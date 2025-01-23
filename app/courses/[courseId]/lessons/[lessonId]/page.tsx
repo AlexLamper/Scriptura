@@ -1,34 +1,69 @@
+import { GetServerSideProps } from 'next';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const lesson = {
-  id: "1",
-  title: "Introduction to Genesis",
-  videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  content: `
-    <h2>Introduction</h2>
-    <p>Genesis, the first book of the Old Testament, serves as the foundation for understanding the entire Bible. It introduces us to key themes and concepts that resonate throughout Scripture.</p>
-    
-    <h2>Key Points</h2>
-    <ul>
-      <li>The creation account</li>
-      <li>The fall of humanity</li>
-      <li>God's covenant with Abraham</li>
-      <li>The patriarchs: Abraham, Isaac, and Jacob</li>
-    </ul>
-    
-    <h2>Reflection Questions</h2>
-    <ol>
-      <li>How does the creation account in Genesis inform our understanding of God's nature?</li>
-      <li>What lessons can we learn from the fall of Adam and Eve?</li>
-      <li>How does God's covenant with Abraham foreshadow His plan for salvation?</li>
-    </ol>
-  `,
+interface Lesson {
+  id: string;
+  title: string;
+  videoUrl: string;
+  content: string;
+}
+
+interface PageProps {
+  params: {
+    courseId: string;
+    lessonId: string;
+  };
+  lesson: Lesson;
+}
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (context) => {
+  const { courseId, lessonId } = context.params as { courseId: string; lessonId: string };
+
+  // Fetch lesson data here
+  const lesson = await fetchLessonData(courseId, lessonId);
+
+  return {
+    props: {
+      params: {
+        courseId,
+        lessonId,
+      },
+      lesson,
+    },
+  };
 };
 
-export default function LessonPage() {
+async function fetchLessonData(courseId: string, lessonId: string): Promise<Lesson> {
+  // Replace this with your actual data fetching logic
+  return {
+    id: lessonId,
+    title: "Introduction to Genesis",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    content: `
+      <h2>Introduction</h2>
+      <p>Genesis, the first book of the Old Testament, serves as the foundation for understanding the entire Bible. It introduces us to key themes and concepts that resonate throughout Scripture.</p>
+      
+      <h2>Key Points</h2>
+      <ul>
+        <li>The creation account</li>
+        <li>The fall of humanity</li>
+        <li>God's covenant with Abraham</li>
+        <li>The patriarchs: Abraham, Isaac, and Jacob</li>
+      </ul>
+      
+      <h2>Reflection Questions</h2>
+      <ol>
+        <li>How does the creation account in Genesis inform our understanding of God's nature?</li>
+        <li>What lessons can we learn from the fall of Adam and Eve?</li>
+        <li>How does God's covenant with Abraham foreshadow His plan for salvation?</li>
+      </ol>
+    `,
+  };
+}
 
+export default function LessonPage({ lesson }: PageProps) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="mx-auto">
