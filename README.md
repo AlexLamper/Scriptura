@@ -43,6 +43,7 @@ Scriptura uses modern technologies to provide an optimal performance and user ex
 - **React-Icons**: Extensive icon library to improve visual consistency in the UI.
 - **FramerMotion**: A library used for animations and transitions.
 - **NextAuth**: For simple and quick to use authentication.
+- **Stripe**: For handling payment and processing transactions.
 
 ## 📄 Pages
 
