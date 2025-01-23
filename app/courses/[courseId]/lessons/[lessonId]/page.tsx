@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const lesson = {
   id: "1",
@@ -25,9 +25,10 @@ const lesson = {
       <li>How does God's covenant with Abraham foreshadow His plan for salvation?</li>
     </ol>
   `,
-}
+};
 
-export default function LessonPage({ }: { params: { courseId: string; lessonId: string } }) {
+export default function LessonPage() {
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="mx-auto">
@@ -94,6 +95,5 @@ export default function LessonPage({ }: { params: { courseId: string; lessonId: 
         </div>
       </div>
     </div>
-  )
+  );
 }
-
