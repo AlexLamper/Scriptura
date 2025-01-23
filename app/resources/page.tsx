@@ -25,7 +25,7 @@ const studyTools = [
 export default function ResourcesPage() {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="mx-auto">
         <h1 className="text-3xl font-bold mb-6">Resources</h1>
         <Tabs defaultValue="bibleVersions">
           <TabsList className="mb-4">

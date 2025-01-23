@@ -3,6 +3,8 @@ import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/SessionProvider";
 import { Header } from "@/components/header";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 export const metadata: Metadata = {
   title: "Scriptura",
@@ -19,13 +21,16 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="antialiased">
-        {/* Pass session to the SessionProvider */}
+      <body className="antialiased bg-gray-100">
         <SessionProvider session={session}>
-          <div className="bg-gray-100 min-h-screen mx-auto p-6">
-            <Header />
-            {children}
-          </div>
+          <SidebarProvider>
+            <AppSidebar />
+            <div className="min-h-screen mx-auto w-full pl-4 pt-6 pr-12">
+              <SidebarTrigger />
+              <Header />
+              {children}
+            </div>
+          </SidebarProvider>
         </SessionProvider>
       </body>
     </html>
