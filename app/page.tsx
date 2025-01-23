@@ -1,20 +1,32 @@
-"use client"
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { Hero } from "@/components/landing/hero";
+import { Features } from "@/components/landing/features";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Testimonials } from "@/components/landing/testimonials";
+import { Pricing } from "@/components/landing/pricing";
+import { FAQ } from "@/components/landing/faq";
+import { CTA } from "@/components/landing/cta";
+import { Footer } from "@/components/landing/footer";
 
-import { CourseGrid } from "@/components/course-grid"
-import { NextLessons } from "@/components/next-lessons"
-import { CourseRecommendation } from "@/components/course-recommendation"
+export default async function LandingPage() {
+  const session = await getServerSession();
 
-export default function Home() {
+  if (session) {
+    redirect("/dashboard");
+    return null; // Prevent further rendering after redirect
+  }
+
   return (
-    <div>
-      <CourseGrid />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <NextLessons />
-        </div>
-        <CourseRecommendation />
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <Hero />
+      <Features />
+      <HowItWorks />
+      <Testimonials />
+      <Pricing />
+      <FAQ />
+      <CTA />
+      <Footer />
     </div>
-  )
+  );
 }
-
