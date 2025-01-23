@@ -1,4 +1,5 @@
-import { GetServerSideProps } from 'next';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,60 +11,21 @@ interface Lesson {
   content: string;
 }
 
-interface PageProps {
-  params: {
-    courseId: string;
-    lessonId: string;
-  };
-  lesson: Lesson;
-}
+export default function LessonPage() {
+  const router = useRouter();
+  const { courseId, lessonId } = router.query;
+  const [lesson, setLesson] = useState<Lesson | null>(null);
 
-export const getServerSideProps: GetServerSideProps<PageProps> = async (context) => {
-  const { courseId, lessonId } = context.params as { courseId: string; lessonId: string };
+  useEffect(() => {
+    if (courseId && lessonId) {
+      fetchLessonData(courseId as string, lessonId as string).then(setLesson);
+    }
+  }, [courseId, lessonId]);
 
-  // Fetch lesson data here
-  const lesson = await fetchLessonData(courseId, lessonId);
+  if (!lesson) {
+    return <div>Loading...</div>;
+  }
 
-  return {
-    props: {
-      params: {
-        courseId,
-        lessonId,
-      },
-      lesson,
-    },
-  };
-};
-
-async function fetchLessonData(courseId: string, lessonId: string): Promise<Lesson> {
-  // Replace this with your actual data fetching logic
-  return {
-    id: lessonId,
-    title: "Introduction to Genesis",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    content: `
-      <h2>Introduction</h2>
-      <p>Genesis, the first book of the Old Testament, serves as the foundation for understanding the entire Bible. It introduces us to key themes and concepts that resonate throughout Scripture.</p>
-      
-      <h2>Key Points</h2>
-      <ul>
-        <li>The creation account</li>
-        <li>The fall of humanity</li>
-        <li>God's covenant with Abraham</li>
-        <li>The patriarchs: Abraham, Isaac, and Jacob</li>
-      </ul>
-      
-      <h2>Reflection Questions</h2>
-      <ol>
-        <li>How does the creation account in Genesis inform our understanding of God's nature?</li>
-        <li>What lessons can we learn from the fall of Adam and Eve?</li>
-        <li>How does God's covenant with Abraham foreshadow His plan for salvation?</li>
-      </ol>
-    `,
-  };
-}
-
-export default function LessonPage({ lesson }: PageProps) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="mx-auto">
@@ -131,4 +93,32 @@ export default function LessonPage({ lesson }: PageProps) {
       </div>
     </div>
   );
+}
+
+async function fetchLessonData(courseId: string, lessonId: string): Promise<Lesson> {
+  // Replace this with your actual data fetching logic
+  return {
+    id: lessonId,
+    title: "Introduction to Genesis",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    content: `
+      <h2>Introduction</h2>
+      <p>Genesis, the first book of the Old Testament, serves as the foundation for understanding the entire Bible. It introduces us to key themes and concepts that resonate throughout Scripture.</p>
+      
+      <h2>Key Points</h2>
+      <ul>
+        <li>The creation account</li>
+        <li>The fall of humanity</li>
+        <li>God's covenant with Abraham</li>
+        <li>The patriarchs: Abraham, Isaac, and Jacob</li>
+      </ul>
+      
+      <h2>Reflection Questions</h2>
+      <ol>
+        <li>How does the creation account in Genesis inform our understanding of God's nature?</li>
+        <li>What lessons can we learn from the fall of Adam and Eve?</li>
+        <li>How does God's covenant with Abraham foreshadow His plan for salvation?</li>
+      </ol>
+    `,
+  };
 }
