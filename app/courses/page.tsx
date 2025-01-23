@@ -1,3 +1,4 @@
+import React from 'react';
 import { CourseGrid } from "@/components/course-grid"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -46,8 +47,8 @@ export default async function CoursesPage() {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="mx-auto">
+    <div className="min-h-screen bg-gray-100 text-gray-800">
+      <div className="bg-gray-100 min-h-screen">
         <h1 className="text-3xl font-bold mb-6">Bible Study Courses</h1>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div className="relative w-full md:w-96">

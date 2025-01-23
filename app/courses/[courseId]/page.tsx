@@ -1,7 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useParams } from "next/navigation"; // Import useParams from next/navigation
 
 const course = {
   id: "1",
@@ -16,7 +19,7 @@ const course = {
   completedLessons: 7,
   duration: "10 weeks",
   level: "Beginner",
-}
+};
 
 const lessons = [
   { id: "1", title: "Introduction to Genesis", duration: "45 min" },
@@ -24,13 +27,16 @@ const lessons = [
   { id: "3", title: "Noah and the Flood", duration: "55 min" },
   { id: "4", title: "Abraham's Covenant", duration: "50 min" },
   { id: "5", title: "Joseph in Egypt", duration: "65 min" },
-]
+];
 
-export default function CoursePage({ params }: { params: { courseId: string } }) {
+export default function CoursePage() {
+  const params = useParams(); // Retrieve params using useParams hook
+  const courseId = params?.courseId; // Access courseId from params
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="mx-auto">
-        {/*Removed Header*/}
+        {/* Removed Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
           <p className="text-gray-600 mb-4">{course.description}</p>
@@ -63,7 +69,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
                   {lessons.map((lesson) => (
                     <li key={lesson.id} className="flex justify-between items-center">
                       <Button variant="link" asChild>
-                        <a href={`/courses/${params.courseId}/lessons/${lesson.id}`}>{lesson.title}</a>
+                        <a href={`/courses/${courseId}/lessons/${lesson.id}`}>{lesson.title}</a>
                       </Button>
                       <span className="text-sm text-gray-500">{lesson.duration}</span>
                     </li>
@@ -87,6 +93,5 @@ export default function CoursePage({ params }: { params: { courseId: string } })
         </div>
       </div>
     </div>
-  )
+  );
 }
-
