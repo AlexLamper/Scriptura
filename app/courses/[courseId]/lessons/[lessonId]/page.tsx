@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 const lesson = {
   id: "1",
   title: "Introduction to Genesis",
-  videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual video URL
+  videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   content: `
     <h2>Introduction</h2>
     <p>Genesis, the first book of the Old Testament, serves as the foundation for understanding the entire Bible. It introduces us to key themes and concepts that resonate throughout Scripture.</p>
@@ -30,7 +30,7 @@ const lesson = {
 export default function LessonPage({ }: { params: { courseId: string; lessonId: string } }) {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="mx-auto">
         <h1 className="text-3xl font-bold mb-6">{lesson.title}</h1>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">

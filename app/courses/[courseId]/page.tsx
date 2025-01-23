@@ -29,7 +29,7 @@ const lessons = [
 export default function CoursePage({ params }: { params: { courseId: string } }) {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="mx-auto">
         {/*Removed Header*/}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
