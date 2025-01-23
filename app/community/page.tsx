@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 const discussionTopics = [
   { id: 1, title: "Understanding the Book of Revelation", replies: 23, lastActivity: "2 hours ago" },
@@ -16,7 +18,13 @@ const studyGroups = [
   { id: 3, name: "Apologetics Discussion", members: 15, nextMeeting: "Next Monday, 8 PM" },
 ]
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+
+    const session = await getServerSession();
+    if(!session || !session.user) {
+        redirect("/api/auth/signin");
+    }
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="mx-auto">
