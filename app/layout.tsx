@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
-import NavMenu from "@/components/Navbar";
 import SessionProvider from "@/components/SessionProvider";
+import { Header } from "@/components/header";
 
 export const metadata: Metadata = {
   title: "Scriptura",
@@ -22,8 +22,10 @@ export default async function RootLayout({
       <body className="antialiased">
         {/* Pass session to the SessionProvider */}
         <SessionProvider session={session}>
-          <NavMenu />
-          {children}
+          <div className="bg-gray-100 min-h-screen mx-auto p-6">
+            <Header />
+            {children}
+          </div>
         </SessionProvider>
       </body>
     </html>
