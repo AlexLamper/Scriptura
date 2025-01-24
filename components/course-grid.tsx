@@ -29,7 +29,7 @@ export function CourseGrid({ courses }: CourseGridProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
-          <CourseCard description={"test description"} totalLessons={0} totalDuration={0} key={course._id} {...course} />
+          <CourseCard difficulty={""} tags={[]} description={"test description"} totalDuration={0} key={course._id} {...course} />
         ))}
       </div>
     </div>
