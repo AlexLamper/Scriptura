@@ -4,11 +4,16 @@ import Course from '@/models/Course';
 
 export async function GET() {
   try {
+    console.log('Connecting to MongoDB...');
     await connectMongoDB();
+    console.log('MongoDB connected successfully');
+
     const courses = await Course.find();
+    console.log('Courses fetched:', courses);
+
     return NextResponse.json(courses);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching courses:', error);
     return NextResponse.json({ message: 'Error fetching courses' }, { status: 500 });
   }
 }

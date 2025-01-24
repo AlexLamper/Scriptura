@@ -1,68 +1,46 @@
-import React from 'react';
-import Link from 'next/link';
+"use client";
 
-type Course = {
-  _id: string;
-  title: string;
-  description: string;
-};
+import React, { useEffect, useState } from "react";
+import { PostType } from "@/lib/models"; // Import the PostType
 
-const fetchCourses = async (): Promise<Course[]> => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const PostPage = () => {
+  const [posts, setPosts] = useState<PostType[]>([]); // Use PostType as the state type
 
-  if (!baseUrl) {
-    throw new Error('NEXT_PUBLIC_BASE_URL is not defined');
-  }
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("/api/posts");
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
 
-  const response = await fetch(`${baseUrl}/api/courses`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+        const posts: PostType[] = await response.json(); // Type the fetched posts
+        setPosts(posts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch courses');
-  }
-
-  return response.json();
-};
-
-const CoursesPage = async () => {
-  let courses: Course[] = [];
-
-  try {
-    courses = await fetchCourses();
-  } catch (error) {
-    console.error('Error fetching courses:', error);
-  }
+    fetchPosts();
+  }, []); // Empty dependency array means it will run once when the component mounts
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800">
-      <div className="">
-        <h1 className="text-3xl font-bold mb-8">Available Courses</h1>
-        {courses.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <div key={course._id} className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-                <Link href={`/courses/${course._id}`}>
-                  <div className="p-4">
-                    <h2 className="text-xl font-semibold text-gray-900 hover:text-pink-600 transition-colors">{course.title}</h2>
-                    <p className="text-sm text-gray-600 mt-2">{course.description}</p>
-                  </div>
-                  <div className="bg-gray-100 p-4 text-pink-600 font-medium hover:bg-pink-100 transition-colors">
-                    <span>View Details</span>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-600">No courses available at the moment.</p>
-        )}
-      </div>
+    <div>
+      <h1>Posts</h1>
+      {posts.length === 0 ? (
+        <p>No posts found</p>
+      ) : (
+        <ul>
+          {posts.map((post) => (
+            <li key={post._id.toString()}> {/* Use toString() to ensure _id is a string */}
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
-export default CoursesPage;
+export default PostPage;
