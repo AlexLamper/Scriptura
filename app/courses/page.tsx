@@ -14,18 +14,23 @@ const CoursePage = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
-
-        const courses: CourseType[] = await response.json();
-        setCourses(courses);
+        const data = await response.json();
+        console.log("Fetched data:", data);
+        if (Array.isArray(data.courses)) {
+          setCourses(data.courses);
+        } else {
+          console.error("Fetched data is not an array:", data);
+        }
+        
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchCourses();
   }, []);
+  
 
   return (
     <div className="py-8">
@@ -35,9 +40,7 @@ const CoursePage = () => {
           <div className="flex justify-center items-center">
             <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
           </div>
-        ) : courses.length === 0 ? (
-          <p className="text-gray-500">No courses found</p>
-        ) : (
+        ) : Array.isArray(courses) && courses.length > 0 ? (
           <ul className="space-y-6">
             {courses.map((course) => (
               <li
@@ -67,10 +70,12 @@ const CoursePage = () => {
               </li>
             ))}
           </ul>
+        ) : (
+          <p className="text-gray-500">No courses found</p>
         )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default CoursePage;

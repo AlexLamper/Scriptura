@@ -1,4 +1,4 @@
-import { Home, BookOpen, User, Briefcase, Settings, Users } from "lucide-react"
+import { Home, BookOpen, User, Briefcase, Settings, Users, TimerIcon } from "lucide-react"
 
 import {
   Sidebar,
@@ -24,6 +24,11 @@ const items = [
     icon: BookOpen,
   },
   {
+    title: "Quizzes",
+    url: "/quizzes",
+    icon: TimerIcon,
+  },
+  {
     title: "Profile",
     url: "/profile",
     icon: User,
@@ -47,7 +52,7 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="flex-shrink-0 max-w-[10vw]">
+    <Sidebar className="flex-shrink-0">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-center p-5">Scriptura</SidebarGroupLabel>

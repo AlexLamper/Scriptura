@@ -1,12 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
 interface QuestionType {
-  question: string;
+  questionText: string;
   options: string[];
   correctAnswer: string;
+  explanation?: string;
 }
 
 interface QuizData {
@@ -24,13 +24,19 @@ export default function QuizPage({ params }: { params: Promise<{ quizId: string 
 
   useEffect(() => {
     const fetchQuiz = async () => {
-      const response = await fetch(`/api/courses?quizId=${quizId}`);
-      const data = await response.json();
-      if (data.quiz) {
-        setQuiz(data.quiz);
-      } else {
-        // Handle the case where the quiz is not found
-        console.error('Quiz not found');
+      try {
+        const response = await fetch(`/api/courses?quizId=${quizId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch quiz');
+        }
+        const data = await response.json();
+        if (data.quiz) {
+          setQuiz(data.quiz);
+        } else {
+          console.error('Quiz not found');
+        }
+      } catch (error) {
+        console.error('Error fetching quiz:', error);
       }
     };
     fetchQuiz();
@@ -54,10 +60,10 @@ export default function QuizPage({ params }: { params: Promise<{ quizId: string 
   };
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{quiz.title}</h1>
       <p className="mb-2">Question {currentQuestionIndex + 1} of {quiz.questions.length}</p>
-      <h2 className="text-lg font-semibold mb-4">{question.question}</h2>
+      <h2 className="text-lg font-semibold mb-4">{question.questionText}</h2>
       <div className="space-y-2">
         {question.options.map((option, index) => (
           <button
