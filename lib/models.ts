@@ -90,5 +90,63 @@ const postSchema = new mongoose.Schema<PostType>({
   },
 });
 
+export interface QuizType {
+  _id: mongoose.Schema.Types.ObjectId;
+  title: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  questions: {
+    questionText: string;
+    options: string[];
+    correctAnswer: string;
+    explanation?: string;
+  }[];
+  tags: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const quizSchema = new mongoose.Schema<QuizType>({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  difficulty: {
+    type: String,
+    enum: ['beginner', 'intermediate', 'advanced'],
+    required: true,
+  },
+  questions: [
+    {
+      questionText: { type: String, required: true },
+      options: [{ type: String, required: true }],
+      correctAnswer: { type: String, required: true },
+      explanation: { type: String },
+    },
+  ],
+  tags: {
+    type: [String],
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 export const Post = mongoose.models.Post || mongoose.model('Post', postSchema);
 export const Course = mongoose.models.Course || mongoose.model('Course', courseSchema);
+export const Quiz = mongoose.models.Quiz || mongoose.model('Quiz', quizSchema);
