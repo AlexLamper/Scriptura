@@ -3,8 +3,8 @@
 import { useEffect } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Input } from "../components/ui/input"
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
 import { Search } from "lucide-react"
 import { Button } from "./ui/button"
 
