@@ -4,16 +4,12 @@ import Link from 'next/link'
 import { useTranslation } from '../../i18n/client'
 import { Footer } from '../../../components/Footer/client'
 import { useState } from 'react'
+import { use } from 'react';
 
-interface PageParams {
-  params: {
-    lng: string;
-  };
-}
-
-export default function Page({ params: { lng } }: PageParams) {
-  const { t } = useTranslation(lng, 'client-page')
-  const [counter, setCounter] = useState(0)
+export default function Page({ params }: { params: Promise<{ lng: string }> }) {
+    const { lng } = use(params);
+    const { t } = useTranslation(lng, 'client-page');
+    const [counter, setCounter] = useState(0);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-600 via-blue-500 to-teal-400 text-white font-mono flex flex-col items-center justify-center p-6 space-y-8">
