@@ -17,7 +17,7 @@ export function Hero({ params: { lng } }: HeroProps) {
     <section className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-32 text-center">
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl">
-          {t("title")}
+          {t("title_1")} <span className="text-red-500">{t("title_2")}</span>
         </h1>
         <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48 lg:max-w-[80%] mx-auto">
           {t("description")}

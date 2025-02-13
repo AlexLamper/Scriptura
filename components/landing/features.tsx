@@ -1,34 +1,45 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { Book, Users, Lightbulb, Compass } from "lucide-react"
+"use client";
 
-const features = [
-  {
-    title: "In-depth Bible Study",
-    description: "Access comprehensive courses and resources for all levels of biblical knowledge.",
-    icon: Book,
-  },
-  {
-    title: "Community Engagement",
-    description: "Connect with fellow believers, join study groups, and participate in discussions.",
-    icon: Users,
-  },
-  {
-    title: "Interactive Learning",
-    description: "Engage with multimedia content, quizzes, and practical applications of Scripture.",
-    icon: Lightbulb,
-  },
-  {
-    title: "Personalized Journey",
-    description: "Track your progress and receive tailored recommendations for your spiritual growth.",
-    icon: Compass,
-  },
-]
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Book, Users, Lightbulb, Compass } from "lucide-react";
+import { useTranslation } from "../../app/i18n/client";
 
-export function Features() {
+interface FeaturesProps {
+  params: {
+    lng: string;
+  };
+}
+
+export function Features({ params: { lng } }: FeaturesProps) {
+  const { t } = useTranslation(lng, "features");
+
+  const features = [
+    {
+      title: t("feature_1_title"),
+      description: t("feature_1_description"),
+      icon: Book,
+    },
+    {
+      title: t("feature_2_title"),
+      description: t("feature_2_description"),
+      icon: Users,
+    },
+    {
+      title: t("feature_3_title"),
+      description: t("feature_3_description"),
+      icon: Lightbulb,
+    },
+    {
+      title: t("feature_4_title"),
+      description: t("feature_4_description"),
+      icon: Compass,
+    },
+  ];
+
   return (
     <section id="features" className="py-24 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12" id="features">Why Choose Scriptura?</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">{t("heading")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <Card key={index}>
@@ -44,6 +55,5 @@ export function Features() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

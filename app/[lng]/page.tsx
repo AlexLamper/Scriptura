@@ -14,8 +14,12 @@ export default async function LandingPage() {
       <Hero params={{
         lng: ""
       }} />
-      <Features />
-      <HowItWorks />
+      <Features params={{
+        lng: ""
+      }} />
+      <HowItWorks params={{
+        lng: ""
+      }} />
       <Testimonials />
       <Pricing />
       <FAQ />
