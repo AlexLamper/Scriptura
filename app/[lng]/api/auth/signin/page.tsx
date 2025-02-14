@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { getProviders, ClientSafeProvider, signIn } from 'next-auth/react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../../../components/ui/button';
 import { Info } from 'lucide-react';
 import Link from 'next/link';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";  // Import ShadCN Dialog components
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "../../../../../components/ui/dialog";  // Import ShadCN Dialog components
 
 export default function SignInPage() {
     const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
@@ -75,7 +75,7 @@ export default function SignInPage() {
                 {/* Additional Info */}
                 <div className="mt-6 text-gray-500 text-sm">
                     <p>
-                        By signing in, you agree to our <span className="text-blue-500"><a href="/terms-of-service">Terms of Service</a></span> and <span className="text-blue-500"><a href="/privacy-policy">Privacy Policy</a></span>.
+                        By signing in, you agree to our <span className="text-blue-500"><Link href="/terms-of-service">Terms of Service</Link></span> and <span className="text-blue-500"><Link href="/privacy-policy">Privacy Policy</Link></span>.
                     </p>
                 </div>
             </div>
