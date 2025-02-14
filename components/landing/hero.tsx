@@ -27,7 +27,7 @@ export function Hero({ params: { lng } }: HeroProps) {
             <Link href="#features">{t("read_more")}</Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="text-lg font-semibold tracking-wide text-[#111827]">
-            <Link href={`/en/api/auth/signin`}>{t("sign_up")}</Link>
+            <Link href={`/api/auth/signin`}>{t("sign_up")}</Link>
           </Button>
         </div>
       </div>
