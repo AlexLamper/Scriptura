@@ -1,6 +1,6 @@
 // app/api/posts/route.ts
-import { connectDB } from "@/lib/connectDB";
-import { Post } from "@/lib/models";
+import { connectDB } from "../../../lib/connectDB";
+import { Post } from "../../../lib/models";
 import { NextResponse } from "next/server";
 
 export async function GET() {
