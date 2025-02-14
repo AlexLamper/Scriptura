@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge"
-import { CourseCard } from "@/components/course-card"
+import { Badge } from "../components/ui/badge"
+import { CourseCard } from "../components/course-card"
 
 const courses = [
   {

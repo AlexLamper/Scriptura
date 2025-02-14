@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { getProviders, ClientSafeProvider, signIn } from 'next-auth/react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../../components/ui/button';
 import { Info } from 'lucide-react';
 import Link from 'next/link';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";  // Import ShadCN Dialog components
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "../../../../components/ui/dialog";
+import '../../../[lng]/globals.css'
 
 export default function SignInPage() {
     const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
