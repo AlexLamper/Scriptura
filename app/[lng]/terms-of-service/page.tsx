@@ -1,18 +1,24 @@
-"use client"
-
-import { Button } from "../../../components/ui/button"
-import Link from "next/link"
-import { useTranslation } from "../../../app/i18n/client"
-import { Footer } from "../../../components/Footer/client"
+import { Button } from "../../../components/ui/button";
+import Link from "next/link";
+import { useTranslation } from "../../../app/i18n/client";
+import { Footer } from "../../../components/Footer/client";
+import { notFound } from "next/navigation"; // This will handle missing params
 
 interface TermsOfServicePageProps {
   params: {
-    lng: string
-  }
+    lng: string;
+  };
 }
 
-export default function TermsOfServicePage({ params: { lng } }: TermsOfServicePageProps) {
-  const { t } = useTranslation(lng, "terms-of-service")
+export default function TermsOfServicePage({ params }: TermsOfServicePageProps) {
+  const { lng } = params;
+
+  // Ensure lng exists, otherwise show a 404 page
+  if (!lng) {
+    notFound();
+  }
+
+  const { t } = useTranslation(lng, "terms-of-service");
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -73,6 +79,5 @@ export default function TermsOfServicePage({ params: { lng } }: TermsOfServicePa
 
       <Footer lng={lng} />
     </div>
-  )
+  );
 }
-
