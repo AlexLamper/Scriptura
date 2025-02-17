@@ -1,0 +1,30 @@
+{
+  "heading": "Kies je plan",
+  "basic_name": "Basis",
+  "basic_price": "Gratis",
+  "basic_features": [
+    "Toegang tot basis cursussen",
+    "Deelname aan community forum",
+    "Persoonlijke studie tracker"
+  ],
+  "basic_cta": "Aanmelden",
+  "premium_name": "Premium",
+  "premium_price": "$9.99/maand",
+  "premium_features": [
+    "Alle Basis functies",
+    "Geavanceerde cursussen en bronnen",
+    "Live webinars met theologen",
+    "Advertentievrije ervaring"
+  ],
+  "premium_cta": "Start gratis proefperiode",
+  "premium_popular_label": "Meest populair",
+  "institutional_name": "Institutioneel",
+  "institutional_price": "Aangepast",
+  "institutional_features": [
+    "Alle Premium functies",
+    "Aangepaste cursus creatie",
+    "Toegewijde ondersteuning",
+    "Analytics en rapportage"
+  ],
+  "institutional_cta": "Neem contact met ons op"
+}
