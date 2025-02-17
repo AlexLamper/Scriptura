@@ -1,23 +1,13 @@
+"use client";
+
 import { Button } from "../../../components/ui/button";
 import Link from "next/link";
 import { useTranslation } from "../../../app/i18n/client";
 import { Footer } from "../../../components/Footer/client";
-import { notFound } from "next/navigation"; // This will handle missing params
+import { use } from "react";
 
-interface TermsOfServicePageProps {
-  params: {
-    lng: string;
-  };
-}
-
-export default function TermsOfServicePage({ params }: TermsOfServicePageProps) {
-  const { lng } = params;
-
-  // Ensure lng exists, otherwise show a 404 page
-  if (!lng) {
-    notFound();
-  }
-
+export default function TermsOfServicePage({ params }: { params: Promise<{ lng: string }> }) {
+  const { lng } = use(params);
   const { t } = useTranslation(lng, "terms-of-service");
 
   return (
