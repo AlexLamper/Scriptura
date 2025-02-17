@@ -1,0 +1,33 @@
+{
+    "heading": "Wähle deinen Plan",
+    "basic_name": "Basis",
+    "basic_price": "Kostenlos",
+    "basic_features": [
+      "Zugang zu grundlegenden Kursen",
+      "Teilnahme am Community-Forum",
+      "Persönlicher Studien-Tracker"
+    ],
+    "basic_cta": "Registrieren",
+    
+    "premium_name": "Premium",
+    "premium_price": "9,99 €/Monat",
+    "premium_features": [
+      "Alle Basisfunktionen",
+      "Erweiterte Kurse und Ressourcen",
+      "Live-Webinare mit Theologen",
+      "Werbefreies Erlebnis"
+    ],
+    "premium_cta": "Kostenlose Testphase starten",
+    "premium_popular_label": "Am beliebtesten",
+    
+    "institutional_name": "Institutionell",
+    "institutional_price": "Individuell",
+    "institutional_features": [
+      "Alle Premium-Funktionen",
+      "Eigene Kursentwicklung",
+      "Dedizierter Support",
+      "Analysen und Berichte"
+    ],
+    "institutional_cta": "Kontaktieren"
+  }
+  

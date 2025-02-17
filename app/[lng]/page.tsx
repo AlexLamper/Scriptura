@@ -20,11 +20,21 @@ export default async function LandingPage() {
       <HowItWorks params={{
         lng: ""
       }} />
-      <Testimonials />
-      <Pricing />
-      <FAQ />
-      <CTA />
-      <Footer />
+      <Testimonials params={{
+        lng: ""
+      }} />
+      <Pricing params={{
+        lng: ""
+      }} />
+      <FAQ params={{
+        lng: ""
+      }} />
+      <CTA params={{
+        lng: ""
+      }} />
+      <Footer params={{
+        lng: ""
+      }} />
     </div>
   );
 }

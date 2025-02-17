@@ -16,38 +16,38 @@ export const config = {
 };
 
 export async function middleware(req: NextRequest) {
-  let lng;
-  if (req.cookies.has(cookieName)) lng = acceptLanguage.get(req.cookies.get(cookieName)?.value);
-  if (!lng) lng = acceptLanguage.get(req.headers.get('Accept-Language'));
-  if (!lng) lng = fallbackLng;
+  const { pathname } = req.nextUrl;
+
+  // Get language preference
+  const lng = req.cookies.has(cookieName)
+    ? acceptLanguage.get(req.cookies.get(cookieName)?.value)
+    : acceptLanguage.get(req.headers.get('Accept-Language')) || fallbackLng;
 
   // Redirect if language in path is not supported
-  if (
-    !languages.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-    !req.nextUrl.pathname.startsWith('/_next')
-  ) {
-    return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
+  if (!languages.some(loc => pathname.startsWith(`/${loc}`)) && !pathname.startsWith('/_next')) {
+    return NextResponse.redirect(new URL(`/${lng}${pathname}`, req.url));
   }
 
+  // Store language preference in a cookie
+  const response = NextResponse.next();
   if (req.headers.has('referer')) {
     const refererUrl = new URL(req.headers.get('referer')!);
-    const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
-    const response = NextResponse.next();
+    const lngInReferer = languages.find(l => refererUrl.pathname.startsWith(`/${l}`));
     if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
-    return response;
   }
 
   // Authentication handling
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  const { pathname } = req.nextUrl;
 
-  if (session && pathname === '/') {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+  // Redirect logged-in users from `/` to `/dashboard`
+  if (session && pathname === `/${lng}`) {
+    return NextResponse.redirect(new URL(`/${lng}/dashboard`, req.url));
   }
 
-  if (!session && (pathname === '/dashboard' || pathname === '/admin')) {
-    return NextResponse.redirect(new URL('/', req.url));
+  // Redirect unauthenticated users away from `/dashboard` and `/admin`
+  if (!session && [`/${lng}/dashboard`, `/${lng}/admin`].includes(pathname)) {
+    return NextResponse.redirect(new URL(`/${lng}/`, req.url));
   }
 
-  return NextResponse.next();
+  return response;
 }

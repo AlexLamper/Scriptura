@@ -1,3 +1,15 @@
 {
-    "languageSwitcher": "Switch from <1>{{lng}}</1> to: "
-  }
+  "about_scriptura": "About Scriptura",
+  "our_mission": "Our Mission",
+  "our_team": "Our Team",
+  "careers": "Careers",
+  "resources": "Resources",
+  "blog": "Blog",
+  "courses": "Courses",
+  "community": "Community",
+  "support": "Support",
+  "faq": "FAQ",
+  "contact_us": "Contact Us",
+  "privacy_policy": "Privacy Policy",
+  "connect": "Connect"
+}
