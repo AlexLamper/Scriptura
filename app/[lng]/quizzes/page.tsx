@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 
 interface QuizType {
   _id: string;
@@ -17,29 +16,19 @@ interface QuizType {
 export default function QuizzesPage() {
   const [quizzes, setQuizzes] = useState<QuizType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [language, setLanguage] = useState<string>('');
   const [difficulty, setDifficulty] = useState<string>('');
   const [category, setCategory] = useState<string>('');
   const [subCategory, setSubCategory] = useState<string>('');
-
-  const params = useParams();
-  const lang = params.lang as string;
-
-  useEffect(() => {
-    setLanguage(lang);
-    fetchQuizzes();
-  }, [lang]);
 
   const fetchQuizzes = async () => {
     setLoading(true);
     try {
       const queryParams = new URLSearchParams({
-        language,
-        difficulty,
-        category,
-        subCategory,
+        ...(difficulty && { difficulty }),
+        ...(category && { category }),
+        ...(subCategory && { subCategory }),
       }).toString();
-      const response = await fetch(`/api/courses?${queryParams}`);
+      const response = await fetch(`/api/courses${queryParams ? `?${queryParams}` : ''}`);
       if (!response.ok) {
         throw new Error('Failed to fetch quizzes');
       }
@@ -54,18 +43,22 @@ export default function QuizzesPage() {
 
   useEffect(() => {
     fetchQuizzes();
-  }, [language, difficulty, category, subCategory]);
+  }, []);
+
+  const handleFilterChange = () => {
+    fetchQuizzes();
+  };
 
   return (
-    <div className="bg-gray-900 min-h-screen text-white p-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-red-500">Available Quizzes</h1>
+    <div>
+      <div className="max-w-7xl">
+        <h1 className="text-4xl font-bold mb-8">Available Quizzes</h1>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <select
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
-            className="bg-[#111827] text-white p-2 rounded"
+            className="bg-white text-gray-900 p-2 rounded border border-gray-300"
           >
             <option value="">All Difficulties</option>
             <option value="beginner">Beginner</option>
@@ -76,7 +69,7 @@ export default function QuizzesPage() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="bg-[#111827] text-white p-2 rounded"
+            className="bg-white text-gray-900 p-2 rounded border border-gray-300"
           >
             <option value="">All Categories</option>
             <option value="Old Testament">Old Testament</option>
@@ -87,17 +80,17 @@ export default function QuizzesPage() {
           <select
             value={subCategory}
             onChange={(e) => setSubCategory(e.target.value)}
-            className="bg-[#111827] text-white p-2 rounded"
+            className="bg-white text-gray-900 p-2 rounded border border-gray-300"
           >
             <option value="">All Sub-Categories</option>
             <option value="Biblical Character">Biblical Character</option>
             <option value="Bible Book">Bible Book</option>
             <option value="Historical Event">Historical Event</option>
           </select>
-          
+
           <button
-            onClick={fetchQuizzes}
-            className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors"
+            onClick={handleFilterChange}
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
           >
             Apply Filters
           </button>
@@ -105,27 +98,27 @@ export default function QuizzesPage() {
 
         {loading ? (
           <div className="flex justify-center items-center">
-            <div className="w-10 h-10 border-4 border-gray-300 border-t-red-500 rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
           </div>
         ) : quizzes.length === 0 ? (
-          <p className="text-gray-400">No quizzes found</p>
+          <p className="text-gray-600">No quizzes found</p>
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {quizzes.map((quiz) => (
               <li
                 key={quiz._id}
-                className="border border-gray-700 rounded-lg shadow-lg p-6 bg-[#111827] hover:bg-gray-800 transition-colors"
+                className="border border-gray-200 rounded-lg shadow-lg p-6 bg-white hover:bg-gray-50 transition-colors"
               >
-                <Link href={`/${lang}/quizzes/${quiz._id}`}>
+                <Link href={`/quizzes/${quiz._id}`}>
                   <div className="cursor-pointer">
-                    <h2 className="text-xl font-semibold mb-2 text-red-500">
+                    <h2 className="text-xl font-semibold mb-2 text-gray-800">
                       {quiz.title}
                     </h2>
-                    <p className="text-gray-300 mb-2">{quiz.description}</p>
+                    <p className="text-gray-600 mb-2">{quiz.description}</p>
                     <div className="flex flex-wrap gap-2 text-sm">
-                      <span className="bg-gray-700 px-2 py-1 rounded">{quiz.difficulty}</span>
-                      <span className="bg-gray-700 px-2 py-1 rounded">{quiz.category}</span>
-                      <span className="bg-gray-700 px-2 py-1 rounded">{quiz.subCategory}</span>
+                      <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded">{quiz.difficulty}</span>
+                      <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded">{quiz.category}</span>
+                      <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded">{quiz.subCategory}</span>
                     </div>
                   </div>
                 </Link>

@@ -5,29 +5,36 @@ import Quiz from '../../../models/Quiz';
 
 export async function GET(request: Request) {
   try {
+    console.log('Connecting to MongoDB...');
     await connectMongoDB();
+    console.log('MongoDB connected successfully');
 
     const { searchParams } = new URL(request.url);
-    const language = searchParams.get('language');
-    const difficulty = searchParams.get('difficulty');
-    const category = searchParams.get('category');
-    const subCategory = searchParams.get('subCategory');
+    const quizId = searchParams.get('quizId');
 
-    const query: { [key: string]: string | null } = {};
+    if (quizId) {
+      // Use .lean() to get a plain JavaScript object
+      const quiz = await Quiz.findById(quizId).lean();
+      if (!quiz) {
+        return NextResponse.json({ message: 'Quiz not found' }, { status: 404 });
+      }
+      return NextResponse.json({ quiz });
+    }
 
-    if (language) query.language = language;
-    if (difficulty) query.difficulty = difficulty;
-    if (category) query.category = category;
-    if (subCategory) query.subCategory = subCategory;
+    // Fetch courses and quizzes as plain objects
+    const courses = await Course.find().lean();
+    console.log('Courses fetched:', courses);
 
-    const quizzes = await Quiz.find(query);
+    const quizzes = await Quiz.find().lean();
+    console.log('Quizzes fetched:', quizzes);
 
-    return NextResponse.json({ quizzes });
+    return NextResponse.json({ courses, quizzes });
   } catch (error) {
-    console.error('Error fetching quizzes:', error);
-    return NextResponse.json({ message: 'Error fetching quizzes' }, { status: 500 });
+    console.error('Error fetching courses or quizzes:', error);
+    return NextResponse.json({ message: 'Error fetching courses' }, { status: 500 });
   }
 }
+
 
 export async function POST(request: Request) {
   try {
