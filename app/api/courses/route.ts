@@ -13,17 +13,19 @@ export async function GET(request: Request) {
     const quizId = searchParams.get('quizId');
 
     if (quizId) {
-      const quiz = await Quiz.findById(quizId);
+      // Use .lean() to get a plain JavaScript object
+      const quiz = await Quiz.findById(quizId).lean();
       if (!quiz) {
         return NextResponse.json({ message: 'Quiz not found' }, { status: 404 });
       }
       return NextResponse.json({ quiz });
     }
 
-    const courses = await Course.find();
+    // Fetch courses and quizzes as plain objects
+    const courses = await Course.find().lean();
     console.log('Courses fetched:', courses);
 
-    const quizzes = await Quiz.find();
+    const quizzes = await Quiz.find().lean();
     console.log('Quizzes fetched:', quizzes);
 
     return NextResponse.json({ courses, quizzes });
@@ -32,6 +34,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: 'Error fetching courses' }, { status: 500 });
   }
 }
+
 
 export async function POST(request: Request) {
   try {
