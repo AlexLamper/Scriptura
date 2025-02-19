@@ -1,51 +1,67 @@
+"use client"
+
 import { Button } from "../components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
+import { useTranslation } from "../app/i18n/client"
+
+interface NextLessonsProps {
+  params: {
+    lng: string
+  }
+}
 
 const nextLessons = [
   {
     id: 1,
-    title: "Introduction to Genesis",
-    course: "Old Testament Survey",
-    teacher: { name: "Dr. Sarah Johnson", image: "/placeholder.svg" },
-    duration: "45 min",
+    titleKey: "lesson_1_title",
+    courseKey: "course_1",
+    teacherNameKey: "teacher_1",
+    teacherImage: "/placeholder.svg",
+    durationKey: "duration_45",
   },
   {
     id: 2,
-    title: "The Gospels: An Overview",
-    course: "New Testament Studies",
-    teacher: { name: "Pastor Michael Lee", image: "/placeholder.svg" },
-    duration: "60 min",
+    titleKey: "lesson_2_title",
+    courseKey: "course_2",
+    teacherNameKey: "teacher_2",
+    teacherImage: "/placeholder.svg",
+    durationKey: "duration_60",
   },
   {
     id: 3,
-    title: "Understanding Biblical Hebrew",
-    course: "Biblical Languages",
-    teacher: { name: "Prof. David Cohen", image: "/placeholder.svg" },
-    duration: "90 min",
+    titleKey: "lesson_3_title",
+    courseKey: "course_3",
+    teacherNameKey: "teacher_3",
+    teacherImage: "/placeholder.svg",
+    durationKey: "duration_90",
   },
   {
     id: 4,
-    title: "The Parables of Jesus",
-    course: "Teachings of Christ",
-    teacher: { name: "Rev. Emily Watson", image: "/placeholder.svg" },
-    duration: "50 min",
+    titleKey: "lesson_4_title",
+    courseKey: "course_4",
+    teacherNameKey: "teacher_4",
+    teacherImage: "/placeholder.svg",
+    durationKey: "duration_50",
   },
   {
     id: 5,
-    title: "Christian Ethics in Modern Times",
-    course: "Applied Theology",
-    teacher: { name: "Dr. Thomas Wright", image: "/placeholder.svg" },
-    duration: "75 min",
+    titleKey: "lesson_5_title",
+    courseKey: "course_5",
+    teacherNameKey: "teacher_5",
+    teacherImage: "/placeholder.svg",
+    durationKey: "duration_75",
   },
 ]
 
-export function NextLessons() {
+export function NextLessons({ params: { lng } }: NextLessonsProps) {
+  const { t } = useTranslation(lng, "next-lessons")
+
   return (
     <div className="bg-white rounded-xl p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">My next Bible lessons</h2>
+        <h2 className="text-2xl font-bold">{t("my_next_bible_lessons")}</h2>
         <Button variant="link" className="text-red-500">
-          View all lessons
+          {t("view_all_lessons")}
         </Button>
       </div>
       <div className="space-y-6">
@@ -53,16 +69,16 @@ export function NextLessons() {
           <div key={lesson.id} className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex-1">
-                <h3 className="font-medium">{lesson.title}</h3>
-                <p className="text-sm text-gray-500">{lesson.course}</p>
+                <h3 className="font-medium">{t(lesson.titleKey)}</h3>
+                <p className="text-sm text-gray-500">{t(lesson.courseKey)}</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarImage src={lesson.teacher.image} />
-                <AvatarFallback>{lesson.teacher.name[0]}</AvatarFallback>
+                <AvatarImage src={lesson.teacherImage} alt={t(lesson.teacherNameKey)} />
+                <AvatarFallback>{t(lesson.teacherNameKey)[0]}</AvatarFallback>
               </Avatar>
-              <span className="text-sm text-gray-500">{lesson.duration}</span>
+              <span className="text-sm text-gray-500">{t(lesson.durationKey)}</span>
             </div>
           </div>
         ))}
