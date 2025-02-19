@@ -12,12 +12,18 @@ export default async function DashboardPage() {
 
     return (
         <div>
-            <CourseGrid />
+            <CourseGrid params={{
+                lng: ""
+            }} />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                    <NextLessons />
+                    <NextLessons params={{
+                        lng: ""
+                    }} />
                 </div>
-                <CourseRecommendation />
+                <CourseRecommendation params={{
+                    lng: ""
+                }} />
             </div>
         </div>
     );

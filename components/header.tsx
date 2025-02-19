@@ -6,8 +6,16 @@ import { useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
 import { Menu, LogOut } from "lucide-react"
 import { Button } from "./ui/button"
+import { useTranslation } from "../app/i18n/client"
 
-export function Header() {
+interface HeaderProps {
+  params: {
+    lng: string
+  }
+}
+
+export function Header({ params: { lng } }: HeaderProps) {
+  const { t } = useTranslation(lng, "header")
   const { data: session, status } = useSession()
   const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -19,7 +27,7 @@ export function Header() {
   }, [status, router])
 
   if (status === "loading") {
-    return <div>Loading...</div>
+    return <div>{t("loading")}</div>
   }
 
   if (!session) {
@@ -30,13 +38,13 @@ export function Header() {
     <header className="mb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">
-          Welcome to <span className="text-red-500">Scriptura</span>
+          {t("welcome_to")} <span className="text-red-500">Scriptura</span>
           {session.user?.name && <span className="hidden sm:inline">, {session.user.name}!</span>}
         </h1>
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-4">
             <Avatar>
-              <AvatarImage src="/placeholder.svg" alt="User" />
+              <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
               <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
             </Avatar>
             <div className="text-sm hidden lg:block">
@@ -46,8 +54,8 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => signOut({ callbackUrl: "https://localhost:3000/" })}
-              aria-label="Sign out"
+              onClick={() => signOut({ callbackUrl: `/${lng}` })}
+              aria-label={t("sign_out")}
             >
               <LogOut className="h-5 w-5" />
             </Button>
@@ -61,7 +69,7 @@ export function Header() {
         <div className="mt-4 md:hidden">
           <div className="flex items-center gap-4">
             <Avatar>
-              <AvatarImage src="/placeholder.svg" alt="User" />
+              <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
               <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
             </Avatar>
             <div className="text-sm">
@@ -71,8 +79,8 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => signOut({ callbackUrl: "https://localhost:3000/" })}
-              aria-label="Sign out"
+              onClick={() => signOut({ callbackUrl: `/${lng}` })}
+              aria-label={t("sign_out")}
             >
               <LogOut className="h-5 w-5" />
             </Button>

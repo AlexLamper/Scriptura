@@ -24,7 +24,9 @@ export default async function ProfileLayout({
             <AppSidebar />
             <div className="min-h-screen mx-auto w-full">
               <SidebarTrigger />
-              <Header />
+              <Header params={{
+              lng: ""
+            }} />
               {children}
             </div>
           </SidebarProvider>
