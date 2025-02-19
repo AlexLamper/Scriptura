@@ -1,120 +1,154 @@
-'use client';
-import React, { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
+"use client"
+
+import { useEffect, useState, use } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "../../../../components/ui/button"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 
 interface QuestionType {
-  questionText: string;
-  options: string[];
-  correctAnswer: string;
-  explanation?: string;
+  questionText: string
+  options: string[]
+  correctAnswer: string
+  explanation?: string
 }
 
 interface QuizData {
-  _id: string;
-  title: string;
-  questions: QuestionType[];
+  _id: string
+  title: string
+  questions: QuestionType[]
 }
 
 interface QuizPageParams {
-  quizId: string;
+  quizId: string
 }
 
 export default function QuizPage({ params }: { params: Promise<QuizPageParams> }) {
-  // Unwrap the promise using React.use() to extract the quizId
-  const { quizId } = use(params);
-  const [quiz, setQuiz] = useState<QuizData | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [score, setScore] = useState(0);
-  const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  const { quizId } = use(params)
+  const [quiz, setQuiz] = useState<QuizData | null>(null)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [selectedOptions, setSelectedOptions] = useState<(string | null)[]>([])
+  const [score, setScore] = useState(0)
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await fetch(`/api/courses?quizId=${quizId}`);
-        const data = await response.json();
+        const response = await fetch(`/api/courses?quizId=${quizId}`)
+        const data = await response.json()
         if (data.quiz) {
-          setQuiz(data.quiz);
+          setQuiz(data.quiz)
+          setSelectedOptions(new Array(data.quiz.questions.length).fill(null))
         } else {
-          setError('Quiz not found');
+          setError("Quiz not found")
         }
       } catch {
-        setError('Error fetching quiz');
+        setError("Error fetching quiz")
       }
-    };
-    fetchQuiz();
-  }, [quizId]);
+    }
+    fetchQuiz()
+  }, [quizId])
 
   if (error) {
-    return <p className="text-red-500 mt-10">{error}</p>;
+    return <p className="text-red-500 mt-10">{error}</p>
   }
   if (!quiz) {
-    return <p className="mt-10">Loading quiz...</p>;
+    return <p className="mt-10">Loading quiz...</p>
   }
 
-  const question = quiz.questions[currentQuestionIndex];
+  const question = quiz.questions[currentQuestionIndex]
 
   const handleAnswer = (option: string) => {
-    setSelectedOption(option);
-    if (option === question.correctAnswer) {
-      setScore((prevScore) => prevScore + 1);
+    if (selectedOptions[currentQuestionIndex] === null) {
+      const newSelectedOptions = [...selectedOptions]
+      newSelectedOptions[currentQuestionIndex] = option
+      setSelectedOptions(newSelectedOptions)
+
+      if (option === question.correctAnswer) {
+        setScore((prevScore) => prevScore + 1)
+      }
     }
-  };
+  }
 
   const handleNext = () => {
     if (currentQuestionIndex < quiz.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null);
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
-      router.push(`/quizzes/${quizId}/result?score=${score}&total=${quiz.questions.length}`);
+      router.push(`/quizzes/${quizId}/result?score=${score}&total=${quiz.questions.length}`)
     }
-  };
+  }
+
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1)
+    }
+  }
+
+  const handleForward = () => {
+    if (currentQuestionIndex < quiz.questions.length - 1 && selectedOptions[currentQuestionIndex] !== null) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
+    }
+  }
 
   return (
-    <div className="min-h-screen">
-      <h1 className="text-4xl font-bold mt-6 mb-4">
-        {quiz.title}
-      </h1>
+    <div className="min-h-screen lg:max-w-[60%] max-w-[95%]">
+      <Button variant="outline" onClick={() => router.push("/quizzes")} className="mb-6">
+        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
+      </Button>
+
+      <h1 className="text-4xl font-bold mb-4">{quiz.title}</h1>
       <p className="mb-2">
         Question {currentQuestionIndex + 1} of {quiz.questions.length}
       </p>
       <p className="mb-6">Score: {score}</p>
-      <div className="">
-        <h2 className="text-2xl mb-4">
-          {question.questionText}
-        </h2>
-        <div className="flex flex-col gap-3 text-white lg:max-w-[60%] max-w-[95%]">
+
+      <div className="mb-6">
+        <h2 className="text-2xl mb-4">{question.questionText}</h2>
+        <div className="flex flex-col gap-3 text-white">
           {question.options.map((option, index) => (
             <button
               key={index}
               className={`p-3 rounded-md transition-colors ${
-                selectedOption === option
+                selectedOptions[currentQuestionIndex] === option
                   ? option === question.correctAnswer
-                    ? 'bg-green-500 text-white'
-                    : 'bg-red-500 text-white'
-                  : 'bg-gray-700 hover:bg-gray-600'
+                    ? "bg-green-500 text-white"
+                    : "bg-red-500 text-white"
+                  : selectedOptions[currentQuestionIndex] !== null && option === question.correctAnswer
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-700 hover:bg-gray-600"
               }`}
               onClick={() => handleAnswer(option)}
-              disabled={!!selectedOption}
+              disabled={selectedOptions[currentQuestionIndex] !== null}
             >
               {option}
             </button>
           ))}
         </div>
-        {selectedOption && question.explanation && (
-          <p className="mt-4 text-gray-800">
-            Explanation: {question.explanation}
-          </p>
+        {selectedOptions[currentQuestionIndex] && question.explanation && (
+          <p className="mt-4 text-gray-800">Explanation: {question.explanation}</p>
         )}
-        <button
-          className="mt-6 bg-gray-700 hover:bg-gray-900 text-white px-4 py-2 rounded hover:cursor-pointer transition-colors"
-          onClick={handleNext}
-          disabled={!selectedOption}
+      </div>
+
+      <div className="flex justify-between items-center">
+        <Button onClick={handleBack} disabled={currentQuestionIndex === 0} variant="outline">
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back
+        </Button>
+
+        <Button onClick={handleNext} disabled={selectedOptions[currentQuestionIndex] === null} variant="default">
+          {currentQuestionIndex < quiz.questions.length - 1 ? "Next" : "Finish"}
+        </Button>
+
+        <Button
+          onClick={handleForward}
+          disabled={
+            currentQuestionIndex === quiz.questions.length - 1 || selectedOptions[currentQuestionIndex] === null
+          }
+          variant="outline"
         >
-          {currentQuestionIndex < quiz.questions.length - 1 ? 'Next' : 'Finish'}
-        </button>
+          Forward <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
       </div>
     </div>
-  );
+  )
 }
+
