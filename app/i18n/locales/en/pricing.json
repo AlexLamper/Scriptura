@@ -1,33 +1,31 @@
 {
-    "heading": "Choose Your Plan",
-    "basic_name": "Basic",
-    "basic_price": "Free",
-    "basic_features": [
-      "Access to basic courses",
-      "Community forum participation",
-      "Personal study tracker"
-    ],
-    "basic_cta": "Sign Up",
-    
-    "premium_name": "Premium",
-    "premium_price": "$9.99/month",
-    "premium_features": [
-      "All Basic features",
-      "Advanced courses and resources",
-      "Live webinars with theologians",
-      "Ad-free experience"
-    ],
-    "premium_cta": "Start Free Trial",
-    "premium_popular_label": "Most Popular",
-    
-    "institutional_name": "Institutional",
-    "institutional_price": "Custom",
-    "institutional_features": [
-      "All Premium features",
-      "Custom course creation",
-      "Dedicated support",
-      "Analytics and reporting"
-    ],
-    "institutional_cta": "Contact Us"
-  }
-  
+  "heading": "Choose Your Plan",
+  "basic_name": "Basic",
+  "basic_price": "Free",
+  "basic_features": [
+    "Access to basic courses",
+    "Participation in the community forum",
+    "Access to over 100+ quizzes",
+    "Advertisements"
+  ],
+  "basic_cta": "Sign Up",
+  "premium_name": "Premium",
+  "premium_price": "€9.99/month",
+  "premium_features": [
+    "Access to all courses",
+    "Participation in the community forum + premium badge",
+    "Access to all quizzes",
+    "No advertisements"
+  ],
+  "premium_cta": "Start Free Trial",
+  "premium_popular_label": "Most Popular",
+  "institutional_name": "Institutional",
+  "institutional_price": "Customized",
+  "institutional_features": [
+    "All Premium features",
+    "Customized courses",
+    "Dedicated support",
+    "Analytics and reporting"
+  ],
+  "institutional_cta": "Contact Us"
+}

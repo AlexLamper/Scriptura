@@ -5,16 +5,17 @@
   "basic_features": [
     "Toegang tot basis cursussen",
     "Deelname aan community forum",
-    "Persoonlijke studie tracker"
+    "Toegang tot meer dan 100+ quizzen",
+    "Advertenties"
   ],
   "basic_cta": "Aanmelden",
   "premium_name": "Premium",
-  "premium_price": "$9.99/maand",
+  "premium_price": "€9.99/maand",
   "premium_features": [
-    "Alle Basis functies",
-    "Geavanceerde cursussen en bronnen",
-    "Live webinars met theologen",
-    "Advertentievrije ervaring"
+    "Toegang tot alle cursussen",
+    "Deelname aan community forum + premium badge",
+    "Toegang tot alle quizzen",
+    "Geen advertenties"
   ],
   "premium_cta": "Start gratis proefperiode",
   "premium_popular_label": "Meest populair",
@@ -22,7 +23,7 @@
   "institutional_price": "Aangepast",
   "institutional_features": [
     "Alle Premium functies",
-    "Aangepaste cursus creatie",
+    "Aangepaste cursussen",
     "Toegewijde ondersteuning",
     "Analytics en rapportage"
   ],
