@@ -1,56 +1,53 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
-import { Button } from "../../../components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card"
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-export default function SuccessPage() {
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading")
-  const searchParams = useSearchParams()
-  const sessionId = searchParams.get("session_id")
+const SuccessPage = () => {
+  const searchParams = useSearchParams();
+  const session_id = searchParams.get('session_id');
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (sessionId) {
-      fetch(`/api/check-session-status?session_id=${sessionId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.status === "complete") {
-            setStatus("success")
+    if (session_id) {
+      const fetchSession = async () => {
+        try {
+          const res = await fetch(`/api/checkout-session?session_id=${session_id}`);
+          const data = await res.json();
+          if (res.ok) {
+            setSession(data);
           } else {
-            setStatus("error")
+            setError(data.error);
           }
-        })
-        .catch(() => setStatus("error"))
-    }
-  }, [sessionId])
+        } catch (err) {
+          console.error(err);
+          setError("An error occurred while fetching the session.");
+        } finally {
+          setLoading(false);
+        }
+      };
 
-  if (status === "loading") {
-    return <div>Loading...</div>
-  }
+      fetchSession();
+    }
+  }, [session_id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <Card className="max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle>{status === "success" ? "Payment Successful!" : "Payment Error"}</CardTitle>
-          <CardDescription>
-            {status === "success"
-              ? "Thank you for subscribing to our Premium plan."
-              : "There was an error processing your payment."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {status === "success" && <p>Your Premium subscription is now active. Enjoy all the benefits!</p>}
-          {status === "error" && <p>Please try again or contact support if the problem persists.</p>}
-        </CardContent>
-        <CardFooter>
-          <Button className="w-full" onClick={() => (window.location.href = "/")}>
-            Return to Home
-          </Button>
-        </CardFooter>
-      </Card>
+    <div>
+      <h1>Payment Successful!</h1>
+      {session && (
+        <div>
+          <p>Thank you, {session.customer_details.name}!</p>
+          <p>Your subscription to the Premium Plan is now active.</p>
+          <p>A confirmation email has been sent to {session.customer_details.email}.</p>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
+export default SuccessPage;

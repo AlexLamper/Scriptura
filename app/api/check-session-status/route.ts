@@ -1,23 +1,23 @@
-import { NextResponse } from "next/server"
-import Stripe from "stripe"
+import { NextApiRequest, NextApiResponse } from "next";
+import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
-})
+});
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
-  const sessionId = searchParams.get("session_id")
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { session_id } = req.query;
 
-  if (!sessionId) {
-    return NextResponse.json({ error: "Missing session_id" }, { status: 400 })
+  if (typeof session_id !== "string") {
+    return res.status(400).json({ error: "Invalid session_id" });
   }
 
   try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
-    return NextResponse.json({ status: session.payment_status })
+    const session = await stripe.checkout.sessions.retrieve(session_id, {
+      expand: ["customer"],
+    });
+    res.status(200).json(session);
   } catch (err: unknown) {
-    return NextResponse.json({ error: (err as Error).message }, { status: 500 })
+    res.status(500).json({ error: (err as Error).message });
   }
 }
-
