@@ -1,18 +1,34 @@
-import { Home, BookOpen, User, Briefcase, Settings, Users, TimerIcon } from "lucide-react"
-
+import React from "react";
+import Link from "next/link";
+import { SearchForm } from "./search-form";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "../components/ui/sidebar"
+  SidebarRail,
+} from "../components/ui/sidebar";
+import {
+  Home,
+  BookOpen,
+  Timer,
+  User,
+  Briefcase,
+  Settings,
+  Users,
+  FileText,
+  Code,
+  Layers,
+  Shield,
+} from "lucide-react";
 
-// Updated menu items with new routes
-const items = [
+// Main navigation items
+const mainNavItems = [
   {
     title: "Dashboard",
     url: "/",
@@ -26,7 +42,7 @@ const items = [
   {
     title: "Quizzes",
     url: "/quizzes",
-    icon: TimerIcon,
+    icon: Timer,
   },
   {
     title: "Profile",
@@ -48,31 +64,110 @@ const items = [
     url: "/community",
     icon: Users,
   },
-]
+];
 
-export function AppSidebar() {
+// Additional sections
+const additionalSections = [
+  {
+    title: "Documentation",
+    items: [
+      {
+        title: "Getting Started",
+        url: "/docs/getting-started",
+        icon: FileText,
+      },
+      {
+        title: "API Reference",
+        url: "/docs/api-reference",
+        icon: Code,
+      },
+    ],
+  },
+  {
+    title: "Support",
+    items: [
+      {
+        title: "FAQ",
+        url: "/support/faq",
+        icon: Layers,
+      },
+      {
+        title: "Contact Us",
+        url: "/support/contact",
+        icon: Shield,
+      },
+    ],
+  },
+];
+
+export function AppSidebar({ ...props }) {
   return (
-    <Sidebar className="flex-shrink-0">
+    <Sidebar {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <div className="flex items-center">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <Home className="size-4" />
+                </div>
+                <div className="ml-2 flex flex-col gap-0.5 leading-none">
+                  <Link href="/">
+                    <span className="font-semibold">Scriptura</span>
+                  </Link>
+                </div>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <SearchForm />
+      </SidebarHeader>
       <SidebarContent>
+        {/* Main Navigation */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-center p-5">Scriptura</SidebarGroupLabel>
+          <SidebarGroupLabel>Main Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {mainNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="p-5">
-                    <a href={item.url}>
-                      <item.icon className="h-6 w-6 mb-1" />
-                      <span className="text-xs">{item.title}</span>
-                    </a>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <span className="flex items-center space-x-2">
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                      </span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
-  )
-}
 
+        {/* Additional Sections */}
+        {additionalSections.map((section) => (
+          <SidebarGroup key={section.title}>
+            <SidebarGroupLabel>{section.title}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {section.items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url}>
+                        <span className="flex items-center space-x-2">
+                          <item.icon className="h-5 w-5" />
+                          <span>{item.title}</span>
+                        </span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      <SidebarRail />
+    </Sidebar>
+  );
+}
