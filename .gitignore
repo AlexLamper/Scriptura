@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# stripe api routes
+/app/api/stripe/*
+/app/api/check-session-status/*
+/app/api/create-checkout-session/*
+/app/api/webhook/*

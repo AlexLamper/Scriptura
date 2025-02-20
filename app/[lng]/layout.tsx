@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Script from "next/script"
 
 export const metadata: Metadata = {
   title: "Scriptura",
@@ -19,6 +20,7 @@ export default async function RootLayout({
             {children}
           </div>
       </body>
+      <Script src="https://js.stripe.com/v3/" />
     </html>
   );
 }
