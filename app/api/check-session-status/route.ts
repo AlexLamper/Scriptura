@@ -1,9 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
-import Stripe from "stripe"
+// import Stripe from "stripe"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16" as "2025-01-27.acacia",
-})
+// Comment out the Stripe initialization
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+//   apiVersion: "2023-10-16" as "2025-01-27.acacia",
+// });
+
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -14,10 +16,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ["customer"],
-    })
-    return NextResponse.json(session)
+    // const session = await stripe.checkout.sessions.retrieve(session_id, {
+    //   expand: ["customer"],
+    // })
+    // return NextResponse.json(session)
   } catch (err: unknown) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 })
   }
