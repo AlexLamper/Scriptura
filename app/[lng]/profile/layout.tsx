@@ -6,7 +6,7 @@ import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "../../../components/ui/sidebar"
 
 export const metadata: Metadata = {
-  title: "Scriptura",
+  title: "Scriptura | Profile",
   description: "Scriptura is an online learning platform to learn more about the bible.",
 };
 
