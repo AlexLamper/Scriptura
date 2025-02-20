@@ -1,101 +1,10 @@
-// "use client"
-
-// import { useEffect, useState } from "react"
-// import { useSession, signOut } from "next-auth/react"
-// import { useRouter } from "next/navigation"
-// import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
-// import { Menu, LogOut } from "lucide-react"
-// import { Button } from "./ui/button"
-// import { useTranslation } from "../app/i18n/client"
-
-// interface HeaderProps {
-//   params: {
-//     lng: string
-//   }
-// }
-
-// export function Header({ params: { lng } }: HeaderProps) {
-//   const { t } = useTranslation(lng, "header")
-//   const { data: session, status } = useSession()
-//   const router = useRouter()
-//   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-//   useEffect(() => {
-//     if (status === "unauthenticated") {
-//       router.push("/api/auth/signin")
-//     }
-//   }, [status, router])
-
-//   if (status === "loading") {
-//     return <div>{t("loading")}</div>
-//   }
-
-//   if (!session) {
-//     return null
-//   }
-
-//   return (
-//     <header className="mb-8">
-//       <div className="flex items-center justify-between">
-//       <span className="hidden sm:inline">
-//         <div className="flex items-center gap-4">
-//           <div className="hidden md:flex items-center gap-4">
-//             <Avatar>
-//               <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
-//               <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
-//             </Avatar>
-//             <div className="text-sm hidden lg:block">
-//               <p className="font-medium">{session.user?.name}</p>
-//               <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
-//             </div>
-//             <Button
-//               variant="ghost"
-//               size="icon"
-//               onClick={() => signOut({ callbackUrl: `/${lng}` })}
-//               aria-label={t("sign_out")}
-//             >
-//               <LogOut className="h-5 w-5" />
-//             </Button>
-//           </div>
-//           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-//             <Menu className="h-6 w-6" />
-//           </Button>
-//         </div>
-//       </div>
-//       {isMenuOpen && (
-//         <div className="mt-4 md:hidden">
-//           <div className="flex items-center gap-4">
-//             <Avatar>
-//               <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
-//               <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
-//             </Avatar>
-//             <div className="text-sm">
-//               <p className="font-medium">{session.user?.name}</p>
-//               <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
-//             </div>
-//             <Button
-//               variant="ghost"
-//               size="icon"
-//               onClick={() => signOut({ callbackUrl: `/${lng}` })}
-//               aria-label={t("sign_out")}
-//             >
-//               <LogOut className="h-5 w-5" />
-//             </Button>
-//           </div>
-//         </div>
-//       )}
-//     </header>
-//   )
-// }
-
-
 "use client"
 
 import { useEffect, useState } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
-import { LogOut, Sun, Moon, Globe } from "lucide-react"
+// import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
+import { LogOut, Sun, Moon, Globe, ChevronDown, User, Settings } from "lucide-react"
 import { Button } from "./ui/button"
 import { useTranslation } from "../app/i18n/client"
 import { motion, AnimatePresence } from "framer-motion"
@@ -111,7 +20,7 @@ export function Header({ params: { lng } }: HeaderProps) {
   const { t } = useTranslation(lng, "header")
   const { data: session, status } = useSession()
   const router = useRouter()
-  const [isProfileOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
@@ -142,39 +51,39 @@ export function Header({ params: { lng } }: HeaderProps) {
   }
 
   return (
-    <header>
-      <div className="flex items-center justify-end space-x-4">
-        <SidebarTrigger />
+    <header className="flex items-center justify-between">
+      <SidebarTrigger />
+      <div className="flex items-center space-x-4">
         <Button
           variant="ghost"
           size="icon"
           onClick={toggleDarkMode}
           aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
           {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
-        <Button variant="ghost" size="icon" onClick={toggleLanguage} aria-label="Switch language">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggleLanguage}
+          aria-label="Switch language"
+          className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
           <Globe className="h-5 w-5" />
         </Button>
         <div className="relative">
-          <div className="flex items-center gap-4">
-            <Avatar>
-              <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
-              <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
-            </Avatar>
-            <div className="text-sm">
+          <Button
+            variant="ghost"
+            className="flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+          >
+            <div className="text-sm text-left">
               <p className="font-medium">{session.user?.name}</p>
               <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => signOut({ callbackUrl: `/${lng}` })}
-              aria-label={t("sign_out")}
-            >
-              <LogOut className="h-5 w-5" />
-            </Button>
-          </div>
+            <ChevronDown className="h-4 w-4 ml-1" />
+          </Button>
           <AnimatePresence>
             {isProfileOpen && (
               <motion.div
@@ -183,6 +92,22 @@ export function Header({ params: { lng } }: HeaderProps) {
                 exit={{ opacity: 0, y: -10 }}
                 className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-10"
               >
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => router.push(`/profile`)}
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  {t("profile")}
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => router.push(`/settings`)}
+                >
+                  <Settings className="h-4 w-4 mr-2" />
+                  {t("settings")}
+                </Button>
                 <Button
                   variant="ghost"
                   className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -199,5 +124,4 @@ export function Header({ params: { lng } }: HeaderProps) {
     </header>
   )
 }
-
 
