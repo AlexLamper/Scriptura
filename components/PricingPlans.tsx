@@ -29,20 +29,20 @@ const plans = [
 ]
 
 export default function PricingPlans() {
-  const handleSubscribe = async (planName: string) => {
-    if (planName === "Premium") {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ plan: "premium" }),
-      })
+//   const handleSubscribe = async (planName: string) => {
+//     if (planName === "Premium") {
+//       const response = await fetch("/api/create-checkout-session", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ plan: "premium" }),
+//       })
 
-      const session = await response.json()
-      window.location.href = session.url
-    }
-  }
+//       const session = await response.json()
+//       window.location.href = session.url
+//     }
+//   }
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -75,7 +75,7 @@ export default function PricingPlans() {
             <CardFooter>
               <Button
                 className="w-full"
-                onClick={() => handleSubscribe(plan.name)}
+                // onClick={() => handleSubscribe(plan.name)}
                 variant={plan.popular ? "default" : "outline"}
               >
                 {plan.cta}
