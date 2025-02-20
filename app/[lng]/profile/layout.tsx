@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "../../../components/SessionProvider";
 import { Header } from "../../../components/header";
 import { AppSidebar } from "../../../components/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "../../../components/ui/sidebar"
+import { SidebarProvider } from "../../../components/ui/sidebar"
 
 export const metadata: Metadata = {
   title: "Scriptura | Profile",
@@ -23,7 +23,6 @@ export default async function ProfileLayout({
           <SidebarProvider>
             <AppSidebar />
             <div className="min-h-screen mx-auto w-full">
-              <SidebarTrigger />
               <Header params={{
               lng: ""
             }} />
