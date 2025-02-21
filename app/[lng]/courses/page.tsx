@@ -35,18 +35,18 @@ const CoursePage = () => {
   const filteredCourses = courses.filter((course) => course.title.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-4">
         <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Explore Our Courses</h1>
         <div className="mb-6">
           <div className="relative">
             <input
               type="text"
               placeholder="Search courses..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[rgb(24,24,27)] dark:border-gray-700 dark:text-white"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
+            <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
           </div>
         </div>
         {loading ? (
@@ -61,7 +61,7 @@ const CoursePage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">{course.title}</h2>
@@ -106,4 +106,3 @@ const CoursePage = () => {
 }
 
 export default CoursePage
-
