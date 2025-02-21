@@ -11,49 +11,49 @@ export default function TermsOfServicePage({ params }: { params: Promise<{ lng: 
   const { t } = useTranslation(lng, "terms-of-service");
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-100 dark:bg-[#18181bf2] flex flex-col">
       <main className="flex-grow container mx-auto px-4 py-8 md:py-16">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">{t("terms_of_service")}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">{t("terms_of_service")}</h1>
 
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+        <div className="bg-gray-200 dark:bg-[#3d3d3ff2] shadow-md rounded-lg p-6 mb-8">
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("acceptance_of_terms")}</h2>
-            <p className="text-gray-600">{t("acceptance_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("acceptance_of_terms")}</h2>
+            <p className="">{t("acceptance_description")}</p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("description_of_service")}</h2>
-            <p className="text-gray-600">{t("service_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("description_of_service")}</h2>
+            <p className="">{t("service_description")}</p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("user_accounts")}</h2>
-            <p className="text-gray-600">{t("user_accounts_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("user_accounts")}</h2>
+            <p className="">{t("user_accounts_description")}</p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("user_conduct")}</h2>
-            <p className="text-gray-600">{t("conduct_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("user_conduct")}</h2>
+            <p className="">{t("conduct_description")}</p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("intellectual_property")}</h2>
-            <p className="text-gray-600">{t("intellectual_property_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("intellectual_property")}</h2>
+            <p className="">{t("intellectual_property_description")}</p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("termination")}</h2>
-            <p className="text-gray-600">{t("termination_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("termination")}</h2>
+            <p className="">{t("termination_description")}</p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("changes_to_terms")}</h2>
-            <p className="text-gray-600">{t("changes_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("changes_to_terms")}</h2>
+            <p className="">{t("changes_description")}</p>
           </section>
 
           <section>
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">{t("contact_us")}</h2>
-            <p className="text-gray-600">{t("contact_description")}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">{t("contact_us")}</h2>
+            <p className="">{t("contact_description")}</p>
           </section>
         </div>
 

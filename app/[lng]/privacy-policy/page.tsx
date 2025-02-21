@@ -3,10 +3,10 @@ import Link from "next/link"
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen py-12 bg-gray-100 dark:bg-[#18181bf2]">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8">Privacy Policy</h1>
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+        <div className="shadow-md rounded-lg p-6 mb-8 bg-gray-200 dark:bg-[#3d3d3ff2]">
           <h2 className="text-2xl font-semibold mb-4">1. Information We Collect</h2>
           <p className="mb-4">
             We collect information you provide directly to us, such as when you create an account, participate in

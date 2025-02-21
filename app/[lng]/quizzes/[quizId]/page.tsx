@@ -150,7 +150,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.3 }}
-          className="mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6"
+          className="mb-8 bg-white dark:bg-[#18181B] rounded-lg shadow-lg p-6"
         >
           <h2 className="text-2xl mb-4 font-semibold text-gray-800 dark:text-white">{question.questionText}</h2>
           <div className="flex flex-col gap-3">
@@ -166,7 +166,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
                       : "bg-red-500 text-white"
                     : selectedOptions[currentQuestionIndex] !== null && option === question.correctAnswer
                       ? "bg-green-500 text-white"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
+                      : "bg-gray-100 dark:bg-[#5a5a5dc2] text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#78787dc2]"
                 }`}
                 onClick={() => handleAnswer(option)}
                 disabled={selectedOptions[currentQuestionIndex] !== null}

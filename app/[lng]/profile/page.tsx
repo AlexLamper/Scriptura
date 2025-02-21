@@ -13,7 +13,7 @@ export default async function ProfilePage() {
     }
 
     return (
-        <div className="bg-gray-100 min-h-screen w-full">
+        <div className="min-h-screen w-full">
             <div className="mx-auto">
                 <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

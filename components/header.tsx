@@ -4,11 +4,12 @@ import { useEffect, useState } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 // import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
-import { LogOut, Sun, Moon, Globe, ChevronDown, User, Settings } from "lucide-react"
+import { LogOut, Globe, ChevronDown, User, Settings } from "lucide-react"
 import { Button } from "./ui/button"
 import { useTranslation } from "../app/i18n/client"
 import { motion, AnimatePresence } from "framer-motion"
 import { SidebarTrigger } from "../components/ui/sidebar"
+import { ModeToggle } from "./dark-mode-toggle"
 
 interface HeaderProps {
   params: {
@@ -21,7 +22,6 @@ export function Header({ params: { lng } }: HeaderProps) {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -41,11 +41,6 @@ export function Header({ params: { lng } }: HeaderProps) {
     return null
   }
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-    // Implement your dark mode logic here
-  }
-
   const toggleLanguage = () => {
     // Implement your language switch logic here
   }
@@ -54,15 +49,7 @@ export function Header({ params: { lng } }: HeaderProps) {
     <header className="flex items-center justify-between">
       <SidebarTrigger />
       <div className="flex items-center space-x-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleDarkMode}
-          aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-          className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        >
-          {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-        </Button>
+        <ModeToggle />
         <Button
           variant="ghost"
           size="icon"

@@ -15,23 +15,35 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
   const { t } = useTranslation(lng, "course-recommendation")
 
   return (
-    <div className="bg-gray-900 text-white rounded-xl p-6">
-      <Badge className="bg-[#FFD700] text-black mb-4">{t("category")}</Badge>
-      <h3 className="text-xl font-bold mb-4">{t("course_title")}</h3>
-      <p className="text-gray-400 mb-4">{t("popularity")}</p>
+    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-xl p-6">
+      <Badge className="bg-[#FFD700] text-black dark:bg-[#2b2d35] dark:text-black mb-4">
+        {t("category")}
+      </Badge>
+      <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+        {t("course_title")}
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400 mb-4">
+        {t("popularity")}
+      </p>
       <div className="flex items-center gap-2 mb-6">
         <div className="flex -space-x-2">
           {[1, 2, 3].map((i) => (
-            <Avatar key={i} className="w-8 h-8 border-2 border-gray-900">
+            <Avatar
+              key={i}
+              className="w-8 h-8 border-2 border-gray-200 dark:border-gray-800"
+            >
               <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
               <AvatarFallback>U{i}</AvatarFallback>
             </Avatar>
           ))}
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-800 text-xs">+100</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 text-xs">
+            +100
+          </div>
         </div>
       </div>
-      <Button className="w-full bg-red-500 hover:bg-red-600">{t("enroll_now")}</Button>
+      <Button className="w-full bg-red-500 hover:bg-red-600">
+        {t("enroll_now")}
+      </Button>
     </div>
   )
 }
-
