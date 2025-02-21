@@ -57,10 +57,12 @@ export function NextLessons({ params: { lng } }: NextLessonsProps) {
   const { t } = useTranslation(lng, "next-lessons")
 
   return (
-    <div className="bg-white rounded-xl p-6">
+    <div className="bg-white dark:bg-[#2d2d33] rounded-xl p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">{t("my_next_bible_lessons")}</h2>
-        <Button variant="link" className="text-red-500">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+          {t("my_next_bible_lessons")}
+        </h2>
+        <Button variant="link" className="text-red-500 dark:text-red-400">
           {t("view_all_lessons")}
         </Button>
       </div>
@@ -69,16 +71,25 @@ export function NextLessons({ params: { lng } }: NextLessonsProps) {
           <div key={lesson.id} className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex-1">
-                <h3 className="font-medium">{t(lesson.titleKey)}</h3>
-                <p className="text-sm text-gray-500">{t(lesson.courseKey)}</p>
+                <h3 className="font-medium text-gray-800 dark:text-white">
+                  {t(lesson.titleKey)}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {t(lesson.courseKey)}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarImage src={lesson.teacherImage} alt={t(lesson.teacherNameKey)} />
+                <AvatarImage
+                  src={lesson.teacherImage}
+                  alt={t(lesson.teacherNameKey)}
+                />
                 <AvatarFallback>{t(lesson.teacherNameKey)[0]}</AvatarFallback>
               </Avatar>
-              <span className="text-sm text-gray-500">{t(lesson.durationKey)}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                {t(lesson.durationKey)}
+              </span>
             </div>
           </div>
         ))}
@@ -86,4 +97,3 @@ export function NextLessons({ params: { lng } }: NextLessonsProps) {
     </div>
   )
 }
-
