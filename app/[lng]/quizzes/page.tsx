@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface QuizType {
   _id: string;
@@ -62,18 +62,20 @@ export default function QuizzesPage() {
 
   useEffect(() => {
     filterQuizzes(); // Re-run the filter whenever a filter changes
-  }, [difficulty, category, subCategory]); // Trigger filter when any of these change
+  }, [difficulty, category, subCategory]);
 
   return (
-    <div>
+    <div className="min-h-screen pt-4">
       <div className="max-w-7xl">
-        <h1 className="text-4xl font-bold mb-8">Available Quizzes</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">
+          Available Quizzes
+        </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <select
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
-            className="bg-white text-gray-900 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-white dark:bg-[rgb(24,24,27)] text-gray-900 dark:text-white p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Difficulties</option>
             <option value="beginner">Beginner</option>
@@ -84,7 +86,7 @@ export default function QuizzesPage() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="bg-white text-gray-900 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-white dark:bg-[rgb(24,24,27)] text-gray-900 dark:text-white p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Categories</option>
             <option value="Bijbel">Bijbel</option>
@@ -95,7 +97,7 @@ export default function QuizzesPage() {
           <select
             value={subCategory}
             onChange={(e) => setSubCategory(e.target.value)}
-            className="bg-white text-gray-900 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-white dark:bg-[rgb(24,24,27)] text-gray-900 dark:text-white p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Sub-Categories</option>
             <option value="Genesis">Genesis</option>
@@ -107,28 +109,36 @@ export default function QuizzesPage() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center items-center">
-            <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="flex justify-center items-center h-64">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : filteredQuizzes.length === 0 ? (
-          <p className="text-gray-600">No quizzes found</p>
+          <p className="text-gray-600 dark:text-gray-300">No quizzes found</p>
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredQuizzes.map((quiz) => (
               <li
                 key={quiz._id}
-                className="border border-gray-200 rounded-lg shadow-lg p-6 bg-white hover:bg-gray-50 transition-colors"
+                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <Link href={`/quizzes/${quiz._id}`}>
                   <div className="cursor-pointer">
-                    <h2 className="text-xl font-semibold mb-2 text-gray-800">
+                    <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
                       {quiz.title}
                     </h2>
-                    <p className="text-gray-600 mb-2">{quiz.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      {quiz.description}
+                    </p>
                     <div className="flex flex-wrap gap-2 text-sm">
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2 py-1 rounded dark:bg-blue-200 dark:text-blue-800">{quiz.difficulty}</span>
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2 py-1 rounded dark:bg-blue-200 dark:text-blue-800">{quiz.category}</span>
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2 py-1 rounded dark:bg-blue-200 dark:text-blue-800">{quiz.subCategory}</span>
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                        {quiz.difficulty}
+                      </span>
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                        {quiz.category}
+                      </span>
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                        {quiz.subCategory}
+                      </span>
                     </div>
                   </div>
                 </Link>
