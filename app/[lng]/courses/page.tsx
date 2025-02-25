@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react"
 import type { CourseType } from "../../../lib/models"
 import { motion } from "framer-motion"
-import { Search, BookOpen, Clock, User, Tag } from "lucide-react"
+import { Search, BookOpen, Clock, User, Tag, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 const CoursePage = () => {
   const [courses, setCourses] = useState<CourseType[]>([])
@@ -36,34 +37,35 @@ const CoursePage = () => {
 
   return (
     <div className="min-h-screen pt-4">
-        <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Explore Our Courses</h1>
-        <div className="mb-6">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search courses..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[rgb(24,24,27)] dark:border-gray-700 dark:text-white"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
-          </div>
+      <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Explore Our Courses</h1>
+      <div className="mb-6">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search courses..."
+            className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[rgb(24,24,27)] dark:border-gray-700 dark:text-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
         </div>
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        ) : filteredCourses.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.map((course) => (
-              <motion.div
-                key={course._id.toString()}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="p-6">
+      </div>
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : filteredCourses.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCourses.map((course) => (
+            <motion.div
+              key={course._id.toString()}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+            >
+              <Link href={`/courses/${course._id}`} className="block h-full">
+                <div className="p-6 flex flex-col h-full">
                   <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">{course.title}</h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{course.description}</p>
                   <div className="flex items-center mb-2">
@@ -82,7 +84,7 @@ const CoursePage = () => {
                     <Clock className="text-purple-500 mr-2" size={16} />
                     <p className="text-sm text-gray-600 dark:text-gray-300">Duration: {course.totalDuration} minutes</p>
                   </div>
-                  <div className="flex flex-wrap">
+                  <div className="flex flex-wrap mb-4">
                     {course.tags.map((tag) => (
                       <span
                         key={tag}
@@ -92,17 +94,25 @@ const CoursePage = () => {
                       </span>
                     ))}
                   </div>
+                  <div className="mt-auto">
+                    <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center">
+                      View Course
+                      <ArrowRight className="ml-2" size={16} />
+                    </button>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-500 dark:text-gray-400 text-lg">
-            No courses found. Try adjusting your search.
-          </p>
-        )}
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 dark:text-gray-400 text-lg">
+          No courses found. Try adjusting your search.
+        </p>
+      )}
     </div>
   )
 }
 
 export default CoursePage
+
