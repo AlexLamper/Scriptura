@@ -1,0 +1,14 @@
+{
+    "loading": "Kurs wird geladen...",
+    "course_not_found": "Kurs nicht gefunden",
+    "instructor": "Dozent",
+    "duration": "Dauer",
+    "minutes": "Minuten",
+    "level": "Niveau",
+    "progress": "Fortschritt",
+    "lessons": "Lektionen",
+    "course_content": "Kursinhalt",
+    "your_progress": "Dein Fortschritt",
+    "complete": "abgeschlossen",
+    "continue_course": "Kurs fortsetzen"
+}
