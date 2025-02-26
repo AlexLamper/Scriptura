@@ -2,13 +2,13 @@ import { NextResponse } from "next/server"
 import connectMongoDB from "../../../../libs/mongodb"
 import Course from "../../../../models/Course"
 
-export async function GET(request: Request, { params }: { params: { courseId: string } }) {
+export async function GET(context: { params: { courseId: string } }) {
   try {
     console.log("Connecting to MongoDB...")
     await connectMongoDB()
     console.log("MongoDB connected successfully")
 
-    const courseId = params.courseId
+    const courseId = context.params.courseId
     console.log("Fetching course with ID:", courseId)
 
     const course = await Course.findById(courseId).lean()
