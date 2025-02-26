@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState, useEffect } from "react"
 import { Button } from "../../../../components/ui/button"
@@ -12,48 +12,81 @@ type CourseType = {
   _id: string
   title: string
   description: string
-  instructor: string
+  instructor: string | { _id: string; name: string; email?: string }
   category: string
   difficulty: string
   totalDuration: number
   tags: string[]
+  lessons?: { title: string; duration: number; content: string }[]
 }
 
-export default function CoursePage({ params }: { params: Promise<{ lng: string, courseId: string }> }) {
-  const { lng, courseId } = use(params);
-  const { t } = useTranslation(lng, "course");
+export default function CoursePage({ params }: { params: Promise<{ lng: string; courseId: string }> }) {
+  const { lng, courseId } = use(params)
+  const { t } = useTranslation(lng, "course")
 
   const [course, setCourse] = useState<CourseType | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
+        console.log(`Fetching course with ID: ${courseId}`)
         const response = await fetch(`/api/courses/${courseId}`)
+
         if (!response.ok) {
-          throw new Error("Failed to fetch course")
+          const errorData = await response.json()
+          throw new Error(errorData.message || "Failed to fetch course")
         }
+
         const data = await response.json()
+        console.log("Course data received:", data)
         setCourse(data)
       } catch (error) {
         console.error("Error fetching course:", error)
+        setError(error instanceof Error ? error.message : "An unknown error occurred")
       } finally {
         setLoading(false)
       }
     }
-    fetchCourse()
+
+    if (courseId) {
+      fetchCourse()
+    }
   }, [courseId])
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">{t("loading")}</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <span className="ml-3">{t("loading")}</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="text-red-500 mb-4">Error: {error}</div>
+        <Button onClick={() => window.history.back()}>{t("go_back")}</Button>
+      </div>
+    )
   }
 
   if (!course) {
-    return <div className="min-h-screen flex items-center justify-center">{t("course_not_found")}</div>
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="text-xl mb-4">{t("course_not_found")}</div>
+        <Button onClick={() => window.history.back()}>{t("go_back")}</Button>
+      </div>
+    )
   }
 
+  // Handle instructor which might be an object or string
+  const instructorName = typeof course.instructor === "object" ? course.instructor._id.toString() : course.instructor
+
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-[#18181bf2] flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-8">{course.title}</h1>
         <div className="grid md:grid-cols-3 gap-8">
@@ -66,7 +99,7 @@ export default function CoursePage({ params }: { params: Promise<{ lng: string, 
                 <p className="mb-4">{course.description}</p>
                 <div className="flex flex-wrap gap-4 text-sm">
                   <span>
-                    {t("instructor")}: {course.instructor}
+                    {t("instructor")}: {instructorName}
                   </span>
                   <span>
                     {t("category")}: {course.category}
@@ -91,6 +124,18 @@ export default function CoursePage({ params }: { params: Promise<{ lng: string, 
                     ))}
                   </div>
                 </div>
+                {course.lessons && course.lessons.length > 0 && (
+                  <div className="mt-6">
+                    <h3 className="font-semibold mb-2">{t("lessons")}:</h3>
+                    <div className="space-y-2">
+                      {course.lessons.map((lesson, index) => (
+                        <div key={index} className="p-3 bg-white dark:bg-[#2C2C33] rounded">
+                          {t("lesson")} {index + 1}: {lesson.toString()}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
