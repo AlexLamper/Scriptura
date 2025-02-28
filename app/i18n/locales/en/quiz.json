@@ -1,0 +1,14 @@
+{
+    "back_to_quizzes": "Back to Quizzes",
+    "question_x_of_y": "Question {{current}} of {{total}}",
+    "score": "Score",
+    "explanation": "Explanation",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "forward": "Forward",
+    "quiz_not_found": "Quiz not found",
+    "error_fetching_quiz": "Error fetching quiz"
+  }
+  
+  

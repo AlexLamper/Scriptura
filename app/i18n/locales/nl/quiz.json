@@ -1,0 +1,13 @@
+{
+    "back_to_quizzes": "Terug naar Quizzen",
+    "question_x_of_y": "Vraag {{current}} van {{total}}",
+    "score": "Score",
+    "explanation": "Uitleg",
+    "back": "Terug",
+    "next": "Volgende",
+    "finish": "Voltooien",
+    "forward": "Vooruit",
+    "quiz_not_found": "Quiz niet gevonden",
+    "error_fetching_quiz": "Fout bij het ophalen van quiz"
+  }
+  

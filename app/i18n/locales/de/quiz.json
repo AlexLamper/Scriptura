@@ -1,0 +1,13 @@
+{
+    "back_to_quizzes": "Zurück zu den Quiz",
+    "question_x_of_y": "Frage {{current}} von {{total}}",
+    "score": "Punktzahl",
+    "explanation": "Erklärung",
+    "back": "Zurück",
+    "next": "Weiter",
+    "finish": "Beenden",
+    "forward": "Vorwärts",
+    "quiz_not_found": "Quiz nicht gefunden",
+    "error_fetching_quiz": "Fehler beim Abrufen des Quiz"
+  }
+  
