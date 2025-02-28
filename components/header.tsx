@@ -10,6 +10,7 @@ import { useTranslation } from "../app/i18n/client"
 import { motion, AnimatePresence } from "framer-motion"
 import { SidebarTrigger } from "../components/ui/sidebar"
 import { ModeToggle } from "./dark-mode-toggle"
+import { LanguageSwitcher } from "./language-switcher"
 
 interface HeaderProps {
   params: {
@@ -49,6 +50,7 @@ export function Header({ params: { lng } }: HeaderProps) {
     <header className="flex items-center justify-between">
       <SidebarTrigger />
       <div className="flex items-center space-x-4">
+        <LanguageSwitcher />
         <ModeToggle />
         <Button
           variant="ghost"
