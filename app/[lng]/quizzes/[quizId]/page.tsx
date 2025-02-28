@@ -6,7 +6,6 @@ import { Button } from "../../../../components/ui/button"
 import { ArrowLeft, ArrowRight, HelpCircle } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Progress } from "../../../../components/ui/progress"
-import { useTranslation } from "../../../../app/i18n/client"
 
 interface QuestionType {
   questionText: string
@@ -25,10 +24,8 @@ interface QuizPageParams {
   quizId: string
 }
 
-export default function QuizPage({ params }: { params: Promise<QuizPageParams & { lng: string }> }) {
-  const { lng, quizId } = use(params);
-  const { t } = useTranslation(lng, "quizzes");
-
+export default function QuizPage({ params }: { params: Promise<QuizPageParams> }) {
+  const { quizId } = use(params)
   const [quiz, setQuiz] = useState<QuizData | null>(null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedOptions, setSelectedOptions] = useState<(string | null)[]>([])
@@ -126,8 +123,8 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams & 
       exit={{ opacity: 0, y: -20 }}
       className="min-h-screen max-w-4xl"
     >
-      <Button variant="outline" onClick={() => router.push(`/${lng}/quizzes`)} className="mb-6">
-        <ArrowLeft className="mr-2 h-4 w-4" /> {t("back_to_quizzes")}
+      <Button variant="outline" onClick={() => router.push("/quizzes")} className="mb-6">
+        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
       </Button>
 
       <motion.h1
@@ -140,12 +137,10 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams & 
 
       <div className="mb-6 space-y-2">
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          {t("question_x_of_y", { current: currentQuestionIndex + 1, total: quiz.questions.length })}
+          Question {currentQuestionIndex + 1} of {quiz.questions.length}
         </p>
         <Progress value={((currentQuestionIndex + 1) / quiz.questions.length) * 100} className="w-full" />
-        <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">
-          {t("score")}: {score}
-        </p>
+        <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">Score: {score}</p>
       </div>
 
       <AnimatePresence mode="wait">
@@ -190,7 +185,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams & 
               >
                 <div className="flex items-center mb-2">
                   <HelpCircle className="text-blue-500 mr-2" />
-                  <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200">{t("explanation")}</h3>
+                  <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200">Explanation</h3>
                 </div>
                 <p className="text-blue-800 dark:text-blue-200">{question.explanation}</p>
               </motion.div>
@@ -201,11 +196,11 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams & 
 
       <div className="flex justify-between items-center">
         <Button onClick={handleBack} disabled={currentQuestionIndex === 0} variant="outline">
-          <ArrowLeft className="mr-2 h-4 w-4" /> {t("back")}
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Button>
 
         <Button onClick={handleNext} disabled={selectedOptions[currentQuestionIndex] === null} variant="default">
-          {currentQuestionIndex < quiz.questions.length - 1 ? t("next") : t("finish")}
+          {currentQuestionIndex < quiz.questions.length - 1 ? "Next" : "Finish"}
           {currentQuestionIndex < quiz.questions.length - 1 && <ArrowRight className="ml-2 h-4 w-4" />}
         </Button>
 
@@ -216,7 +211,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams & 
           }
           variant="outline"
         >
-          {t("forward")} <ArrowRight className="ml-2 h-4 w-4" />
+          Forward <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
     </motion.div>
