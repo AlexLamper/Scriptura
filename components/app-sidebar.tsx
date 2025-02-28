@@ -1,6 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import { SearchForm } from "./search-form";
+"use client"
+import Link from "next/link"
+import { useParams } from "next/navigation"
+import { SearchForm } from "./search-form"
 import {
   Sidebar,
   SidebarContent,
@@ -12,26 +13,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "../components/ui/sidebar";
-import {
-  Home,
-  BookOpen,
-  Timer,
-  User,
-  Briefcase,
-  Settings,
-  Users,
-  FileText,
-  Code,
-  Layers,
-  Shield,
-} from "lucide-react";
+} from "../components/ui/sidebar"
+import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, FileText, Code, Layers, Shield } from "lucide-react"
 
 // Main navigation items
 const mainNavItems = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: Home,
   },
   {
@@ -64,7 +53,7 @@ const mainNavItems = [
     url: "/community",
     icon: Users,
   },
-];
+]
 
 // Additional sections
 const additionalSections = [
@@ -98,9 +87,14 @@ const additionalSections = [
       },
     ],
   },
-];
+]
 
 export function AppSidebar({ ...props }) {
+  const params = useParams()
+  const lang = params.lng || "en" // Default to 'en' if no language is found
+
+  const prependLang = (url: string) => `/${lang}${url}`
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -112,7 +106,7 @@ export function AppSidebar({ ...props }) {
                   <Home className="size-4" />
                 </div>
                 <div className="ml-2 flex flex-col gap-0.5 leading-none">
-                  <Link href="/">
+                  <Link href={prependLang("/")}>
                     <span className="font-semibold">Scriptura</span>
                   </Link>
                 </div>
@@ -131,7 +125,7 @@ export function AppSidebar({ ...props }) {
               {mainNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                    <Link href={prependLang(item.url)}>
                       <span className="flex items-center space-x-2">
                         <item.icon className="h-5 w-5" />
                         <span>{item.title}</span>
@@ -153,7 +147,7 @@ export function AppSidebar({ ...props }) {
                 {section.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <Link href={item.url}>
+                      <Link href={prependLang(item.url)}>
                         <span className="flex items-center space-x-2">
                           <item.icon className="h-5 w-5" />
                           <span>{item.title}</span>
@@ -169,5 +163,6 @@ export function AppSidebar({ ...props }) {
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  );
+  )
 }
+
