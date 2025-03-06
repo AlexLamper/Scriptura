@@ -2,6 +2,8 @@
 
 **Your Interactive Bible Learning Platform**
 
+![Scriptura Screenshot](public/screenshot.png)
+
 ## About Scriptura
 
 *Scriptura* is a modern, web-based learning platform designed to help users explore and study the Bible interactively. Whether you're just beginning your spiritual journey or have extensive Bible knowledge, *Scriptura* provides personalized tools, quizzes, and resources to deepen your understanding.
