@@ -63,18 +63,6 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
   const filteredCourses =
     activeCategory === "all" ? courses : courses.filter((course) => course.category === activeCategory)
 
-  // Get background color based on category - Using shades of the specified red
-  const getCategoryBackground = (category: string) => {
-    const colors: Record<string, string> = {
-      Bible: "bg-gradient-to-br from-[#ef4444] to-[#f24344]",
-      Bijbel: "bg-gradient-to-br from-[#f24344] to-[#ef4444]",
-      "Entire Bible": "bg-gradient-to-br from-[#ff5555] to-[#ef4444]",
-      "Old Testament": "bg-gradient-to-br from-[#ef4444] to-[#ff5555]",
-      "New Testament": "bg-gradient-to-br from-[#f24344] to-[#ff5555]",
-    }
-    return colors[category] || "bg-gradient-to-br from-[#ef4444] to-[#f24344]"
-  }
-
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-6">
@@ -120,26 +108,29 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800/50 shadow-md">
-              <div className="h-32 bg-gradient-to-r from-[#ef4444] to-[#f24344] dark:opacity-80">
+            <div
+              key={i}
+              className="rounded-xl overflow-hidden bg-white dark:bg-[#2e2d32] border border-gray-100 dark:border-gray-700"
+            >
+              <div className="h-32 bg-gray-50 dark:bg-[#353438]">
                 <div className="p-4">
-                  <Skeleton className="h-6 w-24 bg-white/30 dark:bg-white/20" />
+                  <Skeleton className="h-6 w-24 bg-gray-100 dark:bg-[#3a393f]" />
                 </div>
               </div>
               <div className="p-5 space-y-4">
-                <Skeleton className="h-7 w-3/4 bg-gray-200 dark:bg-gray-700" />
+                <Skeleton className="h-7 w-3/4 bg-gray-100 dark:bg-[#3a393f]" />
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <Skeleton className="h-4 w-20 bg-gray-200 dark:bg-gray-700" />
-                    <Skeleton className="h-4 w-12 bg-gray-200 dark:bg-gray-700" />
+                    <Skeleton className="h-4 w-20 bg-gray-100 dark:bg-[#3a393f]" />
+                    <Skeleton className="h-4 w-12 bg-gray-100 dark:bg-[#3a393f]" />
                   </div>
-                  <Skeleton className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full" />
+                  <Skeleton className="h-2 w-full bg-gray-100 dark:bg-[#3a393f] rounded-full" />
                 </div>
                 <div className="flex items-center mt-4">
                   <div className="flex -space-x-2">
-                    <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700" />
-                    <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700" />
-                    <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700" />
+                    <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+                    <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+                    <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
                   </div>
                 </div>
               </div>
@@ -161,7 +152,6 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
                   title={course.title}
                   category={course.category}
                   progress={`${Math.floor(Math.random() * 20)}/${Math.floor(Math.random() * 30) + 20}`}
-                  background={getCategoryBackground(course.category)}
                   students={[
                     { name: "Student 1", image: "/placeholder.svg" },
                     { name: "Student 2", image: "/placeholder.svg" },
@@ -174,7 +164,7 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-gray-50 dark:bg-gray-800/30 rounded-xl border border-gray-100 dark:border-gray-800">
+        <div className="text-center py-16 bg-white dark:bg-[#2e2d32] rounded-xl border border-gray-100 dark:border-gray-700">
           <Search className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
           <p className="text-gray-500 dark:text-gray-400 text-lg">No courses found</p>
           <p className="text-gray-400 dark:text-gray-500 mt-2">Try selecting a different category</p>
