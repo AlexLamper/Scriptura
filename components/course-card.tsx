@@ -17,7 +17,7 @@ interface CourseCardProps {
   students: Student[]
 }
 
-export function CourseCard({ id, title, category, progress, students }: CourseCardProps) {
+export function CourseCard({ title, category, progress, students }: CourseCardProps) {
   // Extract progress numbers
   const [current, total] = progress.split("/").map(Number)
   const progressPercentage = (current / total) * 100
