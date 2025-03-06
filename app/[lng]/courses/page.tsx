@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import type { CourseType } from "../../../lib/models"
 import { motion } from "framer-motion"
-import { Search, BookOpen, Clock, User, Tag, ArrowRight } from "lucide-react"
+import { Search, BookOpen, Clock, User, Tag, ArrowRight, LanguagesIcon } from "lucide-react"
 import Link from "next/link"
 
 const CoursePage = () => {
@@ -79,6 +79,10 @@ const CoursePage = () => {
                   <div className="flex items-center mb-2">
                     <Tag className="text-yellow-500 mr-2" size={16} />
                     <p className="text-sm text-gray-600 dark:text-gray-300">Difficulty: {course.difficulty}</p>
+                  </div>
+                  <div className="flex items-center mb-2">
+                    <LanguagesIcon className="text-red-500 mr-2" size={16} />
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Language: {course.language}</p>
                   </div>
                   <div className="flex items-center mb-4">
                     <Clock className="text-purple-500 mr-2" size={16} />

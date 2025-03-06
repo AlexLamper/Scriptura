@@ -1,11 +1,16 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { languages } from "../app/i18n/settings"
 import { Check, Globe } from "lucide-react"
 import { Button } from "../components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu"
 
 const languageNames: Record<string, string> = {
   en: "English",
@@ -14,19 +19,24 @@ const languageNames: Record<string, string> = {
 }
 
 export function LanguageSwitcher() {
-  // const router = useRouter()
   const pathname = usePathname()
-  const [currentLanguage, setCurrentLanguage] = useState<string>("en")
+  const [currentLanguage, setCurrentLanguage] = useState<string>("")
 
   // Extract current language from pathname
-  useEffect(() => {
+  const updateLanguage = useCallback(() => {
     const pathSegments = pathname.split("/").filter(Boolean)
     const langFromPath = pathSegments[0]
 
     if (languages.includes(langFromPath)) {
       setCurrentLanguage(langFromPath)
+    } else {
+      setCurrentLanguage("en") // Default to English if no valid language is found
     }
   }, [pathname])
+
+  useEffect(() => {
+    updateLanguage()
+  }, [updateLanguage])
 
   // Switch language while preserving the current path
   const switchLanguage = (newLanguage: string) => {
@@ -41,6 +51,11 @@ export function LanguageSwitcher() {
 
     // Use window.location.href to force a full page refresh
     window.location.href = newPath
+  }
+
+  // Don't render anything until we have determined the current language
+  if (!currentLanguage) {
+    return null
   }
 
   return (
