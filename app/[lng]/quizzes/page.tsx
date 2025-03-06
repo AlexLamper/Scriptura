@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 
 interface QuizType {
@@ -40,7 +40,8 @@ export default function QuizzesPage() {
     }
   };
 
-  const filterQuizzes = () => {
+  // Use useCallback to memoize the filterQuizzes function
+  const filterQuizzes = useCallback(() => {
     let filtered = [...quizzes];
 
     if (difficulty) {
@@ -54,7 +55,7 @@ export default function QuizzesPage() {
     }
 
     setFilteredQuizzes(filtered);
-  };
+  }, [quizzes, difficulty, category, subCategory]); // Add all dependencies
 
   useEffect(() => {
     fetchQuizzes();
@@ -62,7 +63,7 @@ export default function QuizzesPage() {
 
   useEffect(() => {
     filterQuizzes(); // Re-run the filter whenever a filter changes
-  }, [difficulty, category, subCategory]);
+  }, [filterQuizzes, fetchQuizzes]); // Now filterQuizzes is the only dependency
 
   return (
     <div className="min-h-screen pt-4">
@@ -138,6 +139,9 @@ export default function QuizzesPage() {
                       </span>
                       <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                         {quiz.subCategory}
+                      </span>
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                        {quiz.language}
                       </span>
                     </div>
                   </div>

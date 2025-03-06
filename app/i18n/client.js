@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import i18next from 'i18next'
-import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next'
-import { useCookies } from 'react-cookie'
-import resourcesToBackend from 'i18next-resources-to-backend'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import { getOptions, languages, cookieName } from './settings'
+import { useEffect, useState } from "react"
+import i18next from "i18next"
+import { initReactI18next, useTranslation as useTranslationOrg } from "react-i18next"
+import { useCookies } from "react-cookie"
+import resourcesToBackend from "i18next-resources-to-backend"
+import LanguageDetector from "i18next-browser-languagedetector"
+import { getOptions, languages, cookieName } from "./settings"
 
-const runsOnServerSide = typeof window === 'undefined'
+const runsOnServerSide = typeof window === "undefined"
 
-// 
+//
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
@@ -19,20 +19,22 @@ i18next
     ...getOptions(),
     lng: undefined, // let detect the language on client side
     detection: {
-      order: ['path', 'htmlTag', 'cookie', 'navigator'],
+      order: ["path", "htmlTag", "cookie", "navigator"],
     },
-    preload: runsOnServerSide ? languages : []
+    preload: runsOnServerSide ? languages : [],
   })
 
 export function useTranslation(lng, ns, options) {
   const [cookies, setCookie] = useCookies([cookieName])
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret
+
+  const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage) // Initialize state outside the conditional block
+
   if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
     i18n.changeLanguage(lng)
   } else {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (activeLng === i18n.resolvedLanguage) return
@@ -46,8 +48,9 @@ export function useTranslation(lng, ns, options) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (cookies.i18next === lng) return
-      setCookie(cookieName, lng, { path: '/' })
-    }, [lng, cookies.i18next])
+      setCookie(cookieName, lng, { path: "/" })
+    }, [lng, cookies.i18next, setCookie]) // Added setCookie to the dependency array
   }
   return ret
 }
+
