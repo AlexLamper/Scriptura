@@ -17,7 +17,7 @@ export default async function ProfilePage() {
             <div className="mx-auto">
                 <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="md:col-span-2">
+                    <Card className="md:col-span-2 dark:bg-[#2e2d32] dark:border-none">
                         <CardHeader>
                             <CardTitle>Personal Information</CardTitle>
                         </CardHeader>
@@ -26,7 +26,7 @@ export default async function ProfilePage() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <Label htmlFor="firstName">First Name</Label>
-                                        <Input id="firstName" defaultValue={session.user.name ?? ""} />
+                                        <Input id="firstName" defaultValue={session.user.name ?? ""} className="dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2" />
                                     </div>
                                     {/* <div>
                                         <Label htmlFor="lastName">Last Name</Label>
@@ -35,13 +35,13 @@ export default async function ProfilePage() {
                                 </div>
                                 <div>
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" defaultValue={session.user.email ?? ""} />
+                                    <Input id="email" type="email" defaultValue={session.user.email ?? ""} className="dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2" />
                                 </div>
                                 <div>
                                     <Label htmlFor="bio">Bio</Label>
                                     <textarea
                                         id="bio"
-                                        className="w-full min-h-[100px] p-2 border rounded-md"
+                                        className="w-full min-h-[100px] p-2 border rounded-md dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2"
                                         defaultValue="I'm passionate about studying the Bible and growing in my faith."
                                     ></textarea>
                                 </div>
@@ -49,7 +49,7 @@ export default async function ProfilePage() {
                             </form>
                         </CardContent>
                     </Card>
-                    <Card>
+                    <Card className="dark:bg-[#2e2d32] dark:border-none">
                         <CardHeader>
                             <CardTitle>Profile Picture</CardTitle>
                         </CardHeader>
