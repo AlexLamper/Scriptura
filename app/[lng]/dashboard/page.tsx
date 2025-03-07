@@ -12,7 +12,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto px-2 pb-8 pt-4">
+    <div className="container mx-auto lg:px-2 pb-8 pt-4">
         <h1 className="flex items-center text-3xl font-bold mb-8 text-gray-800 dark:text-white">
             {/* <BookOpen className="mr-2 text-red-500 dark:text-red-400" /> */}
             Dashboard

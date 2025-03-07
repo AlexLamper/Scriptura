@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 // import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
-import { LogOut, Globe, ChevronDown, User, Settings } from "lucide-react"
+import { LogOut, ChevronDown, User, Settings } from "lucide-react"
 import { Button } from "./ui/button"
 import { useTranslation } from "../app/i18n/client"
 import { motion, AnimatePresence } from "framer-motion"
@@ -42,25 +42,12 @@ export function Header({ params: { lng } }: HeaderProps) {
     return null
   }
 
-  const toggleLanguage = () => {
-    // Implement your language switch logic here
-  }
-
   return (
     <header className="flex items-center justify-between">
       <SidebarTrigger />
       <div className="flex items-center space-x-4">
         <LanguageSwitcher />
         <ModeToggle />
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleLanguage}
-          aria-label="Switch language"
-          className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        >
-          <Globe className="h-5 w-5" />
-        </Button>
         <div className="relative">
           <Button
             variant="ghost"

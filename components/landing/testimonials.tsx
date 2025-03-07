@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { Card, CardContent } from "../../components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
-import { useTranslation } from "../../app/i18n/client";
+import { Card, CardContent } from "../../components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
+import { useTranslation } from "../../app/i18n/client"
 
 interface TestimonialsProps {
   params: {
-    lng: string;
-  };
+    lng: string
+  }
 }
 
 export function Testimonials({ params: { lng } }: TestimonialsProps) {
-  const { t } = useTranslation(lng, "testimonials");
+  const { t } = useTranslation(lng, "testimonials")
 
   const testimonials = [
     {
@@ -32,39 +32,33 @@ export function Testimonials({ params: { lng } }: TestimonialsProps) {
       content: t("testimonial_3_content"),
       avatar: "/placeholder.svg",
     },
-  ];
+  ]
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-[#1a232f]">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">{t("heading")}</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">{t("heading")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index}>
+            <Card key={index} className="dark:bg-gray-700 dark:border-gray-600">
               <CardContent className="pt-6">
                 <div className="flex items-center mb-4">
                   <Avatar className="h-10 w-10 mr-4">
-                    <AvatarImage
-                      src={testimonial.avatar}
-                      alt={testimonial.name}
-                    />
-                    <AvatarFallback>
-                      {testimonial.name[0]}
-                    </AvatarFallback>
+                    <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
+                    <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-600">
-                      {testimonial.role}
-                    </p>
+                    <p className="font-semibold dark:text-white">{testimonial.name}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-700">{testimonial.content}</p>
+                <p className="text-gray-700 dark:text-gray-300">{testimonial.content}</p>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
+
