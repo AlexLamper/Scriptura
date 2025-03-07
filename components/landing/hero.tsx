@@ -23,7 +23,7 @@ export function Hero({ params: { lng } }: HeroProps) {
           <ModeToggle />
         </div>
       </div>
-      <div className="container mx-auto px-4 py-24 text-center">
+      <div className="container mx-auto px-4 py-32 text-center">
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl">
           {t("title_1")} <span className="text-red-500">{t("title_2")}</span>
         </h1>
