@@ -1,76 +1,83 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useCallback } from "react";
-import Link from "next/link";
+import { useEffect, useState, useCallback } from "react"
+import { useRouter } from "next/navigation"
 
 interface QuizType {
-  _id: string;
-  title: string;
-  description: string;
-  language: string;
-  category: string;
-  subCategory: string;
-  difficulty: string;
-  tags: string[];
+  _id: string
+  title: string
+  description: string
+  language: string
+  category: string
+  subCategory: string
+  difficulty: string
+  tags: string[]
 }
 
 export default function QuizzesPage() {
-  const [quizzes, setQuizzes] = useState<QuizType[]>([]);
-  const [filteredQuizzes, setFilteredQuizzes] = useState<QuizType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [difficulty, setDifficulty] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [subCategory, setSubCategory] = useState<string>('');
+  const router = useRouter()
+  const [quizzes, setQuizzes] = useState<QuizType[]>([])
+  const [filteredQuizzes, setFilteredQuizzes] = useState<QuizType[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [difficulty, setDifficulty] = useState<string>("")
+  const [category, setCategory] = useState<string>("")
+  const [subCategory, setSubCategory] = useState<string>("")
 
-  const fetchQuizzes = async () => {
-    setLoading(true);
+  const fetchQuizzes = useCallback(async () => {
+    setLoading(true)
     try {
-      const response = await fetch('/api/courses');
+      const response = await fetch("/api/courses")
       if (!response.ok) {
-        throw new Error('Failed to fetch quizzes');
+        throw new Error("Failed to fetch quizzes")
       }
 
-      const data = await response.json();
-      setQuizzes(data.quizzes); // Store all quizzes fetched
-      setFilteredQuizzes(data.quizzes); // Initially show all quizzes
+      const data = await response.json()
+      setQuizzes(data.quizzes) // Store all quizzes fetched
+      setFilteredQuizzes(data.quizzes) // Initially show all quizzes
     } catch (error) {
-      console.error('Error fetching quizzes:', error);
+      console.error("Error fetching quizzes:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }, [])
 
   // Use useCallback to memoize the filterQuizzes function
   const filterQuizzes = useCallback(() => {
-    let filtered = [...quizzes];
+    let filtered = [...quizzes]
 
     if (difficulty) {
-      filtered = filtered.filter((quiz) => quiz.difficulty === difficulty);
+      filtered = filtered.filter((quiz) => quiz.difficulty === difficulty)
     }
     if (category) {
-      filtered = filtered.filter((quiz) => quiz.category === category);
+      filtered = filtered.filter((quiz) => quiz.category === category)
     }
     if (subCategory) {
-      filtered = filtered.filter((quiz) => quiz.subCategory === subCategory);
+      filtered = filtered.filter((quiz) => quiz.subCategory === subCategory)
     }
 
-    setFilteredQuizzes(filtered);
-  }, [quizzes, difficulty, category, subCategory]); // Add all dependencies
+    setFilteredQuizzes(filtered)
+  }, [quizzes, difficulty, category, subCategory]) // Add all dependencies
+
+  // Handle navigation to quiz detail page
+  const handleQuizClick = useCallback(
+    (quizId: string) => {
+      router.push(`/quizzes/${quizId}`)
+    },
+    [router],
+  )
 
   useEffect(() => {
-    fetchQuizzes();
-  }, []);
+    fetchQuizzes()
+  }, [fetchQuizzes])
 
   useEffect(() => {
-    filterQuizzes(); // Re-run the filter whenever a filter changes
-  }, [filterQuizzes, fetchQuizzes]); // Now filterQuizzes is the only dependency
+    filterQuizzes() // Re-run the filter whenever a filter changes
+  }, [filterQuizzes]) // Now filterQuizzes is the only dependency
 
   return (
     <div className="min-h-screen pt-4">
       <div className="max-w-7xl">
-        <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">
-          Available Quizzes
-        </h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Available Quizzes</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <select
@@ -120,37 +127,38 @@ export default function QuizzesPage() {
             {filteredQuizzes.map((quiz) => (
               <li
                 key={quiz._id}
-                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                onClick={() => handleQuizClick(quiz._id)}
+                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleQuizClick(quiz._id)
+                  }
+                }}
               >
-                <Link href={`/quizzes/${quiz._id}`}>
-                  <div className="cursor-pointer">
-                    <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-                      {quiz.title}
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      {quiz.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 text-sm">
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-                        {quiz.difficulty}
-                      </span>
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-                        {quiz.category}
-                      </span>
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-                        {quiz.subCategory}
-                      </span>
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-                        {quiz.language}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
+                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{quiz.title}</h2>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{quiz.description}</p>
+                <div className="flex flex-wrap gap-2 text-sm">
+                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {quiz.difficulty}
+                  </span>
+                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {quiz.category}
+                  </span>
+                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {quiz.subCategory}
+                  </span>
+                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {quiz.language}
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
         )}
       </div>
     </div>
-  );
+  )
 }
+
