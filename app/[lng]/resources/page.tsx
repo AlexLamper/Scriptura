@@ -28,18 +28,18 @@ export default function ResourcesPage() {
       <div className="mx-auto">
         <h1 className="text-3xl font-bold mb-6">Resources</h1>
         <Tabs defaultValue="bibleVersions">
-          <TabsList className="mb-4">
+          <TabsList className="mb-4 dark:bg-[#2e2d32]">
             <TabsTrigger value="bibleVersions">Bible Versions</TabsTrigger>
             <TabsTrigger value="commentaries">Commentaries</TabsTrigger>
             <TabsTrigger value="studyTools">Study Tools</TabsTrigger>
           </TabsList>
           <TabsContent value="bibleVersions">
-            <Card>
+            <Card className="dark:bg-[#2e2d32] dark:border-none">
               <CardHeader>
                 <CardTitle>Bible Versions</CardTitle>
               </CardHeader>
               <CardContent>
-                <Input className="mb-4" placeholder="Search Bible versions..." />
+                <Input placeholder="Search Bible versions..." className="dark:bg-[#18181a] dark:border-[#ffffff6f] mb-4" />
                 <ul className="space-y-4">
                   {bibleVersions.map((version) => (
                     <li key={version.id} className="flex items-center justify-between">
@@ -47,7 +47,7 @@ export default function ResourcesPage() {
                         <h3 className="font-semibold">{version.name}</h3>
                         <p className="text-sm text-gray-500">{version.language}</p>
                       </div>
-                      <Button variant="outline">Read</Button>
+                      <Button variant="outline" className="dark:bg-[#18181a] dark:border-[#ffffff2b]">Read</Button>
                     </li>
                   ))}
                 </ul>
@@ -55,12 +55,12 @@ export default function ResourcesPage() {
             </Card>
           </TabsContent>
           <TabsContent value="commentaries">
-            <Card>
+            <Card className="dark:bg-[#2e2d32] dark:border-none">
               <CardHeader>
                 <CardTitle>Commentaries</CardTitle>
               </CardHeader>
               <CardContent>
-                <Input className="mb-4" placeholder="Search commentaries..." />
+                <Input placeholder="Search commentaries..." className="dark:bg-[#18181a] dark:border-[#ffffff6f] mb-4" />
                 <ul className="space-y-4">
                   {commentaries.map((commentary) => (
                     <li key={commentary.id} className="flex items-center justify-between">
@@ -68,7 +68,7 @@ export default function ResourcesPage() {
                         <h3 className="font-semibold">{commentary.title}</h3>
                         <p className="text-sm text-gray-500">by {commentary.author}</p>
                       </div>
-                      <Button variant="outline">Access</Button>
+                      <Button variant="outline" className="dark:bg-[#18181a] dark:border-[#ffffff2b]">Access</Button>
                     </li>
                   ))}
                 </ul>
@@ -76,12 +76,12 @@ export default function ResourcesPage() {
             </Card>
           </TabsContent>
           <TabsContent value="studyTools">
-            <Card>
+            <Card className="dark:bg-[#2e2d32] dark:border-none">
               <CardHeader>
                 <CardTitle>Study Tools</CardTitle>
               </CardHeader>
               <CardContent>
-                <Input className="mb-4" placeholder="Search study tools..." />
+                <Input placeholder="Search study tools..." className="dark:bg-[#18181a] dark:border-[#ffffff6f] mb-4" />
                 <ul className="space-y-4">
                   {studyTools.map((tool) => (
                     <li key={tool.id} className="flex items-center justify-between">
@@ -89,7 +89,7 @@ export default function ResourcesPage() {
                         <h3 className="font-semibold">{tool.name}</h3>
                         <p className="text-sm text-gray-500">{tool.description}</p>
                       </div>
-                      <Button variant="outline">Use Tool</Button>
+                      <Button variant="outline" className="dark:bg-[#18181a] dark:border-[#ffffff2b]">Use Tool</Button>
                     </li>
                   ))}
                 </ul>
