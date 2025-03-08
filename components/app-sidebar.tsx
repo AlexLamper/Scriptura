@@ -62,32 +62,32 @@ const additionalSections = [
     items: [
       {
         title: "Join Discord",
-        url: "/extras/discord",
+        url: "/discord",
         icon: HandshakeIcon,
       },
       {
         title: "FAQ",
-        url: "/support/faq",
+        url: "/faq",
         icon: FileQuestion,
       },
       {
         title: "Contact Us",
-        url: "/support/contact",
+        url: "/contact",
         icon: Mail,
       },
       {
         title: "Terms of Service",
-        url: "/support/terms",
+        url: "/terms-of-service",
         icon: Layers,
       },
       {
         title: "Privacy Policy",
-        url: "/support/privacy",
+        url: "/privacy-policy",
         icon: ListCheckIcon,
       },
       {
         title: "Getting Help",
-        url: "/support/help",
+        url: "/help",
         icon: ShieldQuestionIcon,
       }
     ],
