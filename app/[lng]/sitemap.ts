@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
-import connectMongoDB from "../libs/mongodb";
-import Course from "../models/Course";
-import Quiz from "../models/Quiz";
+import connectMongoDB from "../../libs/mongodb";
+import Course from "../../models/Course";
+import Quiz from "../../models/Quiz";
 
 // Marking the sitemap function as asynchronous so you can fetch dynamic data
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
