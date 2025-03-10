@@ -5,11 +5,15 @@ import type { CourseType } from "../../../lib/models"
 import { motion } from "framer-motion"
 import { Search, BookOpen, Clock, User, Tag, ArrowRight, LanguagesIcon } from "lucide-react"
 import Link from "next/link"
+import { use } from "react";
+import { useTranslation } from "../../../app/i18n/client";
 
-const CoursePage = () => {
+const CoursePage = ({ params }: { params: Promise<{ lng: string }> }) => {
   const [courses, setCourses] = useState<CourseType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>("")
+  const { lng } = use(params);
+  const { t } = useTranslation(lng, "courses");
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -37,7 +41,7 @@ const CoursePage = () => {
 
   return (
     <div className="min-h-screen pt-4">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Explore Our Courses</h1>
+      <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">{t("course_header")}</h1>
       <div className="mb-6">
         <div className="relative">
           <input
