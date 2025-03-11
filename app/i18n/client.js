@@ -10,19 +10,21 @@ import { getOptions, languages, cookieName } from "./settings"
 
 const runsOnServerSide = typeof window === "undefined"
 
-//
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .use(resourcesToBackend((language, namespace) => import(`./locales/${language}/${namespace}.json`)))
   .init({
     ...getOptions(),
-    lng: undefined, // let detect the language on client side
+    lng: undefined, // detect language on client side
     detection: {
       order: ["path", "htmlTag", "cookie", "navigator"],
+      lookupFromPathIndex: 0,
+      excludeCacheFor: ["csp", "images"], // Ensures static paths are untouched
     },
     preload: runsOnServerSide ? languages : [],
   })
+
 
 export function useTranslation(lng, ns, options) {
   const [cookies, setCookie] = useCookies([cookieName])
@@ -34,7 +36,6 @@ export function useTranslation(lng, ns, options) {
   if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
     i18n.changeLanguage(lng)
   } else {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (activeLng === i18n.resolvedLanguage) return
