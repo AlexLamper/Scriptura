@@ -39,7 +39,7 @@ export default function FeaturesSection({ params: { lng } }: FeaturesSectionProp
     <section className="py-16 md:py-24 dark:bg-gray-800">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-12 text-center">
-          <p className="text-sm font-semibold uppercase text-[#111828] dark:text-gray-300">{t("subtitle")}</p>
+          <p className="text-sm font-semibold uppercase text-[#111828] dark:text-red-500">{t("subtitle")}</p>
           <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">{t("heading")}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-400">{t("description")}</p>
         </div>
