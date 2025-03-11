@@ -1,12 +1,13 @@
 {
-    "heading": "Warum Scriptura wählen?",
-    "feature_1_title": "Tiefgehendes Bibelstudium",
-    "feature_1_description": "Zugang zu umfassenden Kursen und Ressourcen für alle Wissensstufen der Bibel.",
-    "feature_2_title": "Gemeinschaftsengagement",
-    "feature_2_description": "Verbinde dich mit anderen Gläubigen, tritt Studiengruppen bei und diskutiere.",
-    "feature_3_title": "Interaktives Lernen",
-    "feature_3_description": "Erlebe Multimedia-Inhalte, Quizze und praktische Anwendungen der Schrift.",
-    "feature_4_title": "Personalisierter Weg",
-    "feature_4_description": "Verfolge deinen Fortschritt und erhalte maßgeschneiderte Empfehlungen für dein spirituelles Wachstum."
-  }
-  
+  "subtitle": "Unsere Funktionen",
+  "heading": "Verbessere dein Bibelstudium",
+  "description": "Entdecke die leistungsstarken Funktionen von Scriptura, die dir helfen, tiefer in die Heilige Schrift einzutauchen.",
+  "feature_1_title": "Interaktive Lektionen",
+  "feature_1_description": "Nimm an interaktiven Bibellektionen teil, die die Schrift lebendig werden lassen.",
+  "feature_2_title": "Personalisierte Lernpläne",
+  "feature_2_description": "Erhalte Lernpläne, die auf deine individuelle Lernweise zugeschnitten sind.",
+  "feature_3_title": "Community-Foren",
+  "feature_3_description": "Tritt einer lebendigen Gemeinschaft von Gläubigen bei, um Einblicke und Inspiration zu teilen.",
+  "feature_4_title": "KI-gestützte Einblicke",
+  "feature_4_description": "Nutze KI, um ein tieferes Verständnis und mehr Kontext zur Bibel zu gewinnen."
+}

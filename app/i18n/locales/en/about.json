@@ -1,13 +1,7 @@
 {
-    "heading": "How Scriptura Works",
-    "step_1_title": "Sign Up",
-    "step_1_description": "Create your free account to get started on your Bible study journey.",
-    "step_2_title": "Choose Your Path",
-    "step_2_description": "Select from a variety of courses tailored to your interests and knowledge level.",
-    "step_3_title": "Learn and Engage",
-    "step_3_description": "Study at your own pace, participate in discussions, and track your progress.",
-    "step_4_title": "Grow Your Faith",
-    "step_4_description": "Apply what you've learned to deepen your understanding and strengthen your faith.",
-    "cta": "Start Your Journey"
-  }
-  
+  "heading": "About Scriptura",
+  "paragraph_1": "At Scriptura, we believe that everyone deserves access to the best Bible study tools and techniques to reach their full potential.",
+  "paragraph_2": "Our mission is to democratize Bible study by providing innovative, AI-powered tools that adapt to each believer's unique way of learning.",
+  "paragraph_3": "Since launching Scriptura in 2022, we have helped thousands of believers deepen their understanding of Scripture and grow in their faith.",
+  "button_text": "Try Scriptura for Free"
+}
