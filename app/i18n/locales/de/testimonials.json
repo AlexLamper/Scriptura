@@ -1,13 +1,12 @@
 {
-    "heading": "Was unsere Nutzer sagen",
-    "testimonial_1_name": "Sarah Johnson",
-    "testimonial_1_role": "Leiterin einer Bibelgruppe",
-    "testimonial_1_content": "Scriptura hat die Art und Weise, wie ich Bibelkreise leite, revolutioniert. Die Ressourcen und die Unterstützung der Gemeinschaft sind unschätzbar!",
-    "testimonial_2_name": "Michael Lee",
-    "testimonial_2_role": "Neuer Gläubiger",
-    "testimonial_2_content": "Als jemand, der neu im Glauben ist, war Scriptura ein unglaubliches Werkzeug zum Lernen und Wachsen. Ich fühle mich jeden Tag Gott näher.",
-    "testimonial_3_name": "Rachel Thompson",
-    "testimonial_3_role": "Theologiestudentin",
-    "testimonial_3_content": "Die inhaltliche Tiefe auf Scriptura ist beeindruckend. Es war eine großartige Ergänzung zu meinem formalen Theologiestudium."
-  }
-  
+  "heading": "Was Unsere Nutzer Sagen",
+  "testimonial_1_content": "Scriptura hat meine Bibelstudienroutine revolutioniert. Es macht das Erkunden der Schrift interaktiv und persönlich.",
+  "testimonial_1_name": "Emily R.",
+  "testimonial_1_role": "Pastorin",
+  "testimonial_2_content": "Dank Scriptura fühle ich mich der Heiligen Schrift näher als je zuvor. Die KI-Einblicke sind hervorragend!",
+  "testimonial_2_name": "Michael T.",
+  "testimonial_2_role": "Bibellehrer",
+  "testimonial_3_content": "Die Community und Werkzeuge von Scriptura haben meinen Glaubensweg bereichert. Ich kann es jedem empfehlen, der spirituelles Wachstum sucht.",
+  "testimonial_3_name": "Sarah K.",
+  "testimonial_3_role": "Gemeindemitglied"
+}

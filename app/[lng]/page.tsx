@@ -1,9 +1,9 @@
 import { Hero } from "../../components/landing/hero";
-import { Features } from "../../components/landing/features";
-import { HowItWorks } from "../../components/landing/how-it-works";
-import { Testimonials } from "../../components/landing/testimonials";
+import FeaturesSection from "../../components/landing/features";
+import About from "../../components/landing/about";
+import TestimonialsSection from "../../components/landing/testimonials";
 import { Pricing } from "../../components/landing/pricing";
-import { FAQ } from "../../components/landing/faq";
+import FaqSection from "../../components/landing/faq";
 import { CTA } from "../../components/landing/cta";
 import { Footer } from "../../components/landing/footer";
 
@@ -14,19 +14,19 @@ export default async function LandingPage() {
       <Hero params={{
         lng: ""
       }} />
-      <Features params={{
+      <FeaturesSection params={{
         lng: ""
       }} />
-      <HowItWorks params={{
+      <About params={{
         lng: ""
       }} />
-      <Testimonials params={{
+      <TestimonialsSection params={{
         lng: ""
       }} />
       <Pricing params={{
         lng: ""
       }} />
-      <FAQ params={{
+      <FaqSection params={{
         lng: ""
       }} />
       <CTA params={{

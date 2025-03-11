@@ -1,60 +1,78 @@
 "use client"
 
-import { Card, CardContent } from "../../components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
+import Image from "next/image"
+import { Star } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
 
-interface TestimonialsProps {
+interface TestimonialsSectionProps {
   params: {
     lng: string
   }
 }
 
-export function Testimonials({ params: { lng } }: TestimonialsProps) {
+export default function TestimonialsSection({ params: { lng } }: TestimonialsSectionProps) {
   const { t } = useTranslation(lng, "testimonials")
 
   const testimonials = [
     {
-      name: t("testimonial_1_name"),
-      role: t("testimonial_1_role"),
       content: t("testimonial_1_content"),
-      avatar: "/placeholder.svg",
+      author: t("testimonial_1_name"),
+      role: t("testimonial_1_role"),
+      avatar: "/placeholder.svg?height=48&width=48",
+      stars: 5,
     },
     {
-      name: t("testimonial_2_name"),
-      role: t("testimonial_2_role"),
       content: t("testimonial_2_content"),
-      avatar: "/placeholder.svg",
+      author: t("testimonial_2_name"),
+      role: t("testimonial_2_role"),
+      avatar: "/placeholder.svg?height=48&width=48",
+      stars: 5,
     },
     {
-      name: t("testimonial_3_name"),
-      role: t("testimonial_3_role"),
       content: t("testimonial_3_content"),
-      avatar: "/placeholder.svg",
+      author: t("testimonial_3_name"),
+      role: t("testimonial_3_role"),
+      avatar: "/placeholder.svg?height=48&width=48",
+      stars: 5,
     },
   ]
 
   return (
-    <section className="py-24 bg-white dark:bg-[#1a232f]">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">{t("heading")}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <section className="py-16 md:py-24 dark:bg-gray-800">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl dark:text-white">{t("heading")}</h2>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="dark:bg-gray-700 dark:border-gray-600">
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
-                  <Avatar className="h-10 w-10 mr-4">
-                    <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                    <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold dark:text-white">{testimonial.name}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
-                  </div>
+            <div
+              key={index}
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm dark:bg-gray-800"
+            >
+              <div className="mb-4 flex">
+                {Array(testimonial.stars)
+                  .fill(null)
+                  .map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+              </div>
+              <p className="mb-4 flex-1 text-gray-600 dark:text-gray-300">{testimonial.content}</p>
+              <div className="flex items-center">
+                <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                  <Image
+                    src={testimonial.avatar || "/placeholder.svg"}
+                    alt={testimonial.author}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <p className="text-gray-700 dark:text-gray-300">{testimonial.content}</p>
-              </CardContent>
-            </Card>
+                <div className="ml-3">
+                  <p className="text-sm font-medium dark:text-white">{testimonial.author}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{testimonial.role}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>

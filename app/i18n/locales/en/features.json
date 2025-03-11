@@ -1,12 +1,13 @@
 {
-    "heading": "Why Choose Scriptura?",
-    "feature_1_title": "In-depth Bible Study",
-    "feature_1_description": "Access comprehensive courses and resources for all levels of biblical knowledge.",
-    "feature_2_title": "Community Engagement",
-    "feature_2_description": "Connect with fellow believers, join study groups, and participate in discussions.",
-    "feature_3_title": "Interactive Learning",
-    "feature_3_description": "Engage with multimedia content, quizzes, and practical applications of Scripture.",
-    "feature_4_title": "Personalized Journey",
-    "feature_4_description": "Track your progress and receive tailored recommendations for your spiritual growth."
-  }
-  
+  "subtitle": "Our Features",
+  "heading": "Enhance Your Bible Study Experience",
+  "description": "Explore the powerful features of Scriptura designed to help you dive deeper into the Scriptures.",
+  "feature_1_title": "Interactive Lessons",
+  "feature_1_description": "Engage with interactive Bible lessons that bring Scripture to life.",
+  "feature_2_title": "Personalized Study Plans",
+  "feature_2_description": "Receive study plans tailored to your unique learning style.",
+  "feature_3_title": "Community Forums",
+  "feature_3_description": "Join a vibrant community of believers to share insights and inspiration.",
+  "feature_4_title": "AI-Powered Insights",
+  "feature_4_description": "Leverage AI to gain deeper understanding and context of the Bible."
+}
