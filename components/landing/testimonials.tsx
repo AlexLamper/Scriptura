@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Star } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
+import { motion } from "framer-motion"
 
 interface TestimonialsSectionProps {
   params: {
@@ -37,18 +38,55 @@ export default function TestimonialsSection({ params: { lng } }: TestimonialsSec
     },
   ]
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  }
+
   return (
     <section className="py-16 md:py-24 dark:bg-gray-800">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-12 text-center">
+        <motion.div
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+        >
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl dark:text-white">{t("heading")}</h2>
-        </div>
+        </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <motion.div
+          className="grid gap-8 md:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {testimonials.map((testimonial, index) => (
-            <div
+            <motion.div
               key={index}
               className="flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm dark:bg-gray-800"
+              variants={itemVariants}
             >
               <div className="mb-4 flex">
                 {Array(testimonial.stars)
@@ -72,9 +110,9 @@ export default function TestimonialsSection({ params: { lng } }: TestimonialsSec
                   <p className="text-xs text-gray-500 dark:text-gray-400">{testimonial.role}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

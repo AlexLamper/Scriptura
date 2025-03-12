@@ -3,21 +3,34 @@
 import { useEffect, useState, use } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "../../../../components/ui/button"
-import { ArrowLeft, ArrowRight, HelpCircle } from "lucide-react"
+import { ArrowLeft, ArrowRight, HelpCircle, BookOpen } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Progress } from "../../../../components/ui/progress"
+import { StudyMaterials } from "../../../../components/study-materials"
+
+interface BibleVerse {
+  reference: string
+  text: string
+  translation: string
+}
 
 interface QuestionType {
   questionText: string
   options: string[]
   correctAnswer: string
   explanation?: string
+  relatedVerses?: string[]
 }
 
 interface QuizData {
   _id: string
   title: string
   questions: QuestionType[]
+  studyMaterials?: {
+    bibleVerses: BibleVerse[]
+    summary?: string
+    learningObjectives?: string[]
+  }
 }
 
 interface QuizPageParams {
@@ -32,6 +45,9 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const [score, setScore] = useState(0)
   const [error, setError] = useState<string | null>(null)
   const [showExplanation, setShowExplanation] = useState(false)
+  const [showStudyMaterials, setShowStudyMaterials] = useState(true)
+  const [studyCompleted, setStudyCompleted] = useState(false)
+  const [showRelatedVerses, setShowRelatedVerses] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -42,6 +58,13 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
         if (data.quiz) {
           setQuiz(data.quiz)
           setSelectedOptions(new Array(data.quiz.questions.length).fill(null))
+
+          // Check if user has already completed the study for this quiz
+          const studyStatus = localStorage.getItem(`quiz_${quizId}_study_completed`)
+          if (studyStatus === "true") {
+            setStudyCompleted(true)
+            setShowStudyMaterials(false)
+          }
         } else {
           setError("Quiz not found")
         }
@@ -51,6 +74,13 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     }
     fetchQuiz()
   }, [quizId])
+
+  const handleStudyComplete = () => {
+    setStudyCompleted(true)
+    setShowStudyMaterials(false)
+    // Save study completion status
+    localStorage.setItem(`quiz_${quizId}_study_completed`, "true")
+  }
 
   if (error) {
     return (
@@ -78,7 +108,27 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     )
   }
 
+  // Show study materials if available and not completed
+  if (showStudyMaterials && quiz.studyMaterials?.bibleVerses?.length > 0) {
+    return (
+      <div className="min-h-screen max-w-4xl mx-auto py-8">
+        <Button variant="outline" onClick={() => router.push("/quizzes")} className="mb-6">
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
+        </Button>
+
+        <StudyMaterials
+          quizTitle={quiz.title}
+          bibleVerses={quiz.studyMaterials.bibleVerses}
+          summary={quiz.studyMaterials.summary}
+          learningObjectives={quiz.studyMaterials.learningObjectives}
+          onComplete={handleStudyComplete}
+        />
+      </div>
+    )
+  }
+
   const question = quiz.questions[currentQuestionIndex]
+  const hasRelatedVerses = question.relatedVerses && question.relatedVerses.length > 0
 
   const handleAnswer = (option: string) => {
     if (selectedOptions[currentQuestionIndex] === null) {
@@ -97,6 +147,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
       setShowExplanation(false)
+      setShowRelatedVerses(false)
     } else {
       router.push(`/quizzes/${quizId}/result?score=${score}&total=${quiz.questions.length}`)
     }
@@ -106,26 +157,39 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1)
       setShowExplanation(false)
+      setShowRelatedVerses(false)
     }
   }
 
-  const handleForward = () => {
-    if (currentQuestionIndex < quiz.questions.length - 1 && selectedOptions[currentQuestionIndex] !== null) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1)
-      setShowExplanation(false)
-    }
+  const toggleRelatedVerses = () => {
+    setShowRelatedVerses(!showRelatedVerses)
   }
+
+  // Find related Bible verses for the current question
+  const relatedVerses = question.relatedVerses
+    ?.map((reference) => {
+      return quiz.studyMaterials?.bibleVerses.find((verse) => verse.reference === reference)
+    })
+    .filter(Boolean) as BibleVerse[] | undefined
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="min-h-screen max-w-4xl"
+      className="min-h-screen max-w-4xl mx-auto py-8"
     >
-      <Button variant="outline" onClick={() => router.push("/quizzes")} className="mb-6">
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
-      </Button>
+      <div className="flex justify-between items-center mb-6">
+        <Button variant="outline" onClick={() => router.push("/quizzes")}>
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
+        </Button>
+
+        {studyCompleted && quiz.studyMaterials?.bibleVerses?.length > 0 && (
+          <Button variant="outline" onClick={() => setShowStudyMaterials(true)}>
+            <BookOpen className="mr-2 h-4 w-4" /> Review Study Materials
+          </Button>
+        )}
+      </div>
 
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
@@ -175,6 +239,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
               </motion.button>
             ))}
           </div>
+
           <AnimatePresence>
             {showExplanation && question.explanation && (
               <motion.div
@@ -188,6 +253,40 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
                   <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200">Explanation</h3>
                 </div>
                 <p className="text-blue-800 dark:text-blue-200">{question.explanation}</p>
+
+                {hasRelatedVerses && (
+                  <Button
+                    variant="link"
+                    onClick={toggleRelatedVerses}
+                    className="mt-2 text-blue-800 dark:text-blue-200"
+                  >
+                    {showRelatedVerses ? "Hide Related Verses" : "Show Related Verses"}
+                  </Button>
+                )}
+              </motion.div>
+            )}
+
+            {showRelatedVerses && relatedVerses && relatedVerses.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="mt-4 p-4 bg-green-100 dark:bg-green-900/30 rounded-md"
+              >
+                <div className="flex items-center mb-2">
+                  <BookOpen className="text-green-600 dark:text-green-400 mr-2" />
+                  <h3 className="text-lg font-semibold text-green-800 dark:text-green-200">Related Bible Verses</h3>
+                </div>
+                <div className="space-y-4">
+                  {relatedVerses.map((verse, index) => (
+                    <div key={index} className="border-l-4 border-green-500 pl-4">
+                      <p className="font-semibold text-green-800 dark:text-green-200">
+                        {verse.reference} ({verse.translation})
+                      </p>
+                      <p className="text-green-800 dark:text-green-200">{verse.text}</p>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -202,16 +301,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
         <Button onClick={handleNext} disabled={selectedOptions[currentQuestionIndex] === null} variant="default">
           {currentQuestionIndex < quiz.questions.length - 1 ? "Next" : "Finish"}
           {currentQuestionIndex < quiz.questions.length - 1 && <ArrowRight className="ml-2 h-4 w-4" />}
-        </Button>
-
-        <Button
-          onClick={handleForward}
-          disabled={
-            currentQuestionIndex === quiz.questions.length - 1 || selectedOptions[currentQuestionIndex] === null
-          }
-          variant="outline"
-        >
-          Forward <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
     </motion.div>

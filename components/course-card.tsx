@@ -23,7 +23,7 @@ export function CourseCard({ title, category, progress, students }: CourseCardPr
   const progressPercentage = (current / total) * 100
 
   return (
-    <div className="bg-white dark:bg-[#2e2d32] rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 h-full transition-all duration-300 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-600 cursor-pointer">
+    <div className="bg-white dark:bg-[#2e2d32] rounded-xl overflow-hidden border border-gray-100 dark:border-none h-full transition-all duration-300 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-600 cursor-pointer">
       <div className="flex flex-col h-full p-6">
         <div className="mb-2">
           <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#ef4444]/10 text-[#ef4444] dark:bg-[#ef4444]/20 dark:text-[#f24344]">

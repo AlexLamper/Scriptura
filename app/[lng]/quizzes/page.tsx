@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import { BookOpen } from "lucide-react"
 
 interface QuizType {
   _id: string
@@ -12,6 +13,9 @@ interface QuizType {
   subCategory: string
   difficulty: string
   tags: string[]
+  studyMaterials?: {
+    bibleVerses: { verse: string, text: string}[]
+  }
 }
 
 export default function QuizzesPage() {
@@ -22,6 +26,7 @@ export default function QuizzesPage() {
   const [difficulty, setDifficulty] = useState<string>("")
   const [category, setCategory] = useState<string>("")
   const [subCategory, setSubCategory] = useState<string>("")
+  const [hasStudyMaterials, setHasStudyMaterials] = useState<boolean>(false)
 
   const fetchQuizzes = useCallback(async () => {
     setLoading(true)
@@ -54,9 +59,14 @@ export default function QuizzesPage() {
     if (subCategory) {
       filtered = filtered.filter((quiz) => quiz.subCategory === subCategory)
     }
+    if (hasStudyMaterials) {
+      filtered = filtered.filter(
+        (quiz) => quiz.studyMaterials?.bibleVerses && quiz.studyMaterials.bibleVerses.length > 0,
+      )
+    }
 
     setFilteredQuizzes(filtered)
-  }, [quizzes, difficulty, category, subCategory]) // Add all dependencies
+  }, [quizzes, difficulty, category, subCategory, hasStudyMaterials]) // Add all dependencies
 
   // Handle navigation to quiz detail page
   const handleQuizClick = useCallback(
@@ -79,7 +89,7 @@ export default function QuizzesPage() {
       <div className="max-w-7xl">
         <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Available Quizzes</h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <select
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
@@ -88,7 +98,7 @@ export default function QuizzesPage() {
             <option value="">All Difficulties</option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
-            <option value="hard">Hard</option>
+            <option value="advanced">Advanced</option>
           </select>
 
           <select
@@ -114,6 +124,19 @@ export default function QuizzesPage() {
             <option value="Bible Book">Bible Book</option>
             <option value="Historical Event">Historical Event</option>
           </select>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="hasStudyMaterials"
+              checked={hasStudyMaterials}
+              onChange={(e) => setHasStudyMaterials(e.target.checked)}
+              className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+            />
+            <label htmlFor="hasStudyMaterials" className="ml-2 text-gray-700 dark:text-gray-300">
+              Has Study Materials
+            </label>
+          </div>
         </div>
 
         {loading ? (
@@ -128,7 +151,7 @@ export default function QuizzesPage() {
               <li
                 key={quiz._id}
                 onClick={() => handleQuizClick(quiz._id)}
-                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer relative"
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -137,6 +160,12 @@ export default function QuizzesPage() {
                   }
                 }}
               >
+                {quiz.studyMaterials?.bibleVerses?.length > 0 && (
+                  <div className="absolute top-3 right-3 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs flex items-center">
+                    <BookOpen className="h-3 w-3 mr-1" />
+                    Study Materials
+                  </div>
+                )}
                 <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{quiz.title}</h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{quiz.description}</p>
                 <div className="flex flex-wrap gap-2 text-sm">
