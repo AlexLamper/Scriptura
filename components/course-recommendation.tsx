@@ -69,16 +69,16 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
     <div className="bg-white dark:bg-[#2d2d33] text-gray-900 dark:text-white rounded-xl p-6 shadow-sm">
       {loading ? (
         <div className="space-y-4">
-          <Skeleton className="h-6 w-24 mb-4" />
-          <Skeleton className="h-7 w-full mb-4" />
-          <Skeleton className="h-4 w-3/4 mb-6" />
+          <Skeleton className="h-6 w-24 mb-4 bg-gray-100 dark:bg-[#3a393f]" />
+          <Skeleton className="h-7 w-full mb-4 bg-gray-100 dark:bg-[#3a393f]" />
+          <Skeleton className="h-4 w-3/4 mb-6 bg-gray-100 dark:bg-[#3a393f]" />
           <div className="flex -space-x-2 mb-6">
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
           </div>
-          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full bg-gray-100 dark:bg-[#3a393f]" />
         </div>
       ) : recommendedCourse ? (
         <>
