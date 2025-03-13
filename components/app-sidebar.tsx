@@ -14,7 +14,9 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, Layers, ListCheckIcon, FileQuestion, ShieldQuestionIcon, HandshakeIcon, Mail } from "lucide-react"
+import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, Layers, ListCheckIcon,
+  //  FileQuestion, ShieldQuestionIcon, HandshakeIcon, Mail 
+  } from "lucide-react"
 
 // Main navigation items
 const mainNavItems = [
@@ -60,21 +62,21 @@ const additionalSections = [
   {
     title: "Extras",
     items: [
-      {
-        title: "Join Discord",
-        url: "/discord",
-        icon: HandshakeIcon,
-      },
-      {
-        title: "FAQ",
-        url: "/faq",
-        icon: FileQuestion,
-      },
-      {
-        title: "Contact Us",
-        url: "/contact",
-        icon: Mail,
-      },
+      // {
+      //   title: "Join Discord",
+      //   url: "/discord",
+      //   icon: HandshakeIcon,
+      // },
+      // {
+      //   title: "FAQ",
+      //   url: "/faq",
+      //   icon: FileQuestion,
+      // },
+      // {
+      //   title: "Contact Us",
+      //   url: "/contact",
+      //   icon: Mail,
+      // },
       {
         title: "Terms of Service",
         url: "/terms-of-service",
@@ -85,11 +87,11 @@ const additionalSections = [
         url: "/privacy-policy",
         icon: ListCheckIcon,
       },
-      {
-        title: "Getting Help",
-        url: "/help",
-        icon: ShieldQuestionIcon,
-      }
+      // {
+      //   title: "Getting Help",
+      //   url: "/help",
+      //   icon: ShieldQuestionIcon,
+      // }
     ],
   },
 ]
