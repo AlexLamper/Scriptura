@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogClose,
 } from "../../../../components/ui/dialog"
 import {
   DropdownMenu,
@@ -20,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../../components/ui/dropdown-menu"
 import { motion } from "framer-motion"
+import "../../../[lng]/globals.css"
 import { ModeToggle } from "../../../../components/dark-mode-toggle"
 
 // Language translations
@@ -185,6 +187,9 @@ export default function SignInPage() {
                   </div>
                 </DialogDescription>
               </DialogHeader>
+              <DialogClose className="absolute top-3 right-3 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                ✖
+              </DialogClose>
             </DialogContent>
           </Dialog>
         </div>
