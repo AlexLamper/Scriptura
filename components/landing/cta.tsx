@@ -62,7 +62,7 @@ export function CTA({ params: { lng } }: CTAProps) {
             asChild
             variant="outline"
             size="lg"
-            className="text-lg font-semibold tracking-wide bg-gray-900 dark:border-[#ffffff94] text-white dark:bg-[#1118279d] dark:hover:text-white dark:hover:bg-[#ffffff34]"
+            className="text-lg font-semibold tracking-wide bg-[#ef4444] text-white hover:bg-[#dc2626] dark:bg-[#ef4444] dark:hover:text-white dark:hover:bg-[#dc2626]"
           >
             <Link href={`/api/auth/signin`}>{t("sign_up")}</Link>
           </Button>
