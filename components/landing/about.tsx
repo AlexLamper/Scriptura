@@ -96,7 +96,7 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
               <Button
                 asChild
                 size="lg"
-                className="text-lg border font-semibold tracking-wide bg-gray-900 hover:bg-white hover:text-[#111827] dark:border-[#ffffff94] text-white dark:text-white dark:bg-[#1118279d] dark:hover:bg-[#ffffff34]"
+                className="text-lg border font-semibold tracking-wide bg-[#10172a] hover:bg-[#10172ae0] text-white hover:text-white dark:bg-red-500 dark:hover:bg-red-600 dark:text-white"
               >
                 <Link href="#features">{t("button_text")}</Link>
               </Button>
