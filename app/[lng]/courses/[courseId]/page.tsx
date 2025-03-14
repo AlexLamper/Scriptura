@@ -87,7 +87,12 @@ export default function CoursePage({ params }: { params: Promise<{ lng: string; 
 
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container pr-4 py-8">
+        {/* Back Button */}
+        <Button onClick={() => window.history.back()} className="mb-4">
+          {t("back")}
+        </Button>
+
         <h1 className="text-3xl md:text-4xl font-bold mb-8">{course.title}</h1>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
@@ -157,4 +162,3 @@ export default function CoursePage({ params }: { params: Promise<{ lng: string; 
     </div>
   )
 }
-
