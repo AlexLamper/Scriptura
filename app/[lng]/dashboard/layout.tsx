@@ -6,7 +6,7 @@ import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | User Dashboard",
+  title: "Scriptura | Dashboard",
   description:
     "Access your personalized dashboard on Scriptura to manage courses, track progress, and engage with the community.",
   keywords: [

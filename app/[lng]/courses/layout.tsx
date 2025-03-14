@@ -6,7 +6,7 @@ import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Bible Courses",
+  title: "Scriptura | Courses",
   description:
     "Explore comprehensive Bible courses on Scriptura to deepen your understanding of the scriptures.",
   keywords: [
@@ -110,8 +110,10 @@ export const metadata: Metadata = {
 
 export default async function CoursesLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { lng: string };
 }) {
   const session = await getServerSession();
 
@@ -121,7 +123,7 @@ export default async function CoursesLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
-            <Header params={{ lng: "" }} />
+            <Header params={{ lng: params.lng }} />
             {children}
           </div>
         </SidebarProvider>
