@@ -6,7 +6,7 @@ import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Bible Quizzes",
+  title: "Scriptura | Quizzes",
   description:
     "Engage with interactive Bible quizzes on Scriptura to test and deepen your biblical knowledge.",
   keywords: [

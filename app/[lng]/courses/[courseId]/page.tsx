@@ -1,59 +1,64 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Button } from "../../../../components/ui/button"
-import { Progress } from "../../../../components/ui/progress"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card"
-import { useTranslation } from "../../../../app/i18n/client"
-import { Footer } from "../../../../components/Footer/client"
-import { use } from "react"
+import { use, useState, useEffect } from "react";
+import { Button } from "../../../../components/ui/button";
+import { Progress } from "../../../../components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card";
+import { useTranslation } from "../../../../app/i18n/client";
+import { Footer } from "../../../../components/Footer/client";
+import { ArrowLeft } from "lucide-react";
 
 type CourseType = {
-  _id: string
-  title: string
-  description: string
-  instructor: string | { _id: string; name: string; email?: string }
-  category: string
-  difficulty: string
-  totalDuration: number
-  tags: string[]
-  lessons?: { title: string; duration: number; content: string }[]
-}
+  _id: string;
+  title: string;
+  description: string;
+  instructor: string | { _id: string; name: string; email?: string };
+  category: string;
+  difficulty: string;
+  totalDuration: number;
+  tags: string[];
+  lessons?: { title: string; duration: number; content: string }[];
+};
 
-export default function CoursePage({ params }: { params: Promise<{ lng: string; courseId: string }> }) {
-  const { lng, courseId } = use(params)
-  const { t } = useTranslation(lng, "course")
+export default function CoursePage({
+  params,
+}: {
+  params: Promise<{ lng: string; courseId: string }>;
+}) {
+  // Unwrap the params promise using use()
+  const { lng, courseId } = use(params);
+  const { t } = useTranslation(lng, "course");
 
-  const [course, setCourse] = useState<CourseType | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [course, setCourse] = useState<CourseType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        console.log(`Fetching course with ID: ${courseId}`)
-        const response = await fetch(`/api/courses/${courseId}`)
+        console.log(`Fetching course with ID: ${courseId}`);
+        const response = await fetch(`/api/courses/${courseId}`);
 
         if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.message || "Failed to fetch course")
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch course");
         }
 
-        const data = await response.json()
-        console.log("Course data received:", data)
-        setCourse(data)
+        const data = await response.json();
+        console.log("Course data received:", data);
+        setCourse(data);
       } catch (error) {
-        console.error("Error fetching course:", error)
-        setError(error instanceof Error ? error.message : "An unknown error occurred")
+        console.error("Error fetching course:", error);
+        setError(error instanceof Error ? error.message : "An unknown error occurred");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
     if (courseId) {
-      fetchCourse()
+      fetchCourse();
     }
-  }, [courseId])
+  }, [courseId]);
 
   if (loading) {
     return (
@@ -61,33 +66,46 @@ export default function CoursePage({ params }: { params: Promise<{ lng: string; 
         <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         <span className="ml-3">{t("loading")}</span>
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-red-500 mb-4">Error: {error}</div>
-        <Button onClick={() => window.history.back()}>{t("go_back")}</Button>
+        <Button onClick={() => window.history.back()} className="flex items-center">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("go_back")}
+        </Button>
       </div>
-    )
+    );
   }
 
   if (!course) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-xl mb-4">{t("course_not_found")}</div>
-        <Button onClick={() => window.history.back()}>{t("go_back")}</Button>
+        <Button onClick={() => window.history.back()} className="flex items-center">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("go_back")}
+        </Button>
       </div>
-    )
+    );
   }
 
-  // Handle instructor which might be an object or string
-  const instructorName = typeof course.instructor === "object" ? course.instructor._id.toString() : course.instructor
+  // Handle instructor which might be an object or a string
+  const instructorName =
+    typeof course.instructor === "object" ? course.instructor._id.toString() : course.instructor;
 
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow container mx-auto px-4 py-8">
+        {/* Back Button with Icon */}
+        <Button onClick={() => window.history.back()} className="mb-4 flex items-center">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("back")}
+        </Button>
+
         <h1 className="text-3xl md:text-4xl font-bold mb-8">{course.title}</h1>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
@@ -155,6 +173,5 @@ export default function CoursePage({ params }: { params: Promise<{ lng: string; 
       </main>
       <Footer lng={lng} />
     </div>
-  )
+  );
 }
-

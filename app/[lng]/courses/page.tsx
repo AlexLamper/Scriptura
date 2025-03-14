@@ -1,47 +1,51 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import type { CourseType } from "../../../lib/models"
-import { motion } from "framer-motion"
-import { Search, BookOpen, Clock, User, Tag, ArrowRight, LanguagesIcon } from "lucide-react"
-import Link from "next/link"
-import { use } from "react";
+import { use, useEffect, useState } from "react";
+import type { CourseType } from "../../../lib/models";
+import { motion } from "framer-motion";
+import { Search, BookOpen, Clock, User, Tag, ArrowRight, LanguagesIcon } from "lucide-react";
+import Link from "next/link";
 import { useTranslation } from "../../../app/i18n/client";
 
 const CoursePage = ({ params }: { params: Promise<{ lng: string }> }) => {
-  const [courses, setCourses] = useState<CourseType[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [searchTerm, setSearchTerm] = useState<string>("")
+  // Unwrap the params promise using the experimental use() hook
   const { lng } = use(params);
+  const [courses, setCourses] = useState<CourseType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const { t } = useTranslation(lng, "courses");
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("/api/courses")
+        const response = await fetch("/api/courses");
         if (!response.ok) {
-          throw new Error("Failed to fetch courses")
+          throw new Error("Failed to fetch courses");
         }
-        const data = await response.json()
+        const data = await response.json();
         if (Array.isArray(data.courses)) {
-          setCourses(data.courses)
+          setCourses(data.courses);
         } else {
-          console.error("Fetched data is not an array:", data)
+          console.error("Fetched data is not an array:", data);
         }
       } catch (error) {
-        console.error("Error fetching courses:", error)
+        console.error("Error fetching courses:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchCourses()
-  }, [])
+    };
+    fetchCourses();
+  }, []);
 
-  const filteredCourses = courses.filter((course) => course.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen pt-4">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">{t("course_header")}</h1>
+      <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">
+        {t("course_header")}
+      </h1>
       <div className="mb-6">
         <div className="relative">
           <input
@@ -70,27 +74,39 @@ const CoursePage = ({ params }: { params: Promise<{ lng: string }> }) => {
             >
               <Link href={`/courses/${course._id}`} className="block h-full">
                 <div className="p-6 flex flex-col h-full">
-                  <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">{course.title}</h2>
+                  <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">
+                    {course.title}
+                  </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{course.description}</p>
                   <div className="flex items-center mb-2">
                     <User className="text-blue-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Instructor: {course.instructor}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Instructor: {course.instructor}
+                    </p>
                   </div>
                   <div className="flex items-center mb-2">
                     <BookOpen className="text-green-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Category: {course.category}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Category: {course.category}
+                    </p>
                   </div>
                   <div className="flex items-center mb-2">
                     <Tag className="text-yellow-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Difficulty: {course.difficulty}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Difficulty: {course.difficulty}
+                    </p>
                   </div>
                   <div className="flex items-center mb-2">
                     <LanguagesIcon className="text-red-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Language: {course.language}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Language: {course.language}
+                    </p>
                   </div>
                   <div className="flex items-center mb-4">
                     <Clock className="text-purple-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Duration: {course.totalDuration} minutes</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Duration: {course.totalDuration} minutes
+                    </p>
                   </div>
                   <div className="flex flex-wrap mb-4">
                     {course.tags.map((tag) => (
@@ -119,8 +135,7 @@ const CoursePage = ({ params }: { params: Promise<{ lng: string }> }) => {
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CoursePage
-
+export default CoursePage;
