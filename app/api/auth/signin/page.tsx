@@ -24,7 +24,6 @@ import { motion } from "framer-motion"
 import "../../../[lng]/globals.css"
 import { ModeToggle } from "../../../../components/dark-mode-toggle"
 
-// Language translations
 const translations = {
   en: {
     title: "Sign In",
