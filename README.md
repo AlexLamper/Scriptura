@@ -2,7 +2,9 @@
 
 **Your Interactive Bible Learning Platform**
 
-![Scriptura Screenshot](public/screenshot.png)
+![Scriptura Banner Screenshot](public/screenshot1.png)
+![Scriptura Quiz Banner Screenshot](public/screenshot2.png)
+![Scriptura Course Banner Screenshot](public/screenshot3.png)
 
 ## About Scriptura
 
