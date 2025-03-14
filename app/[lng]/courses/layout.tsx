@@ -113,8 +113,9 @@ export default async function CoursesLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }) {
+  const { lng } = await params;
   const session = await getServerSession();
 
   return (
@@ -123,7 +124,7 @@ export default async function CoursesLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
-            <Header params={{ lng: params.lng }} />
+            <Header params={{ lng }} />
             {children}
           </div>
         </SidebarProvider>
