@@ -7,7 +7,7 @@ import { Badge } from "./ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { useTranslation } from "../app/i18n/client"
 import { Skeleton } from "./ui/skeleton"
-import { BookOpen, Star } from "lucide-react"
+import { BookOpen, Star, Clock, Calendar } from "lucide-react"
 
 interface CourseRecommendationProps {
   params: {
@@ -55,73 +55,74 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
     fetchRecommendedCourse()
   }, [])
 
-  // Get badge color based on category
-  const getCategoryColor = (category?: string) => {
-    const colors: Record<string, string> = {
-      Bible: "bg-amber-100 text-amber-800 dark:bg-amber-700 dark:text-amber-100",
-      Bijbel: "bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100",
-      "Entire Bible": "bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100",
-    }
-    return colors[category || ""] || "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100"
-  }
-
   return (
-    <div className="bg-white dark:bg-[#2d2d33] text-gray-900 dark:text-white rounded-xl p-6 shadow-sm">
+    <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg p-6 shadow-sm border border-indigo-200 dark:border-indigo-900/30 h-full">
       {loading ? (
         <div className="space-y-4">
-          <Skeleton className="h-6 w-24 mb-4 bg-gray-100 dark:bg-[#3a393f]" />
-          <Skeleton className="h-7 w-full mb-4 bg-gray-100 dark:bg-[#3a393f]" />
-          <Skeleton className="h-4 w-3/4 mb-6 bg-gray-100 dark:bg-[#3a393f]" />
+          <Skeleton className="h-6 w-24 mb-4 bg-indigo-100 dark:bg-indigo-900/30" />
+          <Skeleton className="h-7 w-full mb-4 bg-indigo-100 dark:bg-indigo-900/30" />
+          <Skeleton className="h-4 w-3/4 mb-6 bg-indigo-100 dark:bg-indigo-900/30" />
           <div className="flex -space-x-2 mb-6">
-            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
-            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
-            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
-            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
+            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
+            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
+            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
           </div>
-          <Skeleton className="h-10 w-full bg-gray-100 dark:bg-[#3a393f]" />
+          <Skeleton className="h-10 w-full bg-indigo-100 dark:bg-indigo-900/30" />
         </div>
       ) : recommendedCourse ? (
         <>
-          <Badge className={getCategoryColor(recommendedCourse.category)}>{recommendedCourse.category}</Badge>
+          <Badge className="px-2 py-1 rounded-md bg-indigo-100 dark:bg-indigo-900/30 border-none text-indigo-600 dark:text-indigo-400">
+            Featured Course
+          </Badge>
           <h3 className="text-xl font-bold my-4 text-gray-900 dark:text-white">{recommendedCourse.title}</h3>
           <div className="flex items-center gap-1 mb-2 text-amber-500">
-            <Star className="fill-current" size={16} />
-            <Star className="fill-current" size={16} />
-            <Star className="fill-current" size={16} />
-            <Star className="fill-current" size={16} />
-            <Star className="fill-current" size={16} />
-            <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">{t("popularity")}</span>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Star key={i} className="fill-current" size={16} />
+            ))}
+            <span className="text-sm text-gray-600 dark:text-gray-300 ml-2">{t("popularity")}</span>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{recommendedCourse.description}</p>
-          <div className="flex items-center gap-2 mb-2">
-            <BookOpen className="text-gray-500 dark:text-gray-400" size={16} />
-            <span className="text-sm text-gray-600 dark:text-gray-400">{recommendedCourse.instructor}</span>
+          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{recommendedCourse.description}</p>
+          <div className="space-y-2 mb-6">
+            <div className="flex items-center gap-2">
+              <BookOpen className="text-gray-500 dark:text-gray-400" size={16} />
+              <span className="text-sm text-gray-600 dark:text-gray-300">{recommendedCourse.instructor}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="text-gray-500 dark:text-gray-400" size={16} />
+              <span className="text-sm text-gray-600 dark:text-gray-300">15 hours of content</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="text-gray-500 dark:text-gray-400" size={16} />
+              <span className="text-sm text-gray-600 dark:text-gray-300">Updated 2 weeks ago</span>
+            </div>
           </div>
           <div className="flex items-center gap-2 mb-6">
             <div className="flex -space-x-2">
               {[1, 2, 3].map((i) => (
                 <Avatar key={i} className="w-8 h-8 border-2 border-white dark:border-gray-800">
                   <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
-                  <AvatarFallback>U{i}</AvatarFallback>
+                  <AvatarFallback className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                    U{i}
+                  </AvatarFallback>
                 </Avatar>
               ))}
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 text-xs border-2 border-white dark:border-gray-800">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-xs border-2 border-white dark:border-gray-800 text-indigo-600 dark:text-indigo-400 font-medium">
                 +{Math.floor(Math.random() * 100) + 50}
               </div>
             </div>
           </div>
           <Link href={`/courses/${recommendedCourse._id}`}>
-            <Button className="w-full bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white">
+            <Button className="w-full bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white">
               {t("enroll_now")}
             </Button>
           </Link>
         </>
       ) : (
         <div className="text-center py-10">
-          <p className="text-gray-500 dark:text-gray-400">No recommendation available</p>
+          <p className="text-gray-500 dark:text-gray-300">No recommendation available</p>
         </div>
       )}
     </div>
   )
 }
-

@@ -62,9 +62,9 @@ export default function CoursePage({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        <span className="ml-3">{t("loading")}</span>
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <span className="text-lg font-medium text-gray-700 dark:text-gray-300">{t("loading")}</span>
+        <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mt-8"></div>
       </div>
     );
   }
