@@ -14,7 +14,9 @@ export default async function DashboardPage() {
 
   return (
     <div className="container lg:px-2 pb-8 pt-4">
-      <WelcomeDashboard />
+      <WelcomeDashboard params={{
+        lng: ""
+      }} />
 
       <CourseGrid
         params={{
