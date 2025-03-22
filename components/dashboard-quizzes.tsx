@@ -61,7 +61,7 @@ export function DashboardQuizzes({ params: { lng } }: DashboardQuizzesProps) {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t("my_next_bible_lessons")}</h2>
         <Link href="/quizzes">
-          <Button variant="link" style={{ color: "#dc2626" }}>
+          <Button variant="link" className="text-sm text-[#111a2c] dark:text-gray-300">
             {t("view_all_lessons")}
           </Button>
         </Link>
@@ -86,12 +86,12 @@ export function DashboardQuizzes({ params: { lng } }: DashboardQuizzesProps) {
         <div className="space-y-6">
           {quizzes.map((quiz, index) => (
             <Link href={`/quizzes/${quiz._id}`} key={quiz._id.toString()}>
-              <div className="flex items-center justify-between hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-lg transition-colors">
+              <div className="flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-900/20 p-2 rounded-lg transition-colors">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
                     <h3 className="font-medium text-gray-900 dark:text-white">{quiz.title}</h3>
                     <div className="flex items-center text-sm text-gray-500 dark:text-gray-300">
-                      <BookOpen className="w-3 h-3 mr-1" style={{ color: "#dc2626" }} />
+                      <BookOpen className="w-3 h-3 mr-1 text-[#111a2c]"/>
                       <span>
                         {quiz.category} - {quiz.subCategory}
                       </span>
@@ -101,7 +101,7 @@ export function DashboardQuizzes({ params: { lng } }: DashboardQuizzesProps) {
                 <div className="flex items-center gap-4">
                   <Avatar>
                     <AvatarImage src={`/placeholder.svg`} alt={teachers[index % teachers.length]} />
-                    <AvatarFallback className="bg-[rgba(220,38,38,0.1)] dark:bg-[rgba(220,38,38,0.15)] text-red-500 dark:text-red-400">
+                    <AvatarFallback className="bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
                       {teachers[index % teachers.length][0]}
                     </AvatarFallback>
                   </Avatar>

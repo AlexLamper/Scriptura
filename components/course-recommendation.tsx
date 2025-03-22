@@ -56,7 +56,7 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
   }, [])
 
   return (
-    <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg p-6 shadow-sm border border-indigo-200 dark:border-indigo-900/30 h-full">
+    <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg p-6 shadow-sm border dark:border-indigo-900/30 h-full">
       {loading ? (
         <div className="space-y-4">
           <Skeleton className="h-6 w-24 mb-4 bg-indigo-100 dark:bg-indigo-900/30" />
@@ -72,7 +72,7 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
         </div>
       ) : recommendedCourse ? (
         <>
-          <Badge className="px-2 py-1 rounded-md bg-indigo-100 dark:bg-indigo-900/30 border-none text-indigo-600 dark:text-indigo-400">
+          <Badge className="px-2 py-1 rounded-md bg-white dark:bg-indigo-900/30 border-none text-gray-600 dark:text-indigo-400 hover:bg-white hover:text-gray-600">
             Featured Course
           </Badge>
           <h3 className="text-xl font-bold my-4 text-gray-900 dark:text-white">{recommendedCourse.title}</h3>
@@ -113,7 +113,7 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
             </div>
           </div>
           <Link href={`/courses/${recommendedCourse._id}`}>
-            <Button className="w-full bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white">
+            <Button className="w-full">
               {t("enroll_now")}
             </Button>
           </Link>
