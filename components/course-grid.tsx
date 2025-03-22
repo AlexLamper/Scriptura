@@ -66,13 +66,12 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t("my_bible_courses")}</h2>
-        <Badge
-          variant="outline"
-          className="bg-red-50 text-[#ef4444] border-[#ef4444] dark:bg-red-900/30 dark:text-red-300 dark:border-red-800"
-        >
-          <Filter className="w-3.5 h-3.5 mr-1" />
-          {filteredCourses.length} {filteredCourses.length === 1 ? "Course" : "Courses"}
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t("my_bible_courses")}</h2>
+        <Badge variant="outline" className="gap-1 border-[#0f172a] dark:border-[#0f172a] text-[#0f172a] dark:text-[#0f172a]">
+          <Filter className="h-3.5 w-3.5" />
+          <span>
+            {filteredCourses.length} {filteredCourses.length === 1 ? "Course" : "Courses"}
+          </span>
         </Badge>
       </div>
 
@@ -81,8 +80,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           variant={activeCategory === "all" ? "secondary" : "outline"}
           className={
             activeCategory === "all"
-              ? "bg-[#ef4444] text-white hover:bg-[#f24344] dark:bg-[#f24344] dark:hover:bg-[#ef4444] dark:text-white cursor-pointer transition-colors"
-              : "border-[#ef4444] text-[#ef4444] dark:border-[#f24344] dark:text-[#f24344] cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+              ? "bg-[#0f172a] text-white hover:bg-[#0f172a] dark:bg-[#0f172a] dark:hover:bg-[#0f172a] dark:text-white cursor-pointer transition-colors"
+              : "border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] cursor-pointer hover:bg[#0f172a] dark:hover:bg-[#0f172a]/30 transition-colors"
           }
           onClick={() => setActiveCategory("all")}
         >
@@ -95,8 +94,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
             variant={activeCategory === category ? "secondary" : "outline"}
             className={
               activeCategory === category
-                ? "bg-[#ef4444] text-white hover:bg-[#f24344] dark:bg-[#f24344] dark:hover:bg-[#ef4444] dark:text-white cursor-pointer transition-colors"
-                : "border-[#ef4444] text-[#ef4444] dark:border-[#f24344] dark:text-[#f24344] cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                ? "bg-[#0f172a] text-white hover:bg-[#0f172a] dark:bg-[#0f172a] dark:hover:bg-[#0f172a] dark:text-white cursor-pointer transition-colors"
+                : "border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] cursor-pointer hover:bg[#0f172a] dark:hover:bg-[#0f172a]/30 transition-colors"
             }
             onClick={() => setActiveCategory(category)}
           >
@@ -110,28 +109,35 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="rounded-xl overflow-hidden bg-white dark:bg-[#2e2d32] border border-gray-100 dark:border-gray-700"
+              className="rounded-lg overflow-hidden bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 border border-gray-100 dark:border-gray-700"
             >
-              <div className="h-32 bg-gray-50 dark:bg-[#353438]">
-                <div className="p-4">
-                  <Skeleton className="h-6 w-24 bg-gray-100 dark:bg-[#3a393f]" />
+              <div className="relative">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-700"></div>
+                <div className="flex items-center p-5">
+                  <div className="flex-shrink-0 mr-4 w-12 h-12 rounded-full flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30">
+                    <Skeleton className="h-6 w-6 rounded-full" />
+                  </div>
+                  <div>
+                    <Skeleton className="h-5 w-40 mb-2" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
                 </div>
               </div>
-              <div className="p-5 space-y-4">
-                <Skeleton className="h-7 w-3/4 bg-gray-100 dark:bg-[#3a393f]" />
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <Skeleton className="h-4 w-20 bg-gray-100 dark:bg-[#3a393f]" />
-                    <Skeleton className="h-4 w-12 bg-gray-100 dark:bg-[#3a393f]" />
-                  </div>
-                  <Skeleton className="h-2 w-full bg-gray-100 dark:bg-[#3a393f] rounded-full" />
+              <div className="p-5 pt-3">
+                <Skeleton className="h-4 w-full mb-5" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <div className="mb-2 flex justify-between">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="h-3 w-10" />
                 </div>
-                <div className="flex items-center mt-4">
+                <Skeleton className="h-1.5 w-full rounded-full mb-5" />
+                <div className="flex items-center justify-between">
                   <div className="flex -space-x-2">
-                    <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
-                    <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
-                    <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#3a393f]" />
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-8 w-8 rounded-full" />
                   </div>
+                  <Skeleton className="h-8 w-20 rounded-md" />
                 </div>
               </div>
             </div>
@@ -152,25 +158,19 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
                   title={course.title}
                   category={course.category}
                   progress={`${Math.floor(Math.random() * 20)}/${Math.floor(Math.random() * 30) + 20}`}
-                  students={[
-                    { name: "Student 1", image: "/placeholder.svg" },
-                    { name: "Student 2", image: "/placeholder.svg" },
-                    { name: "Student 3", image: "/placeholder.svg" },
-                    { more: Math.floor(Math.random() * 100) + 20 },
-                  ]}
+                  language={course.language}
                 />
               </Link>
             </motion.div>
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white dark:bg-[#2e2d32] rounded-xl border border-gray-100 dark:border-gray-700">
+        <div className="text-center py-16 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg border border-gray-100 dark:border-gray-700">
           <Search className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
-          <p className="text-gray-500 dark:text-gray-400 text-lg">No courses found</p>
-          <p className="text-gray-400 dark:text-gray-500 mt-2">Try selecting a different category</p>
+          <p className="text-gray-500 dark:text-gray-300 text-lg">No courses found</p>
+          <p className="text-gray-400 dark:text-gray-400 mt-2">Try selecting a different category</p>
         </div>
       )}
     </div>
   )
 }
-

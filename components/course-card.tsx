@@ -1,76 +1,67 @@
 "use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { motion } from "framer-motion"
-
-interface Student {
-  name?: string
-  image?: string
-  more?: number
-}
+import { Button } from "./ui/button"
 
 interface CourseCardProps {
   id: string | number
   title: string
   category: string
   progress: string
-  students: Student[]
+  language: string
 }
 
-export function CourseCard({ title, category, progress, students }: CourseCardProps) {
+export function CourseCard({ title, category, progress }: CourseCardProps) {
   // Extract progress numbers
   const [current, total] = progress.split("/").map(Number)
   const progressPercentage = (current / total) * 100
 
   return (
-    <div className="bg-white dark:bg-[#2e2d32] rounded-xl overflow-hidden border border-gray-100 dark:border-none h-full transition-all duration-300 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-600 cursor-pointer">
-      <div className="flex flex-col h-full p-6">
-        <div className="mb-2">
-          <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#ef4444]/10 text-[#ef4444] dark:bg-[#ef4444]/20 dark:text-[#f24344]">
+    <div className="group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-border bg-white dark:bg-gray-800/60 h-full">
+      <div className="flex items-center p-5">
+        {/* <div className="flex-shrink-0 mr-4 w-12 h-12 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-book-open"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+        </div> */}
+        <div>
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+            {title}
+          </h3>
+          <span className="text-xs px-2 py-0.5 rounded-full bg-[#bbc3ffd0] dark:bg-blue-900/30 text-[#ffffff] dark:text-blue-400 border border-black/10 dark:border-gray-700">
             {category}
           </span>
         </div>
-        <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">{title}</h3>
-
-        <div className="mt-auto">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Progress</span>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">{progress}</span>
-          </div>
-          <div className="w-full bg-gray-100 dark:bg-[#353438] rounded-full h-2 mb-4 overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progressPercentage}%` }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="bg-[#ef4444] h-2 rounded-full"
-            />
-          </div>
-
-          <div className="flex items-center">
-            <div className="flex -space-x-2 mr-3">
-              {students
-                .filter((student) => student.name && student.image)
-                .map((student, index) => (
-                  <Avatar
-                    key={index}
-                    className="border-2 border-white dark:border-[#2e2d32] w-8 h-8 transition-transform hover:scale-110 hover:z-10"
-                  >
-                    <AvatarImage src={student.image} alt={student.name} />
-                    <AvatarFallback className="bg-gray-100 dark:bg-[#353438] text-gray-600 dark:text-gray-300">
-                      {student.name?.[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                ))}
-              {students.find((student) => student.more) && (
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-[#353438] text-xs border-2 border-white dark:border-[#2e2d32] text-gray-600 dark:text-gray-300 font-medium">
-                  +{students.find((student) => student.more)?.more}
-                </div>
-              )}
-            </div>
-          </div>
+      </div>
+      <div className="p-5 pt-3">
+        <div className="mb-2 flex justify-between text-xs">
+          <span className="text-gray-500 dark:text-gray-400 font-medium">Progress</span>
+          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">{progress}</span>
         </div>
+        <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-5">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercentage}%` }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="h-full rounded-full transition-all duration-300 group-hover:brightness-110 bg-[#0f172b] dark:bg-blue-600"
+          />
+        </div>
+        <Button className="text-sm font-medium transition-all duration-300 group-hover:translate-y-[-2px] px-4 py-1.5 rounded-md">
+          Continue
+        </Button>
       </div>
     </div>
   )
 }
-

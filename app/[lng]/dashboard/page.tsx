@@ -4,6 +4,7 @@ import { CourseRecommendation } from "../../../components/course-recommendation"
 import { DashboardQuizzes } from "../../../components/dashboard-quizzes"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
+import WelcomeDashboard from "../../../components/dashboard/welcome-dashboard"
 
 export default async function DashboardPage() {
   const session = await getServerSession()
@@ -13,10 +14,10 @@ export default async function DashboardPage() {
 
   return (
     <div className="container lg:px-2 pb-8 pt-4">
-        <h1 className="flex items-center text-3xl font-bold mb-8 text-gray-800 dark:text-white">
-            {/* <BookOpen className="mr-2 text-red-500 dark:text-red-400" /> */}
-            Dashboard
-        </h1>
+      <WelcomeDashboard params={{
+        lng: ""
+      }} />
+
       <CourseGrid
         params={{
           lng: "",
