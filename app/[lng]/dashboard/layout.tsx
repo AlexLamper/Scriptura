@@ -115,7 +115,7 @@ export default async function DashboardLayout({
   const session = await getServerSession();
 
   return (
-    <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
+    <div className="antialiased bg-gray-50 dark:bg-[#18181bf2]">
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />

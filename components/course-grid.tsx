@@ -67,7 +67,7 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
     <div className="mb-8">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t("my_bible_courses")}</h2>
-        <Badge variant="outline" className="gap-1 border-indigo-300 dark:border-indigo-700 text-indigo-500 dark:text-indigo-400">
+        <Badge variant="outline" className="gap-1 border-[#0f172a] dark:border-[#0f172a] text-[#0f172a] dark:text-[#0f172a]">
           <Filter className="h-3.5 w-3.5" />
           <span>
             {filteredCourses.length} {filteredCourses.length === 1 ? "Course" : "Courses"}
@@ -80,8 +80,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           variant={activeCategory === "all" ? "secondary" : "outline"}
           className={
             activeCategory === "all"
-              ? "bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:text-white cursor-pointer transition-colors"
-              : "border-indigo-500 text-indigo-500 dark:border-indigo-400 dark:text-indigo-400 cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors"
+              ? "bg-[#0f172a] text-white hover:bg-[#0f172a] dark:bg-[#0f172a] dark:hover:bg-[#0f172a] dark:text-white cursor-pointer transition-colors"
+              : "border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] cursor-pointer hover:bg[#0f172a] dark:hover:bg-[#0f172a]/30 transition-colors"
           }
           onClick={() => setActiveCategory("all")}
         >
@@ -94,8 +94,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
             variant={activeCategory === category ? "secondary" : "outline"}
             className={
               activeCategory === category
-                ? "bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:text-white cursor-pointer transition-colors"
-                : "border-indigo-500 text-indigo-500 dark:border-indigo-400 dark:text-indigo-400 cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors"
+                ? "bg-[#0f172a] text-white hover:bg-[#0f172a] dark:bg-[#0f172a] dark:hover:bg-[#0f172a] dark:text-white cursor-pointer transition-colors"
+                : "border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] cursor-pointer hover:bg[#0f172a] dark:hover:bg-[#0f172a]/30 transition-colors"
             }
             onClick={() => setActiveCategory(category)}
           >
