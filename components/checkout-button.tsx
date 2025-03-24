@@ -7,11 +7,13 @@ import getStripe from "../utils/stripe"
 interface CheckoutButtonProps {
   priceId?: string
   customerId?: string
+  className?: string
 }
 
 export default function CheckoutButton({
   priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
   customerId,
+  className,
 }: CheckoutButtonProps) {
   const [loading, setLoading] = useState(false)
 
@@ -47,8 +49,8 @@ export default function CheckoutButton({
   }
 
   return (
-    <Button onClick={handleCheckout} disabled={loading} className="w-full">
-      {loading ? "Loading..." : "Subscribe Now - €9.99/month"}
+    <Button onClick={handleCheckout} disabled={loading} className={className}>
+      {loading ? "Processing..." : "Subscribe Now - €9.99/month"}
     </Button>
   )
 }

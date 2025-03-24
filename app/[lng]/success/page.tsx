@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card"
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card"
 import { Button } from "../../../components/ui/button"
+import { CheckCircle, Calendar, BookOpen, Sparkles } from "lucide-react"
 
 export default function SuccessPage() {
   const searchParams = useSearchParams()
@@ -24,46 +25,91 @@ export default function SuccessPage() {
   }, [sessionId])
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Subscription Successful!</CardTitle>
-          <CardDescription>Thank you for subscribing to our premium plan.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {status === "loading" ? (
-            <div className="flex justify-center py-6">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            </div>
-          ) : (
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-8 w-8 text-green-600"
-                >
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
+    <div className="flex justify-center items-center min-h-screen bg-slate-50">
+      <div className="w-full max-w-3xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg shadow-sm border dark:border-indigo-900/30 overflow-hidden transition-all duration-300">
+        <div className="bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
+          <CardHeader className="bg-indigo-600 text-white rounded-t-lg pb-10">
+            <CardTitle className="text-3xl font-bold">Subscription Successful!</CardTitle>
+            <CardDescription className="text-indigo-100 text-lg">Welcome to Scriptura Pro</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6 px-8">
+            {status === "loading" ? (
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
               </div>
-              <p>Your subscription has been activated. You now have access to all premium features.</p>
-              {sessionId && <p className="text-sm text-gray-500">Session ID: {sessionId}</p>}
-            </div>
-          )}
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <Link href="/">
-            <Button>Return to Dashboard</Button>
-          </Link>
-        </CardFooter>
-      </Card>
+            ) : (
+              <div className="space-y-8 py-4">
+                <div className="flex items-center justify-center">
+                  <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-3">
+                    <CheckCircle className="h-16 w-16 text-green-600 dark:text-green-400" />
+                  </div>
+                </div>
+
+                <h2 className="text-2xl font-semibold text-center text-gray-800 dark:text-white">
+                  Your Pro subscription is now active!
+                </h2>
+
+                <p className="text-center text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+                  Thank you for subscribing to Scriptura Pro. Your journey to deeper biblical understanding begins now.
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-4 pt-4">
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg border border-indigo-100 dark:border-indigo-900/30">
+                    <div className="flex items-center mb-3">
+                      <BookOpen className="h-5 w-5 text-indigo-600 dark:text-indigo-400 mr-2" />
+                      <h3 className="font-medium dark:text-white">Full Course Access</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Unlock all premium Bible courses and study materials
+                    </p>
+                  </div>
+
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg border border-purple-100 dark:border-purple-900/30">
+                    <div className="flex items-center mb-3">
+                      <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
+                      <h3 className="font-medium dark:text-white">Advanced Features</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Enjoy note-taking, bookmarking, and personalized study plans
+                    </p>
+                  </div>
+
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg border border-pink-100 dark:border-pink-900/30">
+                    <div className="flex items-center mb-3">
+                      <Calendar className="h-5 w-5 text-pink-600 dark:text-pink-400 mr-2" />
+                      <h3 className="font-medium dark:text-white">Monthly Billing</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Your subscription will renew automatically for €9.99/month
+                    </p>
+                  </div>
+                </div>
+
+                {sessionId && (
+                  <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
+                    Reference: {sessionId.substring(0, 16)}...
+                  </div>
+                )}
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="flex justify-center gap-4 pb-8 pt-2">
+            <Link href="/dashboard">
+              <Button className="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700">
+                Go to Dashboard
+              </Button>
+            </Link>
+            <Link href="/courses">
+              <Button
+                variant="outline"
+                className="border-indigo-600 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-950/50"
+              >
+                Explore Courses
+              </Button>
+            </Link>
+          </CardFooter>
+        </div>
+      </div>
     </div>
   )
 }
