@@ -86,7 +86,7 @@ export function DashboardQuizzes({ params: { lng } }: DashboardQuizzesProps) {
         <div className="space-y-6">
           {quizzes.map((quiz, index) => (
             <Link href={`/quizzes/${quiz._id}`} key={quiz._id.toString()}>
-              <div className="flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-900/20 p-2 rounded-lg transition-colors">
+              <div className="flex items-center justify-between hover:bg-[#e9ebfaa1] dark:hover:bg-gray-900/20 p-2 rounded-lg transition-colors">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
                     <h3 className="font-medium text-gray-900 dark:text-white">{quiz.title}</h3>
