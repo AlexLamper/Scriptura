@@ -17,6 +17,7 @@ import {
 import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, Layers, ListCheckIcon,
   //  FileQuestion, ShieldQuestionIcon, HandshakeIcon, Mail 
   } from "lucide-react"
+import SidebarProCTA from "./sidebar-pro-cta"
 
 // Main navigation items
 const mainNavItems = [
@@ -167,6 +168,7 @@ export function AppSidebar({ ...props }) {
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
+      <SidebarProCTA />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
