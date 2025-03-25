@@ -10,5 +10,7 @@
     "course_content": "Kursinhalt",
     "your_progress": "Dein Fortschritt",
     "complete": "abgeschlossen",
-    "continue_course": "Kurs fortsetzen"
+    "continue_course": "Kurs fortsetzen",
+    "course_progress": "Kursfortschritt",
+    "course_details": "Kursdetails"
 }
