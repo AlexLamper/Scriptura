@@ -64,7 +64,7 @@ export function LanguageSwitcher() {
         <Button
           variant="outline"
           size="sm"
-          className="gap-2 border-primary/20 bg-background/20 hover:bg-background/50 hover:text-white backdrop-blur-sm"
+          className="gap-2 border-primary/20 bg-background/20 hover:bg-gray-100 hover:text-black backdrop-blur-sm"
         >
           <Globe className="h-4 w-4" />
           <span>{languageNames[currentLanguage] || "Language"}</span>
