@@ -1,6 +1,13 @@
 import CheckoutButton from "../../../components/checkout-button";
 import { BookOpen, CheckCircle, Shield, Sparkles } from "lucide-react";
 
+// Get price ID from environment variable
+const PRICE_ID = process.env.STRIPE_PRICE_ID;
+
+if (!PRICE_ID) {
+  console.error("[SubscribePage] Missing STRIPE_PRICE_ID environment variable");
+}
+
 export default function SubscribePage() {
   return (
     <main className="min-h-screen">
@@ -121,7 +128,7 @@ export default function SubscribePage() {
 
           <div className="flex justify-center">
             <CheckoutButton
-              priceId={process.env.NEXT_PUBLIC_STRIPE_PRICE_ID || ""}
+              priceId={PRICE_ID}
               className="w-full md:w-auto text-xl py-6 px-8"
             />
           </div>

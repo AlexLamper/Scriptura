@@ -6,7 +6,7 @@ import getStripe from "../lib/stripe-client";
 import { useToast } from "../hooks/use-toast";
 
 interface CheckoutButtonProps {
-  priceId: string;
+  priceId?: string;
   customerId?: string;
   className?: string;
 }
@@ -20,6 +20,15 @@ export default function CheckoutButton({
   const { toast } = useToast();
 
   const handleCheckout = async () => {
+    if (!priceId) {
+      toast({
+        title: "Configuration Error",
+        description: "Missing price ID. Please contact support.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
     console.log("[CheckoutButton] Starting checkout process");
 
@@ -37,11 +46,9 @@ export default function CheckoutButton({
       console.log("[CheckoutButton] API response status:", response.status);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
+        const errorData = await response.json();
         console.error("[CheckoutButton] API error:", errorData);
-        throw new Error(
-          errorData?.error || `HTTP error! status: ${response.status}`
-        );
+        throw new Error(errorData?.error || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -66,7 +73,7 @@ export default function CheckoutButton({
       console.error("[CheckoutButton] Error:", error);
       toast({
         title: "Error",
-        description: "Failed to start checkout process. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to start checkout process. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -77,7 +84,7 @@ export default function CheckoutButton({
   return (
     <Button 
       onClick={handleCheckout} 
-      disabled={loading} 
+      disabled={loading || !priceId} 
       className={className}
     >
       {loading ? "Processing..." : "Subscribe Now - €9.99/month"}
