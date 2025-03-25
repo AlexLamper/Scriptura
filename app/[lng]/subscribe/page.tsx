@@ -5,7 +5,7 @@ import { BookOpen, CheckCircle, Shield, Sparkles } from "lucide-react";
 export default function SubscribePage() {
   return (
     <main className="min-h-screen">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-4 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 p-4 rounded-lg border">
           <h1 className="text-4xl font-bold text-gray-800 dark:text-white">
             Scriptura Pro
