@@ -9,6 +9,7 @@ import { useTranslation } from "../app/i18n/client"
 import { Skeleton } from "./ui/skeleton"
 import { Search, Filter, ChevronDown, ChevronUp } from "lucide-react"
 import { motion } from "framer-motion"
+import { usePathname } from "next/navigation"
 
 interface CourseGridProps {
   params: {
@@ -32,10 +33,31 @@ interface CourseType {
 export function CourseGrid({ params: { lng } }: CourseGridProps) {
   const { t } = useTranslation(lng, "course-grid")
   const [courses, setCourses] = useState<CourseType[]>([])
+  const [allCourses, setAllCourses] = useState<CourseType[]>([])
   const [loading, setLoading] = useState(true)
   const [activeCategory, setActiveCategory] = useState("all")
   const [categories, setCategories] = useState<string[]>([])
   const [showAllCourses, setShowAllCourses] = useState(false)
+  const [currentLanguage, setCurrentLanguage] = useState<string>("en") // Default to English
+
+  // Get the current language from the URL path
+  const pathname = usePathname()
+
+  useEffect(() => {
+    // Extract language from pathname
+    const pathSegments = pathname.split("/").filter(Boolean)
+    const langFromPath = pathSegments[0]
+
+    console.log("Path segments:", pathSegments)
+    console.log("Language from path:", langFromPath)
+    console.log("Provided lng param:", lng)
+
+    // Use the language from the URL path, fallback to the lng param, or default to "en"
+    const detectedLanguage = langFromPath && ["en", "nl", "de"].includes(langFromPath) ? langFromPath : lng || "en"
+
+    console.log("Using language for filtering:", detectedLanguage)
+    setCurrentLanguage(detectedLanguage)
+  }, [pathname, lng])
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -45,11 +67,25 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           throw new Error("Failed to fetch courses")
         }
         const data: { courses: CourseType[] } = await response.json()
-        if (Array.isArray(data.courses)) {
-          setCourses(data.courses)
 
-          // Extract unique categories
-          const uniqueCategories: string[] = [...new Set(data.courses.map((course: CourseType) => course.category))]
+        console.log("All courses from API:", data.courses)
+        console.log("Current language for filtering:", currentLanguage)
+
+        if (Array.isArray(data.courses)) {
+          setAllCourses(data.courses)
+
+          // Filter courses by the current language (case insensitive)
+          const languageFilteredCourses = data.courses.filter((course) => {
+            console.log(`Course ${course.title} language:`, course.language)
+            return course.language && course.language.toLowerCase() === currentLanguage.toLowerCase()
+          })
+
+          console.log("Filtered courses:", languageFilteredCourses)
+          setCourses(languageFilteredCourses)
+
+          // Extract unique categories from filtered courses
+          const uniqueCategories: string[] = [...new Set(languageFilteredCourses.map((course) => course.category))]
+          console.log("Unique categories:", uniqueCategories)
           setCategories(uniqueCategories)
         }
       } catch (error) {
@@ -59,8 +95,10 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
       }
     }
 
-    fetchCourses()
-  }, [])
+    if (currentLanguage) {
+      fetchCourses()
+    }
+  }, [currentLanguage])
 
   const filteredCourses =
     activeCategory === "all" ? courses : courses.filter((course) => course.category === activeCategory)
@@ -166,7 +204,7 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                <Link href={`/courses/${course._id}`}>
+                <Link href={`/${currentLanguage}/courses/${course._id}`}>
                   <CourseCard
                     id={course._id.toString()}
                     title={course.title}
@@ -204,8 +242,25 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
       ) : (
         <div className="text-center py-16 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg border border-gray-100 dark:border-gray-700">
           <Search className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
-          <p className="text-gray-500 dark:text-gray-300 text-lg">No courses found</p>
-          <p className="text-gray-400 dark:text-gray-400 mt-2">Try selecting a different category</p>
+          <p className="text-gray-500 dark:text-gray-300 text-lg">
+            {allCourses.length > 0 ? `No courses found for ${currentLanguage} language` : "No courses found"}
+          </p>
+          <p className="text-gray-400 dark:text-gray-400 mt-2">
+            {allCourses.length > 0 ? "Try switching to a different language" : "Try selecting a different category"}
+          </p>
+
+          {/* Debug button to show all courses regardless of language */}
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => {
+              setCourses(allCourses)
+              const uniqueCategories = [...new Set(allCourses.map((course) => course.category))]
+              setCategories(uniqueCategories)
+            }}
+          >
+            Show all courses (debug)
+          </Button>
         </div>
       )}
     </div>

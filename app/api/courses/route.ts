@@ -23,10 +23,10 @@ export async function GET(request: Request) {
 
     // Fetch courses and quizzes as plain objects
     const courses = await Course.find().lean();
-    console.log('Courses fetched:', courses);
+    // console.log('Courses fetched:', courses);
 
     const quizzes = await Quiz.find().lean();
-    console.log('Quizzes fetched:', quizzes);
+    // console.log('Quizzes fetched:', quizzes);
 
     return NextResponse.json({ courses, quizzes });
   } catch (error) {
