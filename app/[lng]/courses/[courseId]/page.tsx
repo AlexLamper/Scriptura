@@ -1,11 +1,12 @@
 "use client";
 
 import { use, useState, useEffect } from "react";
+import Link from "next/link";
 import { Button } from "../../../../components/ui/button";
 import { Progress } from "../../../../components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card";
 import { useTranslation } from "../../../../app/i18n/client";
-import { Footer } from "../../../../components/Footer/client";
+// import { Footer } from "../../../../components/Footer/client";
 import { ArrowLeft } from "lucide-react";
 
 type CourseType = {
@@ -63,7 +64,9 @@ export default function CoursePage({
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <span className="text-lg font-medium text-gray-700 dark:text-gray-300">{t("loading")}</span>
+        <span className="text-lg font-medium text-gray-700 dark:text-gray-300">
+          {t("loading")}
+        </span>
         <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mt-8"></div>
       </div>
     );
@@ -95,7 +98,9 @@ export default function CoursePage({
 
   // Handle instructor which might be an object or a string
   const instructorName =
-    typeof course.instructor === "object" ? course.instructor._id.toString() : course.instructor;
+    typeof course.instructor === "object"
+      ? course.instructor._id.toString()
+      : course.instructor;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -147,9 +152,14 @@ export default function CoursePage({
                     <h3 className="font-semibold mb-2">{t("lessons")}:</h3>
                     <div className="space-y-2">
                       {course.lessons.map((lesson, index) => (
-                        <div key={index} className="p-3 bg-white dark:bg-[#2C2C33] rounded">
-                          {t("lesson")} {index + 1}: {lesson.toString()}
-                        </div>
+                        <Link
+                          href={`/${lng}/courses/${courseId}/lessons/${index}`}
+                          key={index}
+                        >
+                          <div className="p-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition cursor-pointer">
+                            {lesson.title}
+                          </div>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -164,14 +174,16 @@ export default function CoursePage({
               </CardHeader>
               <CardContent>
                 <Progress value={33} className="mb-2" />
-                <p className="text-sm mb-4">33% {t("complete")}</p>
+                <p className="text-sm mb-4">
+                  33% {t("complete")}
+                </p>
                 <Button className="w-full">{t("continue_course")}</Button>
               </CardContent>
             </Card>
           </div>
         </div>
       </main>
-      <Footer lng={lng} />
+      {/* <Footer lng={lng} /> */}
     </div>
   );
 }
