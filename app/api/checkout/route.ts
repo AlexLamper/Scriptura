@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import stripe from "../../../lib/stripe";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, { headers: corsHeaders });
+}
+
 export async function POST(req: NextRequest) {
   console.log("[Checkout API] Received request");
   
@@ -14,6 +24,27 @@ export async function POST(req: NextRequest) {
       console.error("[Checkout API] Missing priceId in request");
       return NextResponse.json(
         { error: "Missing priceId" },
+        { status: 400 }
+      );
+    }
+
+    // Validate that we're using the correct mode (test/live) price ID
+    const priceIdMode = priceId.startsWith('price_test_') ? 'test' : 'live';
+    const apiKeyMode = process.env.STRIPE_SECRET_KEY?.startsWith('sk_test_') ? 'test' : 'live';
+    
+    console.log("[Checkout API] Mode validation:", {
+      priceIdMode,
+      apiKeyMode,
+      match: priceIdMode === apiKeyMode
+    });
+
+    if (priceIdMode !== apiKeyMode) {
+      console.error("[Checkout API] Mode mismatch between price ID and API key");
+      return NextResponse.json(
+        { 
+          error: "Configuration error",
+          details: "Stripe API key and price ID must both be in the same mode (test or live)"
+        },
         { status: 400 }
       );
     }
@@ -41,15 +72,29 @@ export async function POST(req: NextRequest) {
     });
 
     console.log("[Checkout API] Stripe session created:", session.id);
-    return NextResponse.json({ sessionId: session.id });
+    
+    const response = NextResponse.json({ sessionId: session.id });
+    // Add CORS headers to the response
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    
+    return response;
   } catch (error) {
     console.error("[Checkout API] Error creating checkout session:", error);
-    return NextResponse.json(
+    const response = NextResponse.json(
       { 
         error: "Error creating checkout session",
         details: error instanceof Error ? error.message : String(error)
       },
       { status: 500 }
     );
+    
+    // Add CORS headers to error response
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    
+    return response;
   }
 }

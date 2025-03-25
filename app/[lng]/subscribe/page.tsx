@@ -1,4 +1,3 @@
-// app/subscribe/page.tsx
 import CheckoutButton from "../../../components/checkout-button";
 import { BookOpen, CheckCircle, Shield, Sparkles } from "lucide-react";
 
@@ -122,7 +121,7 @@ export default function SubscribePage() {
 
           <div className="flex justify-center">
             <CheckoutButton
-              priceId="price_1R6CRIGkd9Br8GXYcZSWTg1p"
+              priceId={process.env.NEXT_PUBLIC_STRIPE_PRICE_ID || ""}
               className="w-full md:w-auto text-xl py-6 px-8"
             />
           </div>
