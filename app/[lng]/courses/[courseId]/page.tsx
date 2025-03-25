@@ -6,7 +6,6 @@ import { Button } from "../../../../components/ui/button";
 import { Progress } from "../../../../components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card";
 import { useTranslation } from "../../../../app/i18n/client";
-// import { Footer } from "../../../../components/Footer/client";
 import { ArrowLeft } from "lucide-react";
 
 type CourseType = {
@@ -183,7 +182,6 @@ export default function CoursePage({
           </div>
         </div>
       </main>
-      {/* <Footer lng={lng} /> */}
     </div>
   );
 }

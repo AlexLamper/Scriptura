@@ -1,125 +1,195 @@
-"use client";
+"use client"
 
-import { use, useEffect, useState } from "react";
-import type { CourseType } from "../../../lib/models";
-import { motion } from "framer-motion";
-import { Search, BookOpen, Clock, User, Tag, ArrowRight, LanguagesIcon } from "lucide-react";
-import Link from "next/link";
-import { useTranslation } from "../../../app/i18n/client";
+import { useState, useEffect } from "react"
+import { useTranslation } from "../../../app/i18n/client"
+import { Search, User, BookOpen, Tag, Clock, ArrowRight } from "lucide-react"
+import { LanguagesIcon } from "lucide-react"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import { use } from "react"
+import { usePathname } from "next/navigation"
 
-const CoursePage = ({ params }: { params: Promise<{ lng: string }> }) => {
-  // Unwrap the params promise using the experimental use() hook
-  const { lng } = use(params);
-  const [courses, setCourses] = useState<CourseType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const { t } = useTranslation(lng, "courses");
+interface Course {
+  _id: string
+  title: string
+  description: string
+  instructor: string
+  category: string
+  difficulty: string
+  language: string
+  totalDuration: number
+  tags: string[]
+}
+
+export default function CoursePage({
+  params,
+}: {
+  params: Promise<{ lng: string }>
+}) {
+  // Unwrap the params promise using use()
+  const { lng } = use(params)
+  const { t } = useTranslation(lng, "course")
+  const [courses, setCourses] = useState<Course[]>([])
+  const [allCourses, setAllCourses] = useState<Course[]>([])
+  const [searchTerm, setSearchTerm] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [currentLanguage, setCurrentLanguage] = useState<string>("en") // Default to English
+
+  // Get the current language from the URL path
+  const pathname = usePathname()
+
+  useEffect(() => {
+    // Extract language from pathname
+    const pathSegments = pathname.split("/").filter(Boolean)
+    const langFromPath = pathSegments[0]
+
+    console.log("Path segments:", pathSegments)
+    console.log("Language from path:", langFromPath)
+    console.log("Provided lng param:", lng)
+
+    // Use the language from the URL path, fallback to the lng param, or default to "en"
+    const detectedLanguage = langFromPath && ["en", "nl", "de"].includes(langFromPath) ? langFromPath : lng || "en"
+
+    console.log("Using language for filtering:", detectedLanguage)
+    setCurrentLanguage(detectedLanguage)
+  }, [pathname, lng])
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("/api/courses");
+        const response = await fetch("/api/courses")
         if (!response.ok) {
-          throw new Error("Failed to fetch courses");
+          throw new Error("Failed to fetch courses")
         }
-        const data = await response.json();
+        const data = await response.json()
+
+        console.log("All courses from API:", data.courses)
+        console.log("Current language for filtering:", currentLanguage)
+
         if (Array.isArray(data.courses)) {
-          setCourses(data.courses);
+          setAllCourses(data.courses)
+
+          // Filter courses by the current language (case insensitive)
+          const languageFilteredCourses = data.courses.filter((course) => {
+            console.log(`Course ${course.title} language:`, course.language)
+            return course.language && course.language.toLowerCase() === currentLanguage.toLowerCase()
+          })
+
+          console.log("Filtered courses:", languageFilteredCourses)
+          setCourses(languageFilteredCourses)
         } else {
-          console.error("Fetched data is not an array:", data);
+          console.error("Fetched data is not an array:", data)
         }
       } catch (error) {
-        console.error("Error fetching courses:", error);
+        console.error("Error fetching courses:", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    fetchCourses();
-  }, []);
+    }
 
-  const filteredCourses = courses.filter((course) =>
-    course.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    if (currentLanguage) {
+      fetchCourses()
+    }
+  }, [currentLanguage])
+
+  const filteredCourses = courses.filter((course) => course.title.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
-    <div className="min-h-screen pt-4">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800 dark:text-white">
-        {t("course_header")}
-      </h1>
-      <div className="mb-6">
+    <div className="min-h-screen">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t("course_header")}</h1>
         <div className="relative">
           <input
             type="text"
             placeholder="Search courses..."
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[rgb(24,24,27)] dark:border-gray-700 dark:text-white"
+            className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#0f172a] dark:bg-[rgb(24,24,27)] dark:border-gray-700 dark:text-white"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
         </div>
       </div>
+
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="rounded-lg overflow-hidden bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 border border-gray-100 dark:border-gray-700"
+            >
+              <div className="p-5">
+                <div className="h-5 w-40 mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              </div>
+              <div className="p-5 pt-3">
+                <div className="h-4 w-full mb-5 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-4 w-full mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-8 w-20 mt-4 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : filteredCourses.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
+          {filteredCourses.map((course, index) => (
             <motion.div
               key={course._id.toString()}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <Link href={`/courses/${course._id}`} className="block h-full">
-                <div className="p-6 flex flex-col h-full">
-                  <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">
-                    {course.title}
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{course.description}</p>
-                  <div className="flex items-center mb-2">
-                    <User className="text-blue-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Instructor: {course.instructor}
-                    </p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <BookOpen className="text-green-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Category: {course.category}
-                    </p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <Tag className="text-yellow-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Difficulty: {course.difficulty}
-                    </p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <LanguagesIcon className="text-red-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Language: {course.language}
-                    </p>
-                  </div>
-                  <div className="flex items-center mb-4">
-                    <Clock className="text-purple-500 mr-2" size={16} />
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Duration: {course.totalDuration} minutes
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap mb-4">
-                    {course.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800"
-                      >
-                        {tag}
+              <Link href={`/${currentLanguage}/courses/${course._id}`} className="block h-full">
+                <div className="group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-border bg-white dark:bg-gray-800/60 h-full">
+                  <div className="flex items-center p-5">
+                    <div>
+                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{course.title}</h3>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 text-[#1f1f1f9d] dark:text-blue-400 border border-black/10 dark:border-gray-700">
+                        {course.category}
                       </span>
-                    ))}
+                    </div>
                   </div>
-                  <div className="mt-auto">
-                    <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center">
+                  <div className="p-5 pt-0">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                      {course.description.length > 100
+                        ? `${course.description.substring(0, 100)}...`
+                        : course.description}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      <div className="flex items-center">
+                        <User className="text-blue-500 mr-2" size={16} />
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{course.instructor}</p>
+                      </div>
+                      <div className="flex items-center">
+                        <BookOpen className="text-green-500 mr-2" size={16} />
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{course.category}</p>
+                      </div>
+                      <div className="flex items-center">
+                        <Tag className="text-yellow-500 mr-2" size={16} />
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{course.difficulty}</p>
+                      </div>
+                      <div className="flex items-center">
+                        <LanguagesIcon className="text-red-500 mr-2" size={16} />
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{course.language}</p>
+                      </div>
+                      <div className="flex items-center col-span-2">
+                        <Clock className="text-purple-500 mr-2" size={16} />
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{course.totalDuration} minutes</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap mb-4">
+                      {course.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 text-[#1f1f1f9d] dark:text-blue-400 border border-black/10 dark:border-gray-700 mr-2 mb-2"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <button className="w-full bg-[#0f172a] hover:bg-[#0f172a]/90 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center text-sm group-hover:translate-y-[-2px]">
                       View Course
                       <ArrowRight className="ml-2" size={16} />
                     </button>
@@ -130,12 +200,19 @@ const CoursePage = ({ params }: { params: Promise<{ lng: string }> }) => {
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-500 dark:text-gray-400 text-lg">
-          No courses found. Try adjusting your search.
-        </p>
+        <div className="text-center py-16 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg border border-gray-100 dark:border-gray-700">
+          <Search className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
+          <p className="text-gray-500 dark:text-gray-300 text-lg">
+            {allCourses.length > 0
+              ? `No courses found for ${currentLanguage} language`
+              : "No courses found. Try adjusting your search."}
+          </p>
+          {allCourses.length > 0 && (
+            <p className="text-gray-400 dark:text-gray-400 mt-2">Try switching to a different language</p>
+          )}
+        </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CoursePage;
