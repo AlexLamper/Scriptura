@@ -18,6 +18,7 @@ export default function CheckoutButton({
 
   const handleCheckout = async () => {
     setLoading(true);
+    console.log("[CheckoutButton] Initiating checkout with priceId:", priceId);
 
     try {
       const response = await fetch("/api/create-checkout-session", {
@@ -25,25 +26,34 @@ export default function CheckoutButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ priceId, customerId }),
       });
+      console.log("[CheckoutButton] Fetch response status:", response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.error("[CheckoutButton] API error response:", errorText);
         throw new Error(`API responded with status ${response.status}: ${errorText}`);
       }
 
       const data = await response.json();
-      const sessionId = data.sessionId;
+      console.log("[CheckoutButton] API response JSON:", data);
 
+      const sessionId = data.sessionId;
       if (!sessionId) {
         throw new Error("Session ID is missing in the API response.");
       }
 
+      console.log("[CheckoutButton] Received sessionId:", sessionId);
       const stripe = await getStripe();
-      const { error } = await stripe!.redirectToCheckout({ sessionId });
+      if (!stripe) {
+        throw new Error("Stripe.js failed to load.");
+      }
 
-      if (error) console.error("Stripe checkout error:", error);
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+      if (error) {
+        console.error("[CheckoutButton] Stripe checkout error:", error);
+      }
     } catch (error) {
-      console.error("Checkout error:", error);
+      console.error("[CheckoutButton] Checkout error:", error);
     } finally {
       setLoading(false);
     }
