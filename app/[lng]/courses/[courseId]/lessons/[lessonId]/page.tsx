@@ -4,7 +4,7 @@ import { use, useState, useEffect } from "react"
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "../../../../../../components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../../../../components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../../../../../components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../../../components/ui/tabs"
 import { useTranslation } from "../../../../../../app/i18n/client"
 import { Skeleton } from "../../../../../../components/ui/skeleton"
@@ -33,7 +33,6 @@ export default function LessonPage({
 }: {
   params: Promise<{ lng: string; courseId: string; lessonId: string }>
 }) {
-  // Unwrap the params promise using use()
   const { lng, courseId, lessonId } = use(params)
   const { t } = useTranslation(lng, "course")
 
@@ -179,7 +178,7 @@ export default function LessonPage({
             {/* Tabs for additional content */}
             <Tabs defaultValue="content" className="mt-8">
               <TabsList className="mb-4">
-                <TabsTrigger value="content" className="text-sm md:text-base">
+                <TabsTrigger value="discussion" className="text-sm md:text-base">
                   {t("lesson_content")}
                 </TabsTrigger>
                 <TabsTrigger value="discussion" className="text-sm md:text-base">
@@ -219,7 +218,7 @@ export default function LessonPage({
                 >
                   <Button
                     variant="outline"
-                    className="w-full justify-start group transition-all"
+                    className="w-full justify-start group transition-all border border-black border-opacity-70 text-black text-opacity-70"
                     disabled={lessonIndex === 0}
                   >
                     <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -236,17 +235,18 @@ export default function LessonPage({
                     <ChevronLeft className="ml-2 h-4 w-4 rotate-180 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-
+              </CardContent>
+              <CardFooter className="border-t">
                 <Link href={`/${lng}/courses/${courseId}`}>
                   <Button
                     variant="secondary"
-                    className="w-full justify-start mt-8 hover:bg-secondary/80 transition-colors"
+                    className="w-full justify-start mt-6 hover:bg-secondary/80 transition-colors"
                   >
-                    <ChevronLeft className="mr-2 h-4 w-4" />
+                    <ChevronLeft className="mr-2 h-full w-full" />
                     {t("back_to_course")}
                   </Button>
                 </Link>
-              </CardContent>
+              </CardFooter>
             </Card>
           </div>
         </div>
