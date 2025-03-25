@@ -10,5 +10,19 @@
     "course_content": "Kursinhalt",
     "your_progress": "Dein Fortschritt",
     "complete": "abgeschlossen",
-    "continue_course": "Kurs fortsetzen"
+    "continue_course": "Kurs fortsetzen",
+    "course_progress": "Kursfortschritt",
+    "course_details": "Kursdetails",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
+    "go_back": "Zurück",
+    "back_to_course": "Zurück zum Kurs",
+    "lesson_content": "Lektionsinhalt",
+    "discussion": "Diskussion",
+    "additional_resources": "Zusätzliche Ressourcen",
+    "discussion_forum_placeholder": "Schreibe hier deinen Kommentar...",
+    "additional_resources_placeholder": "Füge hier zusätzliche Ressourcen hinzu...",
+    "lesson_navigation": "Lektionsnavigation",
+    "previous_lesson": "Vorherige Lektion",
+    "next_lesson": "Nächste Lektion",
+    "course_header": "Kursübersicht"
 }

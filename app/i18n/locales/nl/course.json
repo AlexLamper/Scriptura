@@ -10,5 +10,19 @@
     "course_content": "Cursusinhoud",
     "your_progress": "Jouw voortgang",
     "complete": "voltooid",
-    "continue_course": "Ga verder met de cursus"
+    "continue_course": "Ga verder met de cursus",
+    "course_progress": "Cursusvoortgang",
+    "course_details": "Cursusdetails",
+    "error": "Er is een fout opgetreden. Probeer het later opnieuw.",
+    "go_back": "Ga terug",
+    "back_to_course": "Terug naar de cursus",
+    "lesson_content": "Lesinhoud",
+    "discussion": "Discussie",
+    "additional_resources": "Aanvullende bronnen",
+    "discussion_forum_placeholder": "Schrijf hier je opmerking...",
+    "additional_resources_placeholder": "Voeg hier aanvullende bronnen toe...",
+    "lesson_navigation": "Lesnavigatie",
+    "previous_lesson": "Vorige les",
+    "next_lesson": "Volgende les",
+    "course_header": "Cursusoverzicht"
 }

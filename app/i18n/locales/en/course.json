@@ -10,7 +10,21 @@
     "course_content": "Course Content",
     "your_progress": "Your Progress",
     "complete": "complete",
-    "continue_course": "Continue Course"
+    "continue_course": "Continue Course",
+    "course_progress": "Course Progress",
+    "course_details": "Course Details",
+    "error": "An error occurred. Please try again later.",
+    "go_back": "Go Back",
+    "back_to_course": "Back to Course",
+    "lesson_content": "Lesson Content",
+    "discussion": "Discussion",
+    "additional_resources": "Additional Resources",
+    "discussion_forum_placeholder": "Write your comment here...",
+    "additional_resources_placeholder": "Add additional resources here...",
+    "lesson_navigation": "Lesson Navigation",
+    "previous_lesson": "Previous Lesson",
+    "next_lesson": "Next Lesson",
+    "course_header": "Course Overview"
   }
   
   
