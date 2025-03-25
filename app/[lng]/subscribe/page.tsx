@@ -1,7 +1,6 @@
 import CheckoutButton from "../../../components/checkout-button";
 import { BookOpen, CheckCircle, Shield, Sparkles } from "lucide-react";
 
-// Get price ID from environment variable
 const PRICE_ID = process.env.STRIPE_PRICE_ID;
 
 if (!PRICE_ID) {
