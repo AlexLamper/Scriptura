@@ -104,8 +104,7 @@ export default function CoursePage({
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow container mx-auto px-4 py-2">
-        {/* Back Button with Icon */}
-        <Button onClick={() => window.history.back()} className="mb-4 flex items-center">
+        <Button onClick={() => window.location.href = `/courses`} className="mb-4 flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("back")}
         </Button>
