@@ -27,11 +27,17 @@ export default function CheckoutButton({
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create checkout session");
+        const errorText = await response.text();
+        throw new Error(`API responded with status ${response.status}: ${errorText}`);
       }
 
-      const { sessionId } = await response.json();
+      const data = await response.json();
+      const sessionId = data.sessionId;
+
+      if (!sessionId) {
+        throw new Error("Session ID is missing in the API response.");
+      }
+
       const stripe = await getStripe();
       const { error } = await stripe!.redirectToCheckout({ sessionId });
 
