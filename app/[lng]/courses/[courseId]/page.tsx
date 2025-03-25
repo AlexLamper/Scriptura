@@ -67,7 +67,7 @@ export default function CoursePage({
         <span className="text-lg font-medium text-gray-700 dark:text-gray-300">
           {t("loading")}
         </span>
-        <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mt-8"></div>
+        <div className="w-12 h-12 border-4 border-[#1f2937] border-t-transparent rounded-full animate-spin mt-8"></div>
       </div>
     );
   }
@@ -104,7 +104,7 @@ export default function CoursePage({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-2">
         {/* Back Button with Icon */}
         <Button onClick={() => window.history.back()} className="mb-4 flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />

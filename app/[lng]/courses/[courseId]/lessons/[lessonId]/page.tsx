@@ -74,7 +74,7 @@ export default function LessonPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <Skeleton className="h-10 w-40" />
@@ -118,7 +118,7 @@ export default function LessonPage({
 
   if (!lesson) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 flex flex-col items-center justify-center">
+      <div className="min-h-screen dark:bg-gray-900 flex flex-col items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-center">{t("lesson_not_found")}</CardTitle>
@@ -147,7 +147,7 @@ export default function LessonPage({
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div className="flex items-center">
             <Link href={`/${lng}/courses/${courseId}`} className="group">
-              <Button variant="ghost" size="sm" className="mr-4 transition-all group-hover:-translate-x-1">
+              <Button size="sm" className="mr-4 transition-all group-hover:-translate-x-1">
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 {t("back_to_course")}
               </Button>
