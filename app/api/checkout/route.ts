@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     });
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card", "ideal", "eps", "bancontact", "p24", "sepa_debit"],
+      payment_method_types: ["card", "ideal", "bancontact", "p24", "sepa_debit"],
       line_items: [
         {
           price: priceId,
