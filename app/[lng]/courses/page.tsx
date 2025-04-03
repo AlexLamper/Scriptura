@@ -26,7 +26,7 @@ export default function CoursePage({
 }: {
   params: Promise<{ lng: string }>
 }) {
-  // Unwrap the params promise using use()
+
   const { lng } = use(params)
   const { t } = useTranslation(lng, "course")
   const [courses, setCourses] = useState<Course[]>([])
@@ -107,6 +107,42 @@ export default function CoursePage({
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
+        </div>
+      </div>
+      {/* Statistics Section */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">{allCourses.length}+</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("total_courses")}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">24+</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("expert_instructors")}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">1200+</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("active_students")}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">4.8</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("average_rating")}</p>
+        </div>
+      </div>
+
+      {/* Course List Section Title */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+          {filteredCourses.length > 0
+            ? `${t("showing")} ${filteredCourses.length} ${t("courses")}`
+            : t("no_courses_found")}
+        </h2>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500 dark:text-gray-400">{t("sort_by")}:</span>
+          <select className="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-3 py-1 rounded text-sm border border-gray-200 dark:border-gray-600">
+            <option value="newest">{t("newest")}</option>
+            <option value="popular">{t("most_popular")}</option>
+            <option value="highest">{t("highest_rated")}</option>
+          </select>
         </div>
       </div>
 
