@@ -25,5 +25,16 @@
     "lesson_navigation": "Lektionsnavigation",
     "previous_lesson": "Vorherige Lektion",
     "next_lesson": "Nächste Lektion",
-    "course_header": "Kursübersicht"
+    "course_header": "Kursübersicht",
+    "showing": "Zeige",
+    "courses": "Kurse",
+    "no_courses_found": "Keine Kurse gefunden",
+    "total_courses": "Gesamtanzahl der Kurse",
+    "expert_instructors": "Experten Dozenten",
+    "active_students": "Aktive Studenten",
+    "average_rating": "Durchschnittliche Bewertung",
+    "sort_by": "Sortieren nach",
+    "newest": "Neueste",
+    "most_popular": "Beliebteste",
+    "highest_rated": "Höchste Bewertung"
 }

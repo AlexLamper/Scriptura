@@ -25,5 +25,16 @@
     "lesson_navigation": "Lesnavigatie",
     "previous_lesson": "Vorige les",
     "next_lesson": "Volgende les",
-    "course_header": "Cursusoverzicht"
+    "course_header": "Cursusoverzicht",
+    "showing": "",
+    "courses": "Cursussen",
+    "no_courses_found": "Geen cursussen gevonden",
+    "total_courses": "Totaal aantal cursussen",
+    "expert_instructors": "Expertinstructeurs",
+    "active_students": "Actieve studenten",
+    "average_rating": "Gemiddelde beoordeling",
+    "sort_by": "Sorteer op",
+    "newest": "Nieuwste",
+    "most_popular": "Meest populair",
+    "highest_rated": "Het hoogst beoordeeld"
 }

@@ -154,13 +154,13 @@ export default function CoursePage({
               className="rounded-lg overflow-hidden bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 border border-gray-100 dark:border-gray-700"
             >
               <div className="p-5">
-                <div className="h-5 w-40 mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-5 w-40 mb-2 bg-white dark:bg-gray-700 rounded"></div>
+                <div className="h-3 w-24 bg-gray-100 dark:bg-gray-700 rounded"></div>
               </div>
               <div className="p-5 pt-3">
-                <div className="h-4 w-full mb-5 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-4 w-full mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-8 w-20 mt-4 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+                <div className="h-4 w-full mb-5 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                <div className="h-4 w-full mb-2 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                <div className="h-8 w-20 mt-4 bg-gray-100 dark:bg-gray-700 rounded-md"></div>
               </div>
             </div>
           ))}
