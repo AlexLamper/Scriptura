@@ -36,5 +36,8 @@
     "sort_by": "Sortieren nach",
     "newest": "Neueste",
     "most_popular": "Beliebteste",
-    "highest_rated": "Höchste Bewertung"
+    "highest_rated": "Höchste Bewertung",
+    "related_courses": "Ähnliche Kurse",
+    "learning_objectives": "Lernziele",
+    "download_materials": "Materialien herunterladen"
 }
