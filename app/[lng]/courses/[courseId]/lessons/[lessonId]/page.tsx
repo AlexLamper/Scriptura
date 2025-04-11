@@ -218,7 +218,7 @@ export default function LessonPage({
                 >
                   <Button
                     variant="outline"
-                    className="w-full justify-start group transition-all border border-black border-opacity-70 text-black text-opacity-70"
+                    className="w-full justify-start group transition-all border border-black border-opacity-80 text-black text-opacity-80"
                     disabled={lessonIndex === 0}
                   >
                     <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -240,7 +240,7 @@ export default function LessonPage({
                 <Link href={`/${lng}/courses/${courseId}`}>
                   <Button
                     variant="secondary"
-                    className="w-full justify-start mt-6 hover:bg-secondary/80 transition-colors"
+                    className="w-full justify-start mt-6 hover:bg-secondary/80 transition-colors border"
                   >
                     <ChevronLeft className="mr-2 h-full w-full" />
                     {t("back_to_course")}

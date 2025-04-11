@@ -146,7 +146,7 @@ export default function CoursePage({
                     <div className="space-y-2">
                       {course.lessons.map((lesson, index) => (
                         <Link href={`/${lng}/courses/${courseId}/lessons/${index}`} key={index}>
-                          <div className="p-3 my-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition cursor-pointer">
+                          <div className="p-3 my-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition cursor-pointer border">
                             {lesson.title}
                           </div>
                         </Link>
