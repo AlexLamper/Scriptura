@@ -3,41 +3,43 @@
 import { useState } from "react"
 import { Sparkles, ChevronRight, Check } from "lucide-react"
 import { Button } from "../components/ui/button"
-import getStripe from "../utils/stripe"
+// import getStripe from "../utils/stripe"
+import { useRouter } from "next/navigation"
 
 export default function SidebarProCTA() {
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  const router = useRouter()
 
-  const handleCheckout = async () => {
-    setLoading(true)
+  // const handleCheckout = async () => {
+  //   setLoading(true)
 
-    try {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-        }),
-      })
+  //   try {
+  //     const response = await fetch("/api/create-checkout-session", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
+  //       }),
+  //     })
 
-      const { sessionId } = await response.json()
+  //     const { sessionId } = await response.json()
 
-      // Redirect to Stripe Checkout
-      const stripe = await getStripe()
-      const { error } = await stripe!.redirectToCheckout({ sessionId })
+  //     // Redirect to Stripe Checkout
+  //     const stripe = await getStripe()
+  //     const { error } = await stripe!.redirectToCheckout({ sessionId })
 
-      if (error) {
-        console.error("Stripe checkout error:", error)
-      }
-    } catch (error) {
-      console.error("Error:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  //     if (error) {
+  //       console.error("Stripe checkout error:", error)
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   return (
     <div className="mt-auto px-3 pb-4">
@@ -75,12 +77,13 @@ export default function SidebarProCTA() {
 
             <div className="pt-1">
               <Button
-                onClick={handleCheckout}
-                disabled={loading}
+                onClick={() => router.push("/subscribe")}
+                // disabled={loading}
                 className="w-full"
                 size="sm"
               >
-                {loading ? "Processing..." : "Get Started"}
+                Get Started
+                {/* {loading ? "Processing..." : "Get Started"} */}
               </Button>
             </div>
 
