@@ -16,6 +16,7 @@
     "error": "An error occurred. Please try again later.",
     "go_back": "Go Back",
     "back_to_course": "Back to Course",
+    "back_to_courses": "Back to Courses",
     "lesson_content": "Lesson Content",
     "discussion": "Discussion",
     "additional_resources": "Additional Resources",
@@ -24,7 +25,21 @@
     "lesson_navigation": "Lesson Navigation",
     "previous_lesson": "Previous Lesson",
     "next_lesson": "Next Lesson",
-    "course_header": "Course Overview"
+    "course_header": "Course Overview",
+    "showing": "Showing",
+    "courses": "Courses",
+    "no_courses_found": "No courses found",
+    "total_courses": "Total Courses",
+    "expert_instructors": "Expert Instructors",
+    "active_students": "Active Students",
+    "average_rating": "Average Rating",
+    "sort_by": "Sort by",
+    "newest": "Newest",
+    "most_popular": "Most Popular",
+    "highest_rated": "Highest Rated",
+    "related_courses": "Related Courses",
+    "learning_objectives": "Learning Objectives",
+    "download_materials": "Download Materials"
   }
   
   

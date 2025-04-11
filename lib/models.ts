@@ -11,6 +11,7 @@ export interface CourseType {
   difficulty: string;
   tags: string[];
   language: string;
+  learning_objectives: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -50,6 +51,10 @@ const courseSchema = new mongoose.Schema<CourseType>({
   },
   language: {
     type: String,
+    required: true,
+  },
+  learning_objectives: {
+    type: [String],
     required: true,
   },
   createdAt: {

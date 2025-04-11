@@ -98,8 +98,8 @@ export default function LessonPage({
 
   if (error) {
     return (
-      <div className="min-h-screen dark:bg-gray-900 flex flex-col items-center justify-center">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen dark:bg-gray-900">
+        <Card className="w-full">
           <CardHeader>
             <CardTitle className="text-center text-red-500">{t("error")}</CardTitle>
           </CardHeader>
@@ -140,8 +140,8 @@ export default function LessonPage({
   const hasNextLesson = course?.lessons && lessonIndex < course.lessons.length - 1
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow container mx-auto px-4 py-2">
         {/* Header with back button and course title */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div className="flex items-center">
@@ -218,7 +218,7 @@ export default function LessonPage({
                 >
                   <Button
                     variant="outline"
-                    className="w-full justify-start group transition-all border border-black border-opacity-70 text-black text-opacity-70"
+                    className="w-full justify-start group transition-all border border-black border-opacity-80 text-black text-opacity-80"
                     disabled={lessonIndex === 0}
                   >
                     <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -240,7 +240,7 @@ export default function LessonPage({
                 <Link href={`/${lng}/courses/${courseId}`}>
                   <Button
                     variant="secondary"
-                    className="w-full justify-start mt-6 hover:bg-secondary/80 transition-colors"
+                    className="w-full justify-start mt-6 hover:bg-secondary/80 transition-colors border"
                   >
                     <ChevronLeft className="mr-2 h-full w-full" />
                     {t("back_to_course")}
@@ -250,7 +250,7 @@ export default function LessonPage({
             </Card>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

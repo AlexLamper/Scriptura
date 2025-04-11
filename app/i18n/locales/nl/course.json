@@ -16,6 +16,7 @@
     "error": "Er is een fout opgetreden. Probeer het later opnieuw.",
     "go_back": "Ga terug",
     "back_to_course": "Terug naar de cursus",
+    "back_to_courses": "Terug naar de cursussen",
     "lesson_content": "Lesinhoud",
     "discussion": "Discussie",
     "additional_resources": "Aanvullende bronnen",
@@ -24,5 +25,19 @@
     "lesson_navigation": "Lesnavigatie",
     "previous_lesson": "Vorige les",
     "next_lesson": "Volgende les",
-    "course_header": "Cursusoverzicht"
+    "course_header": "Cursusoverzicht",
+    "showing": "",
+    "courses": "Cursussen",
+    "no_courses_found": "Geen cursussen gevonden",
+    "total_courses": "Totaal aantal cursussen",
+    "expert_instructors": "Expertinstructeurs",
+    "active_students": "Actieve studenten",
+    "average_rating": "Gemiddelde beoordeling",
+    "sort_by": "Sorteer op",
+    "newest": "Nieuwste",
+    "most_popular": "Meest populair",
+    "highest_rated": "Het hoogst beoordeeld",
+    "related_courses": "Gerelateerde cursussen",
+    "learning_objectives": "Leerdoelen",
+    "download_materials": "Download materialen"
 }

@@ -26,7 +26,7 @@ export default function CoursePage({
 }: {
   params: Promise<{ lng: string }>
 }) {
-  // Unwrap the params promise using use()
+
   const { lng } = use(params)
   const { t } = useTranslation(lng, "course")
   const [courses, setCourses] = useState<Course[]>([])
@@ -109,6 +109,42 @@ export default function CoursePage({
           <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
         </div>
       </div>
+      {/* Statistics Section */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">{allCourses.length}+</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("total_courses")}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">24+</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("expert_instructors")}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">1200+</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("active_students")}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800/60 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+          <p className="text-3xl font-bold text-[#0f172a] dark:text-white">4.8</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t("average_rating")}</p>
+        </div>
+      </div>
+
+      {/* Course List Section Title */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+          {filteredCourses.length > 0
+            ? `${t("showing")} ${filteredCourses.length} ${t("courses")}`
+            : t("no_courses_found")}
+        </h2>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500 dark:text-gray-400">{t("sort_by")}:</span>
+          <select className="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-3 py-1 rounded text-sm border border-gray-200 dark:border-gray-600">
+            <option value="newest">{t("newest")}</option>
+            <option value="popular">{t("most_popular")}</option>
+            <option value="highest">{t("highest_rated")}</option>
+          </select>
+        </div>
+      </div>
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -118,13 +154,13 @@ export default function CoursePage({
               className="rounded-lg overflow-hidden bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 border border-gray-100 dark:border-gray-700"
             >
               <div className="p-5">
-                <div className="h-5 w-40 mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-5 w-40 mb-2 bg-white dark:bg-gray-700 rounded"></div>
+                <div className="h-3 w-24 bg-gray-100 dark:bg-gray-700 rounded"></div>
               </div>
               <div className="p-5 pt-3">
-                <div className="h-4 w-full mb-5 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-4 w-full mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-8 w-20 mt-4 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+                <div className="h-4 w-full mb-5 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                <div className="h-4 w-full mb-2 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                <div className="h-8 w-20 mt-4 bg-gray-100 dark:bg-gray-700 rounded-md"></div>
               </div>
             </div>
           ))}

@@ -11,6 +11,7 @@ const CourseSchema = new mongoose.Schema(
     difficulty: { type: String, enum: ['beginner', 'intermediate', 'advanced'], required: true },
     tags: [String],
     language: { type: String, required: true },
+    learning_objectives: { type: [String], required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },
