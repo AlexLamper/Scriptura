@@ -1,7 +1,7 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import connectMongoDB from "../../../../libs/mongodb";
-import User from "../../../../models/User";
+import NextAuth, { type NextAuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
+import connectMongoDB from "../../../../libs/mongodb"
+import User from "../../../../models/User"
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,9 +16,9 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, profile }) {
       try {
-        await connectMongoDB();
+        await connectMongoDB()
 
-        const existingUser = await User.findOne({ email: user.email });
+        const existingUser = await User.findOne({ email: user.email })
         if (!existingUser) {
           // Create the new user (store fields that are available)
           await User.create({
@@ -26,19 +26,19 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             image: user.image || "",
             bio: "",
-          });
+          })
         }
-        return true;
+        return true
       } catch (error) {
-        console.error("Error during sign in callback:", error);
-        return false;
+        console.error("Error during sign in callback:", error)
+        return false
       }
     },
     async session({ session }) {
-      return session;
+      return session
     },
   },
-};
+}
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST }

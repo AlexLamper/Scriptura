@@ -2,13 +2,15 @@
 
 import { use, useState, useEffect } from "react"
 import Link from "next/link"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Check } from "lucide-react"
 import { Button } from "../../../../../../components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../../../../../components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../../../components/ui/tabs"
 import { useTranslation } from "../../../../../../app/i18n/client"
 import { Skeleton } from "../../../../../../components/ui/skeleton"
 import { cn } from "../../../../../../lib/utils"
+import { useSession } from "next-auth/react"
+import { Badge } from "../../../../../../components/ui/badge"
 
 type LessonType = {
   title: string
@@ -35,11 +37,15 @@ export default function LessonPage({
 }) {
   const { lng, courseId, lessonId } = use(params)
   const { t } = useTranslation(lng, "course")
+  const { data: session } = useSession()
 
   const [course, setCourse] = useState<CourseType | null>(null)
   const [lesson, setLesson] = useState<LessonType | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isCompleted, setIsCompleted] = useState(false)
+  const [completedLessons, setCompletedLessons] = useState<number[]>([])
+  const [markingAsCompleted, setMarkingAsCompleted] = useState(false)
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -70,6 +76,82 @@ export default function LessonPage({
       fetchCourse()
     }
   }, [courseId, lessonId])
+
+  // Fetch user progress
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!session) return
+
+      try {
+        const response = await fetch(`/api/user-progress?courseId=${courseId}`)
+        if (response.ok) {
+          const data = await response.json()
+          const completedArray = data.completedLessons || []
+          setCompletedLessons(completedArray)
+          setIsCompleted(completedArray.includes(Number(lessonId)))
+        }
+      } catch (error) {
+        console.error("Error fetching progress:", error)
+      }
+    }
+
+    fetchProgress()
+  }, [courseId, lessonId, session])
+
+  // Update last accessed lesson
+  useEffect(() => {
+    const updateAccess = async () => {
+      if (!session) return
+
+      try {
+        await fetch("/api/user-progress", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            courseId,
+            lessonIndex: Number(lessonId),
+            completed: false,
+          }),
+        })
+      } catch (error) {
+        console.error("Error updating last accessed lesson:", error)
+      }
+    }
+
+    if (courseId && lessonId) {
+      updateAccess()
+    }
+  }, [courseId, lessonId, session])
+
+  const markAsCompleted = async () => {
+    if (!session) return
+
+    try {
+      setMarkingAsCompleted(true)
+      const response = await fetch("/api/user-progress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId,
+          lessonIndex: Number(lessonId),
+          completed: true,
+        }),
+      })
+
+      if (response.ok) {
+        setIsCompleted(true)
+        setCompletedLessons([...completedLessons, Number(lessonId)])
+      }
+    } catch (error) {
+      console.error("Error marking lesson as completed:", error)
+    } finally {
+      setMarkingAsCompleted(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -153,8 +235,15 @@ export default function LessonPage({
             </Link>
             {course && <div className="text-sm md:text-base font-medium text-muted-foreground">{course.title}</div>}
           </div>
-          <div className="text-sm text-muted-foreground">
-            {lesson.duration} {t("minutes")}
+          <div className="flex items-center gap-2">
+            <div className="text-sm text-muted-foreground">
+              {lesson.duration} {t("minutes")}
+            </div>
+            {isCompleted && (
+              <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                <Check className="h-3 w-3 mr-1" /> {t("completed")}
+              </Badge>
+            )}
           </div>
         </div>
 
@@ -235,6 +324,76 @@ export default function LessonPage({
                     <ChevronLeft className="ml-2 h-4 w-4 rotate-180 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
+
+                {/* Mark as completed button */}
+                {session && (
+                  <Button
+                    onClick={markAsCompleted}
+                    disabled={isCompleted || markingAsCompleted}
+                    className={cn(
+                      "w-full mt-4",
+                      isCompleted &&
+                        "bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-100",
+                    )}
+                    variant={isCompleted ? "outline" : "default"}
+                  >
+                    {markingAsCompleted ? (
+                      <span className="flex items-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-2 h-4 w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        {t("processing")}
+                      </span>
+                    ) : isCompleted ? (
+                      <span className="flex items-center">
+                        <Check className="mr-2 h-4 w-4" /> {t("completed")}
+                      </span>
+                    ) : (
+                      t("mark_as_completed")
+                    )}
+                  </Button>
+                )}
+
+                {/* Course progress */}
+                {course?.lessons && course.lessons.length > 0 && (
+                  <div className="mt-6 pt-6 border-t">
+                    <h3 className="font-medium mb-3">{t("course_progress")}</h3>
+                    <div className="space-y-2">
+                      {course.lessons.map((courseLesson, idx) => (
+                        <Link key={idx} href={`/${lng}/courses/${courseId}/lessons/${idx}`}>
+                          <div
+                            className={cn(
+                              "p-2 rounded-md text-sm flex items-center",
+                              idx === lessonIndex ? "bg-primary/10 font-medium" : "hover:bg-muted",
+                              completedLessons.includes(idx) && "border-l-4 border-green-500 pl-1",
+                            )}
+                          >
+                            <span className="mr-2">{idx + 1}.</span>
+                            <span className="truncate">{courseLesson.title}</span>
+                            {completedLessons.includes(idx) && <Check className="h-4 w-4 ml-auto text-green-500" />}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
               <CardFooter className="border-t">
                 <Link href={`/${lng}/courses/${courseId}`}>
@@ -254,4 +413,3 @@ export default function LessonPage({
     </div>
   )
 }
-

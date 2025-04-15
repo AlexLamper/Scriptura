@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
 const UserSchema = new mongoose.Schema(
   {
@@ -6,8 +6,9 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     bio: { type: String },
     image: { type: String },
+    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema)

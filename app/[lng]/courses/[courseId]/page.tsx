@@ -3,10 +3,14 @@
 import { use, useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "../../../../components/ui/button"
-import { Progress } from "../../../../components/ui/progress"
+// import { Progress } from "../../../../components/ui/progress"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card"
 import { useTranslation } from "../../../i18n/client"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Check, Clock, BookOpen } from "lucide-react"
+import CourseProgress from "../../../../components/course-progress"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { Badge } from "../../../../components/ui/badge"
 
 type CourseType = {
   _id: string
@@ -29,10 +33,14 @@ export default function CoursePage({
   // Unwrap the params promise using use()
   const { lng, courseId } = use(params)
   const { t } = useTranslation(lng, "course")
+  const { data: session } = useSession()
+  const router = useRouter()
 
   const [course, setCourse] = useState<CourseType | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [completedLessons, setCompletedLessons] = useState<number[]>([])
+  const [lastAccessedLesson, setLastAccessedLesson] = useState<number>(0)
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -60,6 +68,32 @@ export default function CoursePage({
       fetchCourse()
     }
   }, [courseId])
+
+  // Fetch user progress
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!session) return
+
+      try {
+        const response = await fetch(`/api/user-progress?courseId=${courseId}`)
+        if (response.ok) {
+          const data = await response.json()
+          setCompletedLessons(data.completedLessons || [])
+          setLastAccessedLesson(data.lastAccessedLesson || 0)
+        }
+      } catch (error) {
+        console.error("Error fetching progress:", error)
+      }
+    }
+
+    if (courseId && session) {
+      fetchProgress()
+    }
+  }, [courseId, session])
+
+  const handleContinueCourse = () => {
+    router.push(`/${lng}/courses/${courseId}/lessons/${lastAccessedLesson}`)
+  }
 
   if (loading) {
     return (
@@ -119,7 +153,10 @@ export default function CoursePage({
                     <strong>{t("difficulty")}:</strong> <em>{course.difficulty}</em>
                   </span>
                   <span>
-                    <strong>{t("duration")}:</strong> <em>{course.totalDuration} {t("minutes")}</em>
+                    <strong>{t("duration")}:</strong>{" "}
+                    <em>
+                      {course.totalDuration} {t("minutes")}
+                    </em>
                   </span>
                 </div>
                 <div className="mt-4">
@@ -139,22 +176,52 @@ export default function CoursePage({
                   <div className="mt-6">
                     <h3 className="font-semibold mb-2">{t("lessons")}:</h3>
                     <div className="space-y-4">
-                      {course.lessons.map((lesson, index) => (
-                        <Link href={`/${lng}/courses/${courseId}/lessons/${index}`} key={index}>
-                          <div className="border p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition cursor-pointer my-4">
-                            <div className="flex justify-between items-center">
-                              <h4 className="font-medium">{lesson.title}</h4>
-                              <span className="text-sm text-gray-500 dark:text-gray-400">
-                                {lesson.duration} {t("minutes")}
-                              </span>
+                      {course.lessons.map((lesson, index) => {
+                        const isCompleted = completedLessons.includes(index)
+                        const isLastAccessed = index === lastAccessedLesson
+
+                        return (
+                          <Link href={`/${lng}/courses/${courseId}/lessons/${index}`} key={index}>
+                            <div
+                              className={`border p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition cursor-pointer my-4 ${
+                                isCompleted ? "border-l-4 border-green-500" : ""
+                              } ${isLastAccessed ? "bg-blue-50 dark:bg-blue-900/20" : ""}`}
+                            >
+                              <div className="flex justify-between items-center">
+                                <div className="flex items-center">
+                                  <h4 className="font-medium">{lesson.title}</h4>
+                                  {isCompleted && (
+                                    <Badge className="ml-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                                      <Check className="h-3 w-3 mr-1" /> {t("completed")}
+                                    </Badge>
+                                  )}
+                                  {isLastAccessed && !isCompleted && (
+                                    <Badge className="ml-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+                                      {t("in_progress")}
+                                    </Badge>
+                                  )}
+                                </div>
+                                <div className="flex items-center">
+                                  <Clock className="h-4 w-4 mr-1 text-gray-500 dark:text-gray-400" />
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                                    {lesson.duration} {t("minutes")}
+                                  </span>
+                                </div>
+                              </div>
+                              <p className="text-sm mt-1 text-gray-600 dark:text-gray-300">
+                                {lesson.content?.substring(0, 100)}
+                                {lesson.content && lesson.content.length > 100 ? "..." : ""}
+                              </p>
+                              <div className="flex items-center mt-2">
+                                <BookOpen className="h-4 w-4 mr-1 text-gray-500 dark:text-gray-400" />
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  {t("lesson")} {index + 1} {t("of")} {course.lessons.length}
+                                </span>
+                              </div>
                             </div>
-                            <p className="text-sm mt-1 text-gray-600 dark:text-gray-300">
-                              {lesson.content?.substring(0, 100)}
-                              {lesson.content && lesson.content.length > 100 ? "..." : ""}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        )
+                      })}
                     </div>
                   </div>
                 )}
@@ -168,11 +235,10 @@ export default function CoursePage({
                   <CardTitle>{t("course_progress")}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Progress value={33} className="mb-2" />
-                  <p className="text-sm mb-4">33% {t("complete")}</p>
-                  <Button className="w-full mb-3">{t("continue_course")}</Button>
-                  <Button variant="outline" className="w-full">
-                    {t("download_materials")}
+                  <CourseProgress courseId={courseId} lng={lng} />
+                  {/* <p className="text-sm mb-4">33% {t("complete")}</p> */}
+                  <Button className="w-full mb-3" onClick={handleContinueCourse}>
+                    {completedLessons.length > 0 ? t("continue_course") : t("start_course")}
                   </Button>
                 </CardContent>
               </Card>
@@ -185,9 +251,7 @@ export default function CoursePage({
                   <div className="space-y-3">
                     <Link href={`/${lng}/courses/course-theology-advanced`} className="block">
                       <div className="p-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition border">
-                        <h4 className="font-medium">
-                          {t("relatedCourse1Title")}
-                        </h4>
+                        <h4 className="font-medium">{t("relatedCourse1Title")}</h4>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           {t("relatedCourse1Description")}
                         </p>
@@ -195,9 +259,7 @@ export default function CoursePage({
                     </Link>
                     <Link href={`/${lng}/courses/course-theology-fundamentals`} className="block">
                       <div className="p-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition border">
-                        <h4 className="font-medium">
-                          {t("relatedCourse2Title")}
-                        </h4>
+                        <h4 className="font-medium">{t("relatedCourse2Title")}</h4>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           {t("relatedCourse2Description")}
                         </p>
@@ -207,25 +269,23 @@ export default function CoursePage({
                 </CardContent>
               </Card>
               <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2] mt-8">
-              <CardHeader>
-                <CardTitle>{t("learning_objectives")}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {course.learning_objectives && course.learning_objectives.length > 0 ? (
-                  <ul className="list-disc pl-5 space-y-2">
-                    {course.learning_objectives.map((objective, index) => (
-                      <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
-                        {objective}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {t("no_learning_objectives")}
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+                <CardHeader>
+                  <CardTitle>{t("learning_objectives")}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {course.learning_objectives && course.learning_objectives.length > 0 ? (
+                    <ul className="list-disc pl-5 space-y-2">
+                      {course.learning_objectives.map((objective, index) => (
+                        <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
+                          {objective}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t("no_learning_objectives")}</p>
+                  )}
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
