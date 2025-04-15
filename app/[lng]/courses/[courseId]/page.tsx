@@ -211,13 +211,19 @@ export default function CoursePage({
                 <CardTitle>{t("learning_objectives")}</CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="list-disc pl-5 space-y-2">
-                  {course.learning_objectives.map((objective, index) => (
-                    <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
-                      {objective}
-                    </li>
-                  ))}
-                </ul>
+                {course.learning_objectives && course.learning_objectives.length > 0 ? (
+                  <ul className="list-disc pl-5 space-y-2">
+                    {course.learning_objectives.map((objective, index) => (
+                      <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
+                        {objective}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {t("no_learning_objectives")}
+                  </p>
+                )}
               </CardContent>
             </Card>
             </div>
