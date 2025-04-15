@@ -17,7 +17,7 @@ export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
   const { t } = useTranslation(lng, "welcome")
 
   return (
-    <div className="rounded-xl p-6 border mb-8 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20">
+    <div className="rounded-xl p-6 border mb-8 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10 dark:border-[#91969e52]">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="mb-4 md:mb-0">
           <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">

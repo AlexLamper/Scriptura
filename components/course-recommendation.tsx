@@ -56,58 +56,70 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
   }, [])
 
   return (
-    <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg p-6 shadow-sm border dark:border-indigo-900/30 h-full">
+    <div className="bg-white dark:bg-[#2a2b2f] rounded-lg p-6 shadow-sm border border-gray-100 dark:border-[#b6b6b63d] h-full">
       {loading ? (
         <div className="space-y-4">
-          <Skeleton className="h-6 w-24 mb-4 bg-indigo-100 dark:bg-indigo-900/30" />
-          <Skeleton className="h-7 w-full mb-4 bg-indigo-100 dark:bg-indigo-900/30" />
-          <Skeleton className="h-4 w-3/4 mb-6 bg-indigo-100 dark:bg-indigo-900/30" />
+          <Skeleton className="h-6 w-24 mb-4 bg-gray-100 dark:bg-[#0d1017]" />
+          <Skeleton className="h-7 w-full mb-4 bg-gray-100 dark:bg-[#0d1017]" />
+          <Skeleton className="h-4 w-3/4 mb-6 bg-gray-100 dark:bg-[#0d1017]" />
           <div className="flex -space-x-2 mb-6">
-            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
-            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
-            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
-            <Skeleton className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#0d1017]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#0d1017]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#0d1017]" />
+            <Skeleton className="h-8 w-8 rounded-full bg-gray-100 dark:bg-[#0d1017]" />
           </div>
-          <Skeleton className="h-10 w-full bg-indigo-100 dark:bg-indigo-900/30" />
+          <Skeleton className="h-10 w-full bg-gray-100 dark:bg-[#0d1017]" />
         </div>
       ) : recommendedCourse ? (
         <>
-          <Badge className="px-2 py-1 rounded-md bg-white dark:bg-indigo-900/30 border-none text-gray-600 dark:text-indigo-400 hover:bg-white hover:text-gray-600">
+          <Badge className="px-2 py-1 rounded-md bg-white dark:bg-[#141b23]/30 border-none text-gray-600 dark:text-[#c9d1d9] hover:bg-white hover:text-gray-600">
             Featured Course
           </Badge>
-          <h3 className="text-xl font-bold my-4 text-gray-900 dark:text-white">{recommendedCourse.title}</h3>
+          <h3 className="text-xl font-bold my-4 text-gray-900 dark:text-white">
+            {recommendedCourse.title}
+          </h3>
           <div className="flex items-center gap-1 mb-2 text-amber-500">
             {[1, 2, 3, 4, 5].map((i) => (
               <Star key={i} className="fill-current" size={16} />
             ))}
-            <span className="text-sm text-gray-600 dark:text-gray-300 ml-2">{t("popularity")}</span>
+            <span className="text-sm text-gray-600 dark:text-gray-300 ml-2">
+              {t("popularity")}
+            </span>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{recommendedCourse.description}</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+            {recommendedCourse.description}
+          </p>
           <div className="space-y-2 mb-6">
             <div className="flex items-center gap-2">
               <BookOpen className="text-gray-500 dark:text-gray-400" size={16} />
-              <span className="text-sm text-gray-600 dark:text-gray-300">{recommendedCourse.instructor}</span>
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                {recommendedCourse.instructor}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="text-gray-500 dark:text-gray-400" size={16} />
-              <span className="text-sm text-gray-600 dark:text-gray-300">15 hours of content</span>
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                15 hours of content
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="text-gray-500 dark:text-gray-400" size={16} />
-              <span className="text-sm text-gray-600 dark:text-gray-300">Updated 2 weeks ago</span>
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                Updated 2 weeks ago
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-2 mb-6">
             <div className="flex -space-x-2">
               {[1, 2, 3].map((i) => (
-                <Avatar key={i} className="w-8 h-8 border-2 border-white dark:border-gray-800">
+                <Avatar key={i} className="w-8 h-8 border-2 border-white dark:border-[#b6b6b63d]">
                   <AvatarImage src="/placeholder.svg" alt={t("user_avatar")} />
-                  <AvatarFallback className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                  <AvatarFallback className="bg-gray-100 dark:bg-[#0d1017] text-gray-600 dark:text-[#c9d1d9]">
                     U{i}
                   </AvatarFallback>
                 </Avatar>
               ))}
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-xs border-2 border-white dark:border-gray-800 text-indigo-600 dark:text-indigo-400 font-medium">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-[#0d1017] text-xs border-2 border-white dark:border-[#b6b6b63d] text-gray-600 dark:text-[#c9d1d9] font-medium">
                 +{Math.floor(Math.random() * 100) + 50}
               </div>
             </div>
@@ -120,7 +132,9 @@ export function CourseRecommendation({ params: { lng } }: CourseRecommendationPr
         </>
       ) : (
         <div className="text-center py-10">
-          <p className="text-gray-500 dark:text-gray-300">No recommendation available</p>
+          <p className="text-gray-500 dark:text-gray-300">
+            No recommendation available
+          </p>
         </div>
       )}
     </div>

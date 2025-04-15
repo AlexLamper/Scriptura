@@ -47,15 +47,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
     // Extract language from pathname
     const pathSegments = pathname.split("/").filter(Boolean)
     const langFromPath = pathSegments[0]
-
-    console.log("Path segments:", pathSegments)
-    console.log("Language from path:", langFromPath)
-    console.log("Provided lng param:", lng)
-
-    // Use the language from the URL path, fallback to the lng param, or default to "en"
-    const detectedLanguage = langFromPath && ["en", "nl", "de"].includes(langFromPath) ? langFromPath : lng || "en"
-
-    console.log("Using language for filtering:", detectedLanguage)
+    const detectedLanguage =
+      langFromPath && ["en", "nl", "de"].includes(langFromPath) ? langFromPath : lng || "en"
     setCurrentLanguage(detectedLanguage)
   }, [pathname, lng])
 
@@ -68,24 +61,20 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
         }
         const data: { courses: CourseType[] } = await response.json()
 
-        console.log("All courses from API:", data.courses)
-        console.log("Current language for filtering:", currentLanguage)
-
         if (Array.isArray(data.courses)) {
           setAllCourses(data.courses)
 
           // Filter courses by the current language (case insensitive)
           const languageFilteredCourses = data.courses.filter((course) => {
-            console.log(`Course ${course.title} language:`, course.language)
             return course.language && course.language.toLowerCase() === currentLanguage.toLowerCase()
           })
 
-          console.log("Filtered courses:", languageFilteredCourses)
           setCourses(languageFilteredCourses)
 
           // Extract unique categories from filtered courses
-          const uniqueCategories: string[] = [...new Set(languageFilteredCourses.map((course) => course.category))]
-          console.log("Unique categories:", uniqueCategories)
+          const uniqueCategories: string[] = [
+            ...new Set(languageFilteredCourses.map((course) => course.category))
+          ]
           setCategories(uniqueCategories)
         }
       } catch (error) {
@@ -114,10 +103,12 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t("my_bible_courses")}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-50">
+          {t("my_bible_courses")}
+        </h2>
         <Badge
           variant="outline"
-          className="gap-1 border-[#0f172a] dark:border-[#0f172a] text-[#0f172a] dark:text-[#0f172a]"
+          className="gap-1 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300"
         >
           <Filter className="h-3.5 w-3.5" />
           <span>
@@ -131,8 +122,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           variant={activeCategory === "all" ? "secondary" : "outline"}
           className={
             activeCategory === "all"
-              ? "bg-[#0f172a] text-white hover:bg-[#0f172a] dark:bg-[#0f172a] dark:hover:bg-[#0f172a] dark:text-white cursor-pointer transition-colors"
-              : "border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] cursor-pointer hover:bg[#0f172a] dark:hover:bg-[#0f172a]/30 transition-colors"
+              ? "bg-gray-700 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white cursor-pointer transition-colors"
+              : "border-gray-300 text-gray-800 dark:border-gray-700 dark:text-gray-300 cursor-pointer hover:bg-gray-700 dark:hover:bg-gray-700/30 transition-colors"
           }
           onClick={() => setActiveCategory("all")}
         >
@@ -145,8 +136,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
             variant={activeCategory === category ? "secondary" : "outline"}
             className={
               activeCategory === category
-                ? "bg-[#0f172a] text-white hover:bg-[#0f172a] dark:bg-[#0f172a] dark:hover:bg-[#0f172a] dark:text-white cursor-pointer transition-colors"
-                : "border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] cursor-pointer hover:bg[#0f172a] dark:hover:bg-[#0f172a]/30 transition-colors"
+                ? "bg-gray-700 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white cursor-pointer transition-colors"
+                : "border-gray-300 text-gray-800 dark:border-gray-700 dark:text-gray-300 cursor-pointer hover:bg-gray-700 dark:hover:bg-gray-700/30 transition-colors"
             }
             onClick={() => setActiveCategory(category)}
           >
@@ -160,12 +151,12 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="rounded-lg overflow-hidden bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 border border-gray-100 dark:border-gray-700"
+              className="rounded-lg overflow-hidden bg-gradient-to-r from-gray-100/5 via-gray-200/5 to-gray-100/5 dark:from-gray-800/15 dark:via-gray-900/15 dark:to-gray-800/15 border border-gray-200 dark:border-gray-700"
             >
               <div className="relative">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-700"></div>
                 <div className="flex items-center p-5">
-                  <div className="flex-shrink-0 mr-4 w-12 h-12 rounded-full flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30">
+                  <div className="flex-shrink-0 mr-4 w-12 h-12 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-900/30">
                     <Skeleton className="h-6 w-6 rounded-full" />
                   </div>
                   <div>
@@ -222,7 +213,7 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
               <Button
                 variant="outline"
                 onClick={toggleShowAllCourses}
-                className="border-[#0f172a] text-[#0f172a] dark:border-[#0f172a] dark:text-[#0f172a] hover:bg-[#0f172a]/10"
+                className="border-gray-300 text-gray-800 dark:border-gray-700 dark:text-gray-300 hover:bg-gray-700/10 dark:hover:bg-gray-700/20"
               >
                 {showAllCourses ? (
                   <>
@@ -240,7 +231,7 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
           )}
         </>
       ) : (
-        <div className="text-center py-16 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg border border-gray-100 dark:border-gray-700">
+        <div className="text-center py-16 bg-gradient-to-r from-gray-100/5 via-gray-200/5 to-gray-100/5 dark:from-gray-800/15 dark:via-gray-900/15 dark:to-gray-800/15 rounded-lg border border-gray-200 dark:border-gray-700">
           <Search className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
           <p className="text-gray-500 dark:text-gray-300 text-lg">
             {allCourses.length > 0 ? `No courses found for ${currentLanguage} language` : "No courses found"}
@@ -266,4 +257,3 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
     </div>
   )
 }
-

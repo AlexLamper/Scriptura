@@ -61,7 +61,7 @@ export function Header({ params: { lng } }: HeaderProps) {
   }
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b">
+    <header className="flex items-center justify-between px-6 py-4 border-b dark:border-b-[#91969e52]">
       {/* Left Side: Sidebar Trigger + Logo */}
       <div className="flex items-center space-x-2">
         <SidebarTrigger />
