@@ -39,5 +39,6 @@
     "highest_rated": "Höchste Bewertung",
     "related_courses": "Ähnliche Kurse",
     "learning_objectives": "Lernziele",
-    "download_materials": "Materialien herunterladen"
+    "download_materials": "Materialien herunterladen",
+    "no_learning_objectives": "Keine Lernziele gefunden"
 }

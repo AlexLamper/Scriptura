@@ -67,6 +67,25 @@ const courseSchema = new mongoose.Schema<CourseType>({
   },
 });
 
+export interface UserType {
+  _id: mongoose.Schema.Types.ObjectId;
+  name: string;
+  email: string;
+  bio?: string;
+  image?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const userSchema = new mongoose.Schema<UserType>({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  bio: { type: String },
+  image: { type: String },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+});
+
 export interface PostType {
   _id: mongoose.Schema.Types.ObjectId;
   title: string;
@@ -160,3 +179,4 @@ const quizSchema = new mongoose.Schema<QuizType>({
 export const Post = mongoose.models.Post || mongoose.model('Post', postSchema);
 export const Course = mongoose.models.Course || mongoose.model('Course', courseSchema);
 export const Quiz = mongoose.models.Quiz || mongoose.model('Quiz', quizSchema);
+export const User = mongoose.models.User || mongoose.model('User', userSchema);
