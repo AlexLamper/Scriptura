@@ -16,10 +16,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, profile }) {
       try {
-        // Ensure connection to MongoDB
         await connectMongoDB();
 
-        // Check if user already exists based on email
         const existingUser = await User.findOne({ email: user.email });
         if (!existingUser) {
           // Create the new user (store fields that are available)
@@ -27,7 +25,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name || (profile && profile.name) || "User",
             email: user.email,
             image: user.image || "",
-            bio: "", // You can change this default value or add additional fields as needed
+            bio: "",
           });
         }
         return true;
@@ -37,7 +35,6 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async session({ session }) {
-      // Optionally, you can enhance the session object here with information from your DB.
       return session;
     },
   },
