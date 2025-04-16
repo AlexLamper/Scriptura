@@ -3,8 +3,6 @@
 **Your Interactive Bible Learning Platform**
 
 ![Scriptura Banner Screenshot](public/screenshot1.png)
-![Scriptura Quiz Banner Screenshot](public/screenshot2.png)
-![Scriptura Course Banner Screenshot](public/screenshot3.png)
 
 ## About Scriptura
 
@@ -14,25 +12,23 @@
 
 1. **Features**
 2. **Tech Stack**
-3. **Pages**
-4. **API**
-5. **Contributing**
-6. **Support**
-7. **License**
-8. **Version**
-9. **FAQ**
-10. **Contact**
+3. **API**
+4. **Contributing**
+5. **Support**
+6. **License**
+7. **Version**
+8. **FAQ**
+9. **Contact**
 
 ## Features
 
 - **Personalized Learning** — Track your progress with tailored suggestions and daily Bible reading prompts.
-- **Bible Courses** — Deepen your knowledge of Bible characters, events, and teachings through engaging quizzes.
+- **Bible Courses** — Deepen your knowledge of Bible characters, events, and teachings through engaging courses.
+- **Bible Quizzes** — Learn more about the Bible through our quizzes. Try to get the highest score.
 - **Progress Tracking** — Monitor your milestones, quiz scores, and daily Bible engagement.
-- **Interactive Bible Map** — Discover key biblical locations and their historical significance.
 - **Leaderboards** — Compete with others and see how your Bible knowledge stacks up.
 - **Community Insights** — Share notes, reflections, and insights with fellow learners.
 - **Daily Verses and Teachings** — Reflect on daily Bible verses and thematic lessons.
-- **Note-Taking** — Add, edit, and organize personal notes for effective study.
 
 ## Tech Stack
 
@@ -48,16 +44,6 @@
 - **FramerMotion** — Smooth animations and transitions.
 - **NextAuth** — Simple and secure authentication.
 - **Stripe** — Seamless payment processing.
-
-## Pages
-
-- **Dashboard** — Access courses, daily suggestions, and learning resources.
-- **Courses** — Browse and enroll in Bible study courses.
-- **Profile** — Customize your profile and track achievements.
-- **Resources** — Find various Bible versions, commentaries, and study tools.
-- **Community** — Join discussions, study groups, and share insights.
-- **Settings** — Manage account preferences.
-- **Help/FAQ** — Get support and answers to common questions.
 
 ## API
 
@@ -88,7 +74,7 @@ Interested in supporting *Scriptura*? Spread the word, or contribute directly by
 ## FAQ
 
 **Is Scriptura free to use?**  
-Yes! *Scriptura* is completely free. Premium features may be introduced in the future.
+Yes! *Scriptura* is completely free to use. Want more? The Pro plan is available for just €9.99/month.
 
 **What Bible translations are supported?**  
 We currently support multiple translations, including the **King James Version** — with plans to expand.
