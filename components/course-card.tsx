@@ -23,7 +23,7 @@ export function CourseCard({ title, category, progress }: CourseCardProps) {
           <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
             {title}
           </h3>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 text-[#1f1f1f9d] dark:text-blue-400 border border-black/10 text-[#c9d1d9] dark:border-[#b6b6b63d]">
+          <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 dark:text-blue-400 border border-black/10 dark:border-[#b6b6b63d] text-[#1f1f1f9d]">
             {category}
           </span>
         </div>
