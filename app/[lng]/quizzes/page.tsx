@@ -151,7 +151,7 @@ export default function QuizzesPage() {
               <li
                 key={quiz._id}
                 onClick={() => handleQuizClick(quiz._id)}
-                className="bg-white dark:bg-[#2C2C33] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer relative"
+                className="bg-white dark:bg-[#2a2b2f] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer relative"
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {

@@ -31,17 +31,17 @@ export default async function CommunityPage() {
         <h1 className="text-3xl font-bold mb-6">Community</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
-            <Card>
+            <Card className="dark:bg-[#292b2f] dark:border-none">
               <CardHeader>
                 <CardTitle>Discussion Forum</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="mb-4">
-                  <Input placeholder="Search discussions..." />
+                  <Input placeholder="Search discussions..." className="dark:bg-[#18181a] dark:border-[#ffffff6f]" />
                 </div>
                 <ul className="space-y-4">
                   {discussionTopics.map((topic) => (
-                    <li key={topic.id} className="border-b pb-4 last:border-b-0">
+                    <li key={topic.id} className="border-b dark:border-b-[#4e4d4d52] pb-4 last:border-b-0">
                       <h3 className="font-semibold">{topic.title}</h3>
                       <div className="text-sm text-gray-500">
                         <span>{topic.replies} replies</span> · <span>Last activity {topic.lastActivity}</span>
@@ -54,7 +54,7 @@ export default async function CommunityPage() {
             </Card>
           </div>
           <div>
-            <Card>
+            <Card className="dark:bg-[#292b2f] dark:border-none">
               <CardHeader>
                 <CardTitle>Study Groups</CardTitle>
               </CardHeader>
@@ -67,7 +67,7 @@ export default async function CommunityPage() {
                         <p className="text-sm text-gray-500">{group.members} members</p>
                         <p className="text-sm text-gray-500">Next: {group.nextMeeting}</p>
                       </div>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="dark:bg-[#18181a] dark:border-[#ffffff2b]">
                         Join
                       </Button>
                     </li>

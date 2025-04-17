@@ -28,13 +28,13 @@ export default function ResourcesPage() {
       <div className="mx-auto">
         <h1 className="text-3xl font-bold mb-6">Resources</h1>
         <Tabs defaultValue="bibleVersions">
-          <TabsList className="mb-4 dark:bg-[#2e2d32]">
+          <TabsList className="mb-4 dark:bg-[#292b2f]">
             <TabsTrigger value="bibleVersions">Bible Versions</TabsTrigger>
             <TabsTrigger value="commentaries">Commentaries</TabsTrigger>
             <TabsTrigger value="studyTools">Study Tools</TabsTrigger>
           </TabsList>
           <TabsContent value="bibleVersions">
-            <Card className="dark:bg-[#2e2d32] dark:border-none">
+            <Card className="dark:bg-[#292b2f] dark:border-none">
               <CardHeader>
                 <CardTitle>Bible Versions</CardTitle>
               </CardHeader>
@@ -55,7 +55,7 @@ export default function ResourcesPage() {
             </Card>
           </TabsContent>
           <TabsContent value="commentaries">
-            <Card className="dark:bg-[#2e2d32] dark:border-none">
+            <Card className="dark:bg-[#292b2f] dark:border-none">
               <CardHeader>
                 <CardTitle>Commentaries</CardTitle>
               </CardHeader>
@@ -76,7 +76,7 @@ export default function ResourcesPage() {
             </Card>
           </TabsContent>
           <TabsContent value="studyTools">
-            <Card className="dark:bg-[#2e2d32] dark:border-none">
+            <Card className="dark:bg-[#292b2f] dark:border-none">
               <CardHeader>
                 <CardTitle>Study Tools</CardTitle>
               </CardHeader>

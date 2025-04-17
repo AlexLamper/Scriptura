@@ -44,7 +44,7 @@ export default function SidebarProCTA() {
   return (
     <div className="mt-auto px-3 pb-4">
       <div
-        className={`bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg shadow-sm border dark:border-indigo-900/30 overflow-hidden transition-all duration-300 ${
+        className={`bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10 rounded-lg shadow-sm border dark:border-[#91969e52] overflow-hidden transition-all duration-300 ${
           expanded ? "pb-4" : ""
         }`}
       >
