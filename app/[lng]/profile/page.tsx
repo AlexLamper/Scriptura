@@ -17,7 +17,7 @@ export default async function ProfilePage() {
             <div className="mx-auto">
                 <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="md:col-span-2 dark:bg-[#2e2d32] dark:border-none">
+                    <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-none">
                         <CardHeader>
                             <CardTitle>Personal Information</CardTitle>
                         </CardHeader>
@@ -49,7 +49,7 @@ export default async function ProfilePage() {
                             </form>
                         </CardContent>
                     </Card>
-                    <Card className="dark:bg-[#2e2d32] dark:border-none">
+                    <Card className="dark:bg-[#292b2f] dark:border-none">
                         <CardHeader>
                             <CardTitle>Profile Picture</CardTitle>
                         </CardHeader>
