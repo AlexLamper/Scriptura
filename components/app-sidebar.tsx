@@ -15,7 +15,6 @@ import {
   SidebarRail,
 } from "../components/ui/sidebar"
 import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, Layers, ListCheckIcon,
-  //  FileQuestion, ShieldQuestionIcon, HandshakeIcon, Mail 
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 
@@ -63,21 +62,6 @@ const additionalSections = [
   {
     title: "Extras",
     items: [
-      // {
-      //   title: "Join Discord",
-      //   url: "/discord",
-      //   icon: HandshakeIcon,
-      // },
-      // {
-      //   title: "FAQ",
-      //   url: "/faq",
-      //   icon: FileQuestion,
-      // },
-      // {
-      //   title: "Contact Us",
-      //   url: "/contact",
-      //   icon: Mail,
-      // },
       {
         title: "Terms of Service",
         url: "/terms-of-service",
@@ -88,23 +72,18 @@ const additionalSections = [
         url: "/privacy-policy",
         icon: ListCheckIcon,
       },
-      // {
-      //   title: "Getting Help",
-      //   url: "/help",
-      //   icon: ShieldQuestionIcon,
-      // }
     ],
   },
 ]
 
 export function AppSidebar({ ...props }) {
   const params = useParams()
-  const lang = params.lng || "en" // Default to 'en' if no language is found
+  const lang = params.lng || "en"
 
   const prependLang = (url: string) => `/${lang}${url}`
 
   return (
-    <Sidebar {...props}>
+    <Sidebar {...props} className="dark:border-r-[#91969e52]">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
