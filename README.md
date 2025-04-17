@@ -1,4 +1,4 @@
-# Scriptura
+# Scriptura - Interactive Bible Learning Platform
 
 **Your Interactive Bible Learning Platform**
 
