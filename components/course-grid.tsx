@@ -28,6 +28,7 @@ interface CourseType {
   totalDuration: number
   tags: string[]
   progress?: string
+  imageUrl: string
 }
 
 export function CourseGrid({ params: { lng } }: CourseGridProps) {
@@ -201,7 +202,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
                     title={course.title}
                     category={course.category}
                     progress={`${Math.floor(Math.random() * 20)}/${Math.floor(Math.random() * 30) + 20}`}
-                    language={course.language}
+                    language={course.language} 
+                    imageUrl={course.imageUrl}          
                   />
                 </Link>
               </motion.div>

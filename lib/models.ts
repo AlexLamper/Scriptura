@@ -12,6 +12,7 @@ export interface CourseType {
   tags: string[];
   language: string;
   learning_objectives: string[];
+  imageUrl: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -56,6 +57,10 @@ const courseSchema = new mongoose.Schema<CourseType>({
   learning_objectives: {
     type: [String],
     required: true,
+  },
+  imageUrl: { 
+    type: String, 
+    required: true 
   },
   createdAt: {
     type: Date,
