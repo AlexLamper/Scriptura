@@ -5,6 +5,7 @@ import { DashboardQuizzes } from "../../../components/dashboard-quizzes"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import WelcomeDashboard from "../../../components/dashboard/welcome-dashboard"
+import WhereToStart from "../../../components/where-to-start"
 
 export default async function DashboardPage() {
   const session = await getServerSession()
@@ -39,6 +40,10 @@ export default async function DashboardPage() {
           }}
         />
       </div>
+      <div className="my-8"></div>
+      <hr className="dark:border-[#91969e52]" />
+      <WhereToStart />
+      <hr className="dark:border-[#91969e52]" />
     </div>
   )
 }
