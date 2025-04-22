@@ -47,6 +47,14 @@ export default function LessonPage({
   const [completedLessons, setCompletedLessons] = useState<number[]>([])
   const [markingAsCompleted, setMarkingAsCompleted] = useState(false)
 
+  function replaceCitations(content: string) {
+    // Replace :contentReference[oaicite:0]{index=0} with a superscripted clickable reference
+    return content.replace(/:contentReference\[oaicite:(\d+)\]\{index=\d+\}/g, (_, idx) => {
+      const num = parseInt(idx, 10) + 1
+      return `<sup id=\"ref-${num}\"><a href=\"#ref-${num}\">[${num}]</a></sup>`
+    })
+  }
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -58,7 +66,6 @@ export default function LessonPage({
         const data = await response.json()
         setCourse(data)
 
-        // Use lessonId as index to extract the lesson from the lessons array
         const lessonIndex = Number(lessonId)
         if (data.lessons && data.lessons.length > lessonIndex) {
           setLesson(data.lessons[lessonIndex])
@@ -77,7 +84,6 @@ export default function LessonPage({
     }
   }, [courseId, lessonId])
 
-  // Fetch user progress
   useEffect(() => {
     const fetchProgress = async () => {
       if (!session) return
@@ -98,7 +104,6 @@ export default function LessonPage({
     fetchProgress()
   }, [courseId, lessonId, session])
 
-  // Update last accessed lesson
   useEffect(() => {
     const updateAccess = async () => {
       if (!session) return
@@ -215,11 +220,13 @@ export default function LessonPage({
     )
   }
 
-  // Determine lesson navigation assuming lessonId is used as an index.
   const lessonIndex = Number(lessonId)
   const prevLessonId = lessonIndex > 0 ? String(lessonIndex - 1) : lessonId
   const nextLessonId = String(lessonIndex + 1)
   const hasNextLesson = course?.lessons && lessonIndex < course.lessons.length - 1
+
+  // Process content to render citations correctly
+  const processedContent = replaceCitations(lesson.content)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -247,18 +254,16 @@ export default function LessonPage({
           </div>
         </div>
 
-        {/* Lesson title */}
         <h1 className="text-3xl font-bold mb-8 text-foreground">{lesson.title}</h1>
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            {/* Lesson Content */}
             <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-0 overflow-hidden">
                 <div className="p-8">
-                  <div
-                    className="prose dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
-                    dangerouslySetInnerHTML={{ __html: lesson.content }}
+                  <div 
+                    className="prose whitespace-pre-line dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
+                    dangerouslySetInnerHTML={{ __html: processedContent }}
                   ></div>
                 </div>
               </CardContent>
