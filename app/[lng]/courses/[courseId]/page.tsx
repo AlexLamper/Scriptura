@@ -2,6 +2,7 @@
 
 import { use, useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "../../../../components/ui/button"
 // import { Progress } from "../../../../components/ui/progress"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card"
@@ -23,6 +24,7 @@ type CourseType = {
   tags: string[]
   lessons?: { title: string; duration: number; content: string }[]
   learning_objectives: string[]
+  imageUrl?: string
 }
 
 export default function CoursePage({
@@ -230,6 +232,20 @@ export default function CoursePage({
           </div>
           <div>
             <div className="space-y-6">
+              {course.imageUrl && (
+                <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2] overflow-hidden">
+                  <div className="relative w-full aspect-video">
+                    <Image
+                      src={course.imageUrl || "/placeholder.svg"}
+                      alt={course.title}
+                      fill
+                      className="object-cover opacity-75"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
+                </Card>
+              )}
+
               <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2]">
                 <CardHeader>
                   <CardTitle>{t("course_progress")}</CardTitle>
