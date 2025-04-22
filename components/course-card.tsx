@@ -31,7 +31,7 @@ export function CourseCard({
           src={imageUrl}
           alt={`${title} cover`}
           fill
-          className="object-cover"
+          className="object-cover opacity-70 hover:opacity-80 transition-all duration-300"
           unoptimized
         />
 
