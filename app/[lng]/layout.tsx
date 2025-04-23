@@ -221,7 +221,7 @@ export default async function RootLayout({
       <body className="antialiased bg-gray-100">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

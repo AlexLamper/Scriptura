@@ -98,7 +98,7 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
                 size="lg"
                 className="text-lg border font-semibold tracking-wide bg-[#10172a] hover:bg-[#10172ae0] text-white hover:text-white dark:bg-red-500 dark:hover:bg-red-600 dark:text-white"
               >
-                <Link href="#features">{t("button_text")}</Link>
+                <Link href={`/api/auth/signin`}>{t("button_text")}</Link>
               </Button>
             </motion.div>
           </motion.div>

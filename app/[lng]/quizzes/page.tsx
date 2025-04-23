@@ -12,6 +12,7 @@ interface QuizType {
   category: string
   subCategory: string
   difficulty: string
+  author: string
   tags: string[]
   studyMaterials?: {
     bibleVerses: { verse: string, text: string}[]
@@ -180,6 +181,9 @@ export default function QuizzesPage() {
                   </span>
                   <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                     {quiz.language}
+                  </span>
+                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {quiz.author}
                   </span>
                 </div>
               </li>

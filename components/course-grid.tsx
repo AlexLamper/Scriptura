@@ -137,8 +137,8 @@ export function CourseGrid({ params: { lng } }: CourseGridProps) {
             variant={activeCategory === category ? "secondary" : "outline"}
             className={
               activeCategory === category
-                ? "bg-gray-700 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white cursor-pointer transition-colors"
-                : "border-gray-300 text-gray-800 dark:border-gray-700 dark:text-gray-300 cursor-pointer hover:bg-gray-700 dark:hover:bg-gray-700/30 transition-colors"
+                ? "bg-gray-700 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white cursor-pointer transition-colors hover:text-white"
+                : "border-gray-300 text-gray-800 dark:border-gray-700 dark:text-gray-300 cursor-pointer hover:bg-gray-700 dark:hover:bg-gray-700/30 transition-colors hover:text-white"
             }
             onClick={() => setActiveCategory(category)}
           >

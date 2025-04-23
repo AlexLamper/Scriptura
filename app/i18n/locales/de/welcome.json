@@ -1,6 +1,10 @@
 {
     "welcome_back": "Willkommen zurück",
-    "continue_your_biblical_journey": "Setze deine lernen fort, wo du aufgehört hast.",
+    "continue_your_biblical_journey": "Setze deine biblische Reise fort",
     "resume_course": "Kurs fortsetzen",
-    "take_quiz": "Quiz machen"
-}
+    "take_quiz": "Quiz machen",
+    "good_morning": "Guten Morgen",
+    "good_afternoon": "Guten Tag",
+    "good_evening": "Guten Abend",
+    "good_night": "Gute Nacht"
+  }

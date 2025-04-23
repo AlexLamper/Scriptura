@@ -130,6 +130,7 @@ export interface QuizType {
   description: string;
   category: string;
   difficulty: string;
+  author: string;
   questions: {
     questionText: string;
     options: string[];
@@ -151,6 +152,10 @@ const quizSchema = new mongoose.Schema<QuizType>({
     required: true,
   },
   category: {
+    type: String,
+    required: true,
+  },
+  author: {
     type: String,
     required: true,
   },

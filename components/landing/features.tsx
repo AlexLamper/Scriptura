@@ -76,7 +76,7 @@ export default function FeaturesSection({ params: { lng } }: FeaturesSectionProp
   }
 
   return (
-    <section className="py-16 md:py-24 dark:bg-gray-800">
+    <section className="py-16 md:py-24 dark:bg-gray-800" id="features">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           className="mb-12 text-center"

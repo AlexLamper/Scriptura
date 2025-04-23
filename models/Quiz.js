@@ -7,6 +7,7 @@ const QuizSchema = new mongoose.Schema(
     language: { type: String, required: true },
     category: { type: String, required: true },
     subCategory: { type: String, required: true },
+    author: { type: String, required: true },
     difficulty: { type: String, enum: ["beginner", "intermediate", "advanced"], required: true },
     // New field for study materials
     studyMaterials: {
