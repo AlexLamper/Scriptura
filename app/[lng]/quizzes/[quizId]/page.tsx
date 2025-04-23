@@ -72,6 +72,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const [showDashboard, setShowDashboard] = useState(false)
   const [quizHistory, setQuizHistory] = useState<QuizHistory[]>([])
   const [randomizedOptions, setRandomizedOptions] = useState<string[][]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   // Debug logs to verify state
   useEffect(() => {
@@ -79,14 +80,19 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     console.log("Is timer running:", isTimerRunning)
     console.log("Bookmarked questions:", bookmarkedQuestions)
     console.log("Randomized options:", randomizedOptions)
-  }, [timer, isTimerRunning, bookmarkedQuestions, randomizedOptions])
+    console.log("Show study materials:", showStudyMaterials)
+    console.log("Study completed:", studyCompleted)
+  }, [timer, isTimerRunning, bookmarkedQuestions, randomizedOptions, showStudyMaterials, studyCompleted])
 
   useEffect(() => {
     const fetchQuiz = async () => {
+      setIsLoading(true)
       try {
         const response = await fetch(`/api/courses?quizId=${quizId}`)
         const data = await response.json()
+
         if (data.quiz) {
+          console.log("Fetched quiz data:", data.quiz)
           setQuiz(data.quiz)
           setSelectedOptions(new Array(data.quiz.questions.length).fill(null))
 
@@ -111,8 +117,11 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
       } catch (err) {
         console.error("Error fetching quiz:", err)
         setError("Error fetching quiz")
+      } finally {
+        setIsLoading(false)
       }
     }
+
     fetchQuiz()
 
     // Start the timer when the quiz begins (after study materials)
@@ -126,7 +135,14 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
         saveQuizProgress()
       }
     }
-  }, [quizId, showStudyMaterials, studyCompleted])
+  }, [quizId])
+
+  // Update timer state when study materials are hidden and study is completed
+  useEffect(() => {
+    if (!showStudyMaterials && studyCompleted && !isTimerRunning) {
+      setIsTimerRunning(true)
+    }
+  }, [showStudyMaterials, studyCompleted, isTimerRunning])
 
   // Timer effect
   useEffect(() => {
@@ -274,6 +290,10 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     setIsTimerRunning(true)
   }
 
+  const handleBackToQuizzes = () => {
+    router.push("/quizzes")
+  }
+
   if (error) {
     return (
       <motion.div
@@ -287,7 +307,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     )
   }
 
-  if (!quiz) {
+  if (isLoading || !quiz) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -301,21 +321,22 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   }
 
   // Show study materials if available and not completed
-  if (showStudyMaterials && quiz.studyMaterials?.bibleVerses?.length > 0) {
+  if (
+    showStudyMaterials &&
+    quiz.studyMaterials &&
+    quiz.studyMaterials.bibleVerses &&
+    quiz.studyMaterials.bibleVerses.length > 0
+  ) {
+    console.log("Rendering study materials")
     return (
-      <div className="min-h-screen max-w-4xl mx-auto py-8">
-        <Button variant="outline" onClick={() => router.push("/quizzes")} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
-        </Button>
-
-        <StudyMaterials
-          quizTitle={quiz.title}
-          bibleVerses={quiz.studyMaterials.bibleVerses}
-          summary={quiz.studyMaterials.summary}
-          learningObjectives={quiz.studyMaterials.learningObjectives}
-          onComplete={handleStudyComplete}
-        />
-      </div>
+      <StudyMaterials
+        quizTitle={quiz.title}
+        bibleVerses={quiz.studyMaterials.bibleVerses}
+        summary={quiz.studyMaterials.summary}
+        learningObjectives={quiz.studyMaterials.learningObjectives}
+        onComplete={handleStudyComplete}
+        onBack={handleBackToQuizzes}
+      />
     )
   }
 
@@ -329,7 +350,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
           </Button>
         </div>
 
-        <h1 className="text-3xl font-bold mb-6">Your Progress Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Your Progress Dashboard</h1>
 
         <Tabs defaultValue="history">
           <TabsList className="mb-4">
@@ -490,7 +511,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="min-h-screen max-w-7xl mx-auto py-8"
+      className="min-h-screen mx-auto py-4"
     >
       <div className="flex justify-between items-center mb-6">
         <div className="flex gap-2">
@@ -532,7 +553,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
             onClick={toggleBookmark}
             className={
               isCurrentQuestionBookmarked()
-                ? "bg-gray-800 hover:bg-gray-700 border-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500"
+                ? "bg-[#0f172a] hover:bg-[#1e293b] dark:bg-blue-600 dark:hover:bg-blue-700"
                 : "border-gray-400 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800"
             }
           >
@@ -540,12 +561,17 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
             <span className="ml-1">{isCurrentQuestionBookmarked() ? "Bookmarked" : "Bookmark"}</span>
           </Button>
         </div>
-        <Progress value={((currentQuestionIndex + 1) / quiz.questions.length) * 100} className="w-full" />
+        <Progress
+          value={((currentQuestionIndex + 1) / quiz.questions.length) * 100}
+          className="w-full bg-gray-100 dark:bg-gray-700"
+        >
+          <div className="h-full rounded-full bg-[#0f172a] dark:bg-blue-600" />
+        </Progress>
         <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
           <Clock className="h-4 w-4 mr-1" />
           <span>{formatTime(timer)}</span>
         </div>
-        <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">Score: {score}</p>
+        <p className="text-lg font-semibold text-[#0f172a] dark:text-blue-400">Score: {score}</p>
       </div>
 
       <AnimatePresence mode="wait">
@@ -555,7 +581,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.3 }}
-          className="mb-8 bg-white dark:bg-[#18181B] rounded-lg shadow-lg p-6"
+          className="mb-8 bg-white dark:bg-[#2a2b2f] rounded-lg shadow-lg p-6 border border-gray-100 dark:border-[#91969e52]"
         >
           <h2 className="text-2xl mb-4 font-semibold text-gray-800 dark:text-white">{question.questionText}</h2>
           <div className="flex flex-col gap-3">
@@ -571,7 +597,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
                       : "bg-red-500 text-white"
                     : selectedOptions[currentQuestionIndex] !== null && option === question.correctAnswer
                       ? "bg-green-500 text-white"
-                      : "bg-gray-100 dark:bg-[#5a5a5dc2] text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#78787dc2]"
+                      : "bg-gray-100 dark:bg-[#1f2937] text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#374151]"
                 }`}
                 onClick={() => handleAnswer(option)}
                 disabled={selectedOptions[currentQuestionIndex] !== null}
@@ -587,19 +613,19 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="mt-6 p-4 bg-blue-100 dark:bg-blue-900 rounded-md"
+                className="mt-6 p-4 bg-[#e9ebfa] dark:bg-blue-900/30 rounded-md"
               >
                 <div className="flex items-center mb-2">
-                  <HelpCircle className="text-blue-500 mr-2" />
-                  <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200">Explanation</h3>
+                  <HelpCircle className="text-[#0f172a] dark:text-blue-400 mr-2" />
+                  <h3 className="text-lg font-semibold text-[#0f172a] dark:text-blue-200">Explanation</h3>
                 </div>
-                <p className="text-blue-800 dark:text-blue-200">{question.explanation}</p>
+                <p className="text-[#0f172a] dark:text-blue-200">{question.explanation}</p>
 
                 {hasRelatedVerses && (
                   <Button
                     variant="link"
                     onClick={toggleRelatedVerses}
-                    className="mt-2 text-blue-800 dark:text-blue-200"
+                    className="mt-2 text-[#0f172a] dark:text-blue-200"
                   >
                     {showRelatedVerses ? "Hide Related Verses" : "Show Related Verses"}
                   </Button>
@@ -639,7 +665,11 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Button>
 
-        <Button onClick={handleNext} disabled={selectedOptions[currentQuestionIndex] === null} variant="default">
+        <Button
+          onClick={handleNext}
+          disabled={selectedOptions[currentQuestionIndex] === null}
+          className="bg-[#0f172a] hover:bg-[#1e293b] dark:bg-blue-600 dark:hover:bg-blue-700"
+        >
           {currentQuestionIndex < quiz.questions.length - 1 ? "Next" : "Finish"}
           {currentQuestionIndex < quiz.questions.length - 1 && <ArrowRight className="ml-2 h-4 w-4" />}
         </Button>

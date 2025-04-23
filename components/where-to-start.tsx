@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react"
 
 export default function WhereToStart() {
   return (
-    <div className="w-full max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">Not Sure Where to Start?</h2>
@@ -21,7 +21,7 @@ export default function WhereToStart() {
         <div className="flex justify-center md:justify-end">
           <div className="relative w-full max-w-md">
             <Image
-              src="/en/images/courses/introduction-genesis.png"
+              src="/en/images/start.png"
               alt="Where to start image"
               width={500}
               height={400}
