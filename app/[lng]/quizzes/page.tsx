@@ -182,7 +182,7 @@ export default function QuizzesPage() {
                   <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                     {quiz.language}
                   </span>
-                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                  <span className="font-bold text-gray-800 text-sm pl-2 pr-2 border-l-2 border-gray-300 dark:border-gray-700 dark:text-white mt-2">
                     {quiz.author}
                   </span>
                 </div>
