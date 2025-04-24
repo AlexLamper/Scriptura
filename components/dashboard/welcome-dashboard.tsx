@@ -45,7 +45,7 @@ export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
           </h1>
           <p className="text-gray-600 dark:text-gray-300">{t("continue_your_biblical_journey")}</p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-row gap-3">
           <Button className="gap-2">
             <BookOpen className="h-4 w-4" />
             {t("resume_course")}
