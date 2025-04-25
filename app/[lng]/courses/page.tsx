@@ -84,21 +84,28 @@ export default function CoursePage({
 
   return (
     <div className="min-h-screen">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t("course_header")}</h1>
-        <div className="relative">
+      {/* Header and Search */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0">
+          {t("course_header")}
+        </h1>
+        <div className="relative w-full sm:w-auto">
           <input
             type="text"
             placeholder="Search courses..."
-            className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-[#91969e52] focus:outline-none focus:ring-2 focus:ring-[#0f172a] dark:bg-[#2a2b2f] dark:text-white"
+            className="w-full sm:w-[250px] pl-8 sm:pl-10 pr-4 py-1 sm:py-2 rounded-lg border border-gray-300 dark:border-[#91969e52] focus:outline-none focus:ring-2 focus:ring-[#0f172a] dark:bg-[#2a2b2f] dark:text-white text-sm sm:text-base"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <Search className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500" size={20} />
+          <Search
+            className="absolute left-2 sm:left-3 top-2 sm:top-2.5 text-gray-400 dark:text-gray-500"
+            size={18}
+          />
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      {/* Statistics (hidden on mobile) */}
+      <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
           { value: allCourses.length, label: t("total_courses") },
           { value: 24, label: t("expert_instructors") },
@@ -107,23 +114,30 @@ export default function CoursePage({
         ].map((stat, idx) => (
           <div
             key={idx}
-            className="bg-white dark:bg-[#2a2b2f] p-4 rounded-lg border border-gray-100 dark:border-[#91969e52]"
+            className="bg-white dark:bg-[#2a2b2f] p-2 sm:p-4 rounded-lg border border-gray-100 dark:border-[#91969e52]"
           >
-            <p className="text-3xl font-bold text-[#0f172a] dark:text-white">{stat.value}+</p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">{stat.label}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
+              {stat.value}+
+            </p>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+              {stat.label}
+            </p>
           </div>
         ))}
       </div>
 
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+      {/* Filter & Sort */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-3 sm:mb-0">
           {filteredCourses.length > 0
             ? `${t("showing")} ${filteredCourses.length} ${t("courses")}`
             : t("no_courses_found")}
         </h2>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500 dark:text-gray-400">{t("sort_by")}:</span>
-          <select className="bg-white dark:bg-[#2a2b2f] text-gray-700 dark:text-gray-200 px-3 py-1 rounded text-sm border border-gray-200 dark:border-[#91969e52]">
+          <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            {t("sort_by")}:
+          </span>
+          <select className="bg-white dark:bg-[#2a2b2f] text-gray-700 dark:text-gray-200 px-2 sm:px-3 py-1 rounded text-xs sm:text-sm border border-gray-200 dark:border-[#91969e52]">
             <option value="newest">{t("newest")}</option>
             <option value="popular">{t("most_popular")}</option>
             <option value="highest">{t("highest_rated")}</option>
