@@ -29,9 +29,24 @@ export default function ResourcesPage() {
         <h1 className="text-3xl font-bold mb-6">Resources</h1>
         <Tabs defaultValue="bibleVersions">
           <TabsList className="mb-4 dark:bg-[#292b2f]">
-            <TabsTrigger value="bibleVersions">Bible Versions</TabsTrigger>
-            <TabsTrigger value="commentaries">Commentaries</TabsTrigger>
-            <TabsTrigger value="studyTools">Study Tools</TabsTrigger>
+            <TabsTrigger
+              value="bibleVersions"
+              className="data-[state=active]:text-white data-[state=active]:bg-[#1f2023] rounded"
+            >
+              Bible Versions
+            </TabsTrigger>
+            <TabsTrigger
+              value="commentaries"
+              className="data-[state=active]:text-white data-[state=active]:bg-[#1f2023] rounded"
+            >
+              Commentaries
+            </TabsTrigger>
+            <TabsTrigger
+              value="studyTools"
+              className="data-[state=active]:text-white data-[state=active]:bg-[#1f2023] rounded"
+            >
+              Study Tools
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="bibleVersions">
             <Card className="dark:bg-[#292b2f] dark:border-none">

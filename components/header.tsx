@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { LogOut, ChevronDown, User, Settings, Globe, Sun, Moon, Menu } from "lucide-react"
+import { LogOut, ChevronDown, User, Settings, Menu } from "lucide-react"
 import { Button } from "./ui/button"
 import { useTranslation } from "../app/i18n/client"
 import { motion, AnimatePresence } from "framer-motion"
@@ -146,7 +146,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                 variant="ghost"
                 className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
               >
-                <Globe className="h-4 w-4 mr-2" />
+                {/* <Globe className="h-4 w-4 mr-2" /> */}
                 <LanguageSwitcher />
               </Button>
 
@@ -155,8 +155,6 @@ export function Header({ params: { lng } }: HeaderProps) {
                 variant="ghost"
                 className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
               >
-                <Sun className="h-4 w-4 mr-2 dark:hidden" />
-                <Moon className="h-4 w-4 mr-2 hidden dark:block" />
                 <ModeToggle />
               </Button>
 

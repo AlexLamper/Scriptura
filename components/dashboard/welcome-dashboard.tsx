@@ -37,7 +37,7 @@ export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
   }, [])
 
   return (
-    <div className="rounded-xl p-6 border mb-8 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10 dark:border-[#91969e52]">
+    <div className="rounded-xl p-6 max-md:p-4 border mb-8 max-md:mb-6 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10 dark:border-[#91969e52]">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="mb-4 md:mb-0">
           <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
@@ -45,14 +45,14 @@ export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
           </h1>
           <p className="text-gray-600 dark:text-gray-300">{t("continue_your_biblical_journey")}</p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button className="gap-2">
-            <BookOpen className="h-4 w-4" />
-            {t("resume_course")}
+        <div className="flex flex-row gap-3 flex-shrink-0">
+          <Button className="gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-1 max-sm:h-auto">
+            <BookOpen className="h-4 w-4 max-sm:h-3 max-sm:w-3" />
+            <span className="max-sm:truncate">{t("resume_course")}</span>
           </Button>
-          <Button variant="outline" className="gap-2">
-            <FileText className="h-4 w-4" />
-            {t("take_quiz")}
+          <Button variant="outline" className="gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-1 max-sm:h-auto">
+            <FileText className="h-4 w-4 max-sm:h-3 max-sm:w-3" />
+            <span className="max-sm:truncate">{t("take_quiz")}</span>
           </Button>
         </div>
       </div>
