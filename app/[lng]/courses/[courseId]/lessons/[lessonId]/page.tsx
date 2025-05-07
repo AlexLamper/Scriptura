@@ -261,10 +261,10 @@ export default function LessonPage({
             <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-0 overflow-hidden">
                 <div className="p-8">
-                  <div 
-                    className="prose whitespace-pre-line dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
-                    dangerouslySetInnerHTML={{ __html: processedContent }}
-                  ></div>
+                  <div
+                    className="text-lg prose whitespace-pre-line dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
+                    dangerouslySetInnerHTML={{ __html: processedContent.replace(/\n\n/g, "<br><br>") }}
+                  />
                 </div>
               </CardContent>
             </Card>
