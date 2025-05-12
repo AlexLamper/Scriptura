@@ -42,7 +42,10 @@ export default async function DashboardPage() {
       </div>
       <div className="my-8"></div>
       <hr className="dark:border-[#91969e52]" />
-      <WhereToStart />
+      <WhereToStart params={{
+        lng: "",
+      }}
+       />
     </div>
   )
 }

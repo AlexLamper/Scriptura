@@ -40,5 +40,8 @@
     "related_courses": "Ähnliche Kurse",
     "learning_objectives": "Lernziele",
     "download_materials": "Materialien herunterladen",
-    "no_learning_objectives": "Keine Lernziele gefunden"
+    "no_learning_objectives": "Keine Lernziele gefunden",
+    "start_course": "Kurs starten",
+    "in_progress": "In Bearbeitung",
+    "mark_as_completed": "Als abgeschlossen markieren"
 }

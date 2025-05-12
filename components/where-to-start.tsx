@@ -1,20 +1,31 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "../components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { useTranslation } from "../app/i18n/client"
 
-export default function WhereToStart() {
+interface WhereToStartProps {
+  params: {
+    lng: string
+  }
+}
+
+export default function WhereToStart({ params: { lng } }: WhereToStartProps) {
+
+  const { t } = useTranslation(lng, "where-to-start")
+
   return (
     <div className="w-full max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">Not Sure Where to Start?</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">{t("not_sure_where_to_start")}</h2>
           <p className="text-lg text-gray-700">
-            Learn how the Hebrew Bible was formed into a unified collection and develop the skills necessary for reading
-            it well.
+            {t("learn_how_hebrew_bible_formed")}
           </p>
           <div className="group inline-block">
             <Button className="text-sm font-medium transition-all duration-300 group-hover:translate-y-[-2px] px-4 py-1.5 rounded-md bg-gray-900 text-white">
-              Introduction to the Hebrew Bible <ArrowRight className="ml-2 h-4 w-4" />
+              {t("introduction_to_hebrew_bible")} <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>
