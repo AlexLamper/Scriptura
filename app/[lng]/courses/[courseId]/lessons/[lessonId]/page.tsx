@@ -11,6 +11,8 @@ import { Skeleton } from "../../../../../../components/ui/skeleton"
 import { cn } from "../../../../../../lib/utils"
 import { useSession } from "next-auth/react"
 import { Badge } from "../../../../../../components/ui/badge"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 
 type LessonType = {
   title: string
@@ -47,12 +49,23 @@ export default function LessonPage({
   const [completedLessons, setCompletedLessons] = useState<number[]>([])
   const [markingAsCompleted, setMarkingAsCompleted] = useState(false)
 
-  function replaceCitations(content: string) {
-    // Replace :contentReference[oaicite:0]{index=0} with a superscripted clickable reference
-    return content.replace(/:contentReference\[oaicite:(\d+)\]\{index=\d+\}/g, (_, idx) => {
-      const num = parseInt(idx, 10) + 1
-      return `<sup id=\"ref-${num}\"><a href=\"#ref-${num}\">[${num}]</a></sup>`
+  // Process content to handle citations and fix newlines
+  function processContent(content: string) {
+    // First handle citations
+    let processed = content.replace(/:contentReference\[oaicite:(\d+)\]\{index=\d+\}/g, (_, idx) => {
+      const num = Number.parseInt(idx, 10) + 1
+      return `<sup id="ref-${num}"><a href="#ref-${num}">[${num}]</a></sup>`
     })
+
+    // Fix image markdown syntax if needed
+    processed = processed.replace(/!\[(.*?)\]$$(.*?)$$/g, (match, alt, src) => {
+      return `![${alt}](${src})`
+    })
+
+    // Ensure proper markdown for images that might be plain text
+    processed = processed.replace(/^(Eiland Patmos)$/gm, "![Eiland Patmos](/en/images/courses/patmos.png)")
+
+    return processed
   }
 
   useEffect(() => {
@@ -225,8 +238,8 @@ export default function LessonPage({
   const nextLessonId = String(lessonIndex + 1)
   const hasNextLesson = course?.lessons && lessonIndex < course.lessons.length - 1
 
-  // Process content to render citations correctly
-  const processedContent = replaceCitations(lesson.content)
+  // Process content to handle citations and fix newlines
+  const processedContent = processContent(lesson.content)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -261,10 +274,59 @@ export default function LessonPage({
             <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-0 overflow-hidden">
                 <div className="p-8">
-                  <div
-                    className="text-lg prose whitespace-pre-line dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
-                    dangerouslySetInnerHTML={{ __html: processedContent.replace(/\n\n/g, "<br><br>") }}
-                  />
+                  <div className="prose dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        img: (props) => (
+                          <div className="my-6 flex justify-center">
+                            <img
+                              src={props.src || ""}
+                              alt={props.alt || ""}
+                              className="rounded-lg max-w-full h-auto"
+                              style={{ maxHeight: "500px" }}
+                            />
+                          </div>
+                        ),
+                        a: (props) => (
+                          <a
+                            href={props.href}
+                            target={props.href?.startsWith("http") ? "_blank" : undefined}
+                            rel={props.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                            className="text-primary hover:text-primary/80 transition-colors"
+                          >
+                            {props.children}
+                          </a>
+                        ),
+                        p: (props) => <p className="mb-4 leading-relaxed text-base">{props.children}</p>,
+                        h1: (props) => <h1 className="text-2xl font-bold mt-8 mb-4">{props.children}</h1>,
+                        h2: (props) => <h2 className="text-xl font-bold mt-6 mb-3">{props.children}</h2>,
+                        h3: (props) => <h3 className="text-lg font-bold mt-5 mb-2">{props.children}</h3>,
+                        ul: (props) => <ul className="list-disc pl-6 mb-4 text-base">{props.children}</ul>,
+                        ol: (props) => <ol className="list-decimal pl-6 mb-4 text-base">{props.children}</ol>,
+                        li: (props) => <li className="mb-1 text-base">{props.children}</li>,
+                        blockquote: (props) => (
+                          <blockquote className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4 text-base">
+                            {props.children}
+                          </blockquote>
+                        ),
+                        code: ({ inline, ...props }) =>
+                          inline ? (
+                            <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono">
+                              {props.children}
+                            </code>
+                          ) : (
+                            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-4 text-sm font-mono">
+                              <code>{props.children}</code>
+                            </pre>
+                          ),
+                        strong: (props) => <strong className="font-bold">{props.children}</strong>,
+                        em: (props) => <em className="italic">{props.children}</em>,
+                      }}
+                    >
+                      {processedContent}
+                    </ReactMarkdown>
+                  </div>
                 </div>
               </CardContent>
             </Card>
