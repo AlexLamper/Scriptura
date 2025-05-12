@@ -13,6 +13,7 @@ const CourseSchema = new mongoose.Schema(
     language: { type: String, required: true },
     learning_objectives: { type: [String], required: true },
     imageUrl: { type: String, required: true },
+    generalInformation: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },

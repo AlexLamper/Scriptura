@@ -25,6 +25,7 @@ type CourseType = {
   lessons?: { title: string; duration: number; content: string }[]
   learning_objectives: string[]
   imageUrl?: string
+  generalInformation: string
 }
 
 export default function CoursePage({
@@ -261,24 +262,34 @@ export default function CoursePage({
 
               <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2]">
                 <CardHeader>
-                  <CardTitle>{t("related_courses")}</CardTitle>
+                  <CardTitle>{t("general_information")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <Link href={`/${lng}/courses/course-theology-advanced`} className="block">
-                      <div className="p-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition border">
-                        <h4 className="font-medium">{t("relatedCourse1Title")}</h4>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                          {t("relatedCourse1Description")}
-                        </p>
+                    <Link href="#" className="block space-y-1">
+                      <div className="flex gap-1 text-sm">
+                        <p className="font-medium">Oorspronkelijke taal:</p>
+                        <p className="text-muted-foreground">Grieks</p>
                       </div>
-                    </Link>
-                    <Link href={`/${lng}/courses/course-theology-fundamentals`} className="block">
-                      <div className="p-3 bg-white dark:bg-[#2C2C33] rounded hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition border">
-                        <h4 className="font-medium">{t("relatedCourse2Title")}</h4>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                          {t("relatedCourse2Description")}
-                        </p>
+                      <div className="flex gap-1 text-sm">
+                        <p className="font-medium">Auteur:</p>
+                        <p className="text-muted-foreground">Toegeschreven aan apostel Johannes</p>
+                      </div>
+                      <div className="flex gap-1 text-sm">
+                        <p className="font-medium">Genre:</p>
+                        <p className="text-muted-foreground">Heilig geschrift</p>
+                      </div>
+                      <div className="flex gap-1 text-sm">
+                        <p className="font-medium">Hoofdstukken:</p>
+                        <p className="text-muted-foreground">22</p>
+                      </div>
+                      <div className="flex gap-1 text-sm">
+                        <p className="font-medium">Taal:</p>
+                        <p className="text-muted-foreground">Oudgrieks</p>
+                      </div>
+                      <div className="flex gap-1 text-sm">
+                        <p className="font-medium">Tijd:</p>
+                        <p className="text-muted-foreground">81–96 n.Chr</p>
                       </div>
                     </Link>
                   </div>
