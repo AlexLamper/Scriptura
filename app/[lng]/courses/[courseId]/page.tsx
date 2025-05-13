@@ -277,37 +277,37 @@ export default function CoursePage({
                   <div className="space-y-3">
                     <Link href="#" className="block space-y-1">
                       <div className="flex gap-1 text-sm">
-                        <p className="font-medium">Oorspronkelijke taal:</p>
+                        <p className="font-medium">{t("origin_language")}:</p>
                         <p className="text-muted-foreground">
                           {course.generalInformation?.originLanguage ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
-                        <p className="font-medium">Auteur:</p>
+                        <p className="font-medium">{t("author")}:</p>
                         <p className="text-muted-foreground">
                           {course.generalInformation?.author ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
-                        <p className="font-medium">Genre:</p>
+                        <p className="font-medium">{t("genre")}:</p>
                         <p className="text-muted-foreground">
                           {course.generalInformation?.genre ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
-                        <p className="font-medium">Hoofdstukken:</p>
+                        <p className="font-medium">{t("chapters")}:</p>
                         <p className="text-muted-foreground">
                           {course.generalInformation?.chapters ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
-                        <p className="font-medium">Taal:</p>
+                        <p className="font-medium">{t("language_detail")}:</p>
                         <p className="text-muted-foreground">
                           {course.generalInformation?.languageDetail ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
-                        <p className="font-medium">Tijd:</p>
+                        <p className="font-medium">{t("time_period")}:</p>
                         <p className="text-muted-foreground">
                           {course.generalInformation?.timePeriod ?? ""}
                         </p>

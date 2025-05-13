@@ -43,5 +43,12 @@
     "no_learning_objectives": "Keine Lernziele gefunden",
     "start_course": "Kurs starten",
     "in_progress": "In Bearbeitung",
-    "mark_as_completed": "Als abgeschlossen markieren"
+    "mark_as_completed": "Als abgeschlossen markieren",
+    "general_information": "Allgemeine Informationen",
+    "origin_language": "Originalsprache",
+    "author": "Autor",
+    "genre": "Genre",
+    "chapters": "Kapitel",
+    "language_detail": "Sprachdetails",
+    "time_period": "Zeitraum"
 }
