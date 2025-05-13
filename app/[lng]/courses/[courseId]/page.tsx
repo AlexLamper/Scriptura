@@ -13,6 +13,15 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Badge } from "../../../../components/ui/badge"
 
+interface CourseGeneralInformation {
+  originLanguage: string
+  author: string
+  genre: string
+  chapters: number
+  languageDetail: string
+  timePeriod: string
+}
+
 type CourseType = {
   _id: string
   title: string
@@ -25,7 +34,7 @@ type CourseType = {
   lessons?: { title: string; duration: number; content: string }[]
   learning_objectives: string[]
   imageUrl?: string
-  generalInformation: string
+  generalInformation: CourseGeneralInformation
 }
 
 export default function CoursePage({
@@ -269,27 +278,39 @@ export default function CoursePage({
                     <Link href="#" className="block space-y-1">
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">Oorspronkelijke taal:</p>
-                        <p className="text-muted-foreground">Grieks</p>
+                        <p className="text-muted-foreground">
+                          {course.generalInformation?.originLanguage ?? ""}
+                        </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">Auteur:</p>
-                        <p className="text-muted-foreground">Toegeschreven aan apostel Johannes</p>
+                        <p className="text-muted-foreground">
+                          {course.generalInformation?.author ?? ""}
+                        </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">Genre:</p>
-                        <p className="text-muted-foreground">Heilig geschrift</p>
+                        <p className="text-muted-foreground">
+                          {course.generalInformation?.genre ?? ""}
+                        </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">Hoofdstukken:</p>
-                        <p className="text-muted-foreground">22</p>
+                        <p className="text-muted-foreground">
+                          {course.generalInformation?.chapters ?? ""}
+                        </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">Taal:</p>
-                        <p className="text-muted-foreground">Oudgrieks</p>
+                        <p className="text-muted-foreground">
+                          {course.generalInformation?.languageDetail ?? ""}
+                        </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">Tijd:</p>
-                        <p className="text-muted-foreground">81–96 n.Chr</p>
+                        <p className="text-muted-foreground">
+                          {course.generalInformation?.timePeriod ?? ""}
+                        </p>
                       </div>
                     </Link>
                   </div>

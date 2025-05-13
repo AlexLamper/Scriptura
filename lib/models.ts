@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+export interface GeneralInfo {
+  originLanguage: string;
+  author: string;
+  genre: string;
+  chapters: number;
+  languageDetail: string;
+  timePeriod: string;
+}
+
 export interface CourseType {
   _id: mongoose.Schema.Types.ObjectId;
   title: string;
@@ -13,7 +22,7 @@ export interface CourseType {
   language: string;
   learning_objectives: string[];
   imageUrl: string;
-  generalInformation: string;
+  generalInformation: GeneralInfo;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -59,13 +68,17 @@ const courseSchema = new mongoose.Schema<CourseType>({
     type: [String],
     required: true,
   },
-  imageUrl: { 
-    type: String, 
-    required: true 
-  },
-  generalInformation: {
+  imageUrl: {
     type: String,
     required: true,
+  },
+  generalInformation: {
+    originLanguage: { type: String, required: true },
+    author: { type: String, required: true },
+    genre: { type: String, required: true },
+    chapters: { type: Number, required: true },
+    languageDetail: { type: String, required: true },
+    timePeriod: { type: String, required: true },
   },
   createdAt: {
     type: Date,
@@ -76,6 +89,7 @@ const courseSchema = new mongoose.Schema<CourseType>({
     default: Date.now,
   },
 });
+
 
 export interface UserType {
   _id: mongoose.Schema.Types.ObjectId;

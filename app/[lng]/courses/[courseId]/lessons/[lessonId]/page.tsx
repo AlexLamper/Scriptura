@@ -60,7 +60,6 @@ export default function LessonPage({
       return `<sup id="ref-${num}"><a href="#ref-${num}">[${num}]</a></sup>`
     })
 
-    // Convert plain text "Eiland Patmos" to image markdown
     processed = processed.replace(/^Eiland Patmos$/gm, "![Eiland Patmos](/en/images/courses/patmos.png)")
 
     // Add proper heading to the beginning if it doesn't exist
@@ -95,9 +94,8 @@ export default function LessonPage({
         '<blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4 text-base">$1</blockquote>',
       )
 
-      // Images - FIXED: Using correct regex pattern for Markdown image syntax
       .replace(
-        /!\[(.*?)\]$$(.*?)$$/g,
+        /!\[(.*?)\]\((.*?)\)/g,
         '<div class="my-6 flex justify-center"><img src="$2" alt="$1" class="rounded-lg max-w-full h-auto" style="max-height: 500px" /></div>',
       )
 
