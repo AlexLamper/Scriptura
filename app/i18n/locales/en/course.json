@@ -40,7 +40,10 @@
     "related_courses": "Related Courses",
     "learning_objectives": "Learning Objectives",
     "download_materials": "Download Materials",
-    "no_learning_objectives": "No learning objectives found"
+    "no_learning_objectives": "No learning objectives found",
+    "start_course": "Start Course",
+    "in_progress": "In Progress",
+    "mark_as_completed": "Mark as Completed"
   }
   
   

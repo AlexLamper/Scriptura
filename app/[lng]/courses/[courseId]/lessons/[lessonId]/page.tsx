@@ -47,12 +47,68 @@ export default function LessonPage({
   const [completedLessons, setCompletedLessons] = useState<number[]>([])
   const [markingAsCompleted, setMarkingAsCompleted] = useState(false)
 
-  function replaceCitations(content: string) {
-    // Replace :contentReference[oaicite:0]{index=0} with a superscripted clickable reference
-    return content.replace(/:contentReference\[oaicite:(\d+)\]\{index=\d+\}/g, (_, idx) => {
-      const num = parseInt(idx, 10) + 1
-      return `<sup id=\"ref-${num}\"><a href=\"#ref-${num}\">[${num}]</a></sup>`
+  // Process content to handle citations, newlines, and other formatting issues
+  function processContent(content: string) {
+    if (!content) return ""
+
+    // Replace literal \n with actual newlines
+    let processed = content.replace(/\\n/g, "\n")
+
+    // Handle citations
+    processed = processed.replace(/:contentReference\[oaicite:(\d+)\]\{index=\d+\}/g, (_, idx) => {
+      const num = Number.parseInt(idx, 10) + 1
+      return `<sup id="ref-${num}"><a href="#ref-${num}">[${num}]</a></sup>`
     })
+
+    processed = processed.replace(/^Eiland Patmos$/gm, "![Eiland Patmos](/en/images/courses/patmos.png)")
+
+    // Add proper heading to the beginning if it doesn't exist
+    if (!processed.startsWith("# ")) {
+      const firstLine = processed.split("\n")[0]
+      processed = processed.replace(firstLine, `# ${firstLine}`)
+    }
+
+    return processed
+  }
+
+  // Function to directly render HTML content
+  function createMarkup(content: string) {
+    // Convert markdown to HTML
+    const html = content
+      // Headers
+      .replace(/## (.*?)$/gm, '<h2 class="text-xl font-bold mt-6 mb-3">$1</h2>')
+      .replace(/# (.*?)$/gm, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>')
+
+      // Bold and italic
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+
+      // Lists
+      .replace(/^\d+\. (.*?)$/gm, '<li class="mb-1 text-base">$1</li>')
+      .replace(/<li>(.*?)<\/li>\n<li>/g, "<li>$1</li>\n<li>")
+      .replace(/(<li>.*?<\/li>\n)+/g, (match) => `<ol class="list-decimal pl-6 mb-4 text-base">${match}</ol>`)
+
+      // Blockquotes
+      .replace(
+        /^> (.*?)$/gm,
+        '<blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4 text-base">$1</blockquote>',
+      )
+
+      .replace(
+        /!\[(.*?)\]\((.*?)\)/g,
+        '<div class="my-6 flex justify-center"><img src="$2" alt="$1" class="rounded-lg max-w-full h-auto" style="max-height: 500px" /></div>',
+      )
+
+      // Paragraphs (must come last)
+      .replace(/^([^<].*?)$/gm, '<p class="mb-4 leading-relaxed text-base">$1</p>')
+
+      // Fix empty paragraphs
+      .replace(/<p class="mb-4 leading-relaxed text-base"><\/p>/g, "")
+
+      // Convert newlines to breaks for readability
+      .replace(/\n\n/g, "<br />")
+
+    return { __html: html }
   }
 
   useEffect(() => {
@@ -225,8 +281,8 @@ export default function LessonPage({
   const nextLessonId = String(lessonIndex + 1)
   const hasNextLesson = course?.lessons && lessonIndex < course.lessons.length - 1
 
-  // Process content to render citations correctly
-  const processedContent = replaceCitations(lesson.content)
+  // Process content for rendering
+  const processedContent = processContent(lesson.content)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -261,10 +317,11 @@ export default function LessonPage({
             <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-0 overflow-hidden">
                 <div className="p-8">
-                  <div 
-                    className="prose whitespace-pre-line dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
-                    dangerouslySetInnerHTML={{ __html: processedContent }}
-                  ></div>
+                  {/* Use direct HTML rendering instead of ReactMarkdown */}
+                  <div
+                    className="prose dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"
+                    dangerouslySetInnerHTML={createMarkup(processedContent)}
+                  />
                 </div>
               </CardContent>
             </Card>
