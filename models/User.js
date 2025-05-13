@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema(
     bio: { type: String },
     image: { type: String },
     enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+    streak: { type: Number, default: 0 },
   },
   { timestamps: true },
 )
