@@ -12,6 +12,8 @@
   "bio": "Biografie",
   "save_changes": "Änderungen Speichern",
   "saving": "Speichern...",
+  "saved": "Gespeichert",
+  "changes_saved": "Änderungen erfolgreich gespeichert!",
   "profile_updated": "Profil aktualisiert",
   "profile_updated_success": "Dein Profil wurde erfolgreich aktualisiert.",
   "failed_update_profile": "Profilaktualisierung fehlgeschlagen",

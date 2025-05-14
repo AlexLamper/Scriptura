@@ -12,6 +12,8 @@
   "bio": "Biografie",
   "save_changes": "Wijzigingen Opslaan",
   "saving": "Opslaan...",
+  "saved": "Opgeslagen",
+  "changes_saved": "Wijzigingen succesvol opgeslagen!",
   "profile_updated": "Profiel bijgewerkt",
   "profile_updated_success": "Je profiel is succesvol bijgewerkt.",
   "failed_update_profile": "Profiel bijwerken mislukt",

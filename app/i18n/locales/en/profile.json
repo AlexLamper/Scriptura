@@ -12,6 +12,8 @@
   "bio": "Bio",
   "save_changes": "Save Changes",
   "saving": "Saving...",
+  "saved": "Saved",
+  "changes_saved": "Changes saved successfully!",
   "profile_updated": "Profile updated",
   "profile_updated_success": "Your profile has been updated successfully.",
   "failed_update_profile": "Failed to update profile",
