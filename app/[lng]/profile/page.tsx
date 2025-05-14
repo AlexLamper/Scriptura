@@ -1,68 +1,76 @@
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
-import { Label } from "../../../components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
+import connectMongoDB from "../../../libs/mongodb"
+import User from "../../../models/User"
+import { ProfileForm } from "../../../components/profile/profile-form"
+import { ProfileImageUpload } from "../../../components/profile/profile-image-upload"
+import { SubscriptionStatus } from "../../../components/profile/subscription-status"
 
 export default async function ProfilePage() {
-    const session = await getServerSession();
-    if(!session || !session.user) {
-        redirect("/api/auth/signin");
-    }
+  const session = await getServerSession()
+  if (!session || !session.user) {
+    redirect("/api/auth/signin")
+  }
 
-    return (
-        <div className="min-h-screen w-full">
-            <div className="mx-auto">
-                <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-none">
-                        <CardHeader>
-                            <CardTitle>Personal Information</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <form className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <Label htmlFor="firstName">First Name</Label>
-                                        <Input id="firstName" defaultValue={session.user.name ?? ""} className="dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2" />
-                                    </div>
-                                    {/* <div>
-                                        <Label htmlFor="lastName">Last Name</Label>
-                                        <Input id="lastName" defaultValue="Doe" />
-                                    </div> */}
-                                </div>
-                                <div>
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" defaultValue={session.user.email ?? ""} className="dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2" />
-                                </div>
-                                <div>
-                                    <Label htmlFor="bio">Bio</Label>
-                                    <textarea
-                                        id="bio"
-                                        className="w-full min-h-[100px] p-2 border rounded-md dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2"
-                                        defaultValue="I'm passionate about studying the Bible and growing in my faith."
-                                    ></textarea>
-                                </div>
-                                <Button>Save Changes</Button>
-                            </form>
-                        </CardContent>
-                    </Card>
-                    <Card className="dark:bg-[#292b2f] dark:border-none">
-                        <CardHeader>
-                            <CardTitle>Profile Picture</CardTitle>
-                        </CardHeader>
-                        <CardContent className="flex flex-col items-center">
-                            <Avatar className="w-32 h-32 mb-4">
-                                <AvatarImage src={session.user.image ?? undefined} />
-                                <AvatarFallback>{session.user.name}</AvatarFallback>
-                            </Avatar>
-                            <Button>Change Picture</Button>
-                        </CardContent>
-                    </Card>
-                </div>
-            </div>
+  // Fetch user data from database to get the most up-to-date information
+  await connectMongoDB()
+  const user = await User.findOne({ email: session.user.email })
+
+  if (!user) {
+    // Handle case where user is not found in the database
+    console.error("User not found in database")
+    // Could redirect to an error page or create the user
+    redirect("/api/auth/signin")
+  }
+
+  return (
+    <div className="min-h-screen w-full mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-none">
+          <CardHeader>
+            <CardTitle>Personal Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ProfileForm initialName={user.name} initialEmail={user.email} initialBio={user.bio || ""} />
+          </CardContent>
+        </Card>
+
+        <div className="space-y-6">
+          <Card className="dark:bg-[#292b2f] dark:border-none">
+            <CardHeader>
+              <CardTitle>Profile Picture</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center">
+              <ProfileImageUpload initialImage={user.image} userName={user.name} />
+            </CardContent>
+          </Card>
+
+          <SubscriptionStatus userId={user._id.toString()} />
         </div>
-    )
+      </div>
+
+      <div className="mt-6">
+        <Card className="dark:bg-[#292b2f] dark:border-none">
+          <CardHeader>
+            <CardTitle>Course Progress</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {user.enrolledCourses && user.enrolledCourses.length > 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-lg">Course progress information will be displayed here</p>
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-lg">You are not enrolled in any courses yet</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
 }
