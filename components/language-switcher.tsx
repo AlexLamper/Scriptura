@@ -1,46 +1,33 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { useEffect, useState, useCallback } from "react"
-import { languages } from "../app/i18n/settings"
-import { Check, Globe } from "lucide-react"
 import { Button } from "../components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
+import { Check, Globe } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
 
-const languageNames: Record<string, string> = {
-  en: "English",
-  de: "Deutsch",
-  nl: "Nederlands",
-}
+const languages = [
+  { code: "en", name: "English" },
+  { code: "nl", name: "Nederlands" },
+  { code: "de", name: "Deutsch" },
+]
 
 export function LanguageSwitcher() {
   const pathname = usePathname()
-  const [currentLanguage, setCurrentLanguage] = useState<string>("")
 
-  // Extract current language from pathname
-  const updateLanguage = useCallback(() => {
+  // Simple function to get current language from path
+  const getCurrentLanguage = () => {
+    if (!pathname) return "en"
     const pathSegments = pathname.split("/").filter(Boolean)
     const langFromPath = pathSegments[0]
+    return languages.some((lang) => lang.code === langFromPath) ? langFromPath : "en"
+  }
 
-    if (languages.includes(langFromPath)) {
-      setCurrentLanguage(langFromPath)
-    } else {
-      setCurrentLanguage("en") // Default to English if no valid language is found
-    }
-  }, [pathname])
-
-  useEffect(() => {
-    updateLanguage()
-  }, [updateLanguage])
-
-  // Switch language while preserving the current path
+  // Simple function to switch language
   const switchLanguage = (newLanguage: string) => {
-    if (newLanguage === currentLanguage) return
+    const currentLang = getCurrentLanguage()
+
+    // Don't do anything if clicking the current language
+    if (newLanguage === currentLang) return
 
     // Extract the path without the language prefix
     const pathSegments = pathname.split("/").filter(Boolean)
@@ -49,14 +36,14 @@ export function LanguageSwitcher() {
     // Construct the new path with the selected language
     const newPath = `/${newLanguage}${pathWithoutLang}`
 
-    // Use window.location.href to force a full page refresh
-    window.location.href = newPath
+    // Navigate with a small delay to prevent any race conditions
+    setTimeout(() => {
+      window.location.href = newPath
+    }, 50)
   }
 
-  // Don't render anything until we have determined the current language
-  if (!currentLanguage) {
-    return null
-  }
+  const currentLang = getCurrentLanguage()
+  const currentLanguageName = languages.find((lang) => lang.code === currentLang)?.name || "English"
 
   return (
     <DropdownMenu>
@@ -67,18 +54,21 @@ export function LanguageSwitcher() {
           className="gap-2 border-primary/20 bg-background/20 hover:bg-gray-100 hover:text-black backdrop-blur-sm"
         >
           <Globe className="h-4 w-4" />
-          <span>{languageNames[currentLanguage] || "Language"}</span>
+          <span>{currentLanguageName}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur-sm border-primary/20">
         {languages.map((lang) => (
-          <DropdownMenuItem key={lang} onClick={() => switchLanguage(lang)} className="flex items-center gap-2">
-            {currentLanguage === lang && <Check className="h-4 w-4" />}
-            <span className={currentLanguage === lang ? "font-medium" : ""}>{languageNames[lang]}</span>
+          <DropdownMenuItem
+            key={lang.code}
+            onClick={() => switchLanguage(lang.code)}
+            className="flex items-center gap-2"
+          >
+            {currentLang === lang.code && <Check className="h-4 w-4" />}
+            <span className={currentLang === lang.code ? "font-medium" : ""}>{lang.name}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
-

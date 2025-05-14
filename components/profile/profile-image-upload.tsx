@@ -1,23 +1,31 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "../../components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
 import { useToast } from "../../hooks/use-toast"
 import { Camera, Loader2 } from "lucide-react"
+import { useTranslation } from "../../app/i18n/client"
 
 interface ProfileImageUploadProps {
   initialImage?: string
   userName: string
+  lng: string
 }
 
-export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploadProps) {
+export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImageUploadProps) {
+  const { t } = useTranslation(lng, "profile")
   const [image, setImage] = useState(initialImage)
   const [isUploading, setIsUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { toast } = useToast()
+  const [mounted, setMounted] = useState(false)
+
+  // Add this effect to prevent hydration issues
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleImageClick = () => {
     fileInputRef.current?.click()
@@ -30,8 +38,8 @@ export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploa
     // Check file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: "File too large",
-        description: "Please select an image under 5MB",
+        title: t("file_too_large"),
+        description: t("select_image_under_5mb"),
         variant: "destructive",
       })
       return
@@ -40,8 +48,8 @@ export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploa
     // Check file type
     if (!file.type.startsWith("image/")) {
       toast({
-        title: "Invalid file type",
-        description: "Please select an image file",
+        title: t("invalid_file_type"),
+        description: t("select_image_file"),
         variant: "destructive",
       })
       return
@@ -75,8 +83,8 @@ export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploa
 
         setImage(imageUrl)
         toast({
-          title: "Profile image updated",
-          description: "Your profile image has been updated successfully.",
+          title: t("profile_image_updated"),
+          description: t("profile_image_updated_success"),
         })
       }
 
@@ -84,13 +92,17 @@ export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploa
     } catch (error) {
       console.error("Error uploading image:", error)
       toast({
-        title: "Error",
-        description: "Failed to update profile image. Please try again.",
+        title: t("error"),
+        description: t("failed_update_profile_image_try_again"),
         variant: "destructive",
       })
     } finally {
       setIsUploading(false)
     }
+  }
+
+  if (!mounted) {
+    return null
   }
 
   return (
@@ -111,10 +123,10 @@ export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploa
       <Button onClick={handleImageClick} disabled={isUploading} variant="outline">
         {isUploading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Uploading...
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("uploading")}
           </>
         ) : (
-          "Change Picture"
+          t("change_picture")
         )}
       </Button>
     </div>
