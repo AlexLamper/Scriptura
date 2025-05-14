@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { SidebarTrigger } from "../components/ui/sidebar"
 import { ModeToggle } from "./dark-mode-toggle"
 import { LanguageSwitcher } from "./language-switcher"
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 
 interface HeaderProps {
   params: {
@@ -25,6 +26,27 @@ export function Header({ params: { lng } }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const [userImage, setUserImage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      fetch("/api/user")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch user data")
+          }
+          return response.json()
+        })
+        .then((data) => {
+          if (data.user && data.user.image) {
+            setUserImage(data.user.image)
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error)
+        })
+    }
+  }, [session])
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -80,11 +102,24 @@ export function Header({ params: { lng } }: HeaderProps) {
             className="flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-[#2d2d30] transition-colors"
             onClick={() => setIsProfileOpen(!isProfileOpen)}
           >
-            <div className="text-sm text-left">
-              <p className="font-medium">{session.user?.name}</p>
-              <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
+            {/* profile picture of the user here (Taken from the database) */}
+            <div className="flex items-center">
+              <Avatar className="h-9 w-9 border border-gray-200 dark:border-gray-700 overflow-hidden flex-shrink-0 rounded-full">
+                <AvatarImage
+                  src={userImage || session.user?.image || ""}
+                  alt={session.user?.name || "User"}
+                  className="object-cover aspect-square"
+                />
+                <AvatarFallback className="bg-primary/10 text-primary font-medium">
+                  {session.user?.name?.[0]?.toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
+              <div className="text-sm text-left ml-3">
+                <p className="font-medium">{session.user?.name}</p>
+                <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
+              </div>
+              <ChevronDown className="h-4 w-4 ml-1" />
             </div>
-            <ChevronDown className="h-4 w-4 ml-1" />
           </Button>
           <AnimatePresence>
             {isProfileOpen && (
