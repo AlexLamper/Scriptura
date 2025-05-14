@@ -316,7 +316,7 @@ export default function LessonPage({
           <div className="md:col-span-2">
             <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-0 overflow-hidden">
-                <div className="p-8">
+                <div className="pb-8 px-8">
                   {/* Use direct HTML rendering instead of ReactMarkdown */}
                   <div
                     className="prose dark:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-a:transition-colors max-w-none"

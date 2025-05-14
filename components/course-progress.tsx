@@ -193,7 +193,7 @@ export default function CourseProgress({ courseId, lng }: CourseProgressProps) {
             : "Continue Learning"}
       </Button>
 
-      <Button variant="outline" className="w-full">
+      <Button variant="outline" className="w-full mb-1">
         Download Materials
       </Button>
     </div>

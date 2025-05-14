@@ -171,18 +171,16 @@ export default function CoursePage({
                     </em>
                   </span>
                 </div>
-                <div className="mt-4">
-                  <h3 className="font-semibold mb-2">{t("tags")}:</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {course.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <h3 className="font-semibold mb-0">{t("tags")}:</h3>
+                  {course.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
                 {course.lessons && course.lessons.length > 0 && (
                   <div className="mt-6">
@@ -314,24 +312,6 @@ export default function CoursePage({
                       </div>
                     </Link>
                   </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2] mt-8">
-                <CardHeader>
-                  <CardTitle>{t("learning_objectives")}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {course.learning_objectives && course.learning_objectives.length > 0 ? (
-                    <ul className="list-disc pl-5 space-y-2">
-                      {course.learning_objectives.map((objective, index) => (
-                        <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
-                          {objective}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{t("no_learning_objectives")}</p>
-                  )}
                 </CardContent>
               </Card>
             </div>

@@ -158,18 +158,18 @@ export function Header({ params: { lng } }: HeaderProps) {
                 <Button
                   variant="ghost"
                   className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-                  onClick={() => router.push(`/${lng}/profile`)}
+                  onClick={() => router.push(`/profile`)}
                 >
                   <User className="h-4 w-4 mr-2" />
-                  {translate("profile")}
+                  {translate("Profile")}
                 </Button>
                 <Button
                   variant="ghost"
                   className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-                  onClick={() => router.push(`/${lng}/settings`)}
+                  onClick={() => router.push(`/settings`)}
                 >
                   <Settings className="h-4 w-4 mr-2" />
-                  {translate("settings")}
+                  {translate("Settings")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -177,7 +177,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                   onClick={() => signOut({ callbackUrl: `/${lng}` })}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  {translate("sign_out")}
+                  {translate("Sign Out")}
                 </Button>
               </motion.div>
             )}
@@ -216,7 +216,7 @@ export function Header({ params: { lng } }: HeaderProps) {
               <Button
                 variant="ghost"
                 className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-                onClick={() => router.push(`/${lng}/profile`)}
+                onClick={() => router.push(`/profile`)}
               >
                 <User className="h-4 w-4 mr-2" />
                 {translate("profile")}
