@@ -3,13 +3,13 @@
 import { useEffect, useState, useRef } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { LogOut, ChevronDown, User, Settings, Menu } from "lucide-react"
+import { LogOut, User, Settings, Menu } from "lucide-react"
 import { Button } from "./ui/button"
-import { useTranslation } from "../app/i18n/client"
 import { motion, AnimatePresence } from "framer-motion"
 import { SidebarTrigger } from "../components/ui/sidebar"
 import { ModeToggle } from "./dark-mode-toggle"
 import { LanguageSwitcher } from "./language-switcher"
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 
 interface HeaderProps {
   params: {
@@ -18,22 +18,52 @@ interface HeaderProps {
 }
 
 export function Header({ params: { lng } }: HeaderProps) {
-  const { t } = useTranslation(lng, "header")
   const { data: session, status } = useSession()
   const router = useRouter()
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const [userImage, setUserImage] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
 
+  // Set mounted state to prevent hydration issues
   useEffect(() => {
-    if (status === "unauthenticated") {
+    setMounted(true)
+  }, [])
+
+  // Fetch user image
+  useEffect(() => {
+    if (!mounted || !session?.user?.email) return
+
+    fetch("/api/user")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data")
+        }
+        return response.json()
+      })
+      .then((data) => {
+        if (data.user && data.user.image) {
+          setUserImage(data.user.image)
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error)
+      })
+  }, [session, mounted])
+
+  // Handle authentication redirect
+  useEffect(() => {
+    if (mounted && status === "unauthenticated") {
       router.push("/api/auth/signin")
     }
-  }, [status, router])
+  }, [status, router, mounted])
 
   // Close dropdowns when clicking outside
   useEffect(() => {
+    if (!mounted) return
+
     function handleClickOutside(event: MouseEvent) {
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setIsProfileOpen(false)
@@ -42,13 +72,14 @@ export function Header({ params: { lng } }: HeaderProps) {
         setIsMenuOpen(false)
       }
     }
+
     document.addEventListener("mousedown", handleClickOutside)
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [])
+  }, [mounted])
 
-  if (status === "loading") {
+  if (!mounted || status === "loading") {
     return (
       <div className="flex justify-center items-center h-16">
         <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -60,14 +91,35 @@ export function Header({ params: { lng } }: HeaderProps) {
     return null
   }
 
+  // Simple translation function to avoid i18n issues
+  const translate = (key: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      en: {
+        profile: "Profile",
+        settings: "Settings",
+        sign_out: "Sign Out",
+      },
+      nl: {
+        profile: "Profiel",
+        settings: "Instellingen",
+        sign_out: "Uitloggen",
+      },
+      de: {
+        profile: "Profil",
+        settings: "Einstellungen",
+        sign_out: "Abmelden",
+      },
+    }
+
+    return translations[lng]?.[key] || key
+  }
+
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b dark:border-b-[#91969e52]">
       {/* Left Side: Sidebar Trigger + Logo */}
       <div className="flex items-center space-x-2">
         <SidebarTrigger />
-        <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
-          Dashboard
-        </h1>
+        <h1 className="text-lg font-semibold text-gray-800 dark:text-white">Dashboard</h1>
       </div>
 
       {/* Right Side: Desktop Controls */}
@@ -80,11 +132,20 @@ export function Header({ params: { lng } }: HeaderProps) {
             className="flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-[#2d2d30] transition-colors"
             onClick={() => setIsProfileOpen(!isProfileOpen)}
           >
+            <Avatar className="h-9 w-9 border border-gray-200 dark:border-gray-700 overflow-hidden flex-shrink-0 rounded-full">
+              <AvatarImage
+                src={userImage || session.user?.image || ""}
+                alt={session.user?.name || "User"}
+                className="object-cover aspect-square"
+              />
+              <AvatarFallback className="bg-primary/10 text-primary font-medium">
+                {session.user?.name?.[0]?.toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
             <div className="text-sm text-left">
               <p className="font-medium">{session.user?.name}</p>
               <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
             </div>
-            <ChevronDown className="h-4 w-4 ml-1" />
           </Button>
           <AnimatePresence>
             {isProfileOpen && (
@@ -100,7 +161,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                   onClick={() => router.push(`/profile`)}
                 >
                   <User className="h-4 w-4 mr-2" />
-                  {t("profile")}
+                  {translate("Profile")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -108,7 +169,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                   onClick={() => router.push(`/settings`)}
                 >
                   <Settings className="h-4 w-4 mr-2" />
-                  {t("settings")}
+                  {translate("Settings")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -116,7 +177,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                   onClick={() => signOut({ callbackUrl: `/${lng}` })}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  {t("sign_out")}
+                  {translate("Sign Out")}
                 </Button>
               </motion.div>
             )}
@@ -142,21 +203,14 @@ export function Header({ params: { lng } }: HeaderProps) {
               className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#2d2d30] rounded-md shadow-lg py-2 z-10"
             >
               {/* Language Switcher */}
-              <Button
-                variant="ghost"
-                className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-              >
-                {/* <Globe className="h-4 w-4 mr-2" /> */}
+              <div className="px-4 py-2">
                 <LanguageSwitcher />
-              </Button>
+              </div>
 
               {/* Dark Mode Toggle */}
-              <Button
-                variant="ghost"
-                className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-              >
+              <div className="px-4 py-2">
                 <ModeToggle />
-              </Button>
+              </div>
 
               {/* Profile & Logout */}
               <Button
@@ -165,7 +219,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                 onClick={() => router.push(`/profile`)}
               >
                 <User className="h-4 w-4 mr-2" />
-                {t("profile")}
+                {translate("profile")}
               </Button>
               <Button
                 variant="ghost"
@@ -173,7 +227,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                 onClick={() => signOut({ callbackUrl: `/${lng}` })}
               >
                 <LogOut className="h-4 w-4 mr-2" />
-                {t("sign_out")}
+                {translate("sign_out")}
               </Button>
             </motion.div>
           )}

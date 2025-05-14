@@ -43,5 +43,12 @@
     "no_learning_objectives": "Geen leerdoelen gevonden",
     "start_course": "Start cursus",
     "in_progress": "Momenteel bezig",
-    "mark_as_completed": "Markeer als voltooid"
+    "mark_as_completed": "Markeer als voltooid",
+    "general_information": "Algemene informatie",
+    "origin_language": "Oorspronkelijke taal",
+    "author": "Auteur",
+    "genre": "Genre",
+    "chapters": "Hoofdstukken",
+    "language_detail": "Taalinformatie",
+    "time_period": "Tijdperk"
 }

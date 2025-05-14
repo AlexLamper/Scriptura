@@ -43,7 +43,14 @@
     "no_learning_objectives": "No learning objectives found",
     "start_course": "Start Course",
     "in_progress": "In Progress",
-    "mark_as_completed": "Mark as Completed"
+    "mark_as_completed": "Mark as Completed",
+    "general_information": "General Information",
+    "origin_language": "Origin Language",
+    "author": "Author",
+    "genre": "Genre",
+    "chapters": "Chapters",
+    "language_detail": "Language Detail",
+    "time_period": "Time Period"
   }
   
   

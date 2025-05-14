@@ -16,7 +16,7 @@ export default function WhereToStart({ params: { lng } }: WhereToStartProps) {
   const { t } = useTranslation(lng, "where-to-start")
 
   return (
-    <div className="w-full max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+    <div className="w-full mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">{t("not_sure_where_to_start")}</h2>
