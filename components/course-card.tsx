@@ -16,11 +16,10 @@ interface CourseCardProps {
 export function CourseCard({
   title,
   category,
-  progress,
   imageUrl,
 }: CourseCardProps) {
-  const [current, total] = progress.split("/").map(Number);
-  const progressPercentage = (current / total) * 100;
+  // Hardcoded progress value (50%)
+  const progressPercentage = 50;
 
   return (
     <div className="group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-border bg-white dark:border-[#b6b6b63d] dark:bg-[#2a2b2f] h-full">
@@ -34,7 +33,6 @@ export function CourseCard({
           className="object-cover opacity-70 hover:opacity-80 transition-all duration-300"
           unoptimized
         />
-
       </div>
       
       {/* Card Content */}
@@ -54,7 +52,8 @@ export function CourseCard({
             Progress
           </span>
           <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-            {progress}
+            {/* Removed actual progress, can use hardcoded label instead */}
+            50%
           </span>
         </div>
         <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-5">

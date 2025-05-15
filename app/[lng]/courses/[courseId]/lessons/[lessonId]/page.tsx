@@ -91,7 +91,7 @@ export default function LessonPage({
       // Blockquotes
       .replace(
         /^> (.*?)$/gm,
-        '<blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4 text-base">$1</blockquote>',
+        '<blockquote class="border-l-4 border-gray-300 dark:border-gray-400 pl-4 italic my-4 text-base">$1</blockquote>',
       )
 
       .replace(
@@ -296,7 +296,7 @@ export default function LessonPage({
                 {t("back_to_course")}
               </Button>
             </Link>
-            {course && <div className="text-sm md:text-base font-medium text-muted-foreground">{course.title}</div>}
+            {course && <div className="text-sm md:text-base font-medium text-muted-foreground dark:text-[#ededed95]">{course.title}</div>}
           </div>
           <div className="flex items-center gap-2">
             <div className="text-sm text-muted-foreground">
@@ -314,7 +314,7 @@ export default function LessonPage({
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
+            <Card className="shadow-md hover:shadow-lg transition-shadow duration-300 dark:bg-[#3d3d3ff2] dark:border-[#91969e52]">
               <CardContent className="p-0 overflow-hidden">
                 <div className="pb-8 px-8">
                   {/* Use direct HTML rendering instead of ReactMarkdown */}
@@ -358,8 +358,8 @@ export default function LessonPage({
 
           {/* Sidebar Navigation */}
           <div>
-            <Card className="sticky top-6 shadow-md">
-              <CardHeader className="border-b">
+            <Card className="sticky top-6 shadow-md dark:bg-[#3d3d3ff2] dark:border-[#91969e52]">
+              <CardHeader className="border-b dark:border-b-[#91969e52]">
                 <CardTitle className="text-xl">{t("lesson_navigation")}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 p-6">
@@ -369,7 +369,7 @@ export default function LessonPage({
                 >
                   <Button
                     variant="outline"
-                    className="w-full justify-start group transition-all border border-black border-opacity-80 text-black text-opacity-80"
+                    className="w-full justify-start group transition-all border border-black dark:border-white dark:border-opacity-65 border-opacity-80 text-black dark:text-[#cacaca] text-opacity-80"
                     disabled={lessonIndex === 0}
                   >
                     <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -435,7 +435,7 @@ export default function LessonPage({
 
                 {/* Course progress */}
                 {course?.lessons && course.lessons.length > 0 && (
-                  <div className="mt-6 pt-6 border-t">
+                  <div className="mt-6 pt-6 border-t dark:border-t-[#91969e52]">
                     <h3 className="font-medium mb-3">{t("course_progress")}</h3>
                     <div className="space-y-2">
                       {course.lessons.map((courseLesson, idx) => (
@@ -457,12 +457,9 @@ export default function LessonPage({
                   </div>
                 )}
               </CardContent>
-              <CardFooter className="border-t">
+              <CardFooter className="border-t dark:border-t-[#91969e52]">
                 <Link href={`/${lng}/courses/${courseId}`}>
-                  <Button
-                    variant="secondary"
-                    className="w-full justify-start mt-6 hover:bg-secondary/80 transition-colors border"
-                  >
+                  <Button size="sm" className="mr-4 transition-all group-hover:-translate-x-1 mt-6 w-full justify-star">
                     <ChevronLeft className="mr-2 h-full w-full" />
                     {t("back_to_course")}
                   </Button>
