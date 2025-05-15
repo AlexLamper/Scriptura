@@ -276,37 +276,37 @@ export default function CoursePage({
                     <Link href="#" className="block space-y-1">
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">{t("origin_language")}:</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground dark:text-[#ededed95]">
                           {course.generalInformation?.originLanguage ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">{t("author")}:</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground dark:text-[#ededed95]">
                           {course.generalInformation?.author ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">{t("genre")}:</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground dark:text-[#ededed95]">
                           {course.generalInformation?.genre ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">{t("chapters")}:</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground dark:text-[#ededed95]">
                           {course.generalInformation?.chapters ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">{t("language_detail")}:</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground dark:text-[#ededed95]">
                           {course.generalInformation?.languageDetail ?? ""}
                         </p>
                       </div>
                       <div className="flex gap-1 text-sm">
                         <p className="font-medium">{t("time_period")}:</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground dark:text-[#ededed95]">
                           {course.generalInformation?.timePeriod ?? ""}
                         </p>
                       </div>
