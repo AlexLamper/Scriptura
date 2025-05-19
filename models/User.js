@@ -8,6 +8,9 @@ const UserSchema = new mongoose.Schema(
     image: { type: String },
     enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     streak: { type: Number, default: 0 },
+    subscribed: { type: Boolean, default: false },
+    stripeCustomerId: { type: String },
+    stripeSubscriptionId: { type: String },
   },
   { timestamps: true },
 )

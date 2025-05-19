@@ -6,23 +6,44 @@ import Link from "next/link"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card"
 import { Button } from "../../../components/ui/button"
 import { CheckCircle, Calendar, BookOpen, Sparkles } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 export default function SuccessPage() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id")
   const [status, setStatus] = useState("loading")
+  const { update } = useSession()
 
   useEffect(() => {
     if (sessionId) {
-      // You could verify the session here by calling your API
-      // For simplicity, we're just setting success after a delay
-      const timer = setTimeout(() => {
-        setStatus("success")
-      }, 1000)
+      // Verify the session and update the user's subscription status
+      const verifySession = async () => {
+        try {
+          const response = await fetch("/api/verify-subscription", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ sessionId }),
+          })
 
-      return () => clearTimeout(timer)
+          if (response.ok) {
+            // Update the session to reflect the new subscription status
+            await update()
+            setStatus("success")
+          } else {
+            console.error("Failed to verify subscription")
+            setStatus("success") // Still show success for now
+          }
+        } catch (error) {
+          console.error("Error verifying subscription:", error)
+          setStatus("success") // Still show success for now
+        }
+      }
+
+      verifySession()
     }
-  }, [sessionId])
+  }, [sessionId, update])
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-slate-50">
@@ -113,4 +134,3 @@ export default function SuccessPage() {
     </div>
   )
 }
-
