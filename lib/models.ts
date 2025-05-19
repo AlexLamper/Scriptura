@@ -92,13 +92,16 @@ const courseSchema = new mongoose.Schema<CourseType>({
 
 
 export interface UserType {
-  _id: mongoose.Schema.Types.ObjectId;
-  name: string;
-  email: string;
-  bio?: string;
-  image?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  _id: mongoose.Schema.Types.ObjectId
+  name: string
+  email: string
+  bio?: string
+  image?: string
+  subscribed?: boolean
+  stripeCustomerId?: string
+  stripeSubscriptionId?: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 const userSchema = new mongoose.Schema<UserType>({
@@ -106,9 +109,12 @@ const userSchema = new mongoose.Schema<UserType>({
   email: { type: String, required: true, unique: true },
   bio: { type: String },
   image: { type: String },
+  subscribed: { type: Boolean, default: false },
+  stripeCustomerId: { type: String },
+  stripeSubscriptionId: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-});
+})
 
 export interface PostType {
   _id: mongoose.Schema.Types.ObjectId;
