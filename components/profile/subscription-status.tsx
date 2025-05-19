@@ -1,136 +1,168 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { Button } from "../../components/ui/button"
-import { Badge } from "../../components/ui/badge"
-import { Loader2, Crown, Calendar } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "../../app/i18n/client"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { Button } from "../ui/button"
+import { CheckCircle, XCircle, AlertCircle } from "lucide-react"
+import { useToast } from "../../hooks/use-toast"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 
 interface SubscriptionStatusProps {
   userId: string
   lng: string
+  subscribed?: boolean
+  stripeSubscriptionId?: string
 }
 
-export function SubscriptionStatus({ userId, lng }: SubscriptionStatusProps) {
+export function SubscriptionStatus({ lng, subscribed = false }: SubscriptionStatusProps) {
   const { t } = useTranslation(lng, "profile")
-  const [subscription, setSubscription] = useState<{
-    status: string
-    plan?: string
-    renewalDate?: string
-  } | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [mounted, setMounted] = useState(false)
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [cancelDate, setCancelDate] = useState<Date | null>(null)
+  const [isSubscribed] = useState(subscribed)
 
-  // Add this effect to prevent hydration issues
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const handleCancelSubscription = async () => {
+    setIsLoading(true)
+    try {
+      const response = await fetch("/api/subscription/cancel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
 
-  useEffect(() => {
-    if (!mounted) return
+      const data = await response.json()
 
-    const fetchSubscription = async () => {
-      try {
-        // In a real implementation, you would fetch the subscription status from your API
-        // For this example, we'll simulate a subscription
-
-        // Simulate API call delay
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-
-        // Mock subscription data (replace with actual API call)
-        setSubscription({
-          status: "active", // or "inactive", "canceled", etc.
-          plan: "Free", // Use a fixed string instead of t() here
-          renewalDate: "N/A", // Use a fixed string instead of t() here
-        })
-      } catch (error) {
-        console.error("Error fetching subscription:", error)
-        setSubscription(null)
-      } finally {
-        setIsLoading(false)
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to cancel subscription")
       }
+
+      // Set the cancellation date
+      if (data.cancelDate) {
+        setCancelDate(new Date(data.cancelDate))
+      }
+
+      toast({
+        title: t("subscription_cancel_success"),
+        description: t("subscription_cancel_details"),
+        variant: "default",
+      })
+
+      // Close the dialog
+      setIsDialogOpen(false)
+    } catch (error) {
+      console.error("Error canceling subscription:", error)
+      toast({
+        title: t("subscription_cancel_error"),
+        description: error instanceof Error ? error.message : String(error),
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
     }
-
-    fetchSubscription()
-  }, [mounted, userId]) // Only depend on mounted state and userId
-
-  // Translate the plan and renewal date only when rendering
-  const getTranslatedPlan = (plan: string) => {
-    if (plan === "Free") return t("free_plan")
-    return plan
-  }
-
-  const getTranslatedRenewalDate = (date: string) => {
-    if (date === "N/A") return t("not_applicable")
-    return date
-  }
-
-  const getStatusBadge = () => {
-    if (!subscription) return null
-
-    switch (subscription.status) {
-      case "active":
-        return <Badge className="bg-green-500">{t("active")}</Badge>
-      case "canceled":
-        return (
-          <Badge variant="outline" className="text-yellow-500 border-yellow-500">
-            {t("canceled")}
-          </Badge>
-        )
-      case "inactive":
-        return (
-          <Badge variant="outline" className="text-gray-500 border-gray-500">
-            {t("inactive")}
-          </Badge>
-        )
-      default:
-        return null
-    }
-  }
-
-  if (!mounted) {
-    return null
   }
 
   return (
-    <Card className="dark:bg-[#292b2f] dark:border-none">
-      <CardHeader>
-        <CardTitle className="flex items-center">
-          <Crown className="mr-2 h-5 w-5 text-yellow-500" />
-          {t("subscription_status")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isLoading ? (
-          <div className="flex justify-center py-4">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-          </div>
-        ) : subscription ? (
+    <>
+      <Card className="dark:bg-[#292b2f] dark:border-none">
+        <CardHeader>
+          <CardTitle>{t("subscription_status")}</CardTitle>
+        </CardHeader>
+        <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">{t("status")}:</span>
-              {getStatusBadge()}
+            <div className="flex items-center">
+              {isSubscribed ? (
+                <>
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                  <span className="font-medium">{t("subscribed")}</span>
+                </>
+              ) : (
+                <>
+                  <XCircle className="h-5 w-5 text-gray-400 mr-2" />
+                  <span className="text-gray-600 dark:text-gray-400">{t("not_subscribed")}</span>
+                </>
+              )}
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">{t("current_plan")}:</span>
-              <span className="font-medium">{getTranslatedPlan(subscription.plan || "")}</span>
-            </div>
-            {subscription.renewalDate && (
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">{t("next_renewal")}:</span>
-                <span className="font-medium flex items-center">
-                  <Calendar className="mr-1 h-4 w-4" />
-                  {getTranslatedRenewalDate(subscription.renewalDate)}
-                </span>
+
+            {cancelDate && (
+              <div className="flex items-start mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-md border border-amber-200 dark:border-amber-800">
+                <AlertCircle className="h-5 w-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-sm text-amber-800 dark:text-amber-300">
+                    {t("subscription_ending")}
+                    <span className="font-medium">
+                      {" "}
+                      {cancelDate.toLocaleDateString(lng === "nl" ? "nl-NL" : "en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </p>
+                  <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">{t("subscription_renew_info")}</p>
+                </div>
               </div>
             )}
-            {subscription.plan === "Free" && <Button className="w-full mt-4">{t("upgrade_to_premium")}</Button>}
+
+            <div className="pt-2">
+              {isSubscribed ? (
+                <Button
+                  variant="outline"
+                  className="w-full border-red-500 text-red-500 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-950/30"
+                  onClick={() => setIsDialogOpen(true)}
+                >
+                  {t("cancel_subscription")}
+                </Button>
+              ) : (
+                <Button className="w-full" onClick={() => (window.location.href = `/${lng}/subscribe`)}>
+                  {t("subscribe_now")}
+                </Button>
+              )}
+            </div>
           </div>
-        ) : (
-          <div className="text-center py-4 text-muted-foreground">{t("unable_load_subscription")}</div>
-        )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t("confirm_cancellation")}</DialogTitle>
+            <DialogDescription>{t("cancellation_description")}</DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-gray-600 dark:text-gray-300">{t("cancellation_details")}</p>
+            <ul className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+              <li className="flex items-start">
+                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                {t("cancellation_point_1")}
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                {t("cancellation_point_2")}
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                {t("cancellation_point_3")}
+              </li>
+            </ul>
+          </div>
+          <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              {t("keep_subscription")}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleCancelSubscription}
+              disabled={isLoading}
+              className="mt-2 sm:mt-0"
+            >
+              {isLoading ? t("cancelling") : t("confirm_cancel")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

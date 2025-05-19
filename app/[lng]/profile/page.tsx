@@ -24,6 +24,8 @@ export default function ProfilePage({
     image?: string
     _id: string
     enrolledCourses?: string[]
+    subscribed?: boolean
+    stripeSubscriptionId?: string
   }
 
   const [user, setUser] = useState<User | null>(null)
@@ -113,7 +115,12 @@ export default function ProfilePage({
             </CardContent>
           </Card>
 
-          <SubscriptionStatus userId={user._id.toString()} lng={lng} />
+          <SubscriptionStatus
+            userId={user._id.toString()}
+            lng={lng}
+            subscribed={user.subscribed}
+            stripeSubscriptionId={user.stripeSubscriptionId}
+          />
         </div>
       </div>
 
