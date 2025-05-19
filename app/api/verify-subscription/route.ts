@@ -20,51 +20,71 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not authenticated" }, { status: 401 })
     }
 
+    console.log(`[Verify Subscription] Verifying session ${sessionId} for user ${session.user.email}`)
+
     // Retrieve the Stripe checkout session
     const checkoutSession = await stripe.checkout.sessions.retrieve(sessionId)
-
-    if (checkoutSession.mode !== "subscription") {
-      return NextResponse.json({ error: "Not a subscription checkout session" }, { status: 400 })
-    }
-
-    // Get the subscription ID from the checkout session
-    const subscriptionId = checkoutSession.subscription as string
-
-    if (!subscriptionId) {
-      return NextResponse.json({ error: "No subscription found in checkout session" }, { status: 400 })
-    }
-
-    // Retrieve the subscription to check its status
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId)
-
-    if (subscription.status !== "active") {
-      return NextResponse.json({ error: "Subscription is not active" }, { status: 400 })
-    }
 
     // Connect to MongoDB
     await connectMongoDB()
 
-    // Update the user's subscription status
-    const updatedUser = await User.findOneAndUpdate(
-      { email: session.user.email },
-      {
-        subscribed: true,
-        stripeCustomerId: checkoutSession.customer as string,
-        stripeSubscriptionId: subscriptionId,
-      },
-      { new: true },
-    )
+    // Find the user
+    const user = await User.findOne({ email: session.user.email })
 
-    if (!updatedUser) {
+    if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
 
+    // Update the user's Stripe customer ID if it's in the checkout session
+    if (checkoutSession.customer) {
+      user.stripeCustomerId = checkoutSession.customer as string
+    }
+
+    // If this is a subscription checkout
+    if (checkoutSession.mode === "subscription" && checkoutSession.subscription) {
+      console.log(`[Verify Subscription] Found subscription: ${checkoutSession.subscription}`)
+
+      // Get the subscription details
+      const subscriptionId = checkoutSession.subscription as string
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+
+      // Update the user's subscription status
+      user.subscribed = subscription.status === "active" || subscription.status === "trialing"
+      user.stripeSubscriptionId = subscriptionId
+
+      console.log(`[Verify Subscription] Setting subscription status to: ${user.subscribed}`)
+    } else {
+      console.log(`[Verify Subscription] Not a subscription checkout or no subscription found`)
+
+      // If the user has a Stripe customer ID, check for active subscriptions
+      if (user.stripeCustomerId) {
+        const subscriptions = await stripe.subscriptions.list({
+          customer: user.stripeCustomerId,
+          status: "active",
+          limit: 1,
+        })
+
+        if (subscriptions.data.length > 0) {
+          user.subscribed = true
+          user.stripeSubscriptionId = subscriptions.data[0].id
+          console.log(`[Verify Subscription] Found active subscription: ${user.stripeSubscriptionId}`)
+        }
+      }
+    }
+
+    // Save the updated user
+    await user.save()
+
+    console.log(`[Verify Subscription] Updated user ${user._id}, subscribed: ${user.subscribed}`)
+
     return NextResponse.json({
       success: true,
-      subscribed: true,
+      subscribed: user.subscribed,
+      stripeCustomerId: user.stripeCustomerId,
+      stripeSubscriptionId: user.stripeSubscriptionId,
     })
   } catch (error) {
-    console.error("Error verifying subscription:", error)
+    console.error("[Verify Subscription] Error verifying subscription:", error)
     return NextResponse.json(
       {
         error: "Error verifying subscription",

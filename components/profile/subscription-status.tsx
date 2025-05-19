@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTranslation } from "../../app/i18n/client"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
-import { CheckCircle, XCircle, AlertCircle } from "lucide-react"
+import { CheckCircle, XCircle, AlertCircle, RefreshCw } from "lucide-react"
 import { useToast } from "../../hooks/use-toast"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 
@@ -19,9 +19,60 @@ export function SubscriptionStatus({ lng, subscribed = false }: SubscriptionStat
   const { t } = useTranslation(lng, "profile")
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [cancelDate, setCancelDate] = useState<Date | null>(null)
-  const [isSubscribed] = useState(subscribed)
+  const [isSubscribed, setIsSubscribed] = useState(subscribed)
+
+  // Sync subscription status with Stripe on component mount
+  useEffect(() => {
+    const syncSubscriptionStatus = async () => {
+      try {
+        const response = await fetch("/api/subscription/status")
+        if (response.ok) {
+          const data = await response.json()
+          if (data.subscribed !== isSubscribed) {
+            setIsSubscribed(data.subscribed)
+          }
+        }
+      } catch (error) {
+        console.error("Error syncing subscription status:", error)
+      }
+    }
+
+    syncSubscriptionStatus()
+  }, [isSubscribed])
+
+  const handleSyncSubscription = async () => {
+    setIsSyncing(true)
+    try {
+      const response = await fetch("/api/subscription/status", {
+        method: "POST",
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to sync subscription status")
+      }
+
+      const data = await response.json()
+      setIsSubscribed(data.subscribed)
+
+      toast({
+        title: t("subscription_synced"),
+        description: data.subscribed ? t("subscription_active") : t("subscription_inactive"),
+        variant: "default",
+      })
+    } catch (error) {
+      console.error("Error syncing subscription:", error)
+      toast({
+        title: t("sync_error"),
+        description: error instanceof Error ? error.message : String(error),
+        variant: "destructive",
+      })
+    } finally {
+      setIsSyncing(false)
+    }
+  }
 
   const handleCancelSubscription = async () => {
     setIsLoading(true)
@@ -67,8 +118,19 @@ export function SubscriptionStatus({ lng, subscribed = false }: SubscriptionStat
   return (
     <>
       <Card className="dark:bg-[#292b2f] dark:border-none">
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle>{t("subscription_status")}</CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleSyncSubscription}
+            disabled={isSyncing}
+            className="h-8 w-8 p-0"
+            title={t("sync_subscription")}
+          >
+            <RefreshCw className={`h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} />
+            <span className="sr-only">{t("sync_subscription")}</span>
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
