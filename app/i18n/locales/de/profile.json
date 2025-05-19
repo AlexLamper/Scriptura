@@ -58,5 +58,10 @@
   "subscription_cancel_details": "Dein Abonnement bleibt bis zum Ende deiner aktuellen Abrechnungsperiode aktiv",
   "subscription_cancel_error": "Fehler beim Kündigen des Abonnements",
   "subscription_ending": "Dein Abonnement endet am",
-  "subscription_renew_info": "Du kannst dich jederzeit erneut abonnieren, um den vollen Zugang wiederherzustellen"
+  "subscription_renew_info": "Du kannst dich jederzeit erneut abonnieren, um den vollen Zugang wiederherzustellen",
+  "sync_subscription": "Abonnementstatus Synchronisieren",
+  "subscription_synced": "Abonnementstatus Synchronisiert",
+  "subscription_active": "Abonnement Aktiv",
+  "subscription_inactive": "Abonnement Inaktiv",
+  "sync_error": "Fehler beim Synchronisieren des Abonnements"
 }

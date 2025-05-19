@@ -19,6 +19,7 @@ export default function SuccessPage() {
       // Verify the session and update the user's subscription status
       const verifySession = async () => {
         try {
+          // First, try to verify the subscription through our API
           const response = await fetch("/api/verify-subscription", {
             method: "POST",
             headers: {
@@ -32,8 +33,20 @@ export default function SuccessPage() {
             await update()
             setStatus("success")
           } else {
-            console.error("Failed to verify subscription")
-            setStatus("success") // Still show success for now
+            console.error("Failed to verify subscription through API, trying direct sync")
+
+            // If that fails, try to sync subscription status directly
+            const syncResponse = await fetch("/api/subscription/status", {
+              method: "POST",
+            })
+
+            if (syncResponse.ok) {
+              await update()
+              setStatus("success")
+            } else {
+              console.error("Failed to sync subscription status")
+              setStatus("success") // Still show success for now
+            }
           }
         } catch (error) {
           console.error("Error verifying subscription:", error)
