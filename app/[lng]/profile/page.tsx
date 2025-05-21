@@ -9,6 +9,8 @@ import { ProfileImageUpload } from "../../../components/profile/profile-image-up
 import { SubscriptionStatus } from "../../../components/profile/subscription-status"
 import { use } from "react"
 import { getSession } from "next-auth/react"
+import { Badge } from "../../../components/ui/badge"
+import { ShieldCheck } from "lucide-react"
 
 export default function ProfilePage({
   params,
@@ -26,6 +28,7 @@ export default function ProfilePage({
     enrolledCourses?: string[]
     subscribed?: boolean
     stripeSubscriptionId?: string
+    isAdmin?: boolean // Added admin field
   }
 
   const [user, setUser] = useState<User | null>(null)
@@ -94,7 +97,16 @@ export default function ProfilePage({
 
   return (
     <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4">
-      <h1 className="text-3xl font-bold mb-6">{t("your_profile")}</h1>
+      <div className="flex items-center gap-3 mb-6">
+        <h1 className="text-3xl font-bold">{t("your_profile")}</h1>
+        {user.isAdmin && (
+          <Badge className="bg-purple-600 text-white flex items-center gap-1">
+            <ShieldCheck className="h-3 w-3" />
+            <span>Admin</span>
+          </Badge>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-none">
           <CardHeader>
@@ -120,9 +132,61 @@ export default function ProfilePage({
             lng={lng}
             subscribed={user.subscribed}
             stripeSubscriptionId={user.stripeSubscriptionId}
+            isAdmin={user.isAdmin}
           />
         </div>
       </div>
+
+      {user.isAdmin && (
+        <div className="mt-6">
+          <Card className="dark:bg-[#292b2f] dark:border-none">
+            <CardHeader>
+              <CardTitle>Admin Dashboard</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-lg">
+                  Welcome to the admin dashboard. As an admin, you have access to special features:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <a
+                    href={`/${lng}/admin/courses`}
+                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <h3 className="font-semibold text-lg mb-2">Manage Courses</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Create, edit, and manage premium courses</p>
+                  </a>
+                  <a
+                    href={`/${lng}/admin/users`}
+                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <h3 className="font-semibold text-lg mb-2">Manage Users</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      View and manage user accounts and subscriptions
+                    </p>
+                  </a>
+                  <a
+                    href={`/${lng}/admin/analytics`}
+                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <h3 className="font-semibold text-lg mb-2">Analytics</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      View platform usage and subscription statistics
+                    </p>
+                  </a>
+                  <a
+                    href={`/${lng}/admin/settings`}
+                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <h3 className="font-semibold text-lg mb-2">Platform Settings</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Configure global platform settings</p>
+                  </a>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       <div className="mt-6">
         <Card className="dark:bg-[#292b2f] dark:border-none">

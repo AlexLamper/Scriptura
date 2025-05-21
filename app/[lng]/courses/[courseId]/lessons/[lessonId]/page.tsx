@@ -11,6 +11,8 @@ import { Skeleton } from "../../../../../../components/ui/skeleton"
 import { cn } from "../../../../../../lib/utils"
 import { useSession } from "next-auth/react"
 import { Badge } from "../../../../../../components/ui/badge"
+import { PremiumCourseLock } from "../../../../../../components/premium-course-lock"
+import { useRouter } from "next/navigation"
 
 type LessonType = {
   title: string
@@ -28,6 +30,7 @@ type CourseType = {
   totalDuration: number
   tags: string[]
   lessons?: LessonType[]
+  isPremium?: boolean
 }
 
 export default function LessonPage({
@@ -38,6 +41,7 @@ export default function LessonPage({
   const { lng, courseId, lessonId } = use(params)
   const { t } = useTranslation(lng, "course")
   const { data: session } = useSession()
+  const router = useRouter()
 
   const [course, setCourse] = useState<CourseType | null>(null)
   const [lesson, setLesson] = useState<LessonType | null>(null)
@@ -46,6 +50,27 @@ export default function LessonPage({
   const [isCompleted, setIsCompleted] = useState(false)
   const [completedLessons, setCompletedLessons] = useState<number[]>([])
   const [markingAsCompleted, setMarkingAsCompleted] = useState(false)
+  type UserType = { subscribed?: boolean } | null
+  const [user, setUser] = useState<UserType>(null)
+
+  // Fetch user data to check subscription status
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!session) return
+
+      try {
+        const response = await fetch("/api/user")
+        if (response.ok) {
+          const data = await response.json()
+          setUser(data.user)
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+      }
+    }
+
+    fetchUserData()
+  }, [session])
 
   // Process content to handle citations, newlines, and other formatting issues
   function processContent(content: string) {
@@ -95,7 +120,7 @@ export default function LessonPage({
       )
 
       .replace(
-        /!\[(.*?)\]\((.*?)\)/g,
+        /!\[(.*?)\]$$(.*?)$$/g,
         '<div class="my-6 flex justify-center"><img src="$2" alt="$1" class="rounded-lg max-w-full h-auto" style="max-height: 500px" /></div>',
       )
 
@@ -214,6 +239,17 @@ export default function LessonPage({
     }
   }
 
+  const isUserSubscribed = user?.subscribed || false
+  const isPremiumCourse = course?.isPremium || false
+  // const canAccessCourse = !isPremiumCourse || (isPremiumCourse && isUserSubscribed)
+
+  // Redirect to course page if premium course and user is not subscribed
+  useEffect(() => {
+    if (!loading && isPremiumCourse && !isUserSubscribed) {
+      router.push(`/${lng}/courses/${courseId}`)
+    }
+  }, [loading, isPremiumCourse, isUserSubscribed, router, lng, courseId])
+
   if (loading) {
     return (
       <div className="min-h-screen">
@@ -276,6 +312,15 @@ export default function LessonPage({
     )
   }
 
+  // If premium course and user is not subscribed, show a message
+  if (isPremiumCourse && !isUserSubscribed) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <PremiumCourseLock lng={lng} />
+      </div>
+    )
+  }
+
   const lessonIndex = Number(lessonId)
   const prevLessonId = lessonIndex > 0 ? String(lessonIndex - 1) : lessonId
   const nextLessonId = String(lessonIndex + 1)
@@ -296,7 +341,11 @@ export default function LessonPage({
                 {t("back_to_course")}
               </Button>
             </Link>
-            {course && <div className="text-sm md:text-base font-medium text-muted-foreground dark:text-[#ededed95]">{course.title}</div>}
+            {course && (
+              <div className="text-sm md:text-base font-medium text-muted-foreground dark:text-[#ededed95]">
+                {course.title}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-2">
             <div className="text-sm text-muted-foreground">

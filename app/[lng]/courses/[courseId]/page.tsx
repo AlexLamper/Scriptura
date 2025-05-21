@@ -4,14 +4,14 @@ import { use, useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "../../../../components/ui/button"
-// import { Progress } from "../../../../components/ui/progress"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card"
 import { useTranslation } from "../../../i18n/client"
-import { ArrowLeft, Check, Clock, BookOpen } from "lucide-react"
+import { ArrowLeft, Check, Clock, BookOpen, Crown } from "lucide-react"
 import CourseProgress from "../../../../components/course-progress"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Badge } from "../../../../components/ui/badge"
+import { PremiumCourseLock } from "../../../../components/premium-course-lock"
 
 interface CourseGeneralInformation {
   originLanguage: string
@@ -35,6 +35,7 @@ type CourseType = {
   learning_objectives: string[]
   imageUrl?: string
   generalInformation: CourseGeneralInformation
+  isPremium?: boolean
 }
 
 export default function CoursePage({
@@ -53,6 +54,30 @@ export default function CoursePage({
   const [error, setError] = useState<string | null>(null)
   const [completedLessons, setCompletedLessons] = useState<number[]>([])
   const [lastAccessedLesson, setLastAccessedLesson] = useState<number>(0)
+  interface UserType {
+    subscribed?: boolean
+    [key: string]: unknown
+  }
+  const [user, setUser] = useState<UserType | null>(null)
+
+  // Fetch user data to check subscription status
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!session) return
+
+      try {
+        const response = await fetch("/api/user")
+        if (response.ok) {
+          const data = await response.json()
+          setUser(data.user)
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+      }
+    }
+
+    fetchUserData()
+  }, [session])
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -107,6 +132,10 @@ export default function CoursePage({
     router.push(`/${lng}/courses/${courseId}/lessons/${lastAccessedLesson}`)
   }
 
+  const isUserSubscribed = user?.subscribed || false
+  const isPremiumCourse = course?.isPremium || false
+  const canAccessCourse = !isPremiumCourse || (isPremiumCourse && isUserSubscribed)
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
@@ -142,13 +171,27 @@ export default function CoursePage({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-grow container mx-auto px-0 py-2">
+      {/* Premium course lock overlay */}
+      {isPremiumCourse && !isUserSubscribed && <PremiumCourseLock lng={lng} />}
+
+      <main
+        className={`flex-grow container mx-auto px-0 py-2 ${!canAccessCourse ? "pointer-events-none filter blur-sm" : ""}`}
+      >
         <Button onClick={() => (window.location.href = `/courses`)} className="mb-4 flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("back_to_courses")}
         </Button>
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-8">{course.title}</h1>
+        <div className="flex items-center gap-2 mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold">{course.title}</h1>
+          {isPremiumCourse && (
+            <Badge className={`flex items-center gap-1 ${isUserSubscribed ? "bg-amber-500" : "bg-gray-700"}`}>
+              <Crown className="h-3 w-3" />
+              <span>Premium</span>
+            </Badge>
+          )}
+        </div>
+
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2]">
@@ -261,7 +304,7 @@ export default function CoursePage({
                 <CardContent>
                   <CourseProgress courseId={courseId} lng={lng} />
                   {/* <p className="text-sm mb-4">33% {t("complete")}</p> */}
-                  <Button className="w-full mb-3" onClick={handleContinueCourse}>
+                  <Button className="w-full mb-3" onClick={handleContinueCourse} disabled={!canAccessCourse}>
                     {completedLessons.length > 0 ? t("continue_course") : t("start_course")}
                   </Button>
                 </CardContent>
