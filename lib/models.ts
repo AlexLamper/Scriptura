@@ -100,6 +100,7 @@ export interface UserType {
   subscribed?: boolean
   stripeCustomerId?: string
   stripeSubscriptionId?: string
+  isAdmin?: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -112,6 +113,7 @@ const userSchema = new mongoose.Schema<UserType>({
   subscribed: { type: Boolean, default: false },
   stripeCustomerId: { type: String },
   stripeSubscriptionId: { type: String },
+  isAdmin: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 })

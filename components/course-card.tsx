@@ -1,46 +1,59 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { Button } from "./ui/button";
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { Button } from "./ui/button"
+import { Crown } from "lucide-react"
+import { Badge } from "./ui/badge"
 
 interface CourseCardProps {
-  id: string | number;
-  title: string;
-  category: string;
-  progress: string;
-  language: string;
-  imageUrl: string;
+  id: string | number
+  title: string
+  category: string
+  progress: string
+  language: string
+  imageUrl: string
+  isPremium?: boolean
+  isUserSubscribed?: boolean
 }
 
 export function CourseCard({
   title,
   category,
   imageUrl,
+  isPremium = false,
+  isUserSubscribed = false,
 }: CourseCardProps) {
   // Hardcoded progress value (50%)
-  const progressPercentage = 50;
+  const progressPercentage = 50
 
   return (
     <div className="group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-border bg-white dark:border-[#b6b6b63d] dark:bg-[#2a2b2f] h-full">
-      
       {/* Image Container */}
       <div className="relative w-full h-32">
         <Image
-          src={imageUrl}
+          src={imageUrl || "/placeholder.svg"}
           alt={`${title} cover`}
           fill
           className="object-cover opacity-70 hover:opacity-80 transition-all duration-300"
           unoptimized
         />
+
+        {/* Premium badge */}
+        {isPremium && (
+          <div className="absolute top-2 right-2 z-10">
+            <Badge className={`flex items-center gap-1 ${isUserSubscribed ? "bg-amber-500" : "bg-gray-700"}`}>
+              <Crown className="h-3 w-3" />
+              <span>Premium</span>
+            </Badge>
+          </div>
+        )}
       </div>
-      
+
       {/* Card Content */}
       <div className="flex items-center p-5">
         <div>
-          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
-            {title}
-          </h3>
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{title}</h3>
           <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 dark:text-blue-400 border border-black/10 dark:border-[#b6b6b63d] text-[#1f1f1f9d]">
             {category}
           </span>
@@ -48,9 +61,7 @@ export function CourseCard({
       </div>
       <div className="p-5 pt-3">
         <div className="mb-2 flex justify-between text-xs">
-          <span className="text-gray-500 dark:text-gray-400 font-medium">
-            Progress
-          </span>
+          <span className="text-gray-500 dark:text-gray-400 font-medium">Progress</span>
           <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
             {/* Removed actual progress, can use hardcoded label instead */}
             50%
@@ -69,5 +80,5 @@ export function CourseCard({
         </Button>
       </div>
     </div>
-  );
+  )
 }

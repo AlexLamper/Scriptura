@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import connectMongoDB from '../../../../libs/mongodb';
 import Course from '../../../../models/Course';
+import { getServerSession } from "next-auth"
+import User from "../../../../models/User"
 
 export async function GET(request: Request) {
   try {
@@ -18,10 +20,34 @@ export async function GET(request: Request) {
     }
     
     const course = await Course.findById(courseId).lean();
-    
+
     if (!course) {
       console.log('Course not found with ID:', courseId);
       return NextResponse.json({ message: 'Course not found' }, { status: 404 });
+    }
+
+    // Check if course is premium and user is subscribed
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((course as any).isPremium) {
+      const session = await getServerSession()
+
+      if (!session || !session.user?.email) {
+        // Return course data but mark it as premium for UI handling
+        return NextResponse.json({
+          ...course,
+          isPremium: true,
+        })
+      }
+
+      const user = await User.findOne({ email: session.user.email })
+
+      if (!user || !user.subscribed) {
+        // Return course data but mark it as premium for UI handling
+        return NextResponse.json({
+          ...course,
+          isPremium: true,
+        })
+      }
     }
     
     console.log('Course found:', course);

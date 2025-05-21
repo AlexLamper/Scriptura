@@ -1,230 +1,73 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useTranslation } from "../../app/i18n/client"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import { Button } from "../ui/button"
-import { CheckCircle, XCircle, AlertCircle, RefreshCw } from "lucide-react"
-import { useToast } from "../../hooks/use-toast"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
+import { Button } from "../../components/ui/button"
+import { Badge } from "../../components/ui/badge"
+import { Crown, ShieldCheck } from "lucide-react"
+import Link from "next/link"
 
 interface SubscriptionStatusProps {
   userId: string
   lng: string
   subscribed?: boolean
   stripeSubscriptionId?: string
+  isAdmin?: boolean
 }
 
-export function SubscriptionStatus({ lng, subscribed = false }: SubscriptionStatusProps) {
-  const { t } = useTranslation(lng, "profile")
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSyncing, setIsSyncing] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [cancelDate, setCancelDate] = useState<Date | null>(null)
-  const [isSubscribed, setIsSubscribed] = useState(subscribed)
-
-  // Sync subscription status with Stripe on component mount
-  useEffect(() => {
-    const syncSubscriptionStatus = async () => {
-      try {
-        const response = await fetch("/api/subscription/status")
-        if (response.ok) {
-          const data = await response.json()
-          if (data.subscribed !== isSubscribed) {
-            setIsSubscribed(data.subscribed)
-          }
-        }
-      } catch (error) {
-        console.error("Error syncing subscription status:", error)
-      }
-    }
-
-    syncSubscriptionStatus()
-  }, [isSubscribed])
-
-  const handleSyncSubscription = async () => {
-    setIsSyncing(true)
-    try {
-      const response = await fetch("/api/subscription/status", {
-        method: "POST",
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to sync subscription status")
-      }
-
-      const data = await response.json()
-      setIsSubscribed(data.subscribed)
-
-      toast({
-        title: t("subscription_synced"),
-        description: data.subscribed ? t("subscription_active") : t("subscription_inactive"),
-        variant: "default",
-      })
-    } catch (error) {
-      console.error("Error syncing subscription:", error)
-      toast({
-        title: t("sync_error"),
-        description: error instanceof Error ? error.message : String(error),
-        variant: "destructive",
-      })
-    } finally {
-      setIsSyncing(false)
-    }
-  }
-
-  const handleCancelSubscription = async () => {
-    setIsLoading(true)
-    try {
-      const response = await fetch("/api/subscription/cancel", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to cancel subscription")
-      }
-
-      // Set the cancellation date
-      if (data.cancelDate) {
-        setCancelDate(new Date(data.cancelDate))
-      }
-
-      toast({
-        title: t("subscription_cancel_success"),
-        description: t("subscription_cancel_details"),
-        variant: "default",
-      })
-
-      // Close the dialog
-      setIsDialogOpen(false)
-    } catch (error) {
-      console.error("Error canceling subscription:", error)
-      toast({
-        title: t("subscription_cancel_error"),
-        description: error instanceof Error ? error.message : String(error),
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
+export function SubscriptionStatus({
+  lng,
+  subscribed = false,
+  stripeSubscriptionId,
+  isAdmin = false,
+}: SubscriptionStatusProps) {
   return (
-    <>
-      <Card className="dark:bg-[#292b2f] dark:border-none">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle>{t("subscription_status")}</CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleSyncSubscription}
-            disabled={isSyncing}
-            className="h-8 w-8 p-0"
-            title={t("sync_subscription")}
-          >
-            <RefreshCw className={`h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} />
-            <span className="sr-only">{t("sync_subscription")}</span>
-          </Button>
-        </CardHeader>
-        <CardContent>
+    <Card className="dark:bg-[#292b2f] dark:border-none">
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between">
+          <span>Subscription Status</span>
+          {isAdmin && (
+            <Badge className="bg-purple-600 text-white flex items-center gap-1">
+              <ShieldCheck className="h-3 w-3" />
+              <span>Admin</span>
+            </Badge>
+          )}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {subscribed ? (
           <div className="space-y-4">
-            <div className="flex items-center">
-              {isSubscribed ? (
-                <>
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                  <span className="font-medium">{t("subscribed")}</span>
-                </>
-              ) : (
-                <>
-                  <XCircle className="h-5 w-5 text-gray-400 mr-2" />
-                  <span className="text-gray-600 dark:text-gray-400">{t("not_subscribed")}</span>
-                </>
-              )}
+            <div className="flex items-center gap-2">
+              <Badge className="bg-amber-500 text-white flex items-center gap-1">
+                <Crown className="h-3 w-3" />
+                <span>Premium</span>
+              </Badge>
+              <span className="text-sm text-gray-600 dark:text-gray-300">Active</span>
             </div>
-
-            {cancelDate && (
-              <div className="flex items-start mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-md border border-amber-200 dark:border-amber-800">
-                <AlertCircle className="h-5 w-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-amber-800 dark:text-amber-300">
-                    {t("subscription_ending")}
-                    <span className="font-medium">
-                      {" "}
-                      {cancelDate.toLocaleDateString(lng === "nl" ? "nl-NL" : "en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </span>
-                  </p>
-                  <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">{t("subscription_renew_info")}</p>
-                </div>
-              </div>
+            <p className="text-sm">
+              You have an active premium subscription. Enjoy access to all premium courses and features!
+            </p>
+            <div className="text-xs text-gray-500">
+              {stripeSubscriptionId && <p>Subscription ID: {stripeSubscriptionId}</p>}
+            </div>
+            <Link href={`/${lng}/account/billing`}>
+              <Button variant="outline" className="w-full">
+                Manage Subscription
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-sm">
+              {isAdmin
+                ? "As an admin, you have access to all premium content without a subscription."
+                : "Upgrade to premium to access exclusive courses and features."}
+            </p>
+            {!isAdmin && (
+              <Link href={`/${lng}/pricing`}>
+                <Button className="w-full">Upgrade to Premium</Button>
+              </Link>
             )}
-
-            <div className="pt-2">
-              {isSubscribed ? (
-                <Button
-                  variant="outline"
-                  className="w-full border-red-500 text-red-500 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-950/30"
-                  onClick={() => setIsDialogOpen(true)}
-                >
-                  {t("cancel_subscription")}
-                </Button>
-              ) : (
-                <Button className="w-full" onClick={() => (window.location.href = `/${lng}/subscribe`)}>
-                  {t("subscribe_now")}
-                </Button>
-              )}
-            </div>
           </div>
-        </CardContent>
-      </Card>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{t("confirm_cancellation")}</DialogTitle>
-            <DialogDescription>{t("cancellation_description")}</DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-gray-600 dark:text-gray-300">{t("cancellation_details")}</p>
-            <ul className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
-              <li className="flex items-start">
-                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                {t("cancellation_point_1")}
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                {t("cancellation_point_2")}
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                {t("cancellation_point_3")}
-              </li>
-            </ul>
-          </div>
-          <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-              {t("keep_subscription")}
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleCancelSubscription}
-              disabled={isLoading}
-              className="mt-2 sm:mt-0"
-            >
-              {isLoading ? t("cancelling") : t("confirm_cancel")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+        )}
+      </CardContent>
+    </Card>
   )
 }

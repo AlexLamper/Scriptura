@@ -8,6 +8,8 @@ import Link from "next/link"
 import { use } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "../../../components/ui/button"
+import { useSession } from "next-auth/react"
+import Image from "next/image"
 
 interface Course {
   _id: string
@@ -20,6 +22,7 @@ interface Course {
   totalDuration: number
   tags: string[]
   imageUrl?: string
+  isPremium?: boolean
 }
 
 export default function CoursePage({
@@ -29,6 +32,7 @@ export default function CoursePage({
 }) {
   const { lng } = use(params)
   const { t } = useTranslation(lng, "course")
+  const { data: session } = useSession()
 
   const fallbackTranslations = {
     progress: "Progress",
@@ -40,6 +44,21 @@ export default function CoursePage({
   const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(true)
   const [currentLanguage, setCurrentLanguage] = useState<string>("en")
+  interface User {
+    subscribed?: boolean
+    image?: string
+    _id: string
+    enrolledCourses?: string[]
+    stripeSubscriptionId?: string
+    isAdmin?: boolean
+    name?: string
+    email?: string
+    bio?: string
+    stripeCustomerId?: string
+    createdAt?: string
+    updatedAt?: string
+  }
+  const [user, setUser] = useState<User | null>(null)
 
   const pathname = usePathname()
 
@@ -49,6 +68,25 @@ export default function CoursePage({
     const detectedLanguage = langFromPath && ["en", "nl", "de"].includes(langFromPath) ? langFromPath : lng || "en"
     setCurrentLanguage(detectedLanguage)
   }, [pathname, lng])
+
+  // Fetch user data to check subscription status
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!session) return
+
+      try {
+        const response = await fetch("/api/user")
+        if (response.ok) {
+          const data = await response.json()
+          setUser(data.user)
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+      }
+    }
+
+    fetchUserData()
+  }, [session])
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -82,6 +120,8 @@ export default function CoursePage({
     progress: `${Math.floor(Math.random() * 8)}/${10}`,
   }))
 
+  const isUserSubscribed = user?.subscribed || false
+
   return (
     <div className="min-h-screen">
       {/* Header and Search */}
@@ -97,10 +137,7 @@ export default function CoursePage({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <Search
-            className="absolute left-2 sm:left-3 top-2 sm:top-2.5 text-gray-400 dark:text-gray-500"
-            size={18}
-          />
+          <Search className="absolute left-2 sm:left-3 top-2 sm:top-2.5 text-gray-400 dark:text-gray-500" size={18} />
         </div>
       </div>
 
@@ -116,12 +153,8 @@ export default function CoursePage({
             key={idx}
             className="bg-white dark:bg-[#2a2b2f] p-2 sm:p-4 rounded-lg border border-gray-100 dark:border-[#91969e52]"
           >
-            <p className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
-              {stat.value}+
-            </p>
-            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-              {stat.label}
-            </p>
+            <p className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">{stat.value}+</p>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
           </div>
         ))}
       </div>
@@ -134,9 +167,7 @@ export default function CoursePage({
             : t("no_courses_found")}
         </h2>
         <div className="flex items-center gap-2">
-          <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-            {t("sort_by")}:
-          </span>
+          <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{t("sort_by")}:</span>
           <select className="bg-white dark:bg-[#2a2b2f] text-gray-700 dark:text-gray-200 px-2 sm:px-3 py-1 rounded text-xs sm:text-sm border border-gray-200 dark:border-[#91969e52]">
             <option value="newest">{t("newest")}</option>
             <option value="popular">{t("most_popular")}</option>
@@ -176,7 +207,17 @@ export default function CoursePage({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <Link href={`/${currentLanguage}/courses/${course._id}`} className="block h-full">
+              <Link
+                href={`/${currentLanguage}/courses/${course._id}`}
+                className={`block h-full ${course.isPremium && !isUserSubscribed ? "cursor-not-allowed" : ""}`}
+                onClick={(e) => {
+                  // Prevent navigation for premium courses if user is not subscribed
+                  if (course.isPremium && !isUserSubscribed) {
+                    e.preventDefault()
+                    // You could show a modal or redirect to subscription page here
+                  }
+                }}
+              >
                 <div className="group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-border bg-white dark:border-[#b6b6b63d] dark:bg-[#2a2b2f] h-full">
                   <div className="relative w-full h-32">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 z-10"></div>
@@ -188,14 +229,67 @@ export default function CoursePage({
                         {course.language}
                       </span>
                     </div>
-                    <img
+
+                    {/* Premium badge */}
+                    {course.isPremium && (
+                      <div className="absolute top-2 left-2 z-20">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500 text-white flex items-center gap-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7-6.3-4.6L5.7 21l2.3-7-6-4.6h7.6z" />
+                          </svg>
+                          <span>Premium</span>
+                        </span>
+                      </div>
+                    )}
+                    
+                    <Image
                       src={
                         course.imageUrl ||
                         `/placeholder.svg?height=300&width=500&text=${encodeURIComponent(course.title) || "/placeholder.svg"}`
                       }
                       alt={`${course.title} cover`}
-                      className="object-cover w-full h-full opacity-70 hover:opacity-80 transition-all duration-300"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className={`object-cover w-full h-full transition-all duration-300 ${
+                        course.isPremium && !isUserSubscribed
+                          ? "opacity-40 filter grayscale"
+                          : "opacity-70 hover:opacity-80"
+                      }`}
+                      style={{ objectFit: "cover" }}
+                      priority={index < 3}
                     />
+
+                    {/* Lock overlay for premium courses */}
+                    {course.isPremium && !isUserSubscribed && (
+                      <div className="absolute inset-0 flex items-center justify-center z-20">
+                        <div className="bg-black/60 p-2 rounded-full">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex items-center p-5">
@@ -223,8 +317,15 @@ export default function CoursePage({
                         className="h-full rounded-full transition-all duration-300 group-hover:brightness-110 bg-[#0f172b] dark:bg-blue-600"
                       />
                     </div>
-                    <Button className="text-sm font-medium transition-all duration-300 group-hover:translate-y-[-2px] px-4 py-1.5 rounded-md">
-                      {t("continue") || fallbackTranslations.continue}
+                    <Button
+                      className={`text-sm font-medium transition-all duration-300 group-hover:translate-y-[-2px] px-4 py-1.5 rounded-md ${
+                        course.isPremium && !isUserSubscribed ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed" : ""
+                      }`}
+                      disabled={course.isPremium && !isUserSubscribed}
+                    >
+                      {course.isPremium && !isUserSubscribed
+                        ? "Premium Content"
+                        : t("continue") || fallbackTranslations.continue}
                     </Button>
                   </div>
                 </div>
