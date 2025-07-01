@@ -1,7 +1,7 @@
 import { Hero } from "../../components/landing/hero";
 import FeaturesSection from "../../components/landing/features";
 import About from "../../components/landing/about";
-// import TestimonialsSection from "../../components/landing/testimonials";
+import TestimonialsSection from "../../components/landing/testimonials";
 import { Pricing } from "../../components/landing/pricing";
 import FaqSection from "../../components/landing/faq";
 import { CTA } from "../../components/landing/cta";
@@ -20,9 +20,9 @@ export default async function LandingPage() {
       <About params={{
         lng: ""
       }} />
-      {/* <TestimonialsSection params={{
+      <TestimonialsSection params={{
         lng: ""
-      }} /> */}
+      }} />
       <Pricing params={{
         lng: ""
       }} />
