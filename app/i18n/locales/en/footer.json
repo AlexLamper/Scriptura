@@ -1,15 +1,13 @@
 {
   "about_scriptura": "About Scriptura",
-  "our_mission": "Our Mission",
-  "our_team": "Our Team",
-  "careers": "Careers",
-  "resources": "Resources",
-  "blog": "Blog",
-  "courses": "Courses",
+  "our_courses": "Our Courses",
   "community": "Community",
-  "support": "Support",
-  "faq": "FAQ",
-  "contact_us": "Contact Us",
+  "pricing": "Pricing",
+  "resources": "Resources",
+  "quizzes": "Quizzes",
+  "courses": "Courses",
+  "legal": "Legal",
   "privacy_policy": "Privacy Policy",
+  "terms_of_service": "Terms of Service",
   "connect": "Connect"
 }
