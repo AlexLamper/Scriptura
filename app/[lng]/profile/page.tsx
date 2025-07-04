@@ -11,6 +11,7 @@ import { use } from "react"
 import { getSession } from "next-auth/react"
 import { Badge } from "../../../components/ui/badge"
 import { ShieldCheck } from "lucide-react"
+import UserBadges from "../../../components/profile/badges"
 
 export default function ProfilePage({
   params,
@@ -28,7 +29,8 @@ export default function ProfilePage({
     enrolledCourses?: string[]
     subscribed?: boolean
     stripeSubscriptionId?: string
-    isAdmin?: boolean // Added admin field
+    isAdmin?: boolean
+    badges?: string[]
   }
 
   const [user, setUser] = useState<User | null>(null)
@@ -135,6 +137,17 @@ export default function ProfilePage({
             isAdmin={user.isAdmin}
           />
         </div>
+      </div>
+
+      <div className="mt-6">
+        <Card className="mt-6 dark:bg-[#292b2f] dark:border-none">
+          <CardHeader>
+            <CardTitle>Your Badges</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <UserBadges earned={user.badges || []} />
+          </CardContent>
+        </Card>
       </div>
 
       {user.isAdmin && (

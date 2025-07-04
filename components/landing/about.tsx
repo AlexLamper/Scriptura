@@ -119,7 +119,7 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
             </div>
           </motion.div>
         </div>
-
+{/* 
         <motion.div
           className="mt-12 flex flex-wrap items-center justify-center gap-8"
           initial={{ opacity: 0, y: 20 }}
@@ -135,7 +135,7 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
             <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             <span className="text-sm font-medium dark:text-gray-300">TechCrunch</span>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   )

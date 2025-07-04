@@ -1,15 +1,13 @@
 {
   "about_scriptura": "Over Scriptura",
-  "our_mission": "Onze Missie",
-  "our_team": "Ons Team",
-  "careers": "Carrières",
-  "resources": "Hulpmiddelen",
-  "blog": "Blog",
-  "courses": "Cursussen",
+  "our_courses": "Onze Cursussen",
   "community": "Gemeenschap",
-  "support": "Ondersteuning",
-  "faq": "FAQ",
-  "contact_us": "Neem contact met ons op",
+  "pricing": "Prijzen",
+  "resources": "Hulpmiddelen",
+  "quizzes": "Quizzen",
+  "courses": "Cursussen",
+  "legal": "Juridisch",
   "privacy_policy": "Privacybeleid",
+  "terms_of_service": "Servicevoorwaarden",
   "connect": "Verbinden"
 }

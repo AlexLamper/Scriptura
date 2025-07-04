@@ -44,7 +44,7 @@ export function Hero({ params: { lng } }: HeroProps) {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="text-lg font-semibold tracking-wide bg-gray-900 dark:border-[#ffffff94] text-white dark:bg-[#1118279d] dark:hover:text-white dark:hover:bg-[#ffffff34]"
+                  className="border-none text-lg font-semibold tracking-wide bg-red-500 hover:bg-[#ef4444e7] hover:text-white dark:border-none text-white dark:bg-red-500 dark:hover:text-white dark:hover:bg-[#ef4444e7]"
                 >
                   <Link href={`/api/auth/signin`}>{t("sign_up")}</Link>
                 </Button>

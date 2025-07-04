@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 import { useTranslation } from "../../app/i18n/client"
 
 interface FooterProps {
@@ -22,88 +22,83 @@ export function Footer({ params: { lng } }: FooterProps) {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/about"
+                  href={`/${lng}/courses`}
                   className="text-gray-400 hover:text-white"
                 >
-                  {t("our_mission")}
+                  {t("our_courses")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/team"
-                  className="text-gray-400 hover:text-white"
-                >
-                  {t("our_team")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/careers"
-                  className="text-gray-400 hover:text-white"
-                >
-                  {t("careers")}
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">{t("resources")}</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-400 hover:text-white"
-                >
-                  {t("blog")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/courses"
-                  className="text-gray-400 hover:text-white"
-                >
-                  {t("courses")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/community"
+                  href={`/${lng}/community`}
                   className="text-gray-400 hover:text-white"
                 >
                   {t("community")}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${lng}/pricing`}
+                  className="text-gray-400 hover:text-white"
+                >
+                  {t("pricing")}
+                </Link>
+              </li>
             </ul>
           </div>
+
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">{t("support")}</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">{t("resources")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/faq"
+                  href={`/${lng}/resources`}
                   className="text-gray-400 hover:text-white"
                 >
-                  {t("faq")}
+                  {t("resources")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href={`/${lng}/quizzes`}
                   className="text-gray-400 hover:text-white"
                 >
-                  {t("contact_us")}
+                  {t("quizzes")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/privacy"
+                  href={`/${lng}/courses`}
+                  className="text-gray-400 hover:text-white"
+                >
+                  {t("courses")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">{t("legal")}</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href={`/${lng}/privacy-policy`}
                   className="text-gray-400 hover:text-white"
                 >
                   {t("privacy_policy")}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${lng}/terms-of-service`}
+                  className="text-gray-400 hover:text-white"
+                >
+                  {t("terms_of_service")}
+                </Link>
+              </li>
             </ul>
           </div>
+
           <div>
             <h3 className="text-lg font-semibold mb-4 text-white">{t("connect")}</h3>
             <div className="flex space-x-4">
@@ -122,6 +117,7 @@ export function Footer({ params: { lng } }: FooterProps) {
             </div>
           </div>
         </div>
+
         <div className="mt-8 pt-8 border-t border-gray-200 border-gray-700 text-center">
           <p className="text-gray-600 text-gray-400">
             &copy; {new Date().getFullYear()} Scriptura. All rights reserved.
@@ -131,4 +127,3 @@ export function Footer({ params: { lng } }: FooterProps) {
     </footer>
   )
 }
-
