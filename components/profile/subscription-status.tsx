@@ -48,7 +48,7 @@ export function SubscriptionStatus({
               {stripeSubscriptionId && <p>Subscription ID: {stripeSubscriptionId}</p>}
             </div>
             <Link href={`/${lng}/account/billing`}>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full mt-4">
                 Manage Subscription
               </Button>
             </Link>
