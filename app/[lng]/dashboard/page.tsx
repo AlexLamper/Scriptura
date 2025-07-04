@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import WelcomeDashboard from "../../../components/dashboard/welcome-dashboard"
 import WhereToStart from "../../../components/where-to-start"
+import DailyBibleTask from "../../../components/daily-bible-task"
 
 export default async function DashboardPage() {
   const session = await getServerSession()
@@ -16,6 +17,10 @@ export default async function DashboardPage() {
   return (
     <div className="container lg:px-2 pb-8 pt-4">
       <WelcomeDashboard params={{
+        lng: ""
+      }} />
+
+      <DailyBibleTask params={{
         lng: ""
       }} />
 
