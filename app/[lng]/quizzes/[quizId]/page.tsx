@@ -74,15 +74,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const [randomizedOptions, setRandomizedOptions] = useState<string[][]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  // Debug logs to verify state
-  useEffect(() => {
-    console.log("Timer:", timer)
-    console.log("Is timer running:", isTimerRunning)
-    console.log("Bookmarked questions:", bookmarkedQuestions)
-    console.log("Randomized options:", randomizedOptions)
-    console.log("Show study materials:", showStudyMaterials)
-    console.log("Study completed:", studyCompleted)
-  }, [timer, isTimerRunning, bookmarkedQuestions, randomizedOptions, showStudyMaterials, studyCompleted])
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -92,11 +83,9 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
         const data = await response.json()
 
         if (data.quiz) {
-          console.log("Fetched quiz data:", data.quiz)
           setQuiz(data.quiz)
           setSelectedOptions(new Array(data.quiz.questions.length).fill(null))
 
-          // Check if user has already completed the study for this quiz
           const studyStatus = localStorage.getItem(`quiz_${quizId}_study_completed`)
           if (studyStatus === "true") {
             setStudyCompleted(true)
@@ -170,7 +159,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const randomizeOptions = (questions: QuestionType[]) => {
     if (!questions || questions.length === 0) return
 
-    console.log("Randomizing options for questions:", questions.length)
 
     const randomizedOptionsArray: string[][] = []
 
@@ -179,8 +167,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
       const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5)
       randomizedOptionsArray.push(shuffledOptions)
 
-      console.log("Original options:", question.options)
-      console.log("Shuffled options:", shuffledOptions)
     })
 
     setRandomizedOptions(randomizedOptionsArray)
@@ -193,7 +179,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
       if (savedBookmarks) {
         const parsedBookmarks = JSON.parse(savedBookmarks)
         setBookmarkedQuestions(parsedBookmarks)
-        console.log("Loaded bookmarks:", parsedBookmarks)
       }
     } catch (err) {
       console.error("Error loading bookmarks:", err)
@@ -204,7 +189,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const saveBookmarkedQuestions = (bookmarks: BookmarkedQuestion[]) => {
     try {
       localStorage.setItem("bookmarked_questions", JSON.stringify(bookmarks))
-      console.log("Saved bookmarks:", bookmarks)
     } catch (err) {
       console.error("Error saving bookmarks:", err)
     }
@@ -252,7 +236,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
       if (savedHistory) {
         const parsedHistory = JSON.parse(savedHistory)
         setQuizHistory(parsedHistory)
-        console.log("Loaded quiz history:", parsedHistory)
       }
     } catch (err) {
       console.error("Error loading quiz history:", err)
@@ -263,7 +246,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const saveQuizHistory = (history: QuizHistory[]) => {
     try {
       localStorage.setItem("quiz_history", JSON.stringify(history))
-      console.log("Saved quiz history:", history)
     } catch (err) {
       console.error("Error saving quiz history:", err)
     }
@@ -327,7 +309,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     quiz.studyMaterials.bibleVerses &&
     quiz.studyMaterials.bibleVerses.length > 0
   ) {
-    console.log("Rendering study materials")
     return (
       <StudyMaterials
         quizTitle={quiz.title}
@@ -471,13 +452,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
       saveQuizHistory(updatedHistory)
 
       // Log the values being passed to ensure they're correct
-      console.log("Redirecting to results with:", {
-        score,
-        total: quiz.questions.length,
-        time: timer,
-      })
-
-      // Use a more reliable way to construct the URL with parameters
       const searchParams = new URLSearchParams()
       searchParams.set("score", score.toString())
       searchParams.set("total", quiz.questions.length.toString())

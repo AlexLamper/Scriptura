@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui
 import { Button } from "../../../components/ui/button"
 import { useSession } from "next-auth/react"
 import { ShieldCheck, Users, BookOpen, BarChart3, Settings } from "lucide-react"
+import OnboardingGuide from "../../../components/guide"
 
 export default function AdminDashboard() {
   const { data: session } = useSession()
@@ -19,6 +20,7 @@ export default function AdminDashboard() {
   const [premiumUsers, setPremiumUsers] = useState(0)
   const [totalCourses, setTotalCourses] = useState(0)
   const [premiumCourses, setPremiumCourses] = useState(0)
+  const [showGuide, setShowGuide] = useState(false)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -82,6 +84,9 @@ export default function AdminDashboard() {
     <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4">
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <Button variant="outline" onClick={() => setShowGuide(true)} className="h-8 px-3">
+          View Guide
+        </Button>
         <div className="bg-purple-600 text-white flex items-center gap-1 px-2 py-1 rounded-md">
           <ShieldCheck className="h-4 w-4" />
           <span>Admin Access</span>
@@ -280,6 +285,7 @@ export default function AdminDashboard() {
           </div>
         </CardContent>
       </Card>
+      <OnboardingGuide forceOpen={showGuide} />
     </div>
   )
 }

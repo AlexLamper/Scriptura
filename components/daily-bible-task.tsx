@@ -24,7 +24,7 @@ export default function DailyBibleTask({ params: { lng } }: DailyBibleTaskProps)
   const [task, setTask] = useState<Task | null>(null)
   const [completed, setCompleted] = useState(false)
   const [loading, setLoading] = useState(true)
-  const { t } = useTranslation(lng, "daily-bible-task")
+  const { t } = useTranslation(lng, "welcome")
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -58,7 +58,7 @@ export default function DailyBibleTask({ params: { lng } }: DailyBibleTaskProps)
   if (loading) {
     return (
       <Card className="mb-8 border border-border dark:border-[#91969e52] bg-gradient-to-r from-indigo-500/5 to-purple-500/5">
-        <CardContent className="p-6">{t("loading")}</CardContent>
+        <CardContent className="p-6">{t("daily_loading")}</CardContent>
       </Card>
     )
   }
@@ -68,7 +68,7 @@ export default function DailyBibleTask({ params: { lng } }: DailyBibleTaskProps)
   return (
     <Card className="mb-8 border border-border dark:border-[#91969e52] bg-gradient-to-r from-indigo-500/5 to-purple-500/5">
       <CardContent className="p-6 space-y-4">
-        <h2 className="text-2xl font-bold mb-1">{t("title")}</h2>
+        <h2 className="text-2xl font-bold mb-1">{t("daily_title")}</h2>
         <p className="text-sm text-muted-foreground mb-2">
           {task.passage} - {task.theme}
         </p>
@@ -82,7 +82,7 @@ export default function DailyBibleTask({ params: { lng } }: DailyBibleTaskProps)
         </ul>
         <Button onClick={handleComplete} disabled={completed} className="gap-2">
           {completed && <Check className="w-4 h-4" />}
-          {completed ? t("completed") : t("complete")}
+          {completed ? t("daily_completed") : t("daily_complete")}
         </Button>
       </CardContent>
     </Card>

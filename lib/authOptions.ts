@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import connectMongoDB from "../libs/mongodb";
+import connectMongoDB from "../lib/mongodb";
 import User from "../models/User";
 
 export const authOptions: NextAuthOptions = {

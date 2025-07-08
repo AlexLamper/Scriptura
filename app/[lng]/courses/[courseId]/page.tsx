@@ -82,7 +82,6 @@ export default function CoursePage({
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        console.log(`Fetching course with ID: ${courseId}`)
         const response = await fetch(`/api/courses/${courseId}`)
 
         if (!response.ok) {
@@ -91,7 +90,6 @@ export default function CoursePage({
         }
 
         const data = await response.json()
-        console.log("Course data received:", data)
         setCourse(data)
       } catch (error) {
         console.error("Error fetching course:", error)

@@ -1,6 +1,6 @@
 import stripe from "../stripe"
 import User from "../../models/User"
-import connectMongoDB from "../../libs/mongodb"
+import connectMongoDB from "../../lib/mongodb"
 
 /**
  * Checks if a user has an active subscription by querying Stripe directly

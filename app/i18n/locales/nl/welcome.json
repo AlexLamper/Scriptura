@@ -5,6 +5,10 @@
     "take_quiz": "Quiz maken",
     "good_morning": "Goedemorgen",
     "good_afternoon": "Goedemiddag",
-    "good_evening": "Goedenavond",
-    "good_night": "Goedenacht"
-  }
+  "good_evening": "Goedenavond",
+  "good_night": "Goedenacht",
+  "daily_title": "Dagelijkse Bijbelstudie",
+  "daily_completed": "Voltooid",
+  "daily_complete": "Voltooid",
+  "daily_loading": "Laden..."
+}

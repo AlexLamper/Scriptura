@@ -5,6 +5,10 @@
     "take_quiz": "Take Quiz",
     "good_morning": "Good morning",
     "good_afternoon": "Good afternoon",
-    "good_evening": "Good evening",
-    "good_night": "Good night"
-  }
+  "good_evening": "Good evening",
+  "good_night": "Good night",
+  "daily_title": "Daily Bible Study",
+  "daily_completed": "Completed",
+  "daily_complete": "Complete",
+  "daily_loading": "Loading..."
+}
