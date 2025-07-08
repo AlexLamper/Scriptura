@@ -31,6 +31,8 @@ const QuizSchema = new mongoose.Schema(
       },
     ],
     tags: [String],
+    isPublic: { type: Boolean, default: true },
+    isPremium: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },

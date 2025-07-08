@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, use } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "../../../../components/ui/button"
 import { ArrowLeft, ArrowRight, HelpCircle, BookOpen, Bookmark, Clock, BarChart2 } from "lucide-react"
@@ -52,8 +52,8 @@ interface BookmarkedQuestion {
   questionText: string
 }
 
-export default function QuizPage({ params }: { params: Promise<QuizPageParams> }) {
-  const { quizId } = use(params)
+export default function QuizPage({ params }: { params: QuizPageParams }) {
+  const { quizId } = params
   const [quiz, setQuiz] = useState<QuizData | null>(null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedOptions, setSelectedOptions] = useState<(string | null)[]>([])

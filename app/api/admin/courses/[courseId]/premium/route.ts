@@ -7,11 +7,10 @@ import { getServerSession } from "next-auth"
 // This route toggles a course's premium status (admin only)
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ courseId: string }> }
+  { params }: { params: { courseId: string } }
 ) {
   try {
-    // Await the dynamic route parameter
-    const { courseId } = await params
+    const { courseId } = params
 
     // Check for admin authentication
     const session = await getServerSession()
@@ -54,3 +53,4 @@ export async function POST(
     )
   }
 }
+
