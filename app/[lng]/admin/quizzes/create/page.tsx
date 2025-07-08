@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../../../../compone
 import { Button } from "../../../../../components/ui/button";
 import { Input } from "../../../../../components/ui/input";
 import { Textarea } from "../../../../../components/ui/textarea";
-import { Checkbox } from "../../../../../components/ui/checkbox";
+import { Switch } from "../../../../../components/ui/switch";
 import { ShieldCheck } from "lucide-react";
 
 interface User { _id: string; isAdmin: boolean }
@@ -118,11 +118,11 @@ export default function CreateQuiz() {
             <option value="advanced">Advanced</option>
           </select>
           <div className="flex items-center gap-2">
-            <Checkbox id="public" checked={isPublic} onCheckedChange={(v) => setIsPublic(!!v)} />
+            <Switch id="public" checked={isPublic} onCheckedChange={(v) => setIsPublic(!!v)} />
             <label htmlFor="public">Public</label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox id="premium" checked={isPremium} onCheckedChange={(v) => setIsPremium(!!v)} />
+            <Switch id="premium" checked={isPremium} onCheckedChange={(v) => setIsPremium(!!v)} />
             <label htmlFor="premium">Premium</label>
           </div>
           <Button onClick={submit}>Create</Button>
