@@ -17,13 +17,26 @@ async function verifyAdmin() {
   return { user };
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { courseId: string } }) {
+// Extract courseId from URL
+function getCourseIdFromUrl(req: NextRequest): string | null {
+  const pathSegments = req.nextUrl.pathname.split("/");
+  const courseId = pathSegments[pathSegments.length - 1];
+  return courseId || null;
+}
+
+export async function PUT(req: NextRequest) {
   const auth = await verifyAdmin();
   if (auth.error) return auth.error;
 
+  const courseId = getCourseIdFromUrl(req);
+  if (!courseId) {
+    return NextResponse.json({ error: "Missing course ID in URL" }, { status: 400 });
+  }
+
   const data = await req.json();
+
   try {
-    const course = await Course.findByIdAndUpdate(params.courseId, data, { new: true });
+    const course = await Course.findByIdAndUpdate(courseId, data, { new: true });
     if (!course) {
       return NextResponse.json({ error: "Course not found" }, { status: 404 });
     }
@@ -34,12 +47,17 @@ export async function PUT(req: NextRequest, { params }: { params: { courseId: st
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { courseId: string } }) {
+export async function DELETE(req: NextRequest) {
   const auth = await verifyAdmin();
   if (auth.error) return auth.error;
 
+  const courseId = getCourseIdFromUrl(req);
+  if (!courseId) {
+    return NextResponse.json({ error: "Missing course ID in URL" }, { status: 400 });
+  }
+
   try {
-    await Course.findByIdAndDelete(params.courseId);
+    await Course.findByIdAndDelete(courseId);
     return NextResponse.json({ message: "Course deleted" });
   } catch (error) {
     console.error("Error deleting course:", error);
