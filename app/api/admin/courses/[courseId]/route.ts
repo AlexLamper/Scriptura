@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectMongoDB from "../../../../../libs/mongodb";
 import Course from "../../../../../models/Course";
 import User from "../../../../../models/User";
@@ -17,7 +17,7 @@ async function verifyAdmin() {
   return { user };
 }
 
-export async function PUT(req: Request, { params }: { params: { courseId: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: { courseId: string } }) {
   const auth = await verifyAdmin();
   if (auth.error) return auth.error;
 
@@ -34,7 +34,7 @@ export async function PUT(req: Request, { params }: { params: { courseId: string
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { courseId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: { courseId: string } }) {
   const auth = await verifyAdmin();
   if (auth.error) return auth.error;
 
