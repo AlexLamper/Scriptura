@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import connectMongoDB from '../../../libs/mongodb';
 import Course from '../../../models/Course';
 import Quiz from '../../../models/Quiz';
-import { getServerSession } from 'next-auth';
-import User from '../../../models/User';
 
 export async function GET(request: Request) {
   try {
@@ -15,42 +13,20 @@ export async function GET(request: Request) {
     const quizId = searchParams.get('quizId');
 
     if (quizId) {
+      // Use .lean() to get a plain JavaScript object
       const quiz = await Quiz.findById(quizId).lean();
       if (!quiz) {
         return NextResponse.json({ message: 'Quiz not found' }, { status: 404 });
       }
-
-      if (!quiz.isPublic) {
-        const session = await getServerSession();
-        let isAdmin = false;
-        if (session && session.user?.email) {
-          const user = await User.findOne({ email: session.user.email });
-          isAdmin = !!user?.isAdmin;
-        }
-        if (!isAdmin) {
-          return NextResponse.json({ message: 'Quiz not available' }, { status: 403 });
-        }
-      }
-
-      if (quiz.isPremium) {
-        const session = await getServerSession();
-        if (!session || !session.user?.email) {
-          return NextResponse.json({ ...quiz, isPremium: true });
-        }
-        const user = await User.findOne({ email: session.user.email });
-        if (!user || !user.subscribed) {
-          return NextResponse.json({ ...quiz, isPremium: true });
-        }
-      }
-
       return NextResponse.json({ quiz });
     }
 
     // Fetch courses and quizzes as plain objects
     const courses = await Course.find().lean();
-    const quizzes = await Quiz.find({
-      $or: [{ isPublic: true }, { isPublic: { $exists: false } }],
-    }).lean();
+    // console.log('Courses fetched:', courses);
+
+    const quizzes = await Quiz.find().lean();
+    // console.log('Quizzes fetched:', quizzes);
 
     return NextResponse.json({ courses, quizzes });
   } catch (error) {

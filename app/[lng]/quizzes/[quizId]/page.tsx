@@ -36,7 +36,6 @@ interface QuizData {
 }
 
 interface QuizPageParams {
-  lng: string
   quizId: string
 }
 
@@ -125,9 +124,16 @@ export default function QuizPage({ params }: { params: QuizPageParams }) {
 
     fetchQuiz()
 
+    // Start the timer when the quiz begins (after study materials)
+    if (!showStudyMaterials && studyCompleted) {
+      setIsTimerRunning(true)
+    }
+
     return () => {
-      // Placeholder for persisting quiz progress when unmounting
-      saveQuizProgress()
+      // Save timer value when component unmounts
+      if (timer > 0) {
+        saveQuizProgress()
+      }
     }
   }, [quizId])
 

@@ -14,7 +14,6 @@ interface QuizType {
   difficulty: string
   author: string
   tags: string[]
-  isPremium?: boolean
   studyMaterials?: {
     bibleVerses: { verse: string, text: string}[]
   }
@@ -29,15 +28,11 @@ export default function QuizzesPage() {
   const [category, setCategory] = useState<string>("")
   const [subCategory, setSubCategory] = useState<string>("")
   const [hasStudyMaterials, setHasStudyMaterials] = useState<boolean>(false)
-  interface User { subscribed?: boolean }
-  const [user, setUser] = useState<User | null>(null)
-
-  const isUserSubscribed = user?.subscribed || false
 
   const fetchQuizzes = useCallback(async () => {
     setLoading(true)
     try {
-      const response = await fetch("/api/quizzes")
+      const response = await fetch("/api/courses")
       if (!response.ok) {
         throw new Error("Failed to fetch quizzes")
       }
@@ -50,23 +45,6 @@ export default function QuizzesPage() {
     } finally {
       setLoading(false)
     }
-  }, [])
-
-  // Fetch user data to check subscription status
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/api/user")
-        if (response.ok) {
-          const data = await response.json()
-          setUser(data.user)
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error)
-      }
-    }
-
-    fetchUserData()
   }, [])
 
   // Use useCallback to memoize the filterQuizzes function
@@ -93,11 +71,10 @@ export default function QuizzesPage() {
 
   // Handle navigation to quiz detail page
   const handleQuizClick = useCallback(
-    (quiz: QuizType) => {
-      if (quiz.isPremium && !isUserSubscribed) return
-      router.push(`/quizzes/${quiz._id}`)
+    (quizId: string) => {
+      router.push(`/quizzes/${quizId}`)
     },
-    [router, isUserSubscribed],
+    [router],
   )
 
   useEffect(() => {
@@ -174,28 +151,16 @@ export default function QuizzesPage() {
             {filteredQuizzes.map((quiz) => (
               <li
                 key={quiz._id}
-                onClick={() => handleQuizClick(quiz)}
-                className={`bg-white dark:bg-[#2a2b2f] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 relative ${
-                  quiz.isPremium && !isUserSubscribed ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
-                }`}
+                onClick={() => handleQuizClick(quiz._id)}
+                className="bg-white dark:bg-[#2a2b2f] rounded-lg shadow-lg p-6 overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer relative"
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
-                    handleQuizClick(quiz)
+                    handleQuizClick(quiz._id)
                   }
                 }}
               >
-                {quiz.isPremium && (
-                  <div className="absolute top-3 left-3 bg-amber-500 text-white px-2 py-1 rounded-full text-xs">
-                    Premium
-                  </div>
-                )}
-                {quiz.isPremium && !isUserSubscribed && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10 rounded-lg">
-                    <div className="text-white text-sm font-medium">Premium Content</div>
-                  </div>
-                )}
                 {quiz.studyMaterials?.bibleVerses?.length > 0 && (
                   <div className="absolute top-3 right-3 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs flex items-center">
                     <BookOpen className="h-3 w-3 mr-1" />
