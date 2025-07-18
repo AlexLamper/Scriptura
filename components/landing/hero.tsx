@@ -17,14 +17,29 @@ export function Hero({ params: { lng } }: HeroProps) {
   const { t } = useTranslation(lng, "landing-hero")
 
   return (
-    <section className="bg-[#111828] pt-8 pb-24 text-white md:pt-12 md:pb-32 relative">
+    <section className="relative bg-gradient-to-br from-[#111828] via-[#1f2937] to-[#0f172a] pt-8 pb-24 text-white md:pt-12 md:pb-32 overflow-hidden">
+      
+      {/* SVG Background Blob */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <svg
+          className="absolute -top-20 -left-20 w-[150%] h-auto opacity-20"
+          viewBox="0 0 1024 1024"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill="#111828"
+            d="M512 0C794.8 0 1024 229.2 1024 512s-229.2 512-512 512S0 794.8 0 512 229.2 0 512 0z"
+          />
+        </svg>
+      </div>
 
-      <div className="lg:mt-0 mt-16">
-        <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center space-x-3 z-10">
-          <LanguageSwitcher />
-          <ModeToggle />
-        </div>
-
+      {/* Content Wrapper */}
+      <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center space-x-3 z-20">
+        <LanguageSwitcher />
+        <ModeToggle />
+      </div>
+      <div className="relative z-10 lg:mt-0 mt-16">
         <div className="container mx-auto px-4 md:px-6 mt-12 md:mt-8 max-lg:max-w-[90%]">
           <div className="grid gap-8 md:grid-cols-2 md:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-6">
@@ -68,4 +83,3 @@ export function Hero({ params: { lng } }: HeroProps) {
     </section>
   )
 }
-

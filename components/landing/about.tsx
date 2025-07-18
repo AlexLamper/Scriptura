@@ -61,18 +61,6 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
   return (
     <section id="about" className="bg-gray-100 dark:bg-gray-900 py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
-          className="mb-8 flex justify-start"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-        >
-          <Badge className="bg-[#111828] hover:bg-[#1c2538] dark:bg-red-500 dark:text-white dark:hover:bg-red-400">
-            {t("badge")}
-          </Badge>
-        </motion.div>
-
         <div className="grid gap-8 md:grid-cols-2 md:gap-12">
           <motion.div
             className="flex flex-col justify-center space-y-4"
@@ -81,6 +69,17 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
+            <motion.div
+              className="mb-4 flex justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+            >
+              <Badge className="bg-[#111828] hover:bg-[#1c2538] dark:bg-red-500 dark:text-white dark:hover:bg-red-400">
+                {t("badge")}
+              </Badge>
+            </motion.div>
             <motion.h2
               className="text-3xl font-bold tracking-tight md:text-4xl dark:text-white"
               variants={itemVariants}
@@ -88,9 +87,10 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
               {t("heading")}
             </motion.h2>
             <motion.div className="space-y-4 text-gray-600 dark:text-gray-400" variants={itemVariants}>
-              <p>{t("paragraph_1")}</p>
-              <p>{t("paragraph_2")}</p>
-              <p>{t("paragraph_3")}</p>
+              <div className="text-lg">
+                <p className="mb-2">{t("paragraph_1")}</p>
+                <p>{t("paragraph_2")}</p>
+              </div>
             </motion.div>
             <motion.div className="pt-4" variants={itemVariants}>
               <Button
