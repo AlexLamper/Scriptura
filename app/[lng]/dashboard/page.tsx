@@ -20,7 +20,9 @@ export default async function DashboardPage() {
         lng: ""
       }} />
 
-      <DailyBibleVerse lng="" />
+      <DailyBibleVerse params={{
+        lng: ""
+      }} />
 
       <CourseGrid
         params={{
