@@ -11,13 +11,15 @@ import { ModeToggle } from "./dark-mode-toggle"
 import { LanguageSwitcher } from "./language-switcher"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 
+
 interface HeaderProps {
   params: {
     lng: string
   }
+  title?: string;
 }
 
-export function Header({ params: { lng } }: HeaderProps) {
+export function Header({ params: { lng }, title }: HeaderProps) {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [isProfileOpen, setIsProfileOpen] = useState(false)
@@ -114,12 +116,38 @@ export function Header({ params: { lng } }: HeaderProps) {
     return translations[lng]?.[key] || key
   }
 
+  // Page title translation
+  const pageTitles: Record<string, Record<string, string>> = {
+    en: {
+      dashboard: "Dashboard",
+      study: "Study",
+    },
+    nl: {
+      dashboard: "Dashboard",
+      study: "Bijbelstudie",
+    },
+    de: {
+      dashboard: "Dashboard",
+      study: "Bibelstudium",
+    },
+  };
+  // Fix: always use lowercase for translation keys, but fallback to title if not found
+  let pageTitle = pageTitles[lng]?.dashboard || "Dashboard";
+  if (title) {
+    const key = title.toLowerCase();
+    if (pageTitles[lng] && pageTitles[lng][key]) {
+      pageTitle = pageTitles[lng][key];
+    } else {
+      pageTitle = title;
+    }
+  }
+
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b dark:border-b-[#91969e52] bg-white dark:bg-[#181b23] shadow-sm sticky top-0 z-50">
       {/* Left Side: Sidebar Trigger + Logo */}
       <div className="flex items-center space-x-2">
         <SidebarTrigger />
-        <h1 className="text-lg font-semibold text-gray-800 dark:text-white">Dashboard</h1>
+        <h1 className="text-lg font-semibold text-gray-800 dark:text-white">{pageTitle}</h1>
       </div>
 
       {/* Right Side: Desktop Controls */}

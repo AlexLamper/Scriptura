@@ -7,14 +7,13 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, Layers, ListCheckIcon,
+import { Home, BookOpen, Timer, User, Briefcase, Settings, Users,
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React from 'react'; // Import React for React.CSSProperties
@@ -58,25 +57,6 @@ const mainNavItems = [
   },
 ]
 
-// Additional sections
-const additionalSections = [
-  {
-    title: "Extras",
-    items: [
-      {
-        title: "Terms of Service",
-        url: "/terms-of-service",
-        icon: Layers,
-      },
-      {
-        title: "Privacy Policy",
-        url: "/privacy-policy",
-        icon: ListCheckIcon,
-      },
-    ],
-  },
-]
-
 export function AppSidebar({ ...props }) {
   const params = useParams()
   const lang = params.lng || "en"
@@ -117,9 +97,9 @@ export function AppSidebar({ ...props }) {
       <SidebarContent>
         {/* Main Navigation */}
         <SidebarGroup>
-        <SidebarGroupLabel>
+        {/* <SidebarGroupLabel>
           <span className="font-medium text-gray-800 text-base">Main Navigation</span>
-        </SidebarGroupLabel>
+        </SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNavItems.map((item) => (
@@ -137,31 +117,6 @@ export function AppSidebar({ ...props }) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        {/* Additional Sections */}
-        {additionalSections.map((section) => (
-          <SidebarGroup key={section.title}>
-            <SidebarGroupLabel>
-              <span className="font-medium text-gray-800 text-base">{section.title}</span>
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {section.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={prependLang(item.url)}>
-                        <span className="flex items-center space-x-2">
-                          <item.icon className="h-5 w-5 text-gray-500" />
-                          <span className="text-gray-800 font-medium">{item.title}</span>
-                        </span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
       <SidebarProCTA />
       </SidebarContent>
       <SidebarRail />
