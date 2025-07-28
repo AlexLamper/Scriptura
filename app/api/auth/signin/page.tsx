@@ -50,6 +50,20 @@ const translations = {
     languageDe: "German",
     rightHeading: "Continue to Your Dashboard",
     rightDescription: "Sign in to access your account and continue your journey.",
+    createNow: "Create now",
+    email: "Email",
+    password: "Password",
+    saveAccount: "Save account",
+    forgotPassword: "Forgot Password?",
+    or: "or",
+    continueWithGoogle: "Continue with Google",
+    continueWithFacebook: "Continue with Facebook",
+    introducingFeatures: "Introducing new features",
+    analyzeTrends: "Analyzing previous trends ensures that businesses always make the right decision. And as the scale of the decision and its impact magnifies...",
+    trackProgress: "Track Your Progress",
+    trackProgressDesc: "Stay motivated by tracking your daily and weekly study progress with our new dashboard.",
+    joinCommunity: "Join the Community",
+    joinCommunityDesc: "Connect with others, share insights, and grow together in our vibrant learning community.",
   },
   nl: {
     title: "Nu",
@@ -77,6 +91,20 @@ const translations = {
     languageDe: "Duits",
     rightHeading: "Ga verder naar je Dashboard",
     rightDescription: "Log in om toegang te krijgen tot je account en je studie voort te zetten.",
+    createNow: "Maak nu aan",
+    email: "E-mail",
+    password: "Wachtwoord",
+    saveAccount: "Account opslaan",
+    forgotPassword: "Wachtwoord vergeten?",
+    or: "of",
+    continueWithGoogle: "Doorgaan met Google",
+    continueWithFacebook: "Doorgaan met Facebook",
+    introducingFeatures: "Introductie van nieuwe functies",
+    analyzeTrends: "Het analyseren van eerdere trends zorgt ervoor dat bedrijven altijd de juiste beslissing nemen. En naarmate de schaal van de beslissing en de impact ervan toenemen...",
+    trackProgress: "Volg je voortgang",
+    trackProgressDesc: "Blijf gemotiveerd door je dagelijkse en wekelijkse studievoortgang te volgen met ons nieuwe dashboard.",
+    joinCommunity: "Word lid van de community",
+    joinCommunityDesc: "Maak contact met anderen, deel inzichten en groei samen in onze levendige leergemeenschap.",
   },
   de: {
     title: "Anmelden",
@@ -103,7 +131,21 @@ const translations = {
     languageNl: "Niederländisch",
     languageDe: "Deutsch",
     rightHeading: "Zugang zur Anwendung",
-    rightDescription: "Melden Sie sich an, um auf Ihr Konto zuzugreifen und Ihre Reise fortzusetzen."
+    rightDescription: "Melden Sie sich an, um auf Ihr Konto zuzugreifen und Ihre Reise fortzusetzen.",
+    createNow: "Jetzt erstellen",
+    email: "E-Mail",
+    password: "Passwort",
+    saveAccount: "Konto speichern",
+    forgotPassword: "Passwort vergessen?",
+    or: "oder",
+    continueWithGoogle: "Mit Google fortfahren",
+    continueWithFacebook: "Mit Facebook fortfahren",
+    introducingFeatures: "Neue Funktionen werden vorgestellt",
+    analyzeTrends: "Die Analyse früherer Trends stellt sicher, dass Unternehmen immer die richtige Entscheidung treffen. Und wenn das Ausmaß der Entscheidung und ihre Auswirkungen zunehmen...",
+    trackProgress: "Verfolgen Sie Ihren Fortschritt",
+    trackProgressDesc: "Bleiben Sie motiviert, indem Sie Ihren täglichen und wöchentlichen Lernfortschritt mit unserem neuen Dashboard verfolgen.",
+    joinCommunity: "Treten Sie der Community bei",
+    joinCommunityDesc: "Vernetzen Sie sich mit anderen, tauschen Sie Erkenntnisse aus und wachsen Sie gemeinsam in unserer lebendigen Lerngemeinschaft.",
   }
 }
 
@@ -119,18 +161,18 @@ export default function SignInPage() {
   const slides = [
     {
       image: "/en/images/signin/study.png",
-      heading: "Introducing new features",
-      text: "Analyzing previous trends ensures that businesses always make the right decision. And as the scale of the decision and its impact magnifies..."
+      heading: t.introducingFeatures, // Translated
+      text: t.analyzeTrends // Translated
     },
     {
       image: "/en/images/signin/nature.jpg",
-      heading: "Track Your Progress",
-      text: "Stay motivated by tracking your daily and weekly study progress with our new dashboard."
+      heading: t.trackProgress, // Translated
+      text: t.trackProgressDesc // Translated
     },
     {
       image: "/en/images/signin/sea.jpg",
-      heading: "Join the Community",
-      text: "Connect with others, share insights, and grow together in our vibrant learning community."
+      heading: t.joinCommunity, // Translated
+      text: t.joinCommunityDesc // Translated
     }
   ];
   const [current, setCurrent] = useState(0);
@@ -145,7 +187,7 @@ export default function SignInPage() {
     fetchProviders()
   }, [])
 
-  const handleSignIn = async (providerId: string) => { // Removed eslint-disable-next-line
+  const handleSignIn = async (providerId: string) => {
     setIsLoading(true)
     setLoadingProvider(providerId)
     await signIn(providerId, { callbackUrl: "/" })
@@ -162,7 +204,7 @@ export default function SignInPage() {
       <div className="fixed top-4 left-4 z-30">
         <Link href="/" className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block"><path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          Back
+          {t.backButton} {/* Translated */}
         </Link>
       </div>
       {/* Top-right global controls */}
@@ -174,7 +216,7 @@ export default function SignInPage() {
               size="sm"
               className="flex items-center gap-2 border dark:border-[#ffffff94] dark:text-white dark:bg-[#1118279d] dark:hover:bg-[#ffffff34]"
             >
-              {language === "en" ? "English" : language === "nl" ? "Nederlands" : "Deutsch"}
+              {language === "en" ? t.languageEn : language === "nl" ? t.languageNl : t.languageDe} {/* Translated */}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -192,9 +234,9 @@ export default function SignInPage() {
           </div>
           <DialogContent className="p-6 rounded-2xl max-w-lg border border-gray-200 dark:border-[#23263a] shadow-2xl bg-white/70 dark:bg-[#23263a]/70 backdrop-blur-xl text-gray-900 dark:text-gray-100">
             <DialogHeader>
-              <DialogTitle className="text-lg font-semibold">{t.infoTitle}</DialogTitle> {/* Added DialogTitle */}
+              <DialogTitle className="text-lg font-semibold">{t.infoTitle}</DialogTitle>
               <DialogDescription className="text-gray-600 dark:text-gray-300 mt-2">
-                <div className="space-y-4 mt-2 text-left"> {/* Added structure from second code */}
+                <div className="space-y-4 mt-2 text-left">
                   <p>{t.infoDescription}</p>
 
                   <div>
@@ -237,37 +279,36 @@ export default function SignInPage() {
           </div>
           <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] rounded-2xl shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 mb-2 text-left">Sign in</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-left">Don&apos;t have an account? <a href="#" className="text-blue-600 hover:underline">Create now</a></p>
+            <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-left">Don&apos;t have an account? <a href="#" className="text-blue-600 hover:underline">{t.createNow}</a></p> {/* Translated */}
             <form className="space-y-5">
               <div className="text-left">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">Email</label>
-                <input id="email" name="email" type="email" autoComplete="email" placeholder="Email" className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" disabled />
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t.email}</label> {/* Translated */}
+                <input id="email" name="email" type="email" autoComplete="email" placeholder={t.email} className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" disabled />
               </div>
               <div className="text-left">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">Password</label>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t.password}</label> {/* Translated */}
                 <div className="relative">
-                  <input id="password" name="password" type="password" autoComplete="current-password" placeholder="Password" className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" disabled />
+                  <input id="password" name="password" type="password" autoComplete="current-password" placeholder={t.password} className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" disabled />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer select-none">👁️</span>
                 </div>
               </div>
               <div className="flex items-center justify-between mb-2">
                 <label className="flex items-center text-sm text-gray-600 dark:text-blue-200">
                   <input type="checkbox" className="mr-2 rounded border-gray-300 dark:border-gray-700" disabled />
-                  Save account
+                  {t.saveAccount} {/* Translated */}
                 </label>
-                <a href="#" className="text-xs text-blue-600 hover:underline">Forgot Password?</a>
+                <a href="#" className="text-xs text-blue-600 hover:underline">{t.forgotPassword}</a> {/* Translated */}
               </div>
               <button type="button" className="w-full py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg transition-colors">Sign in</button>
               <div className="flex items-center my-4">
                 <div className="flex-grow h-px bg-gray-200 dark:bg-gray-700" />
-                <span className="mx-2 text-gray-400 text-xs">or</span>
+                <span className="mx-2 text-gray-400 text-xs">{t.or}</span> {/* Translated */}
                 <div className="flex-grow h-px bg-gray-200 dark:bg-gray-700" />
               </div>
 
               {/* Dynamic Provider Buttons */}
               {providers ? (
                 Object.values(providers).map((provider) => (
-                  // Removed motion.div to retain original styling, but kept the button's dynamic behavior
                   <Button
                     key={provider.id}
                     variant="outline"
