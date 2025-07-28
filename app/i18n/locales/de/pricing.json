@@ -1,31 +1,45 @@
 {
-  "heading": "Wähle deinen Plan",
-  "basic_name": "Basis",
-  "basic_price": "Kostenlos",
-  "basic_features": [
-    "Zugang zu Basis-Kursen",
-    "Teilnahme am Community-Forum",
-    "Zugang zu über 100+ Quizzen",
-    "Werbung"
-  ],
-  "basic_cta": "Anmelden",
-  "premium_name": "Premium",
-  "premium_price": "€9,99/Monat",
-  "premium_features": [
-    "Zugang zu allen Kursen",
-    "Teilnahme am Community-Forum + Premium-Badge",
-    "Zugang zu allen Quizzen",
-    "Keine Werbung"
-  ],
-  "premium_cta": "Kostenlose Testphase starten",
-  "premium_popular_label": "Am beliebtesten",
-  "institutional_name": "Institutionell",
-  "institutional_price": "Angepasst",
-  "institutional_features": [
-    "Alle Premium-Funktionen",
-    "Angepasste Kurse",
-    "Dedizierter Support",
-    "Analysen und Berichte"
-  ],
-  "institutional_cta": "Kontaktieren Sie uns"
+  "title": "Wähle deinen Plan",
+  "description": "Starte dein Bibelstudium mit dem passenden Plan für dich",
+  "popular_badge": "Am beliebtesten",
+  "basic": {
+    "name": "Basis",
+    "price": "Kostenlos",
+    "description": "Ideal für den Einstieg",
+    "features": [
+      "Zugang zu Basiskursen",
+      "Teilnahme am Community-Forum",
+      "Zugang zu über 100 Quizzen",
+      "Werbung"
+    ],
+    "buttonText": "Registrieren"
+  },
+  "premium": {
+    "name": "Premium",
+    "price": "€9,99",
+    "priceSubtext": "/Monat",
+    "description": "Für ernsthafte Bibelstudenten",
+    "features": [
+      "Zugang zu allen Kursen",
+      "Forum + Premium-Abzeichen",
+      "Zugang zu allen Quizzen",
+      "Keine Werbung"
+    ],
+    "buttonText": "Kostenlos testen"
+  },
+  "institutional": {
+    "name": "Institutionell",
+    "price": "Individuell",
+    "description": "Für Kirchen und Organisationen",
+    "features": [
+      "Alle Premium-Funktionen",
+      "Individuelle Kurse",
+      "Dedizierter Support",
+      "Analysen und Berichte"
+    ],
+    "buttonText": "Kontaktieren Sie uns"
+  },
+  "cta_title": "Bereit, tiefer in die Schrift einzutauchen?",
+  "cta_subtitle": "Schließe dich Tausenden von Gläubigen an, die gemeinsam Gottes Wort studieren.",
+  "cta_buttonText": "Starte deine kostenlose Testphase"
 }

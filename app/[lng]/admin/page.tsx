@@ -15,6 +15,10 @@ export default function AdminDashboard() {
   }
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [totalUsers, setTotalUsers] = useState(0)
+  const [premiumUsers, setPremiumUsers] = useState(0)
+  const [totalCourses, setTotalCourses] = useState(0)
+  const [premiumCourses, setPremiumCourses] = useState(0)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,6 +39,21 @@ export default function AdminDashboard() {
           }
         } else {
           router.push("/")
+          return
+        }
+
+        const usersRes = await fetch("/api/admin/users")
+        if (usersRes.ok) {
+          const data = await usersRes.json()
+          setTotalUsers(data.users.length)
+          setPremiumUsers(data.users.filter((u: { subscribed: boolean }) => u.subscribed).length)
+        }
+
+        const coursesRes = await fetch("/api/admin/courses")
+        if (coursesRes.ok) {
+          const data = await coursesRes.json()
+          setTotalCourses(data.courses.length)
+          setPremiumCourses(data.courses.filter((c: { isPremium: boolean }) => c.isPremium).length)
         }
       } catch (error) {
         console.error("Error fetching user data:", error)
@@ -75,7 +94,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Total Users</p>
-                <h3 className="text-2xl font-bold">1,234</h3>
+                <h3 className="text-2xl font-bold">{totalUsers}</h3>
               </div>
               <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full">
                 <Users className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -89,7 +108,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Premium Users</p>
-                <h3 className="text-2xl font-bold">256</h3>
+                <h3 className="text-2xl font-bold">{premiumUsers}</h3>
               </div>
               <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full">
                 <ShieldCheck className="h-6 w-6 text-amber-600 dark:text-amber-400" />
@@ -103,7 +122,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Total Courses</p>
-                <h3 className="text-2xl font-bold">42</h3>
+                <h3 className="text-2xl font-bold">{totalCourses}</h3>
               </div>
               <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full">
                 <BookOpen className="h-6 w-6 text-green-600 dark:text-green-400" />
@@ -117,7 +136,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Premium Courses</p>
-                <h3 className="text-2xl font-bold">12</h3>
+                <h3 className="text-2xl font-bold">{premiumCourses}</h3>
               </div>
               <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full">
                 <BookOpen className="h-6 w-6 text-purple-600 dark:text-purple-400" />

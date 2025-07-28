@@ -1,31 +1,45 @@
 {
-  "heading": "Choose Your Plan",
-  "basic_name": "Basic",
-  "basic_price": "Free",
-  "basic_features": [
-    "Access to basic courses",
-    "Participation in the community forum",
-    "Access to over 100+ quizzes",
-    "Advertisements"
-  ],
-  "basic_cta": "Sign Up",
-  "premium_name": "Premium",
-  "premium_price": "€9.99/month",
-  "premium_features": [
-    "Access to all courses",
-    "Participation in the community forum + premium badge",
-    "Access to all quizzes",
-    "No advertisements"
-  ],
-  "premium_cta": "Start Free Trial",
-  "premium_popular_label": "Most Popular",
-  "institutional_name": "Institutional",
-  "institutional_price": "Customized",
-  "institutional_features": [
-    "All Premium features",
-    "Customized courses",
-    "Dedicated support",
-    "Analytics and reporting"
-  ],
-  "institutional_cta": "Contact Us"
+  "title": "Choose Your Plan",
+  "description": "Start your Bible study journey with the plan that fits your needs",
+  "popular_badge": "Most Popular",
+  "basic": {
+    "name": "Basic",
+    "price": "Free",
+    "description": "Perfect for getting started",
+    "features": [
+      "Access to basic courses",
+      "Participation in the community forum",
+      "Access to over 100+ quizzes",
+      "Advertisements"
+    ],
+    "buttonText": "Sign Up"
+  },
+  "premium": {
+    "name": "Premium",
+    "price": "€9.99",
+    "priceSubtext": "/month",
+    "description": "For serious Bible students",
+    "features": [
+      "Access to all courses",
+      "Community forum + premium badge",
+      "Access to all quizzes",
+      "No advertisements"
+    ],
+    "buttonText": "Start Free Trial"
+  },
+  "institutional": {
+    "name": "Institutional",
+    "price": "Custom",
+    "description": "For churches and organizations",
+    "features": [
+      "All Premium features",
+      "Customized courses",
+      "Dedicated support",
+      "Analytics and reporting"
+    ],
+    "buttonText": "Contact Us"
+  },
+  "cta_title": "Ready to dive deeper into Scripture?",
+  "cta_subtitle": "Join thousands of believers studying God's Word together.",
+  "cta_buttonText": "Start Your Free Trial"
 }

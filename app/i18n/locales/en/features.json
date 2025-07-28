@@ -1,13 +1,16 @@
 {
-  "subtitle": "Our Features",
-  "heading": "Enhance Your Bible Study Experience",
-  "description": "Explore the powerful features of Scriptura designed to help you dive deeper into the Scriptures.",
-  "feature_1_title": "Interactive Lessons",
-  "feature_1_description": "Engage with interactive Bible lessons that bring Scripture to life.",
-  "feature_2_title": "Personalized Study Plans",
-  "feature_2_description": "Receive study plans tailored to your unique learning style.",
-  "feature_3_title": "Community Forums",
-  "feature_3_description": "Join a vibrant community of believers to share insights and inspiration.",
-  "feature_4_title": "AI-Powered Insights",
-  "feature_4_description": "Leverage AI to gain deeper understanding and context of the Bible."
+  "heading": "Features",
+  "description": "Everything you need to study Scripture effectively",
+  "feature_1_title": "Bible Courses",
+  "feature_1_description": "Study through every book of the Bible with expert-guided courses covering theology and practical application.",
+  "feature_2_title": "Community Forum",
+  "feature_2_description": "Connect with fellow believers, ask questions, and share insights as you grow in your understanding of Scripture.",
+  "feature_3_title": "Interactive Quizzes",
+  "feature_3_description": "Test your knowledge with over 100+ quizzes and track your progress as you grow in biblical understanding.",
+  "feature_4_title": "Advanced Search",
+  "feature_4_description": "Find any verse, topic, or concept instantly across multiple Bible translations with powerful search tools.",
+  "feature_5_title": "Personal Notes",
+  "feature_5_description": "Save your insights and reflections as you study through Scripture with our note-taking system.",
+  "feature_6_title": "Reading Plans",
+  "feature_6_description": "Follow structured reading plans to read through the entire Bible systematically at your own pace."
 }

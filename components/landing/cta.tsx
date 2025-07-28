@@ -1,74 +1,35 @@
 "use client"
 
-import { Button } from "../../components/ui/button"
-import Link from "next/link"
 import { useTranslation } from "../../app/i18n/client"
+import { Button } from "../../components/ui/button"
 import { motion } from "framer-motion"
 
-interface CTAProps {
+interface CTASectionProps {
   params: {
     lng: string
   }
 }
 
-export function CTA({ params: { lng } }: CTAProps) {
+export function CTASection({ params: { lng } }: CTASectionProps) {
   const { t } = useTranslation(lng, "cta")
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-  }
-
   return (
-    <section className="py-24 bg-gray-100 dark:bg-gray-900">
-      <motion.div
-        className="container mx-auto px-4 text-center"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <motion.h2 className="text-3xl font-bold mb-4 dark:text-white" variants={itemVariants}>
-          {t("ready_to_start")}
-        </motion.h2>
-        <motion.p className="mb-8 text-xl text-gray-600 dark:text-gray-400" variants={itemVariants}>
-          {t("join_scriptura")}
-        </motion.p>
-        <motion.div variants={itemVariants}>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="text-lg font-semibold tracking-wide bg-[#10172a] hover:bg-[#10172ae0] text-white hover:text-white dark:bg-red-500 dark:hover:bg-red-600 dark:text-white"
-          >
-            <Link href={`/api/auth/signin`}>{t("sign_up")}</Link>
+    <section className="py-20 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a] border-gray-200 dark:border-[#23263a]">
+      <div className="container mx-auto px-6 lg:px-8 text-center">
+        <motion.div
+          className="max-w-2xl mx-auto space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("title")}</h2>
+          <p className="text-gray-600 dark:text-blue-200 dark:drop-shadow">{t("subtitle")}</p>
+          <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
+            {t("buttonText")}
           </Button>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }
-
