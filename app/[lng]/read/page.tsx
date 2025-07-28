@@ -48,15 +48,6 @@ export default function Index() {
     if (selectedBook) fetchChapters()
   }, [selectedBook])
 
-  const handlePrevious = () => {
-    if (selectedChapter > 1) setSelectedChapter((prev) => prev - 1)
-  }
-
-  const handleNext = () => {
-    const max = Math.max(...chapters)
-    if (selectedChapter < max) setSelectedChapter((prev) => prev + 1)
-  }
-
   return (
     <div className="min-h-screen">
 
@@ -73,16 +64,13 @@ export default function Index() {
           onBookChange={(book) => {
             setSelectedBook(book)
             setSelectedChapter(1)
-          }}
-          onChapterChange={setSelectedChapter}
-        />
+          } }
+          onChapterChange={setSelectedChapter} loadingVersions={false} loadingBooks={false} loadingChapters={false}        />
 
         <ChapterViewer
           version={selectedVersion}
           book={selectedBook}
           chapter={selectedChapter}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
           maxChapter={Math.max(...chapters)}
         />
       </div>

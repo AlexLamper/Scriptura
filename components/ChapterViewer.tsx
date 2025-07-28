@@ -1,159 +1,140 @@
-import { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, Loader2, AlertCircle } from 'lucide-react'
-import { Button } from '../components/ui/button'
-import { cn } from '../lib/utils'
+import React, { useEffect, useState } from 'react';
+import { Loader2, AlertCircle } from 'lucide-react';
 
 type Props = {
-  version: string | null
-  book: string
-  chapter: number
-  onPrevious: () => void
-  onNext: () => void
-  maxChapter: number
-}
+  version: string | null;
+  book: string;
+  chapter: number;
+  maxChapter: number;
+};
 
-type VerseData = { [key: string]: string }
+type VerseData = { [key: string]: string };
 
 export default function ChapterViewer({
   version,
   book,
   chapter,
-  onPrevious,
-  onNext,
   maxChapter,
 }: Props) {
-  const [verses, setVerses] = useState<VerseData>({})
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [verses, setVerses] = useState<VerseData>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const API_BASE_URL = 'https://www.bijbel-api.nl/api';
+
+  console.groupCollapsed('--- ChapterViewer Render ---');
+  console.log('Props received by ChapterViewer:', {
+    version,
+    book,
+    chapter,
+    maxChapter,
+  });
+  console.groupEnd(); // End ChapterViewer Render group
 
   useEffect(() => {
+    console.groupCollapsed(`useEffect: Fetching chapter content for ${book} ${chapter} (${version})`);
     const fetchChapter = async () => {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
+      setVerses({}); // Clear previous verses when fetching new chapter
 
       try {
         const params = new URLSearchParams({
           book,
           chapter: chapter.toString(),
-        })
+        });
 
-        if (version) {
-          params.append('translation', version)
+        // Only append version if it's explicitly selected and not the default 'Statenvertaling'
+        if (version && version.toLowerCase() !== 'statenvertaling') {
+          params.append('version', version);
+          console.log(`Appending version parameter: ${version}`);
+        } else {
+            console.log(`Using default version (Statenvertaling) or no version specified in API call.`);
         }
 
-        const res = await fetch(`https://www.bijbel-api.nl/api/chapter?${params.toString()}`)
+        const url = `${API_BASE_URL}/chapter?${params.toString()}`;
+        console.log('API URL for chapter fetch:', url);
+
+        const res = await fetch(url);
 
         if (!res.ok) {
-          throw new Error(`API gaf een fout terug: ${res.status}`)
+          const errorText = await res.text();
+          throw new Error(`API gaf een fout terug: ${res.status} ${res.statusText} - ${errorText}`);
         }
 
-        const data = await res.json()
+        const data = await res.json();
+        console.log('Raw API response for chapter:', data);
 
-        if (!data.verses) {
-          throw new Error('Geen verzen gevonden in response')
+        // API response for /api/chapter is an object like { verses: { "1": "text", "2": "text" } }
+        if (!data.verses || Object.keys(data.verses).length === 0) {
+          throw new Error('Geen verzen gevonden in response. Mogelijk is het hoofdstuk leeg of ongeldig.');
         }
 
-        setVerses(data.verses)
+        setVerses(data.verses);
+        console.log('Successfully set verses for chapter.');
       } catch (err: unknown) {
         if (err instanceof Error) {
-          setError(err.message)
+          setError(err.message);
+          console.error('Chapter fetch error:', err.message);
         } else {
-          setError('Fout bij het laden van de bijbeltekst')
+          setError('Fout bij het laden van de bijbeltekst');
+          console.error('Unknown error during chapter fetch:', err);
         }
-        setVerses({})
       } finally {
-        setLoading(false)
+        setLoading(false);
+        console.groupEnd(); // End useEffect: Fetching chapter content group
       }
-    }
+    };
 
-    fetchChapter()
-  }, [book, chapter, version])
+    // Only fetch if book, chapter, and version are truly selected and valid
+    if (book && chapter > 0 && version) {
+      fetchChapter();
+    } else {
+      console.log('Skipping chapter fetch in ChapterViewer: Missing book, chapter, or version.', { book, chapter, version });
+      setVerses({});
+      setLoading(false);
+      setError(null);
+    }
+  }, [book, chapter, version]); // Depend on book, chapter, and version
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Chapter Header */}
-      <div className="flex items-center justify-between mb-12 bg-gradient-to-r from-card/80 via-card to-card/80 backdrop-blur-sm rounded-2xl p-8 border border-border/50 shadow-lg">
-        <Button
-          variant="ghost"
-          onClick={onPrevious}
-          disabled={chapter <= 1}
-          className={cn(
-            "flex items-center gap-3 px-6 py-4 text-base font-medium",
-            "hover:bg-primary/10 hover:text-primary transition-all duration-200",
-            "disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-          )}
-        >
-          <ChevronLeft className="h-5 w-5" />
-          Vorig
-        </Button>
-
-        <div className="text-center">
-          <h2 className="text-3xl font-serif font-bold text-foreground mb-2">
-            {book} {chapter}
-          </h2>
-          <p className="text-foreground/60 text-sm tracking-wide uppercase font-medium">
-            {version && `${version} vertaling`}
-          </p>
+    <div>
+      {loading && (
+        <div className="flex items-center justify-center py-24">
+          <div className="text-center">
+            <Loader2 className="h-10 w-10 animate-spin text-indigo-500 mx-auto mb-6" />
+            <p className="text-gray-700 text-lg font-medium">Bijbeltekst laden...</p>
+          </div>
         </div>
+      )}
 
-        <Button
-          variant="ghost"
-          onClick={onNext}
-          disabled={chapter >= maxChapter}
-          className={cn(
-            "flex items-center gap-3 px-6 py-4 text-base font-medium",
-            "hover:bg-primary/10 hover:text-primary transition-all duration-200",
-            "disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-          )}
-        >
-          Volgende
-          <ChevronRight className="h-5 w-5" />
-        </Button>
-      </div>
-
-      {/* Content Area */}
-      <div className="bg-gradient-to-b from-card to-card/95 rounded-2xl border border-border/50 shadow-xl overflow-hidden">
-        {loading && (
-          <div className="flex items-center justify-center py-24">
-            <div className="text-center">
-              <Loader2 className="h-10 w-10 animate-spin text-primary mx-auto mb-6" />
-              <p className="text-foreground/70 text-lg font-medium">Bijbeltekst laden...</p>
-            </div>
+      {error && (
+        <div className="flex items-center justify-center py-24">
+          <div className="text-center max-w-md">
+            <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-6" />
+            <p className="text-red-600 font-semibold mb-3 text-lg">Fout bij laden</p>
+            <p className="text-gray-700">{error}</p>
           </div>
-        )}
+        </div>
+      )}
 
-        {error && (
-          <div className="flex items-center justify-center py-24">
-            <div className="text-center max-w-md">
-              <AlertCircle className="h-10 w-10 text-destructive mx-auto mb-6" />
-              <p className="text-destructive font-semibold mb-3 text-lg">Fout bij laden</p>
-              <p className="text-foreground/70">{error}</p>
-            </div>
+      {!loading && !error && Object.keys(verses).length > 0 && (
+        <div className="space-y-2 text-justify">
+          {Object.entries(verses).map(([verseNumber, text]) => (
+            <p key={verseNumber}>
+              <sup className="font-semibold text-gray-700">
+                {verseNumber}
+              </sup>{' '}
+              {text}
+            </p>
+          ))}
+        </div>
+      )}
+      {!loading && !error && Object.keys(verses).length === 0 && (
+          <div className="py-12 text-center text-gray-500">
+            Geen bijbeltekst gevonden voor dit hoofdstuk. Probeer een ander hoofdstuk.
           </div>
-        )}
-
-        {!loading && !error && Object.keys(verses).length > 0 && (
-          <div className="px-12 py-16">
-            <div className="max-w-3xl mx-auto">
-              <div className="prose prose-lg prose-stone dark:prose-invert max-w-none">
-                <div className="text-justify leading-8 space-y-1">
-                  {Object.entries(verses).map(([verseNumber, text], index) => (
-                    <span key={verseNumber} className="inline">
-                      <sup className="text-primary/70 font-bold text-sm mx-1 select-none">
-                        {verseNumber}
-                      </sup>
-                      <span className="text-foreground/95 font-serif text-xl leading-8">
-                        {text}
-                      </span>
-                      {index < Object.entries(verses).length - 1 && " "}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
-  )
+  );
 }

@@ -1,12 +1,13 @@
-// import { BookOpen } from "lucide-react"
-import { CourseGrid } from "../../../components/course-grid"
-import { CourseRecommendation } from "../../../components/course-recommendation"
-import { DashboardQuizzes } from "../../../components/dashboard-quizzes"
+import type React from "react"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
-import WelcomeDashboard from "../../../components/dashboard/welcome-dashboard"
-import WhereToStart from "../../../components/where-to-start"
-import DailyBibleVerse from "../../../components/daily-bible-verse"
+import { WelcomeCard } from "../../../components/dashboard/WelcomeCard"
+import { TopPerformersCard } from "../../../components/dashboard/TopPerformersCard"
+import { SummaryCard } from "../../../components/dashboard/SummaryCard"
+import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
+import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
+import { BarChart } from "../../../components/dashboard/BarChart"
+import { FileText, ClipboardList, BookOpen } from "lucide-react"
 
 export default async function DashboardPage() {
   const session = await getServerSession()
@@ -15,43 +16,34 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="container lg:px-2 pb-8 pt-4">
-      <WelcomeDashboard params={{
-        lng: ""
-      }} />
-
-      <DailyBibleVerse params={{
-        lng: ""
-      }} />
-
-      <CourseGrid
-        params={{
-          lng: "",
-        }}
-      />
-      <div className="my-8">
-        <hr className="dark:border-[#91969e52]" />
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <DashboardQuizzes params={{
-                    lng: ""
-                }}          
-            />
+    <div className="container lg:px-2 pb-4 pt-2">
+      <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+        <WelcomeCard lng={""} />
+        <TopPerformersCard />
+        {/* Summary Cards */}
+        <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
+          <SummaryCard
+            icon={<FileText className="h-6 w-6 text-gray-500" />}
+            value="20/25"
+            description="Tasks completed"
+          />
+          <SummaryCard
+            icon={<ClipboardList className="h-6 w-6 text-gray-500" />}
+            value="42/46"
+            description="Pending homework"
+          />
+          <SummaryCard
+            icon={<BookOpen className="h-6 w-6 text-gray-500" />}
+            value="24/28"
+            description="Pending assignments"
+          />
         </div>
-        <CourseRecommendation
-          params={{
-            lng: "",
-          }}
-        />
+        <HomeworkCompletionRatesCard BarChart={BarChart} />
+        <AssignmentsCard />
       </div>
-      <div className="my-8"></div>
-      <hr className="dark:border-[#91969e52]" />
-      <WhereToStart params={{
-        lng: "",
-      }}
-       />
     </div>
   )
 }
+
+
 
