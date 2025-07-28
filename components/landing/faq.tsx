@@ -1,7 +1,7 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion"
 import { useTranslation } from "../../app/i18n/client"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion"
 import { motion } from "framer-motion"
 
 interface FAQSectionProps {
@@ -10,63 +10,46 @@ interface FAQSectionProps {
   }
 }
 
-export default function FaqSection({ params: { lng } }: FAQSectionProps) {
+export function FAQSection({ params: { lng } }: FAQSectionProps) {
   const { t } = useTranslation(lng, "faq")
-
-  const faqs = t("items", { returnObjects: true }) as { question: string; answer: string }[]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-  }
+  const faqs = t("items", { returnObjects: true }) as {
+    question: string
+    answer: string
+  }[]
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-800 py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="faq" className="py-24 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
+      <div className="container mx-auto px-6 lg:px-8">
         <motion.div
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-center space-y-4 mb-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl dark:text-white">{t("faq_title")}</h2>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("faq_title")}</h2>
+          <p className="text-xl text-gray-600 dark:text-blue-200 dark:drop-shadow">
+            {t("faq_subtitle")}
+          </p>
         </motion.div>
 
         <motion.div
-          className="mx-auto max-w-3xl"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          viewport={{ once: true }}
         >
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                <AccordionItem value={`item-${index}`} className="dark:border-gray-700">
-                  <AccordionTrigger className="text-left dark:text-white">{faq.question}</AccordionTrigger>
-                  <AccordionContent className="dark:text-gray-300">{faq.answer}</AccordionContent>
-                </AccordionItem>
-              </motion.div>
+              <AccordionItem
+                key={index}
+                value={`item-${index + 1}`}
+                className="bg-gray-50 dark:bg-[#23263a] rounded-lg px-6 border border-gray-200 dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10"
+              >
+                <AccordionTrigger className="text-left dark:text-blue-100">{faq.question}</AccordionTrigger>
+                <AccordionContent className="text-gray-600 dark:text-blue-200">{faq.answer}</AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
         </motion.div>
@@ -74,4 +57,3 @@ export default function FaqSection({ params: { lng } }: FAQSectionProps) {
     </section>
   )
 }
-

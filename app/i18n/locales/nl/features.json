@@ -1,13 +1,16 @@
 {
-  "subtitle": "Onze Mogelijkheden",
-  "heading": "Verbeter je Bijbelstudie-ervaring",
-  "description": "Ontdek de krachtige functies van Scriptura die je helpen je bijbelstudie ervaring te verbeteren.",
-  "feature_1_title": "Interactieve Lessen",
-  "feature_1_description": "Leer door middel van interactieve lessen die je Bijbelkennis verrijken.",
-  "feature_2_title": "Persoonlijke Studieplannen",
-  "feature_2_description": "Studieplannen die speciaal zijn afgestemd op jouw leerstijl en tempo.",
-  "feature_3_title": "Community Forums",
-  "feature_3_description": "Word lid van onze community waar mensen samenkomen om meer te leren over de Bijbel en elkaar te helpen.",
-  "feature_4_title": "AI-ondersteuning",
-  "feature_4_description": "Dankzij AI worden onze lessen slimmer. Vraag onze chatbot om snel inzicht in bijbelteksten en onderwerpen die je bestudeert."
+  "heading": "Kenmerken",
+  "description": "Alles wat je nodig hebt om de Schrift effectief te bestuderen",
+  "feature_1_title": "Bijbelcursussen",
+  "feature_1_description": "Bestudeer elk boek van de Bijbel met deskundig geleide cursussen over theologie en praktische toepassing.",
+  "feature_2_title": "Community Forum",
+  "feature_2_description": "Verbind met mede-gelovigen, stel vragen en deel inzichten terwijl je groeit in je begrip van de Schrift.",
+  "feature_3_title": "Interactieve Quizzen",
+  "feature_3_description": "Test je kennis met meer dan 100 quizzen en volg je voortgang terwijl je groeit in bijbels begrip.",
+  "feature_4_title": "Geavanceerd Zoeken",
+  "feature_4_description": "Vind direct elk vers, onderwerp of concept in meerdere Bijbelvertalingen met krachtige zoekhulpmiddelen.",
+  "feature_5_title": "Persoonlijke Notities",
+  "feature_5_description": "Bewaar je inzichten en reflecties terwijl je de Schrift bestudeert met ons notitiesysteem.",
+  "feature_6_title": "Leesplannen",
+  "feature_6_description": "Volg gestructureerde leesplannen om de hele Bijbel systematisch in je eigen tempo te lezen."
 }

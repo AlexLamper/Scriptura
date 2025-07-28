@@ -1,10 +1,7 @@
 "use client"
 
-import Image from "next/image"
-import { Button } from "../../components/ui/button"
-import { Badge } from "../../components/ui/badge"
+import { BookOpen, Users, Trophy } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
-import Link from "next/link"
 import { motion } from "framer-motion"
 
 interface AboutSectionProps {
@@ -13,18 +10,15 @@ interface AboutSectionProps {
   }
 }
 
-export default function AboutSection({ params: { lng } }: AboutSectionProps) {
+export function AboutSection({ params: { lng } }: AboutSectionProps) {
   const { t } = useTranslation(lng, "about")
 
-  const textVariants = {
-    hidden: { opacity: 0, y: 30 },
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
         staggerChildren: 0.2,
         delayChildren: 0.1,
       },
@@ -36,108 +30,77 @@ export default function AboutSection({ params: { lng } }: AboutSectionProps) {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-  }
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-        delay: 0.2,
-      },
+      transition: { duration: 0.5 },
     },
   }
 
   return (
-    <section id="about" className="bg-gray-100 dark:bg-gray-900 py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-8 md:grid-cols-2 md:gap-12">
+    <section id="about" className="py-24 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
+      <div className="container mx-auto px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
           <motion.div
-            className="flex flex-col justify-center space-y-4"
-            variants={textVariants}
+            className="text-center space-y-4 mb-16"
+            variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.div
-              className="mb-4 flex justify-start"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5 }}
-            >
-              <Badge className="bg-[#111828] hover:bg-[#1c2538] dark:bg-red-500 dark:text-white dark:hover:bg-red-400">
-                {t("badge")}
-              </Badge>
-            </motion.div>
             <motion.h2
-              className="text-3xl font-bold tracking-tight md:text-4xl dark:text-white"
+              className="text-4xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl"
               variants={itemVariants}
             >
               {t("heading")}
             </motion.h2>
-            <motion.div className="space-y-4 text-gray-600 dark:text-gray-400" variants={itemVariants}>
-              <div className="text-lg">
-                <p className="mb-2">{t("paragraph_1")}</p>
-                <p>{t("paragraph_2")}</p>
-              </div>
-            </motion.div>
-            <motion.div className="pt-4" variants={itemVariants}>
-              <Button
-                asChild
-                size="lg"
-                className="text-lg border font-semibold tracking-wide bg-[#10172a] hover:bg-[#10172ae0] text-white hover:text-white dark:bg-red-500 dark:hover:bg-red-600 dark:text-white"
-              >
-                <Link href={`/api/auth/signin`}>{t("button_text")}</Link>
-              </Button>
-            </motion.div>
+            <motion.p
+              className="text-xl text-gray-600 dark:text-blue-200 max-w-3xl mx-auto dark:drop-shadow"
+              variants={itemVariants}
+            >
+              {t("intro")}
+            </motion.p>
           </motion.div>
+
           <motion.div
-            className="flex items-center justify-center"
-            variants={imageVariants}
+            className="grid lg:grid-cols-3 gap-8"
+            variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="relative h-[300px] w-full max-w-[500px] md:h-[350px]">
-              <Image
-                src="/en/images/hero-nobg1.png"
-                alt="Scriptura App Screenshot"
-                fill
-                className="rounded-lg object-contain"
-              />
-            </div>
+            {/* Item 1 */}
+            <motion.div className="text-center space-y-4 dark:bg-[#23263a] dark:rounded-xl dark:shadow-lg dark:shadow-gray-600/10 p-6" variants={itemVariants}>
+              <div className="w-16 h-16 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-900 dark:to-blue-700/60 rounded-full flex items-center justify-center mx-auto shadow dark:shadow-blue-900/20">
+                <BookOpen className="w-8 h-8 text-blue-500 dark:text-blue-300" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-blue-100">
+                {t("feature_1_title")}
+              </h3>
+              <p className="text-gray-600 dark:text-blue-200">{t("feature_1_text")}</p>
+            </motion.div>
+
+            {/* Item 2 */}
+            <motion.div className="text-center space-y-4 dark:bg-[#23263a] dark:rounded-xl dark:shadow-lg dark:shadow-gray-600/10 p-6" variants={itemVariants}>
+              <div className="w-16 h-16 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-900 dark:to-blue-700/60 rounded-full flex items-center justify-center mx-auto shadow dark:shadow-blue-900/20">
+                <Users className="w-8 h-8 text-blue-500 dark:text-blue-300" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-blue-100">
+                {t("feature_2_title")}
+              </h3>
+              <p className="text-gray-600 dark:text-blue-200">{t("feature_2_text")}</p>
+            </motion.div>
+
+            {/* Item 3 */}
+            <motion.div className="text-center space-y-4 dark:bg-[#23263a] dark:rounded-xl dark:shadow-lg dark:shadow-gray-600/10 p-6" variants={itemVariants}>
+              <div className="w-16 h-16 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-900 dark:to-blue-700/60 rounded-full flex items-center justify-center mx-auto shadow dark:shadow-blue-900/20">
+                <Trophy className="w-8 h-8 text-blue-500 dark:text-blue-300" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-blue-100">
+                {t("feature_3_title")}
+              </h3>
+              <p className="text-gray-600 dark:text-blue-200">{t("feature_3_text")}</p>
+            </motion.div>
           </motion.div>
         </div>
-{/* 
-        <motion.div
-          className="mt-12 flex flex-wrap items-center justify-center gap-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-            <span className="text-sm font-medium dark:text-gray-300">Product Hunt</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-            <span className="text-sm font-medium dark:text-gray-300">TechCrunch</span>
-          </div>
-        </motion.div> */}
       </div>
     </section>
   )
 }
-

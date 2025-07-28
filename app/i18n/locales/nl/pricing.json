@@ -1,31 +1,45 @@
 {
-  "heading": "Kies je plan",
-  "basic_name": "Basis",
-  "basic_price": "Gratis",
-  "basic_features": [
-    "Toegang tot basis cursussen",
-    "Deelname aan community forum",
-    "Toegang tot meer dan 100+ quizzen",
-    "Advertenties"
-  ],
-  "basic_cta": "Aanmelden",
-  "premium_name": "Premium",
-  "premium_price": "€9.99/maand",
-  "premium_features": [
-    "Toegang tot alle cursussen",
-    "Deelname aan community forum + premium badge",
-    "Toegang tot alle quizzen",
-    "Geen advertenties"
-  ],
-  "premium_cta": "Start gratis proefperiode",
-  "premium_popular_label": "Meest populair",
-  "institutional_name": "Institutioneel",
-  "institutional_price": "Aangepast",
-  "institutional_features": [
-    "Alle Premium functies",
-    "Aangepaste cursussen",
-    "Toegewijde ondersteuning",
-    "Analytics en rapportage"
-  ],
-  "institutional_cta": "Neem contact met ons op"
+  "title": "Kies je abonnement",
+  "description": "Begin je bijbelstudie met het plan dat het beste bij je past",
+  "popular_badge": "Meest gekozen",
+  "basic": {
+    "name": "Basis",
+    "price": "Gratis",
+    "description": "Perfect om te starten",
+    "features": [
+      "Toegang tot basiscursussen",
+      "Deelname aan het community forum",
+      "Toegang tot 100+ quizzen",
+      "Advertenties"
+    ],
+    "buttonText": "Aanmelden"
+  },
+  "premium": {
+    "name": "Premium",
+    "price": "€9,99",
+    "priceSubtext": "/maand",
+    "description": "Voor serieuze bijbelstudenten",
+    "features": [
+      "Toegang tot alle cursussen",
+      "Forum + premium badge",
+      "Toegang tot alle quizzen",
+      "Geen advertenties"
+    ],
+    "buttonText": "Probeer gratis"
+  },
+  "institutional": {
+    "name": "Instelling",
+    "price": "Op maat",
+    "description": "Voor kerken en organisaties",
+    "features": [
+      "Alle premiumfuncties",
+      "Aangepaste cursussen",
+      "Persoonlijke ondersteuning",
+      "Inzichten en rapportage"
+    ],
+    "buttonText": "Neem contact op"
+  },
+  "cta_title": "Klaar om dieper de Schrift in te duiken?",
+  "cta_subtitle": "Sluit je aan bij duizenden gelovigen die samen Gods Woord bestuderen.",
+  "cta_buttonText": "Begin je gratis proefperiode"
 }

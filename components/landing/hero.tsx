@@ -1,81 +1,62 @@
 "use client"
 
 import { Button } from "../../components/ui/button"
-import Link from "next/link"
+import { Badge } from "../../components/ui/badge"
+import { ArrowRight, Check } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
-import { ModeToggle } from "../dark-mode-toggle"
-import { LanguageSwitcher } from "../language-switcher"
-import Image from "next/image"
 
-interface HeroProps {
+interface HeroSectionProps {
   params: {
     lng: string
   }
 }
 
-export function Hero({ params: { lng } }: HeroProps) {
+export function HeroSection({ params: { lng } }: HeroSectionProps) {
   const { t } = useTranslation(lng, "landing-hero")
 
   return (
-    <section className="relative bg-gradient-to-br from-[#111828] via-[#1f2937] to-[#0f172a] pt-8 pb-24 text-white md:pt-12 md:pb-32 overflow-hidden">
-      
-      {/* SVG Background Blob */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <svg
-          className="absolute -top-20 -left-20 w-[150%] h-auto opacity-20"
-          viewBox="0 0 1024 1024"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill="#111828"
-            d="M512 0C794.8 0 1024 229.2 1024 512s-229.2 512-512 512S0 794.8 0 512 229.2 0 512 0z"
-          />
-        </svg>
-      </div>
+    <section className="relative bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23] py-24 lg:py-32 overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+            <Badge
+              variant="secondary"
+              className="bg-gray-100 text-gray-600 border-gray-200 dark:bg-[#23263a] dark:text-blue-200 dark:border-[#23263a] shadow-sm dark:shadow-blue-900/20"
+            >
+              {t("badge")}
+            </Badge>
 
-      {/* Content Wrapper */}
-      <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center space-x-3 z-20">
-        <LanguageSwitcher />
-        <ModeToggle />
-      </div>
-      <div className="relative z-10 lg:mt-0 mt-16">
-        <div className="container mx-auto px-4 md:px-6 mt-12 md:mt-8 max-lg:max-w-[90%]">
-          <div className="grid gap-8 md:grid-cols-2 md:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-6">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-                {t("title_1")} <span className="text-red-500">{t("title_2")}</span>
-              </h1>
-              <p className="text-xl text-gray-300">{t("description")}</p>
-              <div className="flex flex-col space-y-3 pt-6 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <Button
-                  asChild
-                  size="lg"
-                  className="text-lg border font-semibold tracking-wide bg-gray-900 hover:bg-white hover:text-[#111827] dark:border-[#ffffff94] text-white dark:text-white dark:bg-[#1118279d] dark:hover:bg-[#ffffff34]"
-                >
-                  <Link href="#features">{t("read_more")}</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="border-none text-lg font-semibold tracking-wide bg-red-500 hover:bg-[#ef4444e7] hover:text-white dark:border-none text-white dark:bg-red-500 dark:hover:text-white dark:hover:bg-[#ef4444e7]"
-                >
-                  <Link href={`/api/auth/signin`}>{t("sign_up")}</Link>
-                </Button>
-              </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-blue-100 leading-tight max-w-[95%] drop-shadow dark:drop-shadow-xl">
+              {t("title_1")}{" "}
+              <span className="bg-gradient-to-r from-[#465af8] to-[#8d92fe] bg-clip-text text-transparent dark:from-[#7a8cff] dark:to-[#bfcaff]">
+                {t("title_2")}
+              </span>
+            </h1>
+
+            <p className="text-xl text-gray-600 dark:text-blue-200 max-w-3xl mx-auto leading-relaxed dark:drop-shadow">
+              {t("description")}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
+                {t("primary_cta")}
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button size="lg" variant="outline" className="px-8 bg-white hover:bg-white hover:border-gray-300 dark:bg-[#181b23] dark:text-blue-200 dark:border-gray-700 dark:hover:bg-[#23263a] dark:hover:border-blue-400 dark:shadow-md">
+                {t("secondary_cta")}
+              </Button>
             </div>
-            <div className="flex items-center justify-center md:mt-0">
-              <div className="relative h-[350px] w-full max-w-[600px] md:h-[400px] lg:h-[450px]">
-                <Image
-                  src="/en/images/hero-nobg1.png"
-                  alt="Scriptura Dashboard Screenshot"
-                  className="rounded-lg object-contain"
-                  width={500}
-                  height={400}
-                  priority
-                />
-              </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm text-gray-500 dark:text-blue-300 pt-8">
+            <div className="flex items-center space-x-2 dark:bg-[#23263a] dark:px-2 dark:py-1 dark:rounded-md">
+              <Check className="w-4 h-4 text-green-500 dark:text-green-400" />
+              <span>{t("feature_1")}</span>
+            </div>
+            <div className="flex items-center space-x-2 dark:bg-[#23263a] dark:px-2 dark:py-1 dark:rounded-md">
+              <Check className="w-4 h-4 text-green-500 dark:text-green-400" />
+              <span>{t("feature_2")}</span>
+            </div>
+            <div className="flex items-center space-x-2 dark:bg-[#23263a] dark:px-2 dark:py-1 dark:rounded-md">
+              <Check className="w-4 h-4 text-green-500 dark:text-green-400" />
+              <span>{t("feature_3")}</span>
             </div>
           </div>
         </div>

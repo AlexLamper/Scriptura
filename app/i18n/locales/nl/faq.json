@@ -1,5 +1,6 @@
 {
   "faq_title": "Veelgestelde Vragen",
+  "faq_subtitle": "Alles wat je moet weten over bijbelstudie met Scriptura",
   "items": [
     {
       "question": "Wat is Scriptura?",
@@ -11,7 +12,7 @@
     },
     {
       "question": "Kan ik Scriptura gebruiken als bron voor informatie?",
-      "answer": "Scripura is geen vervanging voor de Bijbel, ook is het geen informatiebron. Het is een hulpmiddel waarmee je de Bijbel kunt bestuderen en begrijpen. Het biedt AI-ondersteuning, interactieve lessen en een community van gebruikers die samenkomen om elkaar te helpen bij het bestuderen van de Bijbel."
+      "answer": "Scriptura is geen vervanging voor de Bijbel, ook is het geen informatiebron. Het is een hulpmiddel waarmee je de Bijbel kunt bestuderen en begrijpen. Het biedt AI-ondersteuning, interactieve lessen en een community van gebruikers die samenkomen om elkaar te helpen bij het bestuderen van de Bijbel."
     },
     {
       "question": "Welke vertalingen van de Bijbel zijn beschikbaar op Scriptura?",
@@ -19,7 +20,7 @@
     },
     {
       "question": "Hoe vaak wordt er nieuwe inhoud toegevoegd aan Scriptura?",
-      "answer": "De inhoud van Scriptura word regelmatig uitgebreid. We voegen wekelijks of maandelijks nieuwe bijbelstudies, thematische cursussen en leermiddelen toe om gebruikers te helpen in hun geestelijke ontwikkeling. We streven ernaar altijd actueel en relevant materiaal aan te bieden."
+      "answer": "De inhoud van Scriptura wordt regelmatig uitgebreid. We voegen wekelijks of maandelijks nieuwe bijbelstudies, thematische cursussen en leermiddelen toe om gebruikers te helpen in hun geestelijke ontwikkeling. We streven ernaar altijd actueel en relevant materiaal aan te bieden."
     }
   ]
 }

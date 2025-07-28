@@ -1,7 +1,10 @@
 {
-  "badge": "Neu",
-  "heading": "Über Scriptura",
-  "paragraph_1": "Scriptura ist die Bibelplattform für alle, die die Bibel zugänglich und strukturiert studieren möchten. Mit modernen, KI-unterstützten Werkzeugen passen wir uns jeder Lernweise und persönlichen Vorliebe an.",
-  "paragraph_2": "Seit 2024 helfen wir Gläubigen, die Bibel besser zu verstehen – in ihrem eigenen Tempo, auf eine intuitive, aufschlussreiche und inspirierende Weise.",
-  "button_text": "Anmelden"
+  "heading": "Warum Scriptura?",
+  "intro": "Wir glauben, dass das Verständnis der Schrift für jeden Gläubigen zugänglich, fesselnd und transformierend sein sollte.",
+  "feature_1_title": "Schriftzentriert",
+  "feature_1_text": "Jeder Kurs und jede Funktion basiert auf der Autorität und Wahrheit des Wortes Gottes, um dir ein tieferes biblisches Verständnis zu ermöglichen.",
+  "feature_2_title": "Gemeinschaftlich",
+  "feature_2_text": "Lerne gemeinsam mit Tausenden von Gläubigen in unserem lebendigen Forum, teile Einsichten und wachse gemeinsam im Glauben.",
+  "feature_3_title": "Fortschrittsorientiert",
+  "feature_3_text": "Verfolge dein geistliches Wachstum mit strukturierten Lernpfaden, Quizzen und Erfolgen, die dein biblisches Wissen feiern."
 }

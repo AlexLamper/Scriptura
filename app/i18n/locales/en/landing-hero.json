@@ -1,8 +1,13 @@
 {
-    "title_1": "Discover the Bible with",
-    "title_2": "Scriptura",
-    "description": "Learn more about the Bible through our personalized learning environment, designed to improve your Bible knowledge with structured courses and clear explanations.",
-    "read_more": "Read more",
-    "sign_up": "Sign Up"
-  }
-  
+  "badge": "New: Interactive Bible Study Courses",
+  "title_1": "Discover the Bible with",
+  "title_2": "Scriptura",
+  "description": "Learn more about the Bible through our personalized learning environment, designed to improve your Bible knowledge with structured courses and clear explanations.",
+  "verse_text": "\"Search the scriptures; for in them ye think ye have eternal life: and they are they which testify of me.\"",
+  "verse_reference": "— John 5:39",
+  "primary_cta": "Start Your Bible Journey",
+  "secondary_cta": "Read more",
+  "feature_1": "Free Bible courses",
+  "feature_2": "Multiple translations",
+  "feature_3": "Community forum"
+}

@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "../app/i18n/client";
+import { BookOpen } from "lucide-react"; // Je kunt een ander icoon gebruiken of verwijderen
 
 interface DailyBibleVerseProps {
   params: {
@@ -25,7 +26,6 @@ export default function DailyBibleVerse({ params: { lng } }: DailyBibleVerseProp
     setLoading(true);
     setError(null);
     setVerse(null);
-    // Haal het juiste endpoint uit de vertaling
     const endpoint = t("api_endpoint");
     fetch(endpoint)
       .then(async (res) => {
@@ -36,7 +36,6 @@ export default function DailyBibleVerse({ params: { lng } }: DailyBibleVerseProp
         return res.json();
       })
       .then((data) => {
-        // Verschillende APIs hebben verschillende response formats
         if (lng === "nl" && data.text && data.reference) {
           setVerse({ text: data.text, reference: data.reference, translation: data.version });
         } else if (lng === "en" && data.verse && data.verse.details && data.verse.details.text) {
@@ -56,14 +55,35 @@ export default function DailyBibleVerse({ params: { lng } }: DailyBibleVerseProp
   }, [lng, t]);
 
   return (
-    <div className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 p-4 rounded-lg shadow mb-4">
-      {loading && <p>{t("loading")}</p>}
-      {error && <p className="text-red-500">{error}</p>}
+    <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-md p-6 max-w-3xl mx-auto my-6 transition-colors">
+      <div className="flex items-center mb-4">
+        <BookOpen className="text-blue-600 dark:text-blue-400 w-6 h-6 mr-2" />
+        <h2 className="text-xl font-bold text-zinc-800 dark:text-zinc-100">
+          {t("daily_verse_title") || "Dagelijkse Bijbeltekst"}
+        </h2>
+      </div>
+
+      {loading && <p className="text-zinc-600 dark:text-zinc-300">{t("loading")}</p>}
+
+      {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
+
       {verse && (
-        <>
-          <p className="text-lg font-semibold mb-1">{verse.reference} {verse.translation && <span className="text-xs text-gray-500">({verse.translation})</span>}</p>
-          <p>{verse.text}</p>
-        </>
+        <div>
+          <blockquote className="text-lg italic text-zinc-800 dark:text-zinc-200 mb-4 leading-relaxed">
+            “{verse.text}”
+          </blockquote>
+
+          {verse.reference && (
+            <p className="text-sm font-medium text-blue-700 dark:text-blue-400">
+              {verse.reference}
+              {verse.translation && (
+                <span className="ml-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  ({verse.translation})
+                </span>
+              )}
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

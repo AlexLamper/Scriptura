@@ -1,13 +1,16 @@
 {
-  "subtitle": "Unsere Funktionen",
-  "heading": "Verbessere dein Bibelstudium",
-  "description": "Entdecke die leistungsstarken Funktionen von Scriptura, die dir helfen, tiefer in die Heilige Schrift einzutauchen.",
-  "feature_1_title": "Interaktive Lektionen",
-  "feature_1_description": "Nimm an interaktiven Bibellektionen teil, die die Schrift lebendig werden lassen.",
-  "feature_2_title": "Personalisierte Lernpläne",
-  "feature_2_description": "Erhalte Lernpläne, die auf deine individuelle Lernweise zugeschnitten sind.",
-  "feature_3_title": "Community-Foren",
-  "feature_3_description": "Tritt einer lebendigen Gemeinschaft von Gläubigen bei, um Einblicke und Inspiration zu teilen.",
-  "feature_4_title": "KI-gestützte Einblicke",
-  "feature_4_description": "Nutze KI, um ein tieferes Verständnis und mehr Kontext zur Bibel zu gewinnen."
+  "heading": "Funktionen",
+  "description": "Alles, was du brauchst, um die Schrift effektiv zu studieren",
+  "feature_1_title": "Bibelkurse",
+  "feature_1_description": "Studieren Sie jedes Buch der Bibel mit fachkundig geführten Kursen zu Theologie und praktischer Anwendung.",
+  "feature_2_title": "Community-Forum",
+  "feature_2_description": "Verbinde dich mit anderen Gläubigen, stelle Fragen und teile Erkenntnisse, während du im Verständnis der Schrift wächst.",
+  "feature_3_title": "Interaktive Quizze",
+  "feature_3_description": "Teste dein Wissen mit über 100 Quizzen und verfolge deinen Fortschritt beim Wachstum im biblischen Verständnis.",
+  "feature_4_title": "Erweiterte Suche",
+  "feature_4_description": "Finde jeden Vers, jedes Thema oder Konzept sofort in mehreren Bibelübersetzungen mit leistungsstarken Suchwerkzeugen.",
+  "feature_5_title": "Persönliche Notizen",
+  "feature_5_description": "Speichere deine Erkenntnisse und Reflexionen beim Studium der Schrift mit unserem Notizsystem.",
+  "feature_6_title": "Lesepläne",
+  "feature_6_description": "Folge strukturierten Leseplänen, um die gesamte Bibel systematisch in deinem eigenen Tempo zu lesen."
 }
