@@ -1,5 +1,7 @@
+
 "use client"
 
+import Link from "next/link"
 import { Button } from "../../components/ui/button"
 import { Badge } from "../../components/ui/badge"
 import { ArrowRight, Check } from "lucide-react"
@@ -36,13 +38,19 @@ export function HeroSection({ params: { lng } }: HeroSectionProps) {
               {t("description")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
-                {t("primary_cta")}
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="px-8 bg-white hover:bg-white hover:border-gray-300 dark:bg-[#181b23] dark:text-blue-200 dark:border-gray-700 dark:hover:bg-[#23263a] dark:hover:border-blue-400 dark:shadow-md">
-                {t("secondary_cta")}
-              </Button>
+              <Link href="/api/auth/signin" className="hover:cursor-pointer">
+                <Button asChild size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
+                  <span>
+                    {t("primary_cta")}
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </span>
+                </Button>
+              </Link>
+              <Link href="#about" scroll={true} className="hover:cursor-pointer">
+                <Button asChild size="lg" variant="outline" className="px-8 bg-white hover:bg-white hover:border-gray-300 dark:bg-[#181b23] dark:text-blue-200 dark:border-gray-700 dark:hover:bg-[#23263a] dark:hover:border-blue-400 dark:shadow-md">
+                  <span>{t("secondary_cta")}</span>
+                </Button>
+              </Link>
             </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm text-gray-500 dark:text-blue-300 pt-8">

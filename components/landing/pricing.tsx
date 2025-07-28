@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { Badge } from "../../components/ui/badge"
 import { Button } from "../../components/ui/button"
 import { Check, X } from "lucide-react"
-import { motion } from "framer-motion"
 
 interface PricingSectionProps {
   params: {
@@ -65,7 +64,7 @@ export function PricingSection({ params: { lng } }: PricingSectionProps) {
   ]
 
   return (
-    <section id="pricing" className="py-24 pb-0 dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a] bg-[#f6f7ff]">
+    <section id="pricing" className="py-24 dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("title")}</h2>
@@ -77,7 +76,7 @@ export function PricingSection({ params: { lng } }: PricingSectionProps) {
             <Card
               key={index}
               className={`$
-                plan.popular ? "border-blue-500 shadow-lg relative dark:border-blue-400 dark:shadow-blue-900/20" : "border-gray-200 dark:border-gray-700/40 dark:shadow-lg dark:shadow-blue-900/10"
+                plan.popular ? "border-blue-500 shadow-lg relative dark:border-blue-400 dark:shadow-blue-900/20" : "border-gray-200 dark:border-blue-900/40 dark:shadow-lg dark:shadow-blue-900/10"
               } dark:bg-[#23263a]`}
             >
               {plan.popular && (
@@ -126,22 +125,6 @@ export function PricingSection({ params: { lng } }: PricingSectionProps) {
             </Card>
           ))}
         </div>
-      </div>
-      {/* CTA merged below, no section break, same background */}
-      <div className="container mx-auto px-6 lg:px-8 text-center pt-20 pb-20">
-        <motion.div
-          className="max-w-2xl mx-auto space-y-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("title")}</h2>
-          <p className="text-gray-600 dark:text-blue-200 dark:drop-shadow">{t("cta_subtitle")}</p>
-          <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
-            {t("cta_buttonText")}
-          </Button>
-        </motion.div>
       </div>
     </section>
   )

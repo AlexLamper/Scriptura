@@ -1,7 +1,6 @@
 import { HeroSection } from "../../components/landing/hero";
 import { FeaturesSection } from "../../components/landing/features";
 import { AboutSection } from "../../components/landing/about";
-// import { TestimonialsSection } from "../../components/landing/testimonials";
 import { PricingSection } from "../../components/landing/pricing";
 import { FAQSection } from "../../components/landing/faq";
 import { Footer } from "../../components/landing/footer";
@@ -11,7 +10,9 @@ export default async function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Header params={{
+        lng: ""
+      }} />
       <HeroSection params={{
         lng: ""
       }} />
@@ -21,9 +22,6 @@ export default async function LandingPage() {
       <FeaturesSection params={{
         lng: ""
       }} />
-      {/* <TestimonialsSection params={{
-        lng: ""
-      }} /> */}
       <PricingSection params={{
         lng: ""
       }} />
