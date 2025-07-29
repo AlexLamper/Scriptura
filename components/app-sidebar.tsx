@@ -16,9 +16,9 @@ import {
 import { Home, BookOpen, Timer, User, Briefcase, Settings, Users,
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
-import React from 'react'; // Import React for React.CSSProperties
+import React from 'react';
 
-// Main navigation items
+// Main navigation items/links
 const mainNavItems = [
   {
     title: "Dashboard",
@@ -66,13 +66,10 @@ export function AppSidebar({ ...props }) {
   return (
     <Sidebar
       {...props}
-      // Combine existing and new classes.
-      // Crucially, remove 'bg-white' from here as it likely gets overridden by the CSS variable.
       className="dark:border-r-[#91969e52] font-sans text-gray-800"
-      // This is the working solution for the white background:
       style={{
-        '--sidebar-background': '0 0% 100%', // HSL for pure white
-        backgroundColor: '#fff', // Strong fallback for full compatibility
+        '--sidebar-background': '0 0% 100%',
+        backgroundColor: '#fff',
       } as React.CSSProperties}
     >
       <SidebarHeader>
@@ -97,9 +94,6 @@ export function AppSidebar({ ...props }) {
       <SidebarContent>
         {/* Main Navigation */}
         <SidebarGroup>
-        {/* <SidebarGroupLabel>
-          <span className="font-medium text-gray-800 text-base">Main Navigation</span>
-        </SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNavItems.map((item) => (

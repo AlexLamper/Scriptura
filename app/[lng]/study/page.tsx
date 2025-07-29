@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { FileText, Edit, BookOpen, Folder } from 'lucide-react';
-import BibleSelector from '../../../components/BibleSelector';
-import ChapterViewer from '../../../components/ChapterViewer';
+import BibleSelector from '../../../components/study/BibleSelector';
+import ChapterViewer from '../../../components/study/ChapterViewer';
 
 // Define interfaces for API responses
 interface Version {

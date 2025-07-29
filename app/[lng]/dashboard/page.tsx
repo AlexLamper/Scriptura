@@ -2,7 +2,7 @@ import type React from "react"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { WelcomeCard } from "../../../components/dashboard/WelcomeCard"
-import { TopPerformersCard } from "../../../components/dashboard/TopPerformersCard"
+import { DailyVerseCard } from "../../../components/dashboard/DailyVerseCard"
 import { SummaryCard } from "../../../components/dashboard/SummaryCard"
 import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
 import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
@@ -19,7 +19,7 @@ export default async function DashboardPage() {
     <div className="container lg:px-2 pb-4 pt-2">
       <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
         <WelcomeCard lng={""} />
-        <TopPerformersCard />
+        <DailyVerseCard lng={""} />
         {/* Summary Cards */}
         <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
           <SummaryCard
