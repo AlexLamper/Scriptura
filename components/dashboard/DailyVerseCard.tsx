@@ -84,9 +84,9 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
         )}
         {verse && (
           <div className="w-full">
-            <blockquote className="text-xl md:text-2xl italic text-gray-700 dark:text-gray-200 mb-4 leading-relaxed relative" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
+            <blockquote className="text-[1.24rem] md:text-2xl italic text-gray-700 dark:text-gray-200 mb-4 leading-relaxed relative" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
               <span className="absolute top-0 left-0 text-5xl text-gray-300 dark:text-gray-600 -translate-x-4 -translate-y-4">“</span>
-              {verse.text}
+              <span className="text-[1.24rem]">{verse.text}</span>
               <span className="absolute bottom-0 right-0 text-5xl text-gray-300 dark:text-gray-600 translate-x-4 translate-y-4">”</span>
             </blockquote>
             {verse.reference && (

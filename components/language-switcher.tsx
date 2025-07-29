@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import { Button } from "../components/ui/button"
-import { Check, Globe } from "lucide-react"
+import { Check, Languages } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
 
 const languages = [
@@ -53,7 +53,7 @@ export function LanguageSwitcher() {
           size="sm"
           className="gap-2 border-primary/20 bg-background/20 hover:bg-gray-100 hover:text-black backdrop-blur-sm"
         >
-          <Globe className="h-4 w-4" />
+          <Languages className="h-4 w-4" />
           <span>{currentLanguageName}</span>
         </Button>
       </DropdownMenuTrigger>

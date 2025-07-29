@@ -25,17 +25,17 @@ export default async function DashboardPage() {
           <SummaryCard
             icon={<FileText className="h-6 w-6 text-gray-500" />}
             value="20/25"
-            description="Tasks completed"
+            description="Courses completed"
           />
           <SummaryCard
             icon={<ClipboardList className="h-6 w-6 text-gray-500" />}
             value="42/46"
-            description="Pending homework"
+            description="Quizzes completed"
           />
           <SummaryCard
             icon={<BookOpen className="h-6 w-6 text-gray-500" />}
             value="24/28"
-            description="Pending assignments"
+            description="Study materials completed"
           />
         </div>
         <HomeworkCompletionRatesCard BarChart={BarChart} />
