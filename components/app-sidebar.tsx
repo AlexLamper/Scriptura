@@ -13,7 +13,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, Timer, User, Briefcase, Settings, Users,
+import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, BookText, 
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React from 'react';
@@ -24,6 +24,11 @@ const mainNavItems = [
     title: "Dashboard",
     url: "/dashboard",
     icon: Home,
+  },
+  {
+    title: "Study",
+    url: "/study",
+    icon: BookText,
   },
   {
     title: "Courses",

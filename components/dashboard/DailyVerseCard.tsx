@@ -93,23 +93,46 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                     <span className="ml-2 text-xs text-gray-500">({verse.translation})</span>
                   )}
                 </p>
-                {/* Biblebook, chapter, verse extraction */}
+                {/* Biblebook, chapter, verse extraction with debug info */}
                 {(() => {
-                  // Try to extract book, chapter, verse from reference string
-                  const match = verse.reference.match(/^(.*?)\s*(\d+)(?::(\d+))?/);
-                  if (match) {
-                    const book = match[1]?.trim();
-                    const chapter = match[2];
-                    const verseNum = match[3];
-                    return (
-                      <div className="text-xs text-gray-400 mt-1">
-                        {book && <span className="mr-2">Boek: <span className="font-medium text-gray-600">{book}</span></span>}
-                        {chapter && <span className="mr-2">Hoofdstuk: <span className="font-medium text-gray-600">{chapter}</span></span>}
-                        {verseNum && <span>Vers: <span className="font-medium text-gray-600">{verseNum}</span></span>}
-                      </div>
-                    );
+                  // Nieuwe robuuste parsing
+                  let book = null, chapter = null, verseNum = null, debug = {};
+                  try {
+                    // Voorbeeld: "Genesis 1:3", "1 Johannes 4:8", "Psalmen 23"
+                    const ref = verse.reference.trim();
+                    // Zoek laatste spatie, alles ervoor is boek, alles erna is hoofdstuk/vers
+                    const lastSpace = ref.lastIndexOf(" ");
+                    if (lastSpace > 0) {
+                      book = ref.substring(0, lastSpace);
+                      const chapVerse = ref.substring(lastSpace + 1);
+                      // chapVerse kan "1:3" of "23" zijn
+                      if (chapVerse.includes(":")) {
+                        const [ch, v] = chapVerse.split(":");
+                        chapter = ch;
+                        verseNum = v;
+                      } else {
+                        chapter = chapVerse;
+                        verseNum = null;
+                      }
+                    } else {
+                      // Geen spatie, alles is boek
+                      book = ref;
+                    }
+                    debug = {ref, book, chapter, verseNum};
+                  } catch (e) {
+                    debug = {error: String(e), ref: verse.reference};
                   }
-                  return null;
+                  return (
+                    <div className="text-xs text-gray-400 mt-1">
+                      <span className="mr-2">Boek: <span className="font-medium text-gray-600">{book ?? '-'}</span></span>
+                      <span className="mr-2">Hoofdstuk: <span className="font-medium text-gray-600">{chapter ?? '-'}</span></span>
+                      <span>Vers: <span className="font-medium text-gray-600">{verseNum ?? '-'}</span></span>
+                      <details className="mt-1">
+                        <summary className="cursor-pointer text-gray-300">[debug]</summary>
+                        <div className="text-gray-400">debug: <pre>{JSON.stringify(debug, null, 2)}</pre></div>
+                      </details>
+                    </div>
+                  );
                 })()}
               </>
             )}
