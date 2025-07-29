@@ -66,7 +66,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   }, [lng]);
 
   return (
-    <Card className="p-6 bg-white shadow-sm rounded-lg" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
+    <Card className="p-6 bg-white shadow-sm rounded-lg">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
         <CardTitle className="text-lg font-semibold text-gray-800 flex items-center gap-2">
           <BookOpen className="text-blue-600 w-5 h-5" />
@@ -84,57 +84,39 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
         )}
         {verse && (
           <div className="w-full">
-            <blockquote className="text-2xl text-gray-800 mb-2 italic leading-relaxed">“{verse.text}”</blockquote>
+            <blockquote className="text-lg italic text-gray-800 mb-2 leading-relaxed">“{verse.text}”</blockquote>
             {verse.reference && (
-              <>
-                <p className="text-sm font-medium text-blue-700">
-                  {verse.reference}
-                  {verse.translation && (
-                    <span className="ml-2 text-xs text-gray-500">({verse.translation})</span>
-                  )}
-                </p>
-                {/* Biblebook, chapter, verse extraction with debug info */}
-                {(() => {
-                  // Nieuwe robuuste parsing
-                  let book = null, chapter = null, verseNum = null, debug = {};
-                  try {
-                    // Voorbeeld: "Genesis 1:3", "1 Johannes 4:8", "Psalmen 23"
-                    const ref = verse.reference.trim();
-                    // Zoek laatste spatie, alles ervoor is boek, alles erna is hoofdstuk/vers
-                    const lastSpace = ref.lastIndexOf(" ");
-                    if (lastSpace > 0) {
-                      book = ref.substring(0, lastSpace);
-                      const chapVerse = ref.substring(lastSpace + 1);
-                      // chapVerse kan "1:3" of "23" zijn
-                      if (chapVerse.includes(":")) {
-                        const [ch, v] = chapVerse.split(":");
-                        chapter = ch;
-                        verseNum = v;
-                      } else {
-                        chapter = chapVerse;
-                        verseNum = null;
-                      }
-                    } else {
-                      // Geen spatie, alles is boek
-                      book = ref;
-                    }
-                    debug = {ref, book, chapter, verseNum};
-                  } catch (e) {
-                    debug = {error: String(e), ref: verse.reference};
-                  }
+              <p className="text-sm font-medium text-blue-700">
+                {verse.reference}
+                {verse.translation && (
+                  <span className="ml-2 text-xs text-gray-500">({verse.translation})</span>
+                )}
+              </p>
+            )}
+            {/* Toon book, chapter, verse indien aanwezig in de API-respons */}
+            {rawResponse && typeof rawResponse === 'object' && (
+              (() => {
+                type ApiResponse = {
+                  book?: string;
+                  chapter?: number;
+                  verse?: number;
+                  [key: string]: unknown;
+                };
+                const resp = rawResponse as ApiResponse;
+                const book = resp.book ?? null;
+                const chapter = resp.chapter ?? null;
+                const verseNum = resp.verse ?? null;
+                if (book || chapter || verseNum) {
                   return (
-                    <div className="text-xs text-gray-400 mt-1">
-                      <span className="mr-2">Boek: <span className="font-medium text-gray-600">{book ?? '-'}</span></span>
-                      <span className="mr-2">Hoofdstuk: <span className="font-medium text-gray-600">{chapter ?? '-'}</span></span>
-                      <span>Vers: <span className="font-medium text-gray-600">{verseNum ?? '-'}</span></span>
-                      <details className="mt-1">
-                        <summary className="cursor-pointer text-gray-300">[debug]</summary>
-                        <div className="text-gray-400">debug: <pre>{JSON.stringify(debug, null, 2)}</pre></div>
-                      </details>
+                    <div className="text-xs text-gray-500 mt-1 mb-2 flex flex-wrap gap-4">
+                      <span>Boek: <span className="font-medium text-gray-700">{book ?? '-'}</span></span>
+                      <span>Hoofdstuk: <span className="font-medium text-gray-700">{chapter ?? '-'}</span></span>
+                      <span>Vers: <span className="font-medium text-gray-700">{verseNum ?? '-'}</span></span>
                     </div>
                   );
-                })()}
-              </>
+                }
+                return null;
+              })()
             )}
           </div>
         )}
