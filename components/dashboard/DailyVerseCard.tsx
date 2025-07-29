@@ -66,34 +66,38 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   }, [lng]);
 
   return (
-    <Card className="p-6 bg-white shadow-sm rounded-lg">
-      <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
-        <CardTitle className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-          <BookOpen className="text-blue-600 w-5 h-5" />
+    <Card className="p-8 shadow-xl rounded-2xl border border-gray-200 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700">
+      <CardHeader className="flex flex-row items-center justify-between p-0 pb-6">
+        <CardTitle className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
+          <BookOpen className="text-indigo-600 w-8 h-8" />
           {t("daily_verse_title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col items-center p-0">
-        {loading && <p className="text-gray-500 text-base py-4">{t("loading")}</p>}
+        {loading && <p className="text-gray-600 dark:text-gray-400 text-lg py-6 font-medium">{t("loading")}</p>}
         {error && (
-          <div className="text-red-600 text-base py-4">
-            <div>{error}</div>
-            {status && <div>Status: {status}</div>}
-            {rawResponse && <pre className="text-xs text-red-400 bg-red-50 p-2 rounded mt-2 max-w-full overflow-x-auto">{JSON.stringify(rawResponse, null, 2)}</pre>}
+          <div className="text-red-700 text-base py-4 bg-red-50 p-4 rounded-lg border border-red-200 dark:bg-red-950 dark:border-red-700 dark:text-red-300">
+            <div className="font-semibold mb-2">Error: {error}</div>
+            {status && <div className="text-sm">Status Code: {status}</div>}
+            {rawResponse && <pre className="text-xs text-red-500 bg-red-100 p-3 rounded mt-3 max-w-full overflow-x-auto border border-red-200 dark:bg-red-800 dark:text-red-200 dark:border-red-600">{JSON.stringify(rawResponse, null, 2)}</pre>}
           </div>
         )}
         {verse && (
           <div className="w-full">
-            <blockquote className="text-lg italic text-gray-800 mb-2 leading-relaxed">“{verse.text}”</blockquote>
+            <blockquote className="text-xl md:text-2xl italic text-gray-800 dark:text-gray-200 mb-4 leading-relaxed font-serif relative">
+              <span className="absolute top-0 left-0 text-5xl text-gray-300 dark:text-gray-600 -translate-x-4 -translate-y-4">“</span>
+              {verse.text}
+              <span className="absolute bottom-0 right-0 text-5xl text-gray-300 dark:text-gray-600 translate-x-4 translate-y-4">”</span>
+            </blockquote>
             {verse.reference && (
-              <p className="text-sm font-medium text-blue-700">
+              <p className="text-base font-semibold text-indigo-700 dark:text-indigo-400 text-right mt-4">
                 {verse.reference}
                 {verse.translation && (
-                  <span className="ml-2 text-xs text-gray-500">({verse.translation})</span>
+                  <span className="ml-2 text-sm text-gray-500 dark:text-gray-400 font-normal">({verse.translation})</span>
                 )}
               </p>
             )}
-            {/* Toon book, chapter, verse indien aanwezig in de API-respons */}
+            {/* Toon book, chapter, verse indien aanwezig in the API-respons */}
             {rawResponse && typeof rawResponse === 'object' && (
               (() => {
                 type ApiResponse = {
@@ -108,10 +112,10 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                 const verseNum = resp.verse ?? null;
                 if (book || chapter || verseNum) {
                   return (
-                    <div className="text-xs text-gray-500 mt-1 mb-2 flex flex-wrap gap-4">
-                      <span>Boek: <span className="font-medium text-gray-700">{book ?? '-'}</span></span>
-                      <span>Hoofdstuk: <span className="font-medium text-gray-700">{chapter ?? '-'}</span></span>
-                      <span>Vers: <span className="font-medium text-gray-700">{verseNum ?? '-'}</span></span>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex flex-wrap gap-x-6 gap-y-2">
+                      <span>Book: <span className="font-medium text-gray-700 dark:text-gray-300">{book ?? '-'}</span></span>
+                      <span>Chapter: <span className="font-medium text-gray-700 dark:text-gray-300">{chapter ?? '-'}</span></span>
+                      <span>Verse: <span className="font-medium text-gray-700 dark:text-gray-300">{verseNum ?? '-'}</span></span>
                     </div>
                   );
                 }
