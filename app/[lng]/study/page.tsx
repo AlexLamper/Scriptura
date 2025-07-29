@@ -313,6 +313,11 @@ export default function StudyPage() {
 
         {/* Right: Commentary section (remains static for now) */}
         <section className="bg-white p-6 rounded shadow">
+          <h2 className="text-lg font-semibold mb-4">DENKVRAAG</h2>
+          <h3 className="font-semibold mb-2">Wat zegt dit bijbelgedeelte over de schepping?</h3>
+          <p className="mb-4">
+            In <a href="#" className="text-blue-600">Gen.1:1-2:3</a> wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie?
+          </p>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">COMMENTAAR</h2>
             <div className="flex space-x-3">
