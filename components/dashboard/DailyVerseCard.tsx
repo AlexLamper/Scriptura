@@ -68,8 +68,8 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   return (
     <Card className="p-8 shadow-xl rounded-2xl border border-gray-200 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-6">
-        <CardTitle className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
-          <BookOpen className="text-indigo-600 w-8 h-8" />
+        <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
+          <BookOpen className="text-indigo-600 lg:w-6 lg:h-6 w-5 h-5" />
           {t("daily_verse_title")}
         </CardTitle>
       </CardHeader>
@@ -84,7 +84,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
         )}
         {verse && (
           <div className="w-full">
-            <blockquote className="text-xl md:text-2xl italic text-gray-800 dark:text-gray-200 mb-4 leading-relaxed font-serif relative">
+            <blockquote className="text-xl md:text-2xl italic text-gray-700 dark:text-gray-200 mb-4 leading-relaxed relative" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
               <span className="absolute top-0 left-0 text-5xl text-gray-300 dark:text-gray-600 -translate-x-4 -translate-y-4">“</span>
               {verse.text}
               <span className="absolute bottom-0 right-0 text-5xl text-gray-300 dark:text-gray-600 translate-x-4 translate-y-4">”</span>
@@ -111,11 +111,17 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                 const chapter = resp.chapter ?? null;
                 const verseNum = resp.verse ?? null;
                 if (book || chapter || verseNum) {
+                  // Bouw string: 'book chapter:verse' (chapter en verse optioneel)
+                  let refString = book ? book : '';
+                  if (chapter) {
+                    refString += (refString ? ' ' : '') + chapter;
+                    if (verseNum) {
+                      refString += `:${verseNum}`;
+                    }
+                  }
                   return (
-                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex flex-wrap gap-x-6 gap-y-2">
-                      <span>Book: <span className="font-medium text-gray-700 dark:text-gray-300">{book ?? '-'}</span></span>
-                      <span>Chapter: <span className="font-medium text-gray-700 dark:text-gray-300">{chapter ?? '-'}</span></span>
-                      <span>Verse: <span className="font-medium text-gray-700 dark:text-gray-300">{verseNum ?? '-'}</span></span>
+                    <div className="lg:text-md lg:text-gray-400 text-sm text-gray-500 dark:text-gray-400 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <span className="font-medium text-gray-700 dark:text-gray-300">{refString || '-'}</span>
                     </div>
                   );
                 }
