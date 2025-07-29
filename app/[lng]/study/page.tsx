@@ -313,13 +313,8 @@ export default function StudyPage() {
 
         {/* Right: Commentary section (remains static for now) */}
         <section className="bg-white p-6 rounded shadow">
-          <h2 className="text-lg font-semibold mb-4">DENKVRAAG</h2>
-          <h3 className="font-semibold mb-2">Wat zegt dit bijbelgedeelte over de schepping?</h3>
-          <p className="mb-4">
-            In <a href="#" className="text-blue-600">Gen.1:1-2:3</a> wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie?
-          </p>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">COMMENTAAR</h2>
+            <h2 className="text-lg font-semibold">DENKVRAAG</h2>
             <div className="flex space-x-3">
               <button className="p-2 bg-gray-100 rounded hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition">
                 <FileText size={18} />
@@ -335,6 +330,11 @@ export default function StudyPage() {
               </button>
             </div>
           </div>
+          <h3 className="font-semibold mb-2">Wat zegt dit bijbelgedeelte over de schepping?</h3>
+          <p className="mb-4">
+           In <a href="#" className="text-blue-600">Gen.1:1-2:3</a> wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie? 
+          </p>
+          <h2 className="text-lg font-semibold mb-4">COMMENTAAR</h2>
           <h3 className="font-semibold mb-2">Boek 1: De schepping van hemel en aarde (Gen.1:1–2:3)</h3>
           <p className="mb-4">
             In <a href="#" className="text-blue-600">Gen.1:1-2:3</a> wordt over Gods scheppingswerk verteld. De zeven dagen vormen de eerste week van Gods handelen. De uitdrukkingen &apos;God&apos;, &apos;scheppen&apos; en &apos;hemel en aarde&apos; komen voor in <a href="#" className="text-blue-600">Gen.1:1</a> (het begin) en in omgekeerde volgorde in <a href="#" className="text-blue-600">Gen.2:1-3</a> (het slot van dit gedeelte). De taal is proza en geen poëzie, maar het onderwerp is zo verheven dat de taal soms bijna poëtisch wordt. Het boek Genesis begint met de grote en goede daden van God en eindigt in de laatste hoofdstukken met het ontstaan van het volk Israël. <span className="bg-yellow-200">De schepping vindt plaats in een oplopende reeks van gebeurtenissen, in een andere volgorde dan de hedendaagse evolutietheorie dat doet. De mensen komen niet voort uit dieren, in een proces van toeval en overleving van de sterkste, maar zij zijn ontstaan door Gods scheppingswoorden.</span>
