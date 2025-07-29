@@ -13,17 +13,22 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, Timer, User, Briefcase, Settings, Users,
+import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, BookText, 
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
-import React from 'react'; // Import React for React.CSSProperties
+import React from 'react';
 
-// Main navigation items
+// Main navigation items/links
 const mainNavItems = [
   {
     title: "Dashboard",
     url: "/dashboard",
     icon: Home,
+  },
+  {
+    title: "Study",
+    url: "/study",
+    icon: BookText,
   },
   {
     title: "Courses",
@@ -66,13 +71,10 @@ export function AppSidebar({ ...props }) {
   return (
     <Sidebar
       {...props}
-      // Combine existing and new classes.
-      // Crucially, remove 'bg-white' from here as it likely gets overridden by the CSS variable.
       className="dark:border-r-[#91969e52] font-sans text-gray-800"
-      // This is the working solution for the white background:
       style={{
-        '--sidebar-background': '0 0% 100%', // HSL for pure white
-        backgroundColor: '#fff', // Strong fallback for full compatibility
+        '--sidebar-background': '0 0% 100%',
+        backgroundColor: '#fff',
       } as React.CSSProperties}
     >
       <SidebarHeader>
@@ -97,9 +99,6 @@ export function AppSidebar({ ...props }) {
       <SidebarContent>
         {/* Main Navigation */}
         <SidebarGroup>
-        {/* <SidebarGroupLabel>
-          <span className="font-medium text-gray-800 text-base">Main Navigation</span>
-        </SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNavItems.map((item) => (
@@ -108,7 +107,7 @@ export function AppSidebar({ ...props }) {
                     <Link href={prependLang(item.url)}>
                       <span className="flex items-center space-x-2">
                         <item.icon className="h-5 w-5 text-gray-500" />
-                        <span className="text-gray-700 font-medium">{item.title}</span>
+                        <span className="text-gray-600/95 font-medium text-base">{item.title}</span>
                       </span>
                     </Link>
                   </SidebarMenuButton>

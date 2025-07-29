@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import BibleSelector from '../../../components/BibleSelector'
-import ChapterViewer from '../../../components/ChapterViewer'
+import BibleSelector from '../../../components/study/BibleSelector'
+import ChapterViewer from '../../../components/study/ChapterViewer'
 
 export default function Index() {
   const [versions, setVersions] = useState<string[]>([])

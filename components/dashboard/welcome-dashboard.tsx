@@ -20,22 +20,20 @@ export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
   const [greeting, setGreeting] = useState<string>("")
 
   useEffect(() => {
-    const getTimeBasedGreeting = () => {
-      const hour = new Date().getHours()
-
+    const getTimeBasedGreetingKey = () => {
+      const hour = new Date().getHours();
       if (hour >= 5 && hour < 12) {
-        return "good_morning"
+        return "good_morning";
       } else if (hour >= 12 && hour < 18) {
-        return "good_afternoon"
+        return "good_afternoon";
       } else if (hour >= 18 && hour < 22) {
-        return "good_evening"
+        return "good_evening";
       } else {
-        return "good_night"
+        return "good_night";
       }
-    }
-
-    setGreeting(getTimeBasedGreeting())
-  }, [])
+    };
+    setGreeting(getTimeBasedGreetingKey());
+  }, []);
 
   return (
     <div className="rounded-xl p-6 max-md:p-4 border mb-8 max-md:mb-6 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10 dark:border-[#91969e52]">

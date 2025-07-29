@@ -29,14 +29,14 @@ export default function ChapterViewer({
     chapter,
     maxChapter,
   });
-  console.groupEnd(); // End ChapterViewer Render group
+  console.groupEnd();
 
   useEffect(() => {
     console.groupCollapsed(`useEffect: Fetching chapter content for ${book} ${chapter} (${version})`);
     const fetchChapter = async () => {
       setLoading(true);
       setError(null);
-      setVerses({}); // Clear previous verses when fetching new chapter
+      setVerses({});
 
       try {
         const params = new URLSearchParams({
@@ -44,7 +44,6 @@ export default function ChapterViewer({
           chapter: chapter.toString(),
         });
 
-        // Only append version if it's explicitly selected and not the default 'Statenvertaling'
         if (version && version.toLowerCase() !== 'statenvertaling') {
           params.append('version', version);
           console.log(`Appending version parameter: ${version}`);
@@ -65,7 +64,6 @@ export default function ChapterViewer({
         const data = await res.json();
         console.log('Raw API response for chapter:', data);
 
-        // API response for /api/chapter is an object like { verses: { "1": "text", "2": "text" } }
         if (!data.verses || Object.keys(data.verses).length === 0) {
           throw new Error('Geen verzen gevonden in response. Mogelijk is het hoofdstuk leeg of ongeldig.');
         }
@@ -82,11 +80,10 @@ export default function ChapterViewer({
         }
       } finally {
         setLoading(false);
-        console.groupEnd(); // End useEffect: Fetching chapter content group
+        console.groupEnd();
       }
     };
 
-    // Only fetch if book, chapter, and version are truly selected and valid
     if (book && chapter > 0 && version) {
       fetchChapter();
     } else {
@@ -95,7 +92,7 @@ export default function ChapterViewer({
       setLoading(false);
       setError(null);
     }
-  }, [book, chapter, version]); // Depend on book, chapter, and version
+  }, [book, chapter, version]);
 
   return (
     <div>

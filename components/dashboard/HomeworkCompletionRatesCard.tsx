@@ -12,7 +12,7 @@ export function HomeworkCompletionRatesCard({ BarChart }: HomeworkCompletionRate
   return (
     <Card className="lg:col-span-2 p-6 bg-white shadow-sm rounded-lg">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
-        <CardTitle className="text-lg font-semibold text-gray-800">Homework Completion Rates</CardTitle>
+        <CardTitle className="text-lg font-semibold text-gray-800">Course Completion Rates</CardTitle>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="h-8 text-sm text-gray-600 bg-transparent">
