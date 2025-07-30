@@ -141,8 +141,8 @@ export function AppSidebar({ ...props }) {
                   <SidebarMenuButton asChild>
                     <Link href={prependLang(item.url)}>
                       <span className="flex items-center space-x-2">
-                        <item.icon className="h-5 w-5 text-gray-500" />
-                        <span className="text-gray-600/95 dark:text-gray-300 font-medium text-base">{item.title}</span>
+                        <item.icon className="h-5 w-5 text-gray-600 dark:text-gray-500" />
+                        <span className="text-gray-700/95 dark:text-gray-300 font-normal text-base">{item.title}</span>
                       </span>
                     </Link>
                   </SidebarMenuButton>
