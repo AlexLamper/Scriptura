@@ -9,17 +9,23 @@ import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
 import { BarChart } from "../../../components/dashboard/BarChart"
 import { FileText, ClipboardList, BookOpen } from "lucide-react"
 
-export default async function DashboardPage() {
+interface DashboardPageProps {
+  params: Promise<{ lng: string }>
+}
+
+export default async function DashboardPage({ params }: DashboardPageProps) {
   const session = await getServerSession()
   if (!session || !session.user) {
     redirect("/api/auth/signin")
   }
 
+  const { lng } = await params
+
   return (
     <div className="container lg:px-2 pb-4 pt-2">
       <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
-        <WelcomeCard lng={""} />
-        <DailyVerseCard lng={""} />
+        <WelcomeCard lng={lng} />
+        <DailyVerseCard lng={lng} />
         {/* Summary Cards */}
         <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
           <SummaryCard

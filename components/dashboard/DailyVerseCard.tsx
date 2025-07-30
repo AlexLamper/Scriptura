@@ -24,13 +24,28 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   // Debug state
   const [rawResponse, setRawResponse] = useState<unknown>(null);
   const [status, setStatus] = useState<number | null>(null);
+  
   useEffect(() => {
+    // Fallback to 'en' if lng is empty or undefined
+    const language = lng && lng.trim() !== '' ? lng : 'en';
+    console.log('DailyVerseCard: Language detected:', language, '(original:', lng, ')');
+    
     setLoading(true);
     setError(null);
     setVerse(null);
     setRawResponse(null);
     setStatus(null);
-    const endpoint = "https://www.scriptura-api.com/api/daytext";
+    
+    // Determine API endpoint based on language
+    let endpoint = '';
+    if (language === 'en' || language === 'de') {
+      endpoint = "https://www.scriptura-api.com/api/daytext?version=asv";
+      console.log('DailyVerseCard: Using ASV for', language);
+    } else {
+      endpoint = "https://www.scriptura-api.com/api/daytext";
+      console.log('DailyVerseCard: Using Statenvertaling for', language);
+    }
+    
     fetch(endpoint)
       .then(async (res) => {
         setStatus(res.status);
@@ -47,14 +62,22 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
         return json;
       })
       .then((data) => {
-        if (lng === "nl" && data.text && data.reference) {
-          setVerse({ text: data.text, reference: data.reference, translation: data.version });
-        } else if (lng === "en" && data.verse && data.verse.details && data.verse.details.text) {
-          setVerse({ text: data.verse.details.text, reference: data.verse.details.reference, translation: "KJV" });
-        } else if (lng === "de" && data.text && data.reference) {
-          setVerse({ text: data.text, reference: data.reference, translation: data.version });
+        console.log('DailyVerseCard: API response for', language, ':', data);
+        
+        // Handle ASV response format for English/German
+        if ((language === "en" || language === "de") && data.version && data.text && data.book && data.chapter && data.verse) {
+          const reference = `${data.book} ${data.chapter}:${data.verse}`;
+          setVerse({ text: data.text, reference: reference, translation: data.version.toUpperCase() });
+        }
+        // Handle Dutch statenvertaling response format
+        else if (language === "nl" && data.text && data.reference) {
+          setVerse({ text: data.text, reference: data.reference, translation: data.version || "Statenvertaling" });
+        }
+        // Fallback for other formats
+        else if (data.verse && data.verse.details && data.verse.details.text) {
+          setVerse({ text: data.verse.details.text, reference: data.verse.details.reference, translation: language === "en" || language === "de" ? "ASV" : "Statenvertaling" });
         } else if (data.text) {
-          setVerse({ text: data.text });
+          setVerse({ text: data.text, translation: language === "en" || language === "de" ? "ASV" : "Statenvertaling" });
         } else {
           throw new Error("No recognizable verse in response: " + JSON.stringify(data));
         }
@@ -89,14 +112,6 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
               <span className="text-[1.24rem]">{verse.text}</span>
               <span className="absolute bottom-0 right-0 text-5xl text-gray-300 dark:text-gray-600 translate-x-4 translate-y-4">”</span>
             </blockquote>
-            {verse.reference && (
-              <p className="text-base font-semibold text-indigo-700 dark:text-indigo-400 text-right mt-4">
-                {verse.reference}
-                {verse.translation && (
-                  <span className="ml-2 text-sm text-gray-500 dark:text-gray-400 font-normal">({verse.translation})</span>
-                )}
-              </p>
-            )}
             {/* Toon book, chapter, verse indien aanwezig in the API-respons */}
             {rawResponse && typeof rawResponse === 'object' && (
               (() => {
@@ -121,7 +136,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                   }
                   return (
                     <div className="lg:text-md lg:text-gray-400 text-sm text-gray-500 dark:text-gray-400 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <span className="font-medium text-gray-700 dark:text-gray-300">{refString || '-'}</span>
+                      <span className="font-medium text-gray-700 dark:text-gray-300">{refString || '-'} ({verse.translation})</span>
                     </div>
                   );
                 }
