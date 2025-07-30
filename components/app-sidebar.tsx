@@ -16,7 +16,7 @@ import {
 import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, BookText, 
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Main navigation items/links
 const mainNavItems = [
@@ -65,16 +65,51 @@ const mainNavItems = [
 export function AppSidebar({ ...props }) {
   const params = useParams()
   const lang = params.lng || "en"
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   const prependLang = (url: string) => `/${lang}${url}`
+
+  // Check if dark mode is active
+  useEffect(() => {
+    setIsClient(true)
+    
+    const checkDarkMode = () => {
+      const darkModeActive = document.documentElement.classList.contains('dark')
+      setIsDarkMode(darkModeActive)
+    }
+
+    checkDarkMode()
+    
+    // Listen for theme changes
+    const observer = new MutationObserver(checkDarkMode)
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    })
+
+    // Also listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleMediaChange = () => {
+      if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
+        setIsDarkMode(mediaQuery.matches)
+      }
+    }
+    mediaQuery.addEventListener('change', handleMediaChange)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener('change', handleMediaChange)
+    }
+  }, [])
 
   return (
     <Sidebar
       {...props}
-      className="dark:border-r-[#91969e52] font-sans text-gray-800"
+      className="dark:border-r-[#91969e52] font-sans text-gray-800 dark:text-gray-200"
       style={{
-        '--sidebar-background': '0 0% 100%',
-        backgroundColor: '#fff',
+        backgroundColor: isClient && isDarkMode ? '#181b23' : '#ffffff',
+        '--sidebar-background': isClient && isDarkMode ? '#181b23' : '#ffffff',
       } as React.CSSProperties}
     >
       <SidebarHeader>
