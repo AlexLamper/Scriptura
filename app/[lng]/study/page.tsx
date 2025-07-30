@@ -24,7 +24,7 @@ export default function StudyPage() {
   const [loadingBooks, setLoadingBooks] = useState(false);
   const [loadingChapters, setLoadingChapters] = useState(false);
 
-  const API_BASE_URL = 'https://www.bijbel-api.nl/api';
+  const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
   // 1. Fetch available versions on initial load
   useEffect(() => {

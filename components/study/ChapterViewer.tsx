@@ -20,7 +20,7 @@ export default function ChapterViewer({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_BASE_URL = 'https://www.bijbel-api.nl/api';
+  const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
   console.groupCollapsed('--- ChapterViewer Render ---');
   console.log('Props received by ChapterViewer:', {

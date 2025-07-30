@@ -30,7 +30,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
     setVerse(null);
     setRawResponse(null);
     setStatus(null);
-    const endpoint = "https://www.bijbel-api.nl/api/daytext";
+    const endpoint = "https://www.scriptura-api.com/api/daytext";
     fetch(endpoint)
       .then(async (res) => {
         setStatus(res.status);
