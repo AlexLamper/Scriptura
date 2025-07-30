@@ -9,7 +9,7 @@ import { use } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "../../../components/ui/button"
 import { useSession } from "next-auth/react"
-import Image from "next/image"
+// import Image from "next/image"
 
 interface Course {
   _id: string
@@ -181,19 +181,22 @@ export default function CoursePage({
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="group rounded-lg overflow-hidden shadow-sm border border-border bg-white dark:border-[#b6b6b63d] dark:bg-[#2a2b2f] h-full"
+              className="rounded-lg shadow-sm border border-gray-200 bg-[#f6f7ff] dark:border-[#23263a] dark:bg-[#23263a] h-full p-6"
             >
-              <div className="relative w-full h-32 bg-gray-100 dark:bg-gray-700"></div>
-              <div className="flex items-center p-5">
-                <div className="h-5 w-40 mb-2 bg-gray-100 dark:bg-gray-700 rounded"></div>
-              </div>
-              <div className="p-5 pt-3">
-                <div className="mb-2 flex justify-between">
-                  <div className="h-3 w-16 bg-gray-100 dark:bg-gray-700 rounded"></div>
-                  <div className="h-3 w-10 bg-gray-100 dark:bg-gray-700 rounded"></div>
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex gap-2">
+                  <div className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-5 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
                 </div>
-                <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full mb-5"></div>
-                <div className="h-8 w-24 bg-gray-100 dark:bg-gray-700 rounded-md"></div>
+                <div className="h-5 w-20 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <div className="h-6 w-48 mb-2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-5 w-20 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                </div>
+                <div className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-md"></div>
               </div>
             </div>
           ))}
@@ -218,108 +221,77 @@ export default function CoursePage({
                   }
                 }}
               >
-                <div className="group rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-border bg-white dark:border-[#b6b6b63d] dark:bg-[#2a2b2f] h-full">
-                  <div className="relative w-full h-32">
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 z-10"></div>
-                    <div className="absolute top-2 right-2 z-20 flex gap-1" onClick={(e) => e.preventDefault()}>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 dark:text-blue-400 border border-black/10 dark:border-[#b6b6b63d] text-[#1f1f1f9d]">
+                <div className="group rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-200 bg-white dark:border-[#23263a] dark:bg-[#23263a] dark:shadow-lg dark:shadow-blue-900/20 h-full p-6 relative">
+                  
+                  {/* Premium overlay */}
+                  {course.isPremium && !isUserSubscribed && (
+                    <div className="absolute inset-0 bg-black/20 z-20 flex items-center justify-center rounded-lg">
+                      <div className="bg-black/60 p-2 rounded-full shadow-lg">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Header badges */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex gap-2">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border-gray-200 dark:bg-[#23263a] dark:text-blue-200 dark:border-[#23263a] shadow-sm dark:shadow-blue-900/20">
                         {course.difficulty}
                       </span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 dark:text-blue-400 border border-black/10 dark:border-[#b6b6b63d] text-[#1f1f1f9d]">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border-gray-200 dark:bg-[#23263a] dark:text-blue-200 dark:border-[#23263a] shadow-sm dark:shadow-blue-900/20">
                         {course.language}
                       </span>
                     </div>
 
-                    {/* Premium badge */}
                     {course.isPremium && (
-                      <div className="absolute top-2 left-2 z-20">
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500 text-white flex items-center gap-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7-6.3-4.6L5.7 21l2.3-7-6-4.6h7.6z" />
-                          </svg>
-                          <span>Premium</span>
-                        </span>
-                      </div>
-                    )}
-                    
-                    <Image
-                      src={
-                        course.imageUrl ||
-                        `/placeholder.svg?height=300&width=500&text=${encodeURIComponent(course.title) || "/placeholder.svg"}`
-                      }
-                      alt={`${course.title} cover`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className={`object-cover w-full h-full transition-all duration-300 ${
-                        course.isPremium && !isUserSubscribed
-                          ? "opacity-40 filter grayscale"
-                          : "opacity-70 hover:opacity-80"
-                      }`}
-                      style={{ objectFit: "cover" }}
-                      priority={index < 3}
-                    />
-
-                    {/* Lock overlay for premium courses */}
-                    {course.isPremium && !isUserSubscribed && (
-                      <div className="absolute inset-0 flex items-center justify-center z-20">
-                        <div className="bg-black/60 p-2 rounded-full">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                          </svg>
-                        </div>
-                      </div>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white flex items-center gap-1 shadow-lg dark:shadow-amber-900/30">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7-6.3-4.6L5.7 21l2.3-7-6-4.6h7.6z" />
+                        </svg>
+                        <span>Premium</span>
+                      </span>
                     )}
                   </div>
 
-                  <div className="flex items-center p-5">
+                  {/* Course content */}
+                  <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{course.title}</h3>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#e9ebfa] dark:bg-blue-900/30 dark:text-blue-400 border border-black/10 dark:border-[#b6b6b63d] text-[#1f1f1f9d]">
+                      <h3 className="font-bold text-xl text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl mb-2">{course.title}</h3>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border-gray-200 dark:bg-[#23263a] dark:text-blue-200 dark:border-[#23263a] shadow-sm dark:shadow-blue-900/20">
                         {course.category}
                       </span>
                     </div>
-                  </div>
-                  <div className="p-5 pt-3">
-                    <div className="mb-2 flex justify-between text-xs">
-                      <span className="text-gray-500 dark:text-gray-400 font-medium">
-                        {t("progress") || fallbackTranslations.progress}
-                      </span>
-                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">{course.progress}</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-5">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{
-                          width: `${(Number.parseInt(course.progress.split("/")[0]) / Number.parseInt(course.progress.split("/")[1])) * 100}%`,
-                        }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="h-full rounded-full transition-all duration-300 group-hover:brightness-110 bg-[#0f172b] dark:bg-blue-600"
-                      />
-                    </div>
+                    
+                    {course.description && (
+                      <p className="text-sm text-gray-600 dark:text-blue-200 dark:drop-shadow line-clamp-3">
+                        {course.description}
+                      </p>
+                    )}
+
                     <Button
-                      className={`text-sm font-medium transition-all duration-300 group-hover:translate-y-[-2px] px-4 py-1.5 rounded-md ${
-                        course.isPremium && !isUserSubscribed ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed" : ""
+                      className={`w-full text-sm font-medium transition-all duration-300 group-hover:translate-y-[-2px] px-4 py-2.5 rounded-md shadow-sm dark:shadow-lg ${
+                        course.isPremium && !isUserSubscribed 
+                          ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed text-white" 
+                          : "bg-blue-500 hover:bg-blue-600 text-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500"
                       }`}
                       disabled={course.isPremium && !isUserSubscribed}
                     >
