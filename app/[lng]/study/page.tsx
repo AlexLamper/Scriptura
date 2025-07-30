@@ -1,13 +1,185 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { FileText, Edit, BookOpen, Folder } from 'lucide-react';
+import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users } from 'lucide-react';
 import BibleSelector from '../../../components/study/BibleSelector';
 import ChapterViewer from '../../../components/study/ChapterViewer';
 
 // Define interfaces for API responses
 interface Version {
   name: string;
+}
+
+// Tab Component
+interface TabComponentProps {
+  selectedBook: string;
+  selectedChapter: number;
+  selectedVersion?: string | null;
+}
+
+function TabComponent({ selectedBook, selectedChapter }: TabComponentProps) {
+  const [activeTab, setActiveTab] = useState('explanation');
+
+  const tabs = [
+    { id: 'explanation', label: 'Uitleg', icon: MessageCircle },
+    { id: 'historical', label: 'Historische Context', icon: Clock },
+    { id: 'related', label: 'Gerelateerde Verzen', icon: Link },
+    { id: 'community', label: 'Community Notes', icon: Users },
+  ];
+
+  const renderTabContent = () => {
+    const reference = selectedBook && selectedChapter ? `${selectedBook} ${selectedChapter}` : 'Selecteer een passage';
+    
+    switch (activeTab) {
+      case 'explanation':
+        return (
+          <div className="space-y-4">
+            {/* Thinking Question Section - Prominent placement at top of explanation tab */}
+            <div className="p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
+              <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                <MessageCircle size={18} className="text-blue-600" />
+                Denkvraag
+              </h3>
+              <p className="text-sm text-blue-900 leading-relaxed">
+                Wat zegt dit bijbelgedeelte over Gods karakter en Zijn relatie met de mensheid? 
+                Hoe kunnen we deze waarheden toepassen in ons dagelijks leven?
+              </p>
+            </div>
+            
+            <h3 className="font-semibold mb-2">Wat zegt dit bijbelgedeelte over de schepping?</h3>
+            <p className="mb-4">
+              In <a href="#" className="text-blue-600">{reference}</a> wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie? 
+            </p>
+            <h4 className="font-semibold mb-2">Commentaar</h4>
+            <p className="mb-4">
+              In <a href="#" className="text-blue-600">{reference}</a> wordt over Gods scheppingswerk verteld. De zeven dagen vormen de eerste week van Gods handelen. De uitdrukkingen &apos;God&apos;, &apos;scheppen&apos; en &apos;hemel en aarde&apos; komen voor in het begin en in omgekeerde volgorde in het slot van dit gedeelte.
+            </p>
+            <p className="mb-4">
+              <span className="bg-yellow-200 p-1 rounded">De schepping vindt plaats in een oplopende reeks van gebeurtenissen, in een andere volgorde dan de hedendaagse evolutietheorie dat doet. De mensen komen niet voort uit dieren, in een proces van toeval en overleving van de sterkste, maar zij zijn ontstaan door Gods scheppingswoorden.</span>
+            </p>
+          </div>
+        );
+      case 'historical':
+        return (
+          <div className="space-y-4">
+            <h3 className="font-semibold mb-2">Historische Context van {reference}</h3>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium mb-2">Tijdperiode</h4>
+              <p className="text-sm text-gray-700 mb-3">
+                Genesis werd geschreven in de context van het oude Nabije Oosten, waarschijnlijk tijdens de tijd van Mozes (ca. 1400 v.Chr.).
+              </p>
+              <h4 className="font-medium mb-2">Culturele Achtergrond</h4>
+              <p className="text-sm text-gray-700 mb-3">
+                Het scheppingsverhaal onderscheidt zich van andere oude Nabije Oosterse scheppingsmythen door zijn monotheïstische karakter en de waardigheid van de mens.
+              </p>
+              <h4 className="font-medium mb-2">Literaire Context</h4>
+              <p className="text-sm text-gray-700">
+                Genesis 1-11 vormt de &apos;oergeschiedenis&apos; die de basis legt voor de verhalen van de aartsvaders die volgen.
+              </p>
+            </div>
+          </div>
+        );
+      case 'related':
+        return (
+          <div className="space-y-4">
+            <h3 className="font-semibold mb-2">Gerelateerde Bijbelpassages</h3>
+            <div className="space-y-3">
+              <div className="border-l-4 border-blue-500 pl-4">
+                <h4 className="font-medium text-blue-700">Johannes 1:1-3</h4>
+                <p className="text-sm text-gray-600">&quot;In den beginne was het Woord, en het Woord was bij God, en het Woord was God.&quot;</p>
+                <span className="text-xs text-gray-500">Thema: Schepping door het Woord</span>
+              </div>
+              <div className="border-l-4 border-green-500 pl-4">
+                <h4 className="font-medium text-green-700">Psalm 33:6</h4>
+                <p className="text-sm text-gray-600">&quot;Door des HEEREN woord zijn de hemelen gemaakt, en door den geest zijns monds al hun heir.&quot;</p>
+                <span className="text-xs text-gray-500">Thema: Gods scheppende woord</span>
+              </div>
+              <div className="border-l-4 border-purple-500 pl-4">
+                <h4 className="font-medium text-purple-700">Hebreeën 11:3</h4>
+                <p className="text-sm text-gray-600">&quot;Door het geloof verstaan wij, dat de wereld door Gods woord is toebereid.&quot;</p>
+                <span className="text-xs text-gray-500">Thema: Geloof in de schepping</span>
+              </div>
+              <div className="border-l-4 border-red-500 pl-4">
+                <h4 className="font-medium text-red-700">Kolossenzen 1:16</h4>
+                <p className="text-sm text-gray-600">&quot;Want door Hem zijn alle dingen geschapen, die in de hemelen en die op de aarde zijn.&quot;</p>
+                <span className="text-xs text-gray-500">Thema: Christus als Schepper</span>
+              </div>
+            </div>
+          </div>
+        );
+      case 'community':
+        return (
+          <div className="space-y-4">
+            <h3 className="font-semibold mb-2">Community Notes voor {reference}</h3>
+            <div className="space-y-3">
+              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                    JD
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-blue-800">Johannes de Vries</p>
+                    <p className="text-sm text-gray-700 mt-1">
+                      Belangrijk om te zien dat God niet alleen spreekt, maar dat Zijn woord ook daadkracht heeft. &quot;Hij sprak en het geschiedde.&quot;
+                    </p>
+                    <span className="text-xs text-gray-500">2 dagen geleden</span>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                    MJ
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-green-800">Maria Janssen</p>
+                    <p className="text-sm text-gray-700 mt-1">
+                      De herhaalde uitdrukking &quot;en God zag dat het goed was&quot; benadrukt Gods volmaakte werk en Zijn goedkeuring van de schepping.
+                    </p>
+                    <span className="text-xs text-gray-500">1 week geleden</span>
+                  </div>
+                </div>
+              </div>
+              <button className="w-full py-2 px-4 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition">
+                + Voeg je eigen notitie toe
+              </button>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div>
+      {/* Tab Headers */}
+      <div className="flex space-x-1 mb-4 border-b border-gray-200">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-t-lg text-sm font-medium transition ${
+                activeTab === tab.id
+                  ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-500'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <Icon size={16} />
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Tab Content */}
+      <div className="min-h-[400px]">
+        {renderTabContent()}
+      </div>
+    </div>
+  );
 }
 
 export default function StudyPage() {
@@ -146,27 +318,24 @@ export default function StudyPage() {
           const errorText = await res.text();
           throw new Error(`Failed to fetch chapters for ${selectedBook}: ${res.status} ${res.statusText} - ${errorText}`);
         }
-        // CRITICAL FIX HERE: The /api/chapters endpoint returns an array of strings (chapter numbers)
         const chapterStrings: string[] = await res.json();
         console.log(`API response for chapters of ${selectedBook}:`, chapterStrings);
 
-        // Convert string array to number array and get max chapter
-        const chapterNumbers = chapterStrings.map(Number).sort((a,b) => a-b); // Ensure they are numbers and sorted
-        const numberOfChapters = chapterNumbers.length > 0 ? chapterNumbers[chapterNumbers.length - 1] : 0; // Get the highest chapter number
+        const chapterNumbers = chapterStrings.map(Number).sort((a,b) => a-b);
+        const numberOfChapters = chapterNumbers.length > 0 ? chapterNumbers[chapterNumbers.length - 1] : 0;
 
         if (chapterNumbers.length === 0) {
           console.warn(`No chapters found for ${selectedBook}. API returned empty array.`);
           setChapters([]);
-          setMaxChapter(1); // Or 0, depending on how you want to handle "no chapters"
+          setMaxChapter(1);
           setSelectedChapter(1);
           return;
         }
 
         console.log(`Processed chapter numbers for ${selectedBook}:`, chapterNumbers);
         setChapters(chapterNumbers);
-        setMaxChapter(numberOfChapters); // Set max chapter to the highest number
+        setMaxChapter(numberOfChapters);
 
-        // Ensure selected chapter is within bounds for the new book
         setSelectedChapter((prevChapter) => {
           // If the previous chapter is still in the new list, keep it. Otherwise, default to 1.
           const newChapter = chapterNumbers.includes(prevChapter) ? prevChapter : (chapterNumbers.length > 0 ? chapterNumbers[0] : 1);
@@ -287,9 +456,19 @@ export default function StudyPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Left: Bible verse section - Render ChapterViewer */}
         <section className="bg-white p-6 rounded shadow overflow-auto">
-          <h2 className="text-lg font-semibold mb-4">
-            BIJBELTEKST ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">
+              BIJBELTEKST ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
+            </h2>
+            {selectedBook && selectedChapter && (
+              <div className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-lg">
+                <span className="font-medium">{selectedBook}</span>
+                <span className="mx-1">•</span>
+                <span>Hoofdstuk {selectedChapter}</span>
+              </div>
+            )}
+          </div>
+
           {selectedBook && selectedChapter && selectedVersion && (
             <ChapterViewer
               version={selectedVersion}
@@ -311,10 +490,10 @@ export default function StudyPage() {
           )}
         </section>
 
-        {/* Right: Commentary section (remains static for now) */}
+        {/* Right: Tabbed content section */}
         <section className="bg-white p-6 rounded shadow">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">DENKVRAAG</h2>
+            <h2 className="text-lg font-semibold">STUDIE MATERIAAL</h2>
             <div className="flex space-x-3">
               <button className="p-2 bg-gray-100 rounded hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition">
                 <FileText size={18} />
@@ -330,37 +509,9 @@ export default function StudyPage() {
               </button>
             </div>
           </div>
-          <h3 className="font-semibold mb-2">Wat zegt dit bijbelgedeelte over de schepping?</h3>
-          <p className="mb-4">
-           In <a href="#" className="text-blue-600">Gen.1:1-2:3</a> wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie? 
-          </p>
-          <h2 className="text-lg font-semibold mb-4">COMMENTAAR</h2>
-          <h3 className="font-semibold mb-2">Boek 1: De schepping van hemel en aarde (Gen.1:1–2:3)</h3>
-          <p className="mb-4">
-            In <a href="#" className="text-blue-600">Gen.1:1-2:3</a> wordt over Gods scheppingswerk verteld. De zeven dagen vormen de eerste week van Gods handelen. De uitdrukkingen &apos;God&apos;, &apos;scheppen&apos; en &apos;hemel en aarde&apos; komen voor in <a href="#" className="text-blue-600">Gen.1:1</a> (het begin) en in omgekeerde volgorde in <a href="#" className="text-blue-600">Gen.2:1-3</a> (het slot van dit gedeelte). De taal is proza en geen poëzie, maar het onderwerp is zo verheven dat de taal soms bijna poëtisch wordt. Het boek Genesis begint met de grote en goede daden van God en eindigt in de laatste hoofdstukken met het ontstaan van het volk Israël. <span className="bg-yellow-200">De schepping vindt plaats in een oplopende reeks van gebeurtenissen, in een andere volgorde dan de hedendaagse evolutietheorie dat doet. De mensen komen niet voort uit dieren, in een proces van toeval en overleving van de sterkste, maar zij zijn ontstaan door Gods scheppingswoorden.</span>
-          </p>
-          <p className="mb-4">Er zijn enige overeenkomsten tussen de 1e en 4e dag, tussen de 2e en 5e dag en de 3e en 6e dag; de 7e dag staat apart. In de eerste drie dagen wordt de aarde gevormd, in de volgende drie dagen wordt de geschapen wereld verder ingericht.</p>
-          <div className="overflow-auto">
-            <table className="min-w-full border border-gray-300 text-center">
-              <tbody>
-                <tr className="border">
-                  <td className="px-2 py-1 border border-gray-300">dag 1: licht</td>
-                  <td className="px-2 py-1 border">dag 4: hemellichten</td>
-                </tr>
-                <tr className="border">
-                  <td className="px-2 py-1 border">dag 2: water en lucht</td>
-                  <td className="px-2 py-1 border">dag 5: vissen en vogels</td>
-                </tr>
-                <tr className="border">
-                  <td className="px-2 py-1 border">dag 3: land en zee (planten)</td>
-                  <td className="px-2 py-1 border">dag 6: dieren en mensen (planten voor voedsel)</td>
-                </tr>
-                <tr className="border">
-                  <td className="px-2 py-1 border" colSpan={2}>dag 7: de sabbat</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          
+          {/* Tab Navigation */}
+          <TabComponent selectedBook={selectedBook} selectedChapter={selectedChapter} />
         </section>
       </div>
     </div>
