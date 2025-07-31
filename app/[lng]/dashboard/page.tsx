@@ -6,6 +6,7 @@ import { DailyVerseCard } from "../../../components/dashboard/DailyVerseCard"
 import { SummaryCard } from "../../../components/dashboard/SummaryCard"
 import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
 import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
+import { CoursesCard } from "../../../components/dashboard/CoursesCard"
 import { BarChart } from "../../../components/dashboard/BarChart"
 import { FileText, ClipboardList, BookOpen } from "lucide-react"
 
@@ -26,6 +27,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
       <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
         <WelcomeCard lng={lng} />
         <DailyVerseCard lng={lng} />
+        
         {/* Summary Cards */}
         <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
           <SummaryCard
@@ -44,8 +46,15 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
             description="Study materials completed"
           />
         </div>
-        <HomeworkCompletionRatesCard BarChart={BarChart} />
-        <AssignmentsCard />
+
+        {/* Featured Courses */}
+        <CoursesCard lng={lng} />
+        
+        {/* Right sidebar */}
+        <div className="space-y-6">
+          <HomeworkCompletionRatesCard BarChart={BarChart} />
+          <AssignmentsCard />
+        </div>
       </div>
     </div>
   )
