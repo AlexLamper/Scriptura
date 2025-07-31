@@ -23,8 +23,8 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   const { lng } = await params
 
   return (
-    <div className="container lg:px-2 pb-4 pt-2">
-      <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+    <div className="container lg:px-0 pb-2 pt-0">
+      <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
         <WelcomeCard lng={lng} />
         <DailyVerseCard lng={lng} />
         

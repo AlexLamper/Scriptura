@@ -121,7 +121,7 @@ export default async function DashboardLayout({
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
             <Header params={{ lng: "" }} />
-            <div className="p-8">
+            <div className="p-4">
               {children}
             </div>
           </div>
