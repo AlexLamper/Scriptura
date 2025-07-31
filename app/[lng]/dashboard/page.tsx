@@ -3,12 +3,12 @@ import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { WelcomeCard } from "../../../components/dashboard/WelcomeCard"
 import { DailyVerseCard } from "../../../components/dashboard/DailyVerseCard"
-import { SummaryCard } from "../../../components/dashboard/SummaryCard"
+// import { SummaryCard } from "../../../components/dashboard/SummaryCard"
 import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
 import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
 import { CoursesCard } from "../../../components/dashboard/CoursesCard"
 import { BarChart } from "../../../components/dashboard/BarChart"
-import { FileText, ClipboardList, BookOpen } from "lucide-react"
+// import { FileText, ClipboardList, BookOpen } from "lucide-react"
 
 interface DashboardPageProps {
   params: Promise<{ lng: string }>
@@ -29,7 +29,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         <DailyVerseCard lng={lng} />
         
         {/* Summary Cards */}
-        <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
+        {/* <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
           <SummaryCard
             icon={<FileText className="h-6 w-6 text-gray-500" />}
             value="20/25"
@@ -45,7 +45,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
             value="24/28"
             description="Study materials completed"
           />
-        </div>
+        </div> */}
 
         {/* Featured Courses */}
         <CoursesCard lng={lng} />
