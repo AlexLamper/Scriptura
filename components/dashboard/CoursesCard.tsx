@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { BookOpen, ArrowRight, Clock } from "lucide-react"
+import { useTranslation } from "../../app/i18n/client"
 
 interface Course {
   _id: string
@@ -24,6 +25,7 @@ interface CoursesCardProps {
 }
 
 export function CoursesCard({ lng }: CoursesCardProps) {
+  const { t } = useTranslation(lng, "course")
   const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -65,7 +67,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Featured Courses</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("courses")}</h3>
           </div>
           <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
         </div>
@@ -93,11 +95,11 @@ export function CoursesCard({ lng }: CoursesCardProps) {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Featured Courses</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("courses")}</h3>
         </div>
         <Link href={`/${lng}/courses`}>
           <Button variant="outline" size="sm" className="flex items-center gap-1">
-            View All
+            {t("view_all")}
             <ArrowRight className="h-3 w-3" />
           </Button>
         </Link>
@@ -106,9 +108,9 @@ export function CoursesCard({ lng }: CoursesCardProps) {
       {courses.length === 0 ? (
         <div className="text-center py-8">
           <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-500 dark:text-gray-400 mb-4">No courses available</p>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">{t("no_courses_found")}</p>
           <Link href={`/${lng}/courses`}>
-            <Button>Browse Courses</Button>
+            <Button>{t("browse_courses")}</Button>
           </Link>
         </div>
       ) : (
@@ -164,7 +166,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
                     variant="ghost" 
                     className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 p-1 h-auto"
                   >
-                    Start Course →
+                    {t("start_study")} →
                   </Button>
                 </div>
               </div>
@@ -175,7 +177,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
             <Link href={`/${lng}/courses`}>
               <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors group">
                 <p className="text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 font-medium">
-                  View more courses →
+                  {t("view_more_studies")} →
                 </p>
               </div>
             </Link>
