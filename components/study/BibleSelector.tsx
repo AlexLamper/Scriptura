@@ -47,7 +47,7 @@ export default function BibleSelector({
     <>
       {/* Version Selector */}
       <select
-        className="px-3 py-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-brand text-sm"
+        className="px-3 py-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-brand text-sm dark:bg-[#232325] dark:border-gray-500 dark:text-gray-100 dark:focus:ring-indigo-300"
         value={selectedVersion || ''}
         onChange={(e) => onVersionChange(e.target.value)}
         disabled={loadingVersions || versions.length === 0}
@@ -64,7 +64,7 @@ export default function BibleSelector({
 
       {/* Book Selector */}
       <select
-        className="px-3 py-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-brand text-sm"
+        className="px-3 py-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-brand text-sm dark:bg-[#232325] dark:border-gray-500 dark:text-gray-100 dark:focus:ring-indigo-300"
         value={selectedBook}
         onChange={(e) => onBookChange(e.target.value)}
         disabled={loadingBooks || books.length === 0}
@@ -81,7 +81,7 @@ export default function BibleSelector({
 
       {/* Chapter Selector */}
       <select
-        className="px-3 py-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-brand text-sm"
+        className="px-3 py-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-brand text-sm dark:bg-[#232325] dark:border-gray-500 dark:text-gray-100 dark:focus:ring-indigo-300"
         value={selectedChapter}
         onChange={(e) => onChapterChange(Number(e.target.value))}
         disabled={loadingChapters || chapters.length === 0}

@@ -50,7 +50,11 @@
     "genre": "Genre",
     "chapters": "Chapters",
     "language_detail": "Language Detail",
-    "time_period": "Time Period"
+    "time_period": "Time Period",
+    "view_all": "View All",
+    "browse_courses": "Browse Courses",
+    "start_study": "Start Course",
+    "view_more_studies": "View more courses"
   }
   
   

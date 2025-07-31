@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { SearchForm } from "./search-form"
+import { useTranslation } from "../app/i18n/client"
 import {
   Sidebar,
   SidebarContent,
@@ -16,47 +17,47 @@ import {
 import { Home, BookOpen, Timer, User, Briefcase, Settings, Users, BookText, 
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-// Main navigation items/links
+// Main navigation items/links with translation keys
 const mainNavItems = [
   {
-    title: "Dashboard",
+    titleKey: "dashboard",
     url: "/dashboard",
     icon: Home,
   },
   {
-    title: "Study",
+    titleKey: "study",
     url: "/study",
     icon: BookText,
   },
   {
-    title: "Courses",
+    titleKey: "courses",
     url: "/courses",
     icon: BookOpen,
   },
   {
-    title: "Quizzes",
+    titleKey: "quizzes",
     url: "/quizzes",
     icon: Timer,
   },
   {
-    title: "Profile",
+    titleKey: "profile",
     url: "/profile",
     icon: User,
   },
   {
-    title: "Resources",
+    titleKey: "resources",
     url: "/resources",
     icon: Briefcase,
   },
   {
-    title: "Settings",
+    titleKey: "settings",
     url: "/settings",
     icon: Settings,
   },
   {
-    title: "Community",
+    titleKey: "community",
     url: "/community",
     icon: Users,
   },
@@ -65,16 +66,52 @@ const mainNavItems = [
 export function AppSidebar({ ...props }) {
   const params = useParams()
   const lang = params.lng || "en"
+  const { t } = useTranslation(lang as string, "sidebar")
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   const prependLang = (url: string) => `/${lang}${url}`
+
+  // Check if dark mode is active
+  useEffect(() => {
+    setIsClient(true)
+    
+    const checkDarkMode = () => {
+      const darkModeActive = document.documentElement.classList.contains('dark')
+      setIsDarkMode(darkModeActive)
+    }
+
+    checkDarkMode()
+    
+    // Listen for theme changes
+    const observer = new MutationObserver(checkDarkMode)
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    })
+
+    // Also listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleMediaChange = () => {
+      if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
+        setIsDarkMode(mediaQuery.matches)
+      }
+    }
+    mediaQuery.addEventListener('change', handleMediaChange)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener('change', handleMediaChange)
+    }
+  }, [])
 
   return (
     <Sidebar
       {...props}
-      className="dark:border-r-[#91969e52] font-sans text-gray-800"
+      className="dark:border-r-[#91969e52] font-sans text-gray-800 dark:text-gray-200"
       style={{
-        '--sidebar-background': '0 0% 100%',
-        backgroundColor: '#fff',
+        backgroundColor: isClient && isDarkMode ? '#181b23' : '#ffffff',
+        '--sidebar-background': isClient && isDarkMode ? '#181b23' : '#ffffff',
       } as React.CSSProperties}
     >
       <SidebarHeader>
@@ -102,12 +139,12 @@ export function AppSidebar({ ...props }) {
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNavItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.titleKey}>
                   <SidebarMenuButton asChild>
                     <Link href={prependLang(item.url)}>
                       <span className="flex items-center space-x-2">
-                        <item.icon className="h-5 w-5 text-gray-500" />
-                        <span className="text-gray-600/95 font-medium text-base">{item.title}</span>
+                        <item.icon className="h-5 w-5 text-gray-600 dark:text-gray-500" />
+                        <span className="text-gray-700/95 dark:text-gray-300 font-normal text-base">{t(item.titleKey)}</span>
                       </span>
                     </Link>
                   </SidebarMenuButton>

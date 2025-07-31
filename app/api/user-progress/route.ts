@@ -37,8 +37,7 @@ export async function GET(request: NextRequest) {
     if (!progress) {
       // If no progress exists yet, return default values
       return NextResponse.json({
-        completedLessons: [],
-        lastAccessedLesson: 0,
+        completed: false,
         progress: 0,
       })
     }
@@ -58,10 +57,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const { courseId, lessonIndex, completed } = await request.json()
+    const { courseId, completed } = await request.json()
 
-    if (!courseId || lessonIndex === undefined) {
-      return NextResponse.json({ error: "Course ID and lesson index are required" }, { status: 400 })
+    if (!courseId || completed === undefined) {
+      return NextResponse.json({ error: "Course ID and completed status are required" }, { status: 400 })
     }
 
     await connectMongoDB()
@@ -83,19 +82,20 @@ export async function POST(request: NextRequest) {
       progress = new UserProgress({
         user: user._id,
         course: courseId,
-        completedLessons: completed ? [lessonIndex] : [],
-        lastAccessedLesson: lessonIndex,
+        completed: completed,
         startedAt: new Date(),
+        completedAt: completed ? new Date() : undefined,
         lastAccessedAt: new Date(),
       })
     } else {
       // Update existing progress record
-      progress.lastAccessedLesson = lessonIndex
+      progress.completed = completed
       progress.lastAccessedAt = new Date()
-
-      // Add to completed lessons if marked as completed and not already in the array
-      if (completed && !progress.completedLessons.includes(lessonIndex)) {
-        progress.completedLessons.push(lessonIndex)
+      
+      if (completed && !progress.completedAt) {
+        progress.completedAt = new Date()
+      } else if (!completed) {
+        progress.completedAt = undefined
       }
     }
 

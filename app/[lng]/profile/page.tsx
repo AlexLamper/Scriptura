@@ -78,7 +78,7 @@ export default function ProfilePage({
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 flex items-center justify-center">
+      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 flex items-center justify-center bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
@@ -86,11 +86,11 @@ export default function ProfilePage({
 
   if (error || !user) {
     return (
-      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4">
-        <Card className="dark:bg-[#292b2f] dark:border-none">
+      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
+        <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
           <CardContent className="p-6">
-            <h2 className="text-xl font-semibold text-red-600">{t("error_loading_profile")}</h2>
-            <p className="mt-2">{error || t("user_not_found")}</p>
+            <h2 className="text-xl font-semibold text-red-600 dark:text-red-400">{t("error_loading_profile")}</h2>
+            <p className="mt-2 text-gray-600 dark:text-blue-200">{error || t("user_not_found")}</p>
           </CardContent>
         </Card>
       </div>
@@ -100,9 +100,9 @@ export default function ProfilePage({
   return (
     <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4">
       <div className="flex items-center gap-3 mb-6">
-        <h1 className="text-3xl font-bold">{t("your_profile")}</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("your_profile")}</h1>
         {user.isAdmin && (
-          <Badge className="bg-purple-600 text-white flex items-center gap-1">
+          <Badge className="bg-purple-600 text-white flex items-center gap-1 dark:bg-gradient-to-r dark:from-purple-600 dark:to-purple-400 dark:shadow-lg">
             <ShieldCheck className="h-3 w-3" />
             <span>Admin</span>
           </Badge>
@@ -110,9 +110,9 @@ export default function ProfilePage({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-none">
+        <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
           <CardHeader>
-            <CardTitle>{t("personal_information")}</CardTitle>
+            <CardTitle className="text-gray-900 dark:text-blue-100">{t("personal_information")}</CardTitle>
           </CardHeader>
           <CardContent>
             <ProfileForm initialName={user.name} initialEmail={user.email} initialBio={user.bio || ""} lng={lng} />
@@ -120,9 +120,9 @@ export default function ProfilePage({
         </Card>
 
         <div className="space-y-6">
-          <Card className="dark:bg-[#292b2f] dark:border-none">
+          <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
             <CardHeader>
-              <CardTitle>{t("profile_picture")}</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-blue-100">{t("profile_picture")}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
               <ProfileImageUpload initialImage={user.image} userName={user.name} lng={lng} />
@@ -140,9 +140,9 @@ export default function ProfilePage({
       </div>
 
       <div className="mt-6">
-        <Card className="mt-6 dark:bg-[#292b2f] dark:border-none">
+        <Card className="mt-6 dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
           <CardHeader>
-            <CardTitle>Your Badges</CardTitle>
+            <CardTitle className="text-gray-900 dark:text-blue-100">Your Badges</CardTitle>
           </CardHeader>
           <CardContent>
             <UserBadges earned={user.badges || []} />
@@ -152,47 +152,47 @@ export default function ProfilePage({
 
       {user.isAdmin && (
         <div className="mt-6">
-          <Card className="dark:bg-[#292b2f] dark:border-none">
+          <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
             <CardHeader>
-              <CardTitle>Admin Dashboard</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-blue-100">Admin Dashboard</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <p className="text-lg">
+                <p className="text-lg text-gray-600 dark:text-blue-200">
                   Welcome to the admin dashboard. As an admin, you have access to special features:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <a
                     href={`/${lng}/admin/courses`}
-                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
                   >
-                    <h3 className="font-semibold text-lg mb-2">Manage Courses</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Create, edit, and manage premium courses</p>
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Manage Courses</h3>
+                    <p className="text-sm text-gray-600 dark:text-blue-200">Create, edit, and manage premium courses</p>
                   </a>
                   <a
                     href={`/${lng}/admin/users`}
-                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
                   >
-                    <h3 className="font-semibold text-lg mb-2">Manage Users</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Manage Users</h3>
+                    <p className="text-sm text-gray-600 dark:text-blue-200">
                       View and manage user accounts and subscriptions
                     </p>
                   </a>
                   <a
                     href={`/${lng}/admin/analytics`}
-                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
                   >
-                    <h3 className="font-semibold text-lg mb-2">Analytics</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Analytics</h3>
+                    <p className="text-sm text-gray-600 dark:text-blue-200">
                       View platform usage and subscription statistics
                     </p>
                   </a>
                   <a
                     href={`/${lng}/admin/settings`}
-                    className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
                   >
-                    <h3 className="font-semibold text-lg mb-2">Platform Settings</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Configure global platform settings</p>
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Platform Settings</h3>
+                    <p className="text-sm text-gray-600 dark:text-blue-200">Configure global platform settings</p>
                   </a>
                 </div>
               </div>
@@ -202,19 +202,19 @@ export default function ProfilePage({
       )}
 
       <div className="mt-6">
-        <Card className="dark:bg-[#292b2f] dark:border-none">
+        <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
           <CardHeader>
-            <CardTitle>{t("course_progress")}</CardTitle>
+            <CardTitle className="text-gray-900 dark:text-blue-100">{t("course_progress")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {user.enrolledCourses && user.enrolledCourses.length > 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-lg">{t("course_progress_info")}</p>
+                  <p className="text-lg text-gray-600 dark:text-blue-200">{t("course_progress_info")}</p>
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-lg">{t("no_enrolled_courses")}</p>
+                  <p className="text-lg text-gray-600 dark:text-blue-200">{t("no_enrolled_courses")}</p>
                 </div>
               )}
             </div>

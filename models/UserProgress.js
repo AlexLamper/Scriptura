@@ -4,9 +4,9 @@ const UserProgressSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     course: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
-    completedLessons: [{ type: Number }], // Array of lesson indices that have been completed
-    lastAccessedLesson: { type: Number, default: 0 }, // Index of the last lesson accessed
+    completed: { type: Boolean, default: false }, // Whether the course has been completed
     startedAt: { type: Date, default: Date.now },
+    completedAt: { type: Date }, // When the course was completed
     lastAccessedAt: { type: Date, default: Date.now },
   },
   { timestamps: true },

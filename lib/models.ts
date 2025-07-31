@@ -15,7 +15,7 @@ export interface CourseType {
   description: string;
   category: string;
   instructor: string;
-  lessons: string[];
+  content: string;
   totalDuration: number;
   difficulty: string;
   tags: string[];
@@ -44,8 +44,8 @@ const courseSchema = new mongoose.Schema<CourseType>({
     type: String,
     required: true,
   },
-  lessons: {
-    type: [String],
+  content: {
+    type: String,
     required: true,
   },
   totalDuration: {

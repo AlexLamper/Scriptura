@@ -79,7 +79,7 @@ export function EnrollButton({
       <Button
         variant="outline"
         className={className}
-        onClick={() => router.push(`/${lng}/courses/${courseId}/lessons/0`)}
+        onClick={() => router.push(`/${lng}/courses/${courseId}`)}
       >
         {enrolledText}
       </Button>
