@@ -1,17 +1,11 @@
 "use client"
 
-import { use, useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "../../../../components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../../components/ui/card"
+import { useState, useEffect, use } from "react"
 import { useTranslation } from "../../../i18n/client"
-import { ArrowLeft, Check, Clock, BookOpen, Crown } from "lucide-react"
-import CourseProgress from "../../../../components/course-progress"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { Badge } from "../../../../components/ui/badge"
-import { PremiumCourseLock } from "../../../../components/premium-course-lock"
+import { Button } from "../../../../components/ui/button"
+import { ArrowLeft } from "lucide-react"
 
 interface CourseGeneralInformation {
   originLanguage: string
@@ -31,7 +25,7 @@ type CourseType = {
   difficulty: string
   totalDuration: number
   tags: string[]
-  lessons?: { title: string; duration: number; content: string }[]
+  content: string
   learning_objectives: string[]
   imageUrl?: string
   generalInformation: CourseGeneralInformation
@@ -43,7 +37,6 @@ export default function CoursePage({
 }: {
   params: Promise<{ lng: string; courseId: string }>
 }) {
-  // Unwrap the params promise using use()
   const { lng, courseId } = use(params)
   const { t } = useTranslation(lng, "course")
   const { data: session } = useSession()
@@ -52,8 +45,8 @@ export default function CoursePage({
   const [course, setCourse] = useState<CourseType | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [completedLessons, setCompletedLessons] = useState<number[]>([])
-  const [lastAccessedLesson, setLastAccessedLesson] = useState<number>(0)
+  const [isCompleted, setIsCompleted] = useState(false)
+  const [markingAsCompleted, setMarkingAsCompleted] = useState(false)
   interface UserType {
     subscribed?: boolean
     [key: string]: unknown
@@ -106,35 +99,124 @@ export default function CoursePage({
     }
   }, [courseId])
 
-  // Fetch user progress
+  // Fetch completion status
   useEffect(() => {
-    const fetchProgress = async () => {
-      if (!session) return
+    const fetchCompletionStatus = async () => {
+      if (!session || !courseId) return
 
       try {
         const response = await fetch(`/api/user-progress?courseId=${courseId}`)
         if (response.ok) {
           const data = await response.json()
-          setCompletedLessons(data.completedLessons || [])
-          setLastAccessedLesson(data.lastAccessedLesson || 0)
+          setIsCompleted(data.completed || false)
         }
       } catch (error) {
-        console.error("Error fetching progress:", error)
+        console.error("Error fetching completion status:", error)
       }
     }
 
-    if (courseId && session) {
-      fetchProgress()
-    }
-  }, [courseId, session])
+    fetchCompletionStatus()
+  }, [session, courseId])
 
-  const handleContinueCourse = () => {
-    router.push(`/${lng}/courses/${courseId}/lessons/${lastAccessedLesson}`)
+  // Process content to handle citations, newlines, and other formatting issues
+  function processContent(content: string) {
+    if (!content) return ""
+
+    // Replace literal \n with actual newlines
+    let processed = content.replace(/\\n/g, "\n")
+
+    // Handle citations
+    processed = processed.replace(/:contentReference\[oaicite:(\d+)\]\{index=\d+\}/g, (_, idx) => {
+      const num = Number.parseInt(idx, 10) + 1
+      return `<sup id="ref-${num}"><a href="#ref-${num}">[${num}]</a></sup>`
+    })
+
+    processed = processed.replace(/^Eiland Patmos$/gm, "![Eiland Patmos](/en/images/courses/patmos.png)")
+
+    // Add proper heading to the beginning if it doesn't exist
+    if (!processed.startsWith("# ")) {
+      const firstLine = processed.split("\n")[0]
+      processed = processed.replace(firstLine, `# ${firstLine}`)
+    }
+
+    return processed
+  }
+
+  // Function to directly render HTML content
+  function createMarkup(content: string) {
+    // Convert markdown to HTML
+    const html = content
+      // Headers
+      .replace(/## (.*?)$/gm, '<h2 class="text-xl font-bold mt-6 mb-3 text-gray-900 dark:text-blue-100">$1</h2>')
+      .replace(/# (.*?)$/gm, '<h1 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-blue-100">$1</h1>')
+
+      // Bold and italic
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+
+      // Lists
+      .replace(/^\d+\. (.*?)$/gm, '<li class="mb-1 text-base text-gray-700 dark:text-blue-200">$1</li>')
+      .replace(/<li>(.*?)<\/li>\n<li>/g, "<li>$1</li>\n<li>")
+      .replace(/(<li>.*?<\/li>\n)+/g, (match) => `<ol class="list-decimal pl-6 mb-4 text-base">${match}</ol>`)
+
+      // Blockquotes
+      .replace(
+        /^> (.*?)$/gm,
+        '<blockquote class="border-l-4 border-gray-300 dark:border-gray-400 pl-4 italic my-4 text-base text-gray-700 dark:text-blue-200">$1</blockquote>',
+      )
+
+      .replace(
+        /!\[(.*?)\]\((.*?)\)/g,
+        '<div class="my-6 flex justify-center"><img src="$2" alt="$1" class="rounded-lg max-w-full h-auto" style="max-height: 500px" /></div>',
+      )
+
+      // Paragraphs (must come last)
+      .replace(/^([^<].*?)$/gm, '<p class="mb-4 leading-relaxed text-base text-gray-700 dark:text-blue-200">$1</p>')
+
+      // Fix empty paragraphs
+      .replace(/<p class="mb-4 leading-relaxed text-base text-gray-700 dark:text-blue-200"><\/p>/g, "")
+
+      // Convert newlines to breaks for readability
+      .replace(/\n\n/g, "<br />")
+
+    return { __html: html }
+  }
+
+  const markAsCompleted = async () => {
+    if (!session) return
+
+    try {
+      setMarkingAsCompleted(true)
+      const response = await fetch("/api/user-progress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId,
+          completed: true,
+        }),
+      })
+
+      if (response.ok) {
+        setIsCompleted(true)
+      }
+    } catch (error) {
+      console.error("Error marking course as completed:", error)
+    } finally {
+      setMarkingAsCompleted(false)
+    }
   }
 
   const isUserSubscribed = user?.subscribed || false
   const isPremiumCourse = course?.isPremium || false
-  const canAccessCourse = !isPremiumCourse || (isPremiumCourse && isUserSubscribed)
+
+  // Redirect to courses page if premium course and user is not subscribed
+  useEffect(() => {
+    if (!loading && isPremiumCourse && !isUserSubscribed) {
+      router.push(`/${lng}/courses`)
+    }
+  }, [loading, isPremiumCourse, isUserSubscribed, router, lng])
 
   if (loading) {
     return (
@@ -149,7 +231,7 @@ export default function CoursePage({
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-red-500 mb-4">Error: {error}</div>
-        <Button onClick={() => window.history.back()} className="flex items-center">
+        <Button onClick={() => router.back()} className="flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("go_back")}
         </Button>
@@ -161,7 +243,7 @@ export default function CoursePage({
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-xl mb-4">{t("course_not_found")}</div>
-        <Button onClick={() => window.history.back()} className="flex items-center">
+        <Button onClick={() => router.back()} className="flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("go_back")}
         </Button>
@@ -169,194 +251,103 @@ export default function CoursePage({
     )
   }
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      {/* Premium course lock overlay */}
-      {isPremiumCourse && !isUserSubscribed && <PremiumCourseLock lng={lng} />}
+  // If premium course and user is not subscribed, show a message
+  if (isPremiumCourse && !isUserSubscribed) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="text-xl mb-4 text-center">
+          <h1 className="text-2xl font-bold mb-2">{course.title}</h1>
+          <p className="text-gray-600 dark:text-gray-400">This is a premium course. Please subscribe to access the content.</p>
+        </div>
+        <Button onClick={() => router.push(`/${lng}/pricing`)} className="mb-4">
+          View Subscription Plans
+        </Button>
+        <Button onClick={() => router.back()} variant="outline" className="flex items-center">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t("go_back")}
+        </Button>
+      </div>
+    )
+  }
 
-      <main
-        className={`flex-grow container mx-auto px-0 py-2 ${!canAccessCourse ? "pointer-events-none filter blur-sm" : ""}`}
-      >
-        <Button onClick={() => (window.location.href = `/courses`)} className="mb-4 flex items-center">
+  // Process content for rendering
+  const processedContent = processContent(course.content)
+
+  return (
+    <div className="min-h-screen bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
+      <main className="container mx-auto px-6 py-8">
+        <Button onClick={() => router.push(`/${lng}/courses`)} className="mb-6 flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("back_to_courses")}
         </Button>
 
-        <div className="flex items-center gap-2 mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold">{course.title}</h1>
-          {isPremiumCourse && (
-            <Badge className={`flex items-center gap-1 ${isUserSubscribed ? "bg-amber-500" : "bg-gray-700"}`}>
-              <Crown className="h-3 w-3" />
-              <span>Premium</span>
-            </Badge>
-          )}
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-2">
-            <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2]">
-              <CardHeader>
-                <CardTitle>{t("course_details")}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">{course.description}</p>
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <span>
-                    <strong>{t("category")}:</strong> <em>{course.category}</em>
-                  </span>
-                  <span>
-                    <strong>{t("difficulty")}:</strong> <em>{course.difficulty}</em>
-                  </span>
-                  <span>
-                    <strong>{t("duration")}:</strong>{" "}
-                    <em>
-                      {course.totalDuration} {t("minutes")}
-                    </em>
-                  </span>
-                </div>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <h3 className="font-semibold mb-0">{t("tags")}:</h3>
-                  {course.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                {course.lessons && course.lessons.length > 0 && (
-                  <div className="mt-6">
-                    <h3 className="font-semibold mb-2">{t("lessons")}:</h3>
-                    <div className="space-y-4">
-                      {course.lessons.map((lesson, index) => {
-                        const isCompleted = completedLessons.includes(index)
-                        const isLastAccessed = index === lastAccessedLesson
-
-                        return (
-                          <Link href={`/${lng}/courses/${courseId}/lessons/${index}`} key={index}>
-                            <div
-                              className={`border p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#1c1c1e] transition cursor-pointer my-4 ${
-                                isCompleted ? "border-l-4 border-green-500" : ""
-                              } ${isLastAccessed ? "bg-blue-50 dark:bg-blue-900/20" : ""}`}
-                            >
-                              <div className="flex justify-between items-center">
-                                <div className="flex items-center">
-                                  <h4 className="font-medium">{lesson.title}</h4>
-                                  {isCompleted && (
-                                    <Badge className="ml-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                                      <Check className="h-3 w-3 mr-1" /> {t("completed")}
-                                    </Badge>
-                                  )}
-                                  {isLastAccessed && !isCompleted && (
-                                    <Badge className="ml-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-                                      {t("in_progress")}
-                                    </Badge>
-                                  )}
-                                </div>
-                                <div className="flex items-center">
-                                  <Clock className="h-4 w-4 mr-1 text-gray-500 dark:text-gray-400" />
-                                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                                    {lesson.duration} {t("minutes")}
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="text-sm mt-1 text-gray-600 dark:text-gray-300">
-                                {lesson.content?.substring(0, 100)}
-                                {lesson.content && lesson.content.length > 100 ? "..." : ""}
-                              </p>
-                              <div className="flex items-center mt-2">
-                                <BookOpen className="h-4 w-4 mr-1 text-gray-500 dark:text-gray-400" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  {t("lesson")} {index + 1} {t("of")} {course.lessons.length}
-                                </span>
-                              </div>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+        <div className="bg-white dark:bg-[#23263a] rounded-2xl shadow-lg p-8 mb-8">
+          <div className="flex items-center gap-4 mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-blue-100">{course.title}</h1>
+            {isPremiumCourse && (
+              <span className="px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-semibold flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7-6.3-4.6L5.7 21l2.3-7-6-4.6h7.6z" />
+                </svg>
+                Premium
+              </span>
+            )}
           </div>
-          <div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <div 
+                className="prose prose-lg max-w-none dark:prose-invert"
+                dangerouslySetInnerHTML={createMarkup(processedContent)}
+              />
+            </div>
+            
             <div className="space-y-6">
-              {course.imageUrl && (
-                <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2] overflow-hidden">
-                  <div className="relative w-full aspect-video">
-                    <Image
-                      src={course.imageUrl || "/placeholder.svg"}
-                      alt={course.title}
-                      fill
-                      className="object-cover opacity-75"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
+              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+                <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-blue-100">Course Details</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-blue-200">Category:</span>
+                    <span className="font-medium text-gray-900 dark:text-blue-100">{course.category}</span>
                   </div>
-                </Card>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-blue-200">Difficulty:</span>
+                    <span className="font-medium text-gray-900 dark:text-blue-100">{course.difficulty}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-blue-200">Duration:</span>
+                    <span className="font-medium text-gray-900 dark:text-blue-100">{course.totalDuration} min</span>
+                  </div>
+                </div>
+              </div>
+
+              {course.learning_objectives && course.learning_objectives.length > 0 && (
+                <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+                  <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-blue-100">Learning Objectives</h3>
+                  <ul className="space-y-2">
+                    {course.learning_objectives.map((objective, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="text-green-500 mt-1">✓</span>
+                        <span className="text-gray-700 dark:text-blue-200">{objective}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
 
-              <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2]">
-                <CardHeader>
-                  <CardTitle>{t("course_progress")}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CourseProgress courseId={courseId} lng={lng} />
-                  {/* <p className="text-sm mb-4">33% {t("complete")}</p> */}
-                  <Button className="w-full mb-3" onClick={handleContinueCourse} disabled={!canAccessCourse}>
-                    {completedLessons.length > 0 ? t("continue_course") : t("start_course")}
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-[#fafafa] dark:bg-[#3d3d3ff2]">
-                <CardHeader>
-                  <CardTitle>{t("general_information")}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <Link href="#" className="block space-y-1">
-                      <div className="flex gap-1 text-sm">
-                        <p className="font-medium">{t("origin_language")}:</p>
-                        <p className="text-muted-foreground dark:text-[#ededed95]">
-                          {course.generalInformation?.originLanguage ?? ""}
-                        </p>
-                      </div>
-                      <div className="flex gap-1 text-sm">
-                        <p className="font-medium">{t("author")}:</p>
-                        <p className="text-muted-foreground dark:text-[#ededed95]">
-                          {course.generalInformation?.author ?? ""}
-                        </p>
-                      </div>
-                      <div className="flex gap-1 text-sm">
-                        <p className="font-medium">{t("genre")}:</p>
-                        <p className="text-muted-foreground dark:text-[#ededed95]">
-                          {course.generalInformation?.genre ?? ""}
-                        </p>
-                      </div>
-                      <div className="flex gap-1 text-sm">
-                        <p className="font-medium">{t("chapters")}:</p>
-                        <p className="text-muted-foreground dark:text-[#ededed95]">
-                          {course.generalInformation?.chapters ?? ""}
-                        </p>
-                      </div>
-                      <div className="flex gap-1 text-sm">
-                        <p className="font-medium">{t("language_detail")}:</p>
-                        <p className="text-muted-foreground dark:text-[#ededed95]">
-                          {course.generalInformation?.languageDetail ?? ""}
-                        </p>
-                      </div>
-                      <div className="flex gap-1 text-sm">
-                        <p className="font-medium">{t("time_period")}:</p>
-                        <p className="text-muted-foreground dark:text-[#ededed95]">
-                          {course.generalInformation?.timePeriod ?? ""}
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
+              <Button
+                onClick={markAsCompleted}
+                disabled={isCompleted || markingAsCompleted}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3"
+              >
+                {isCompleted ? "✓ Completed" : markingAsCompleted ? "Marking Complete..." : "Mark as Complete"}
+              </Button>
             </div>
           </div>
         </div>

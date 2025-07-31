@@ -5,9 +5,7 @@ import Quiz from '../../../models/Quiz';
 
 export async function GET(request: Request) {
   try {
-    console.log('Connecting to MongoDB...');
     await connectMongoDB();
-    console.log('MongoDB connected successfully');
 
     const { searchParams } = new URL(request.url);
     const quizId = searchParams.get('quizId');
@@ -23,10 +21,7 @@ export async function GET(request: Request) {
 
     // Fetch courses and quizzes as plain objects
     const courses = await Course.find().lean();
-    // console.log('Courses fetched:', courses);
-
     const quizzes = await Quiz.find().lean();
-    // console.log('Quizzes fetched:', quizzes);
 
     return NextResponse.json({ courses, quizzes });
   } catch (error) {

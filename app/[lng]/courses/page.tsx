@@ -94,11 +94,20 @@ export default function CoursePage({
         const response = await fetch("/api/courses")
         if (!response.ok) throw new Error("Failed to fetch courses")
         const data = await response.json()
+        
         if (Array.isArray(data.courses)) {
           setAllCourses(data.courses)
-          const languageFilteredCourses = data.courses.filter(
-            (course) => course.language?.toLowerCase() === currentLanguage.toLowerCase(),
+          let languageFilteredCourses = data.courses.filter(
+            (course) => course.language?.toLowerCase() === currentLanguage.toLowerCase()
           )
+          
+          // Fallback to English courses if no courses found for current language
+          if (languageFilteredCourses.length === 0 && currentLanguage !== 'en') {
+            languageFilteredCourses = data.courses.filter(
+              (course) => course.language?.toLowerCase() === 'en'
+            );
+          }
+          
           setCourses(languageFilteredCourses)
         }
       } catch (error) {
@@ -114,11 +123,6 @@ export default function CoursePage({
   }, [currentLanguage])
 
   const filteredCourses = courses.filter((course) => course.title.toLowerCase().includes(searchTerm.toLowerCase()))
-
-  const coursesWithProgress = filteredCourses.map((course) => ({
-    ...course,
-    progress: `${Math.floor(Math.random() * 8)}/${10}`,
-  }))
 
   const isUserSubscribed = user?.subscribed || false
 
@@ -203,7 +207,7 @@ export default function CoursePage({
         </div>
       ) : filteredCourses.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {coursesWithProgress.map((course, index) => (
+          {filteredCourses.map((course, index) => (
             <motion.div
               key={course._id.toString()}
               initial={{ opacity: 0, y: 20 }}
