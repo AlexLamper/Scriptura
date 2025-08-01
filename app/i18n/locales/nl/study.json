@@ -1,5 +1,7 @@
 {
   "page_title": "Bestudeer de Bijbel",
+  "select_passage": "Selecteer Bijbelpassage",
+  "translation": "Vertaling",
   "loading_translations": "Laden vertalingen...",
   "no_translations": "Geen vertalingen",
   "select_translation": "Selecteer vertaling",
@@ -11,12 +13,25 @@
   "select_chapter": "Selecteer hoofdstuk",
   "previous_chapter": "Vorige hoofdstuk",
   "next_chapter": "Volgende hoofdstuk",
-  "print_download": "Print of download hoofdstuk",
+  "print_download": "Print of download",
+  "download_chapter": "Download Hoofdstuk",
+  "download_verse": "Download Vers",
+  "download_options": "Download Opties",
+  "download_as_pdf": "Download als PDF",
+  "study_materials": "Studie Materiaal",
+  "bible_text": "Bijbeltekst",
+  "comparison_view": "Vergelijkingsweergave",
+  "add_bookmark": "Bladwijzer Toevoegen",
+  "remove_bookmark": "Bladwijzer Verwijderen",
+  "bookmarks": "Bladwijzers",
+  "play_audio": "Audio Afspelen",
+  "pause_audio": "Audio Pauzeren",
+  "keyboard_shortcuts": "Toetsenbordsnelkoppelingen",
   "no_translations_available": "Geen vertalingen beschikbaar.",
   "no_books_available": "Geen boeken beschikbaar voor deze vertaling.",
-  "select_book_chapter": "Selecteer een boek en hoofdstuk om te beginnen.",
-  "select_translation_start": "Selecteer een Bijbelvertaling om te beginnen.",
-  "select_passage": "Selecteer een passage om te lezen",
+  "select_book_chapter": "Selecteer een boek en hoofdstuk om te beginnen met lezen.",
+  "select_translation_start": "Selecteer een Bijbelvertaling om je studie te beginnen.",
+  "ready_to_study": "Klaar om dieper in Gods Woord te duiken",
   "tabs": {
     "explanation": "Uitleg",
     "historical": "Historische Context",
@@ -41,7 +56,11 @@
     "cultural_background": "Culturele Achtergrond",
     "cultural_background_text": "Het scheppingsverhaal onderscheidt zich van andere oude Nabije Oosterse scheppingsmythen door zijn monotheïstische karakter en de waardigheid van de mens.",
     "literary_context": "Literaire Context",
-    "literary_context_text": "Genesis 1-11 vormt de 'oergeschiedenis' die de basis legt voor de verhalen van de aartsvaders die volgen."
+    "literary_context_text": "Genesis 1-11 vormt de 'oergeschiedenis' die de basis legt voor de verhalen van de aartsvaders die volgen.",
+    "original_languages": "Oorspronkelijke Talen",
+    "hebrew_greek_tools": "Hebreeuws & Grieks Hulpmiddelen",
+    "timeline": "Historische Tijdlijn",
+    "maps_context": "Kaarten & Culturele Context"
   },
   "related_verses": {
     "title": "Gerelateerde Bijbelpassages",
@@ -51,5 +70,14 @@
     "psalm_33_theme": "Thema: Gods scheppende woord",
     "hebrews_11": "Door het geloof verstaan wij, dat de wereld door Gods woord toebereid is, alzo dat hetgene, dat men ziet, niet geworden is uit zichtbare dingen.",
     "hebrews_11_theme": "Thema: Geloof in de schepping"
+  },
+  "shortcuts": {
+    "title": "Toetsenbordsnelkoppelingen",
+    "next_chapter": "→ Volgende Hoofdstuk",
+    "prev_chapter": "← Vorige Hoofdstuk",
+    "bookmark": "B - Bladwijzer Aan/Uit",
+    "download": "D - Download",
+    "play_audio": "Spatie - Audio Afspelen/Pauzeren",
+    "search": "/ - Zoeken"
   }
 }

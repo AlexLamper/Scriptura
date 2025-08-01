@@ -1,5 +1,7 @@
 {
   "page_title": "Study the Bible",
+  "select_passage": "Select Bible Passage",
+  "translation": "Translation",
   "loading_translations": "Loading translations...",
   "no_translations": "No translations",
   "select_translation": "Select translation",
@@ -11,12 +13,25 @@
   "select_chapter": "Select chapter",
   "previous_chapter": "Previous chapter",
   "next_chapter": "Next chapter",
-  "print_download": "Print or download chapter",
+  "print_download": "Print or download",
+  "download_chapter": "Download Chapter",
+  "download_verse": "Download Verse",
+  "download_as_pdf": "Download as PDF",
+  "download_options": "Download Options",
+  "study_materials": "Study Materials",
+  "bible_text": "Bible Text",
+  "comparison_view": "Comparison View",
+  "add_bookmark": "Add Bookmark",
+  "remove_bookmark": "Remove Bookmark",
+  "bookmarks": "Bookmarks",
+  "play_audio": "Play Audio",
+  "pause_audio": "Pause Audio",
+  "keyboard_shortcuts": "Keyboard Shortcuts",
   "no_translations_available": "No translations available.",
   "no_books_available": "No books available for this translation.",
-  "select_book_chapter": "Select a book and chapter to start.",
-  "select_translation_start": "Select a Bible translation to start.",
-  "select_passage": "Select a passage to read",
+  "select_book_chapter": "Select a book and chapter to start reading.",
+  "select_translation_start": "Select a Bible translation to begin your study.",
+  "ready_to_study": "Ready to dive deeper into God's Word",
   "tabs": {
     "explanation": "Explanation",
     "historical": "Historical Context",
@@ -41,7 +56,11 @@
     "cultural_background": "Cultural Background",
     "cultural_background_text": "The creation story distinguishes itself from other ancient Near Eastern creation myths by its monotheistic character and the dignity of man.",
     "literary_context": "Literary Context",
-    "literary_context_text": "Genesis 1-11 forms the 'primeval history' that lays the foundation for the stories of the patriarchs that follow."
+    "literary_context_text": "Genesis 1-11 forms the 'primeval history' that lays the foundation for the stories of the patriarchs that follow.",
+    "original_languages": "Original Languages",
+    "hebrew_greek_tools": "Hebrew & Greek Tools",
+    "timeline": "Historical Timeline",
+    "maps_context": "Maps & Cultural Context"
   },
   "related_verses": {
     "title": "Related Bible Passages",
@@ -51,5 +70,14 @@
     "psalm_33_theme": "Theme: God's creative word",
     "hebrews_11": "By faith we understand that the universe was created by the word of God, so that what is seen was not made out of things that are visible.",
     "hebrews_11_theme": "Theme: Faith in creation"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "next_chapter": "→ Next Chapter",
+    "prev_chapter": "← Previous Chapter",
+    "bookmark": "B - Toggle Bookmark",
+    "download": "D - Download",
+    "play_audio": "Space - Play/Pause Audio",
+    "search": "/ - Search"
   }
 }

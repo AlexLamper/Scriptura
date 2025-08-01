@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users } from 'lucide-react';
+import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users, Bookmark } from 'lucide-react';
 import BibleSelector from '../../../components/study/BibleSelector';
 import ChapterViewer from '../../../components/study/ChapterViewer';
 import { ChapterNotes } from '../../../components/study/ChapterNotes';
+import BookmarkSystem from '../../../components/study/BookmarkSystem';
+import { ShortcutDisplay } from '../../../components/study/ShortcutDisplay';
 import { useTranslation } from '../../i18n/client';
+import { useKeyboardShortcuts, KeyboardShortcut } from '../../../hooks/useKeyboardShortcuts';
 
 // Define interfaces for API responses
 interface Version {
@@ -19,20 +22,65 @@ interface TabComponentProps {
   selectedVersion?: string | null;
   language: string;
   t: (key: string) => string;
+  versions: string[];
+  versionObjects?: { id: string; name: string; abbreviation: string }[];
+  onNextChapter: () => void;
+  onPrevChapter: () => void;
+  onDownload: () => void;
 }
 
-function TabComponent({ selectedBook, selectedChapter, language = "en", t }: TabComponentProps) {
+function TabComponent({ 
+  selectedBook, 
+  selectedChapter, 
+  selectedVersion, 
+  language = "en", 
+  t, 
+  // versions, 
+  // versionObjects = [],
+  onNextChapter,
+  onPrevChapter,
+  onDownload
+}: TabComponentProps) {
   const [activeTab, setActiveTab] = useState('explanation');
+
+  // Define keyboard shortcuts
+  const shortcuts: KeyboardShortcut[] = [
+    {
+      key: 'ArrowRight',
+      action: onNextChapter,
+      description: t('shortcuts.next_chapter')
+    },
+    {
+      key: 'ArrowLeft',
+      action: onPrevChapter,
+      description: t('shortcuts.prev_chapter')
+    },
+    {
+      key: 'b',
+      action: () => setActiveTab('bookmarks'),
+      description: t('shortcuts.bookmark')
+    },
+    {
+      key: 'd',
+      action: onDownload,
+      description: t('shortcuts.download')
+    },
+  ];
+
+  // Enable keyboard shortcuts
+  useKeyboardShortcuts({ shortcuts });
 
   const tabs = [
     { id: 'explanation', label: t('tabs.explanation'), icon: MessageCircle },
     { id: 'historical', label: t('tabs.historical'), icon: Clock },
     { id: 'related', label: t('tabs.related'), icon: Link },
     { id: 'notes', label: t('tabs.notes'), icon: Users },
+    { id: 'bookmarks', label: t('bookmarks'), icon: Bookmark },
+    { id: 'shortcuts', label: t('keyboard_shortcuts'), icon: MessageCircle },
   ];
 
   const renderTabContent = () => {
-    const reference = selectedBook && selectedChapter ? `${selectedBook} ${selectedChapter}` : 'Selecteer een passage';
+    const reference = selectedBook && selectedChapter ? `${selectedBook} ${selectedChapter}` : t('select_book_chapter');
     
     switch (activeTab) {
       case 'explanation':
@@ -115,6 +163,23 @@ function TabComponent({ selectedBook, selectedChapter, language = "en", t }: Tab
             />
           </div>
         );
+      case 'bookmarks':
+        return (
+          <BookmarkSystem
+            currentTranslation={selectedVersion || ''}
+            currentTranslationName={selectedVersion || ''}
+            currentBook={selectedBook}
+            currentChapter={selectedChapter}
+            t={t}
+          />
+        );
+      case 'shortcuts':
+        return (
+          <ShortcutDisplay
+            shortcuts={shortcuts}
+            t={t}
+          />
+        );
       default:
         return null;
     }
@@ -123,20 +188,20 @@ function TabComponent({ selectedBook, selectedChapter, language = "en", t }: Tab
   return (
     <div>
       {/* Tab Headers */}
-      <div className="flex space-x-1 mb-4 border-b border-gray-200 dark:border-gray-600">
+      <div className="flex flex-wrap space-x-1 mb-4 border-b border-gray-200 dark:border-gray-600 overflow-x-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-3 py-2 rounded-t-lg text-sm font-medium transition ${
+              className={`flex items-center space-x-2 px-2 sm:px-3 py-2 rounded-t-lg text-xs sm:text-sm font-medium transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-500 dark:bg-[#232325] dark:text-blue-300 dark:border-blue-400'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-[#2a2d35]'
               }`}
             >
-              <Icon size={16} />
+              <Icon size={14} className="sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">{tab.label}</span>
             </button>
           );
@@ -168,8 +233,75 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
   const [loadingVersions, setLoadingVersions] = useState(false);
   const [loadingBooks, setLoadingBooks] = useState(false);
   const [loadingChapters, setLoadingChapters] = useState(false);
+  const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+
+  // Close download dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (showDownloadOptions && !target.closest('.download-dropdown')) {
+        setShowDownloadOptions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showDownloadOptions]);
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
+
+  // Download functionality
+  const downloadContent = useCallback((content: string, filename: string, format: 'txt' | 'pdf' = 'txt') => {
+    if (format === 'txt') {
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  }, []);
+
+  const handleDownloadChapter = useCallback(async () => {
+    if (!selectedBook || !selectedChapter || !selectedVersion) return;
+    
+    try {
+      const params = new URLSearchParams({ 
+        book: selectedBook, 
+        chapter: selectedChapter.toString() 
+      });
+      if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
+        params.append('version', selectedVersion);
+      }
+      
+      const response = await fetch(`${API_BASE_URL}/chapter?${params.toString()}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('API Response:', data); // Debug log
+        
+        // Handle different response formats
+        let verses;
+        if (Array.isArray(data)) {
+          verses = data;
+        } else if (data.verses && Array.isArray(data.verses)) {
+          verses = data.verses;
+        } else {
+          console.error('Unexpected API response format:', data);
+          return;
+        }
+        
+        const content = verses.map((verse: { verse: number; text: string }) => `${verse.verse}: ${verse.text}`).join('\n');
+        const filename = `${selectedBook}_${selectedChapter}_${selectedVersion || 'default'}.txt`;
+        downloadContent(content, filename);
+      }
+    } catch (error) {
+      console.error('Error downloading chapter:', error);
+    }
+    setShowDownloadOptions(false);
+  }, [selectedBook, selectedChapter, selectedVersion, downloadContent]);
 
   // Function to get default Bible version based on language
   const getDefaultVersion = (availableVersions: string[], language: string): string | null => {
@@ -429,10 +561,15 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
     });
   }, [chapters]); // Depend on chapters array to ensure correct index lookup
 
+  // Wrapper for download functionality for keyboard shortcuts
+  const handleDownload = useCallback(() => {
+    handleDownloadChapter();
+  }, [handleDownloadChapter]);
+
   return (
     <div className="mt-2">
-      {/* Top controls: Bible/book/chapter selectors, arrows, print/download */}
-      <div className="flex flex-wrap items-center gap-3 mb-6">
+      {/* Top controls: Bible/book/chapter selectors with navigation arrows */}
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 mb-6">
         <BibleSelector
           versions={versions}
           books={books}
@@ -449,39 +586,62 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           t={t}
         />
 
-        {/* Prev/Next Arrows */}
-        <button
-          className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100"
-          title={t('previous_chapter')}
-          onClick={handlePreviousChapter}
-          disabled={selectedChapter <= 1 || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === 0}
-        >
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button
-          className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100"
-          title={t('next_chapter')}
-          onClick={handleNextChapter}
-          disabled={selectedChapter >= maxChapter || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === chapters.length - 1}
-        >
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-        {/* Print/Download Button */}
-        <button className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition ml-auto dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100" title={t('print_download')}>
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17 17v4H7v-4M12 12v6m0 0l-3-3m3 3l3-3M21 15V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8" />
-          </svg>
-        </button>
+        {/* Navigation Arrows - positioned right after selectors */}
+        <div className="flex items-center gap-2 order-last sm:order-none">
+          <button
+            className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100"
+            title={t('previous_chapter')}
+            onClick={handlePreviousChapter}
+            disabled={selectedChapter <= 1 || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === 0}
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100"
+            title={t('next_chapter')}
+            onClick={handleNextChapter}
+            disabled={selectedChapter >= maxChapter || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === chapters.length - 1}
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Download Button with dropdown */}
+        <div className="relative ml-auto download-dropdown">
+          <button 
+            className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100" 
+            title={t('print_download')}
+            onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17 17v4H7v-4M12 12v6m0 0l-3-3m3 3l3-3M21 15V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8" />
+            </svg>
+          </button>
+          
+          {showDownloadOptions && (
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-10">
+              <div className="p-2">
+                <button
+                  onClick={handleDownloadChapter}
+                  disabled={!selectedBook || !selectedChapter}
+                  className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {t('download_chapter')}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
         {/* Left: Bible verse section - Render ChapterViewer */}
-        <section className="bg-white p-6 rounded shadow overflow-auto dark:bg-[#181b23] dark:shadow-xl dark:shadow-black/20">
-          <div className="flex items-center justify-between mb-4">
+        <section className="bg-white p-4 sm:p-6 rounded shadow overflow-auto dark:bg-[#181b23] dark:shadow-xl dark:shadow-black/20">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
             {selectedBook && selectedChapter && (
               <h2 className="text-lg font-semibold dark:text-white">
                 <span className="font-semibold">{selectedBook} </span>
@@ -489,7 +649,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
               </h2>
             )}
             <div className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-lg dark:text-gray-200 dark:bg-[#2a2d35]">
-              Version: ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
+              {t('select_translation')}: ({selectedVersion || (loadingVersions ? t('loading_translations') : t('no_translations'))})
             </div>
           </div>
 
@@ -505,20 +665,32 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           {/* Add a message if no book/chapter is selected yet */}
           {(!selectedBook || !selectedChapter || !selectedVersion) && !loadingBooks && !loadingChapters && (
             <div className="py-12 text-center text-gray-500 dark:text-gray-300">
-              {loadingVersions && t('loading_translations')}
-              {!loadingVersions && versions.length === 0 && t('no_translations_available')}
-              {!loadingVersions && versions.length > 0 && selectedVersion && loadingBooks && t('loading_books')}
-              {!loadingVersions && versions.length > 0 && selectedVersion && !loadingBooks && books.length === 0 && t('no_books_available')}
-              {!loadingVersions && versions.length > 0 && selectedVersion && !selectedBook && t('select_book_chapter')}
-              {!selectedVersion && t('select_translation_start')}
+              <div className="space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 rounded-full flex items-center justify-center mx-auto">
+                  <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    {t('ready_to_study')}
+                  </h3>
+                  <div className="text-sm space-y-1">
+                    {loadingVersions && <p>{t('loading_translations')}</p>}
+                    {!loadingVersions && versions.length === 0 && <p>{t('no_translations_available')}</p>}
+                    {!loadingVersions && versions.length > 0 && selectedVersion && loadingBooks && <p>{t('loading_books')}</p>}
+                    {!loadingVersions && versions.length > 0 && selectedVersion && !loadingBooks && books.length === 0 && <p>{t('no_books_available')}</p>}
+                    {!loadingVersions && versions.length > 0 && selectedVersion && !selectedBook && <p>{t('select_book_chapter')}</p>}
+                    {!selectedVersion && <p>{t('select_translation_start')}</p>}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </section>
 
         {/* Right: Tabbed content section */}
-        <section className="bg-white p-6 rounded shadow dark:bg-[#181b23] dark:shadow-xl dark:shadow-black/20">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold dark:text-white">STUDIE MATERIAAL</h2>
+        <section className="bg-white p-4 sm:p-6 rounded shadow dark:bg-[#181b23] dark:shadow-xl dark:shadow-black/20">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+            <h2 className="text-lg font-semibold dark:text-white">{t('study_materials').toUpperCase()}</h2>
             <div className="flex space-x-3">
               <button className="p-2 bg-gray-100 rounded hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100">
                 <FileText size={18} />
@@ -536,7 +708,17 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           </div>
           
           {/* Tab Navigation */}
-          <TabComponent selectedBook={selectedBook} selectedChapter={selectedChapter} language={lng} t={t} />
+          <TabComponent 
+            selectedBook={selectedBook} 
+            selectedChapter={selectedChapter} 
+            selectedVersion={selectedVersion}
+            language={lng} 
+            t={t} 
+            versions={versions}
+            onNextChapter={handleNextChapter}
+            onPrevChapter={handlePreviousChapter}
+            onDownload={handleDownload}
+          />
         </section>
       </div>
     </div>
