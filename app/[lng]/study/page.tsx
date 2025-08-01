@@ -449,16 +449,16 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
         {/* Left: Bible verse section - Render ChapterViewer */}
         <section className="bg-white p-6 rounded shadow overflow-auto dark:bg-[#181b23] dark:shadow-xl dark:shadow-black/20">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold dark:text-white">
-              BIJBELTEKST ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
-            </h2>
             {selectedBook && selectedChapter && (
-              <div className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-lg dark:text-gray-200 dark:bg-[#2a2d35]">
+              <h2 className="text-lg font-semibold dark:text-white">
                 <span className="font-medium">{selectedBook}</span>
                 <span className="mx-1">•</span>
                 <span>Hoofdstuk {selectedChapter}</span>
-              </div>
+              </h2>
             )}
+            <div className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-lg dark:text-gray-200 dark:bg-[#2a2d35]">
+              BIJBELTEKST ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
+            </div>
           </div>
 
           {selectedBook && selectedChapter && selectedVersion && (

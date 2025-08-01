@@ -1,0 +1,187 @@
+[
+  {
+    "title": "Foundations of Faith",
+    "description": "Explore the fundamental principles of biblical faith through key passages and teachings.",
+    "category": "Biblical Studies",
+    "theme": "Faith",
+    "difficulty": "beginner",
+    "language": "en",
+    "totalDuration": 120,
+    "tags": ["faith", "foundations", "basics"],
+    "learning_objectives": [
+      "Understand what biblical faith means",
+      "Learn key verses about faith",
+      "Apply faith principles to daily life"
+    ],
+    "passages": [
+      { "book": "Hebrews", "chapter": 11, "verses": "1-6" },
+      { "book": "Romans", "chapter": 10, "verses": "17" },
+      { "book": "James", "chapter": 2, "verses": "14-26" }
+    ],
+    "content": "A comprehensive study on faith...",
+    "imageUrl": "/images/faith-course.jpg",
+    "isPremium": false
+  },
+  {
+    "title": "Understanding God's Grace",
+    "description": "Dive deep into the concept of divine grace and its transformative power in our lives.",
+    "category": "Theology",
+    "theme": "Grace",
+    "difficulty": "intermediate",
+    "language": "en",
+    "totalDuration": 180,
+    "tags": ["grace", "mercy", "salvation"],
+    "learning_objectives": [
+      "Define biblical grace",
+      "Understand grace vs. works",
+      "Experience grace in daily living"
+    ],
+    "passages": [
+      { "book": "Ephesians", "chapter": 2, "verses": "8-9" },
+      { "book": "Romans", "chapter": 5, "verses": "20-21" },
+      { "book": "2 Corinthians", "chapter": 12, "verses": "9" }
+    ],
+    "content": "An in-depth exploration of grace...",
+    "imageUrl": "/images/grace-course.jpg",
+    "isPremium": true
+  },
+  {
+    "title": "Wisdom from Jesus' Parables",
+    "description": "Learn timeless truths through the stories Jesus told to illustrate kingdom principles.",
+    "category": "Jesus' Teachings",
+    "theme": "Parables",
+    "difficulty": "beginner",
+    "language": "en",
+    "totalDuration": 150,
+    "tags": ["parables", "jesus", "stories", "kingdom"],
+    "learning_objectives": [
+      "Understand parable interpretation",
+      "Learn key parables of Jesus",
+      "Apply parable lessons today"
+    ],
+    "passages": [
+      { "book": "Luke", "chapter": 15, "verses": "11-32" },
+      { "book": "Matthew", "chapter": 13, "verses": "3-9" },
+      { "book": "Luke", "chapter": 10, "verses": "25-37" }
+    ],
+    "content": "Journey through Jesus' most famous parables...",
+    "imageUrl": "/images/parables-course.jpg",
+    "isPremium": false
+  },
+  {
+    "title": "The Power of Prayer",
+    "description": "Discover the biblical foundations of prayer and how to develop a meaningful prayer life.",
+    "category": "Spiritual Disciplines",
+    "theme": "Prayer",
+    "difficulty": "beginner",
+    "language": "en",
+    "totalDuration": 90,
+    "tags": ["prayer", "communication", "spiritual-discipline"],
+    "learning_objectives": [
+      "Learn biblical models of prayer",
+      "Develop consistent prayer habits",
+      "Understand different types of prayer"
+    ],
+    "passages": [
+      { "book": "Matthew", "chapter": 6, "verses": "9-13" },
+      { "book": "1 Thessalonians", "chapter": 5, "verses": "16-18" },
+      { "book": "James", "chapter": 5, "verses": "13-16" }
+    ],
+    "content": "A practical guide to biblical prayer...",
+    "imageUrl": "/images/prayer-course.jpg",
+    "isPremium": false
+  },
+  {
+    "title": "The Path to Salvation",
+    "description": "Understand the biblical plan of salvation and what it means to be saved by grace.",
+    "category": "Doctrine",
+    "theme": "Salvation",
+    "difficulty": "intermediate",
+    "language": "en",
+    "totalDuration": 200,
+    "tags": ["salvation", "gospel", "redemption"],
+    "learning_objectives": [
+      "Understand the need for salvation",
+      "Learn the steps to salvation",
+      "Grow in assurance of salvation"
+    ],
+    "passages": [
+      { "book": "Romans", "chapter": 3, "verses": "23" },
+      { "book": "Romans", "chapter": 6, "verses": "23" },
+      { "book": "John", "chapter": 3, "verses": "16" },
+      { "book": "Acts", "chapter": 16, "verses": "30-31" }
+    ],
+    "content": "The complete biblical teaching on salvation...",
+    "imageUrl": "/images/salvation-course.jpg",
+    "isPremium": true
+  },
+  {
+    "title": "Following Jesus: A Discipleship Journey",
+    "description": "Learn what it means to be a disciple of Jesus Christ in the modern world.",
+    "category": "Christian Living",
+    "theme": "Discipleship",
+    "difficulty": "intermediate",
+    "language": "en",
+    "totalDuration": 240,
+    "tags": ["discipleship", "following-jesus", "christian-life"],
+    "learning_objectives": [
+      "Understand the cost of discipleship",
+      "Learn spiritual disciplines",
+      "Develop Christ-like character"
+    ],
+    "passages": [
+      { "book": "Luke", "chapter": 9, "verses": "23-26" },
+      { "book": "Matthew", "chapter": 28, "verses": "18-20" },
+      { "book": "John", "chapter": 15, "verses": "1-8" }
+    ],
+    "content": "A comprehensive guide to Christian discipleship...",
+    "imageUrl": "/images/discipleship-course.jpg",
+    "isPremium": true
+  },
+  {
+    "title": "Love in Action",
+    "description": "Explore the biblical concept of love and how to live it out in relationships and service.",
+    "category": "Christian Living",
+    "theme": "Love",
+    "difficulty": "beginner",
+    "language": "en",
+    "totalDuration": 100,
+    "tags": ["love", "relationships", "service"],
+    "learning_objectives": [
+      "Understand God's love for us",
+      "Learn to love others biblically",
+      "Put love into practical action"
+    ],
+    "passages": [
+      { "book": "1 John", "chapter": 4, "verses": "7-21" },
+      { "book": "1 Corinthians", "chapter": 13, "verses": "1-13" },
+      { "book": "John", "chapter": 13, "verses": "34-35" }
+    ],
+    "content": "Discovering and living biblical love...",
+    "imageUrl": "/images/love-course.jpg",
+    "isPremium": false
+  },
+  {
+    "title": "Biblical Wisdom for Daily Living",
+    "description": "Learn practical wisdom from Proverbs and other wisdom literature for everyday decisions.",
+    "category": "Wisdom Literature",
+    "theme": "Wisdom",
+    "difficulty": "intermediate",
+    "language": "en",
+    "totalDuration": 160,
+    "tags": ["wisdom", "proverbs", "practical-living"],
+    "learning_objectives": [
+      "Understand biblical wisdom",
+      "Apply wisdom to decision-making",
+      "Develop wise relationships"
+    ],
+    "passages": [
+      { "book": "Proverbs", "chapter": 1, "verses": "1-7" },
+      { "book": "Proverbs", "chapter": 3, "verses": "5-6" },
+      { "book": "James", "chapter": 1, "verses": "5-8" }
+    ],
+    "content": "Practical wisdom from Scripture...",
+    "imageUrl": "/images/wisdom-course.jpg",
+    "isPremium": true
+  }
+]

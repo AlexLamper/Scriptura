@@ -98,128 +98,86 @@ export default function ProfilePage({
   }
 
   return (
-    <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4">
-      <div className="flex items-center gap-3 mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("your_profile")}</h1>
-        {user.isAdmin && (
-          <Badge className="bg-purple-600 text-white flex items-center gap-1 dark:bg-gradient-to-r dark:from-purple-600 dark:to-purple-400 dark:shadow-lg">
-            <ShieldCheck className="h-3 w-3" />
-            <span>Admin</span>
-          </Badge>
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2 dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
-          <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-blue-100">{t("personal_information")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ProfileForm initialName={user.name} initialEmail={user.email} initialBio={user.bio || ""} lng={lng} />
-          </CardContent>
-        </Card>
-
-        <div className="space-y-6">
-          <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
-            <CardHeader>
-              <CardTitle className="text-gray-900 dark:text-blue-100">{t("profile_picture")}</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center">
-              <ProfileImageUpload initialImage={user.image} userName={user.name} lng={lng} />
-            </CardContent>
-          </Card>
-
-          <SubscriptionStatus
-            userId={user._id.toString()}
-            lng={lng}
-            subscribed={user.subscribed}
-            stripeSubscriptionId={user.stripeSubscriptionId}
-            isAdmin={user.isAdmin}
-          />
+    <div className="min-h-screen">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              {t("your_profile")}
+            </h1>
+            {user.isAdmin && (
+              <Badge className="bg-purple-600 text-white flex items-center gap-1 shadow-sm">
+                <ShieldCheck className="h-3 w-3" />
+                <span>Admin</span>
+              </Badge>
+            )}
+          </div>
+          <p className="text-gray-600 dark:text-gray-300">
+            {t("profile_description", { defaultValue: "Manage your account settings and preferences" })}
+          </p>
         </div>
-      </div>
 
-      <div className="mt-6">
-        <Card className="mt-6 dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
-          <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-blue-100">Your Badges</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <UserBadges earned={user.badges || []} />
-          </CardContent>
-        </Card>
-      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Profile Section */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+              <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+                <CardTitle className="text-gray-900 dark:text-white">
+                  {t("personal_information")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <ProfileForm 
+                  initialName={user.name} 
+                  initialEmail={user.email} 
+                  initialBio={user.bio || ""} 
+                  lng={lng} 
+                />
+              </CardContent>
+            </Card>
 
-      {user.isAdmin && (
-        <div className="mt-6">
-          <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
-            <CardHeader>
-              <CardTitle className="text-gray-900 dark:text-blue-100">Admin Dashboard</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <p className="text-lg text-gray-600 dark:text-blue-200">
-                  Welcome to the admin dashboard. As an admin, you have access to special features:
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <a
-                    href={`/${lng}/admin/courses`}
-                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
-                  >
-                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Manage Courses</h3>
-                    <p className="text-sm text-gray-600 dark:text-blue-200">Create, edit, and manage premium courses</p>
-                  </a>
-                  <a
-                    href={`/${lng}/admin/users`}
-                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
-                  >
-                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Manage Users</h3>
-                    <p className="text-sm text-gray-600 dark:text-blue-200">
-                      View and manage user accounts and subscriptions
-                    </p>
-                  </a>
-                  <a
-                    href={`/${lng}/admin/analytics`}
-                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
-                  >
-                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Analytics</h3>
-                    <p className="text-sm text-gray-600 dark:text-blue-200">
-                      View platform usage and subscription statistics
-                    </p>
-                  </a>
-                  <a
-                    href={`/${lng}/admin/settings`}
-                    className="block p-4 bg-gray-100 dark:bg-[#181b23] rounded-lg hover:bg-gray-200 dark:hover:bg-[#23263a] transition-colors border dark:border-gray-700/40 dark:shadow-md"
-                  >
-                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-blue-100">Platform Settings</h3>
-                    <p className="text-sm text-gray-600 dark:text-blue-200">Configure global platform settings</p>
-                  </a>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            {/* Badges Section */}
+            <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+              <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+                <CardTitle className="text-gray-900 dark:text-white">
+                  {t("your_badges", { defaultValue: "Your Badges" })}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <UserBadges earned={user.badges || []} />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Profile Picture */}
+            <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+              <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+                <CardTitle className="text-gray-900 dark:text-white">
+                  {t("profile_picture")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 flex flex-col items-center">
+                <ProfileImageUpload 
+                  initialImage={user.image} 
+                  userName={user.name} 
+                  lng={lng} 
+                />
+              </CardContent>
+            </Card>
+
+            {/* Subscription */}
+            <SubscriptionStatus
+              userId={user._id.toString()}
+              lng={lng}
+              subscribed={user.subscribed}
+              stripeSubscriptionId={user.stripeSubscriptionId}
+              isAdmin={user.isAdmin}
+            />
+          </div>
         </div>
-      )}
-
-      <div className="mt-6">
-        <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
-          <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-blue-100">{t("course_progress")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {user.enrolledCourses && user.enrolledCourses.length > 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-lg text-gray-600 dark:text-blue-200">{t("course_progress_info")}</p>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-lg text-gray-600 dark:text-blue-200">{t("no_enrolled_courses")}</p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   )
