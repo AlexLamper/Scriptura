@@ -5,10 +5,10 @@ import { WelcomeCard } from "../../../components/dashboard/WelcomeCard"
 import { DailyVerseCard } from "../../../components/dashboard/DailyVerseCard"
 import { RecentNotesCard } from "../../../components/dashboard/RecentNotesCard"
 // import { SummaryCard } from "../../../components/dashboard/SummaryCard"
-import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
-import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
+// import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
+// import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
 import { CoursesCard } from "../../../components/dashboard/CoursesCard"
-import { BarChart } from "../../../components/dashboard/BarChart"
+// import { BarChart } from "../../../components/dashboard/BarChart"
 // import { FileText, ClipboardList, BookOpen } from "lucide-react"
 
 interface DashboardPageProps {
@@ -54,8 +54,8 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         {/* Right sidebar */}
         <div className="space-y-6">
           <RecentNotesCard lng={lng} />
-          <HomeworkCompletionRatesCard BarChart={BarChart} />
-          <AssignmentsCard />
+          {/* <HomeworkCompletionRatesCard BarChart={BarChart} />
+          <AssignmentsCard /> */}
         </div>
       </div>
     </div>

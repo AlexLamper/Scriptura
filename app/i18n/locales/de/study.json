@@ -18,6 +18,7 @@
   "select_translation_start": "Wählen Sie eine Bibelübersetzung zum Starten.",
   "select_passage": "Wählen Sie eine Passage zum Lesen",
   "tabs": {
+    "inductive_study": "Induktive Studienmethode",
     "explanation": "Erklärung",
     "historical": "Historischer Kontext",
     "related": "Verwandte Verse",
@@ -51,5 +52,62 @@
     "psalm_33_theme": "Thema: Gottes schöpferisches Wort",
     "hebrews_11": "Durch den Glauben erkennen wir, dass die Welt durch Gottes Wort geschaffen ist, sodass alles, was man sieht, aus nichts Sichtbarem geworden ist.",
     "hebrews_11_theme": "Thema: Glaube an die Schöpfung"
+  },
+  "inductive": {
+    "title": "Induktive Studienmethode",
+    "subtitle": "Ein systematischer Ansatz für Bibelstudium",
+    "step": "Schritt",
+    "observe": {
+      "title": "Beobachten",
+      "subtitle": "Was siehst du?",
+      "description": "Lesen Sie den Text sorgfältig und beobachten Sie, was tatsächlich darin steht.",
+      "questions": {
+        "who": "Wer sind die Hauptpersonen?",
+        "what": "Was passiert?",
+        "when": "Wann geschieht das?",
+        "where": "Wo geschieht das?",
+        "why": "Warum geschieht das?",
+        "how": "Wie geschieht das?"
+      },
+      "notes_placeholder": "Schreiben Sie hier Ihre Beobachtungen..."
+    },
+    "interpret": {
+      "title": "Interpretieren",
+      "subtitle": "Was bedeutet es?",
+      "description": "Entdecken Sie die Bedeutung dessen, was Sie beobachtet haben.",
+      "tools": {
+        "context": "Kontext",
+        "cross_references": "Querverweise",
+        "word_study": "Wortstudie",
+        "commentary": "Kommentar"
+      },
+      "questions": {
+        "main_point": "Was ist der Hauptpunkt dieser Passage?",
+        "principles": "Welche Prinzipien lernen Sie?",
+        "meaning": "Was hätte das für die ursprünglichen Leser bedeutet?"
+      },
+      "notes_placeholder": "Schreiben Sie hier Ihre Interpretation..."
+    },
+    "apply": {
+      "title": "Anwenden",
+      "subtitle": "Wie wenden Sie es an?",
+      "description": "Wenden Sie die Wahrheiten in Ihrem täglichen Leben an.",
+      "categories": {
+        "personal": "Persönlich",
+        "relational": "Beziehungsbezogen",
+        "spiritual": "Spirituell"
+      },
+      "questions": {
+        "lessons": "Welche Lektionen kann ich daraus lernen?",
+        "changes": "Welche Veränderungen muss ich vornehmen?",
+        "actions": "Welche konkreten Schritte werde ich unternehmen?"
+      },
+      "notes_placeholder": "Schreiben Sie hier Ihre Anwendung..."
+    },
+    "progress": {
+      "completed_steps": "Abgeschlossene Schritte",
+      "save_progress": "Fortschritt Speichern",
+      "load_progress": "Fortschritt Laden"
+    }
   }
 }
