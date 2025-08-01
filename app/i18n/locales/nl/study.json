@@ -33,6 +33,7 @@
   "select_translation_start": "Selecteer een Bijbelvertaling om je studie te beginnen.",
   "ready_to_study": "Klaar om dieper in Gods Woord te duiken",
   "tabs": {
+    "inductive_study": "Inductieve Studiemethode",
     "explanation": "Uitleg",
     "historical": "Historische Context",
     "related": "Gerelateerde Verzen",
@@ -79,5 +80,62 @@
     "download": "D - Download",
     "play_audio": "Spatie - Audio Afspelen/Pauzeren",
     "search": "/ - Zoeken"
+  },
+  "inductive": {
+    "title": "Inductieve Studiemethode",
+    "subtitle": "Een systematische aanpak voor bijbelstudie",
+    "step": "Stap",
+    "observe": {
+      "title": "Observeren",
+      "subtitle": "Wat zie je?",
+      "description": "Lees de tekst zorgvuldig en observeer wat er daadwerkelijk staat.",
+      "questions": {
+        "who": "Wie zijn de hoofdpersonen?",
+        "what": "Wat gebeurt er?",
+        "when": "Wanneer gebeurt dit?",
+        "where": "Waar gebeurt dit?",
+        "why": "Waarom gebeurt dit?",
+        "how": "Hoe gebeurt dit?"
+      },
+      "notes_placeholder": "Schrijf hier je observaties..."
+    },
+    "interpret": {
+      "title": "Interpreteren",
+      "subtitle": "Wat betekent het?",
+      "description": "Ontdek de betekenis van wat je hebt geobserveerd.",
+      "tools": {
+        "context": "Context",
+        "cross_references": "Kruisverwijzingen",
+        "word_study": "Woordstudie",
+        "commentary": "Commentaar"
+      },
+      "questions": {
+        "main_point": "Wat is het hoofdpunt van deze passage?",
+        "principles": "Welke principes leer je?",
+        "meaning": "Wat zou dit betekend hebben voor de oorspronkelijke lezers?"
+      },
+      "notes_placeholder": "Schrijf hier je interpretatie..."
+    },
+    "apply": {
+      "title": "Toepassen",
+      "subtitle": "Hoe pas je het toe?",
+      "description": "Pas de waarheden toe in je dagelijks leven.",
+      "categories": {
+        "personal": "Persoonlijk",
+        "relational": "Relationeel",
+        "spiritual": "Spiritueel"
+      },
+      "questions": {
+        "lessons": "Welke lessen kan ik hieruit trekken?",
+        "changes": "Welke veranderingen moet ik maken?",
+        "actions": "Welke concrete acties ga ik ondernemen?"
+      },
+      "notes_placeholder": "Schrijf hier je toepassing..."
+    },
+    "progress": {
+      "completed_steps": "Voltooide stappen",
+      "save_progress": "Voortgang Opslaan",
+      "load_progress": "Voortgang Laden"
+    }
   }
 }

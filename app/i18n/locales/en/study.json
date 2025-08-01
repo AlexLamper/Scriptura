@@ -33,6 +33,7 @@
   "select_translation_start": "Select a Bible translation to begin your study.",
   "ready_to_study": "Ready to dive deeper into God's Word",
   "tabs": {
+    "inductive_study": "Inductive Study Method",
     "explanation": "Explanation",
     "historical": "Historical Context",
     "related": "Related Verses",
@@ -79,5 +80,62 @@
     "download": "D - Download",
     "play_audio": "Space - Play/Pause Audio",
     "search": "/ - Search"
+  },
+  "inductive": {
+    "title": "Inductive Study Method",
+    "subtitle": "A systematic approach to Bible study",
+    "step": "Step",
+    "observe": {
+      "title": "Observe",
+      "subtitle": "What do you see?",
+      "description": "Read the text carefully and observe what it actually says.",
+      "questions": {
+        "who": "Who are the main characters?",
+        "what": "What is happening?",
+        "when": "When does this take place?",
+        "where": "Where does this happen?",
+        "why": "Why does this happen?",
+        "how": "How does this happen?"
+      },
+      "notes_placeholder": "Write your observations here..."
+    },
+    "interpret": {
+      "title": "Interpret",
+      "subtitle": "What does it mean?",
+      "description": "Discover the meaning of what you have observed.",
+      "tools": {
+        "context": "Context",
+        "cross_references": "Cross References",
+        "word_study": "Word Study",
+        "commentary": "Commentary"
+      },
+      "questions": {
+        "main_point": "What is the main point of this passage?",
+        "principles": "What principles do you learn?",
+        "meaning": "What would this have meant to the original readers?"
+      },
+      "notes_placeholder": "Write your interpretation here..."
+    },
+    "apply": {
+      "title": "Apply",
+      "subtitle": "How do you apply it?",
+      "description": "Apply the truths to your daily life.",
+      "categories": {
+        "personal": "Personal",
+        "relational": "Relational",
+        "spiritual": "Spiritual"
+      },
+      "questions": {
+        "lessons": "What lessons can I learn from this?",
+        "changes": "What changes do I need to make?",
+        "actions": "What specific actions will I take?"
+      },
+      "notes_placeholder": "Write your application here..."
+    },
+    "progress": {
+      "completed_steps": "Completed steps",
+      "save_progress": "Save Progress",
+      "load_progress": "Load Progress"
+    }
   }
 }

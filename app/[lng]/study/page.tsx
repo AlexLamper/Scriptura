@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users, Bookmark } from 'lucide-react';
+import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users, Bookmark, Brain } from 'lucide-react';
 import BibleSelector from '../../../components/study/BibleSelector';
 import ChapterViewer from '../../../components/study/ChapterViewer';
 import { ChapterNotes } from '../../../components/study/ChapterNotes';
 import BookmarkSystem from '../../../components/study/BookmarkSystem';
 import { ShortcutDisplay } from '../../../components/study/ShortcutDisplay';
+import InductiveStudy from '../../../components/study/InductiveStudy';
 import { useTranslation } from '../../i18n/client';
 import { useKeyboardShortcuts, KeyboardShortcut } from '../../../hooks/useKeyboardShortcuts';
 
@@ -41,7 +42,7 @@ function TabComponent({
   onPrevChapter,
   onDownload
 }: TabComponentProps) {
-  const [activeTab, setActiveTab] = useState('explanation');
+  const [activeTab, setActiveTab] = useState('inductive');
 
   // Define keyboard shortcuts
   const shortcuts: KeyboardShortcut[] = [
@@ -71,6 +72,7 @@ function TabComponent({
   useKeyboardShortcuts({ shortcuts });
 
   const tabs = [
+    { id: 'inductive', label: t('tabs.inductive_study'), icon: Brain },
     { id: 'explanation', label: t('tabs.explanation'), icon: MessageCircle },
     { id: 'historical', label: t('tabs.historical'), icon: Clock },
     { id: 'related', label: t('tabs.related'), icon: Link },
@@ -83,6 +85,13 @@ function TabComponent({
     const reference = selectedBook && selectedChapter ? `${selectedBook} ${selectedChapter}` : t('select_book_chapter');
     
     switch (activeTab) {
+      case 'inductive':
+        return <InductiveStudy 
+          book={selectedBook || ''} 
+          chapter={selectedChapter || 0} 
+          version={selectedVersion || ''} 
+          t={t} 
+        />;
       case 'explanation':
         return (
           <div className="space-y-4">
