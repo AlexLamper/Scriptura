@@ -240,24 +240,53 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
     const fetchBooks = async () => {
       setLoadingBooks(true);
       try {
-        const res = await fetch(`${API_BASE_URL}/books`);
+        // Build URL with version parameter if not the default Statenvertaling
+        const params = new URLSearchParams();
+        if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
+          params.append('version', selectedVersion);
+          console.log(`Fetching books for version: ${selectedVersion}`);
+        } else {
+          console.log('Fetching books for default version (Staten Vertaling)');
+        }
+
+        const url = `${API_BASE_URL}/books${params.toString() ? `?${params.toString()}` : ''}`;
+        console.log('API URL for book fetch:', url);
+        
+        const res = await fetch(url);
         if (!res.ok) {
           const errorText = await res.text();
           throw new Error(`Failed to fetch books: ${res.status} ${res.statusText} - ${errorText}`);
         }
-        // CORRECT: The /api/books endpoint returns an array of strings directly
+        // The /api/books endpoint returns an array of strings directly
         const bookNames: string[] = await res.json();
         console.log('API Response for books:', bookNames);
 
         setBooks(bookNames);
 
-        // Set 'Genesis' as default, otherwise the first one
-        if (bookNames.includes('Genesis')) {
-          setSelectedBook('Genesis');
-          console.log('Default book set to Genesis');
-        } else if (bookNames.length > 0) {
-          setSelectedBook(bookNames[0]);
-          console.log('Default book set to first available:', bookNames[0]);
+        // Set appropriate default book based on language/version
+        let defaultBook = '';
+        if (selectedVersion === 'Staten Vertaling' || lng === 'nl') {
+          // For Dutch versions, look for "Genesis" or equivalent
+          if (bookNames.includes('Genesis')) {
+            defaultBook = 'Genesis';
+          } else if (bookNames.includes('1 Mozes')) {
+            defaultBook = '1 Mozes';
+          }
+        } else {
+          // For English and other versions, look for "Genesis"
+          if (bookNames.includes('Genesis')) {
+            defaultBook = 'Genesis';
+          }
+        }
+
+        // Fallback to first book if no preferred default found
+        if (!defaultBook && bookNames.length > 0) {
+          defaultBook = bookNames[0];
+        }
+
+        if (defaultBook) {
+          setSelectedBook(defaultBook);
+          console.log('Default book set to:', defaultBook);
         } else {
           setSelectedBook(''); // No books found
           console.warn('No books found from API.');
@@ -272,7 +301,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
       }
     };
     fetchBooks();
-  }, [selectedVersion]); // Runs when selectedVersion changes
+  }, [selectedVersion, lng]); // Runs when selectedVersion or language changes
 
   // 3. Fetch chapters for a selected book and version
   useEffect(() => {
@@ -352,8 +381,12 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
     console.log('handleVersionChange called with:', version);
     setSelectedVersion(version);
     // Reset book and chapter when version changes, to trigger re-fetch of books/chapters
+    // Clear current selections since different versions have different book names
     setSelectedBook(''); // This will trigger the book useEffect
+    setBooks([]); // Clear current books list
     setSelectedChapter(1); // Reset chapter to 1
+    setChapters([]); // Clear chapters
+    setMaxChapter(1); // Reset max chapter
   }, []);
 
   const handleBookChange = useCallback((book: string) => {
@@ -451,13 +484,12 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           <div className="flex items-center justify-between mb-4">
             {selectedBook && selectedChapter && (
               <h2 className="text-lg font-semibold dark:text-white">
-                <span className="font-medium">{selectedBook}</span>
-                <span className="mx-1">•</span>
-                <span>Hoofdstuk {selectedChapter}</span>
+                <span className="font-semibold">{selectedBook} </span>
+                <span className='font-semibold'>{selectedChapter}</span>
               </h2>
             )}
             <div className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-lg dark:text-gray-200 dark:bg-[#2a2d35]">
-              BIJBELTEKST ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
+              Version: ({selectedVersion || (loadingVersions ? 'Laden...' : 'Niet geselecteerd')})
             </div>
           </div>
 
