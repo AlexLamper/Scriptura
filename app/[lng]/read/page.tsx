@@ -1,10 +1,14 @@
 "use client"
 
 import { useEffect, useState } from 'react'
+import React from 'react'
 import BibleSelector from '../../../components/study/BibleSelector'
 import ChapterViewer from '../../../components/study/ChapterViewer'
 
-export default function Index() {
+export default function ReadPage({ params }: { params: Promise<{ lng: string }> }) {
+  const resolvedParams = React.use(params);
+  const lng = resolvedParams.lng;
+  
   const [versions, setVersions] = useState<string[]>([])
   const [books, setBooks] = useState<string[]>([])
   const [chapters, setChapters] = useState<number[]>([])
@@ -72,6 +76,7 @@ export default function Index() {
           book={selectedBook}
           chapter={selectedChapter}
           maxChapter={Math.max(...chapters)}
+          language={lng}
         />
       </div>
     </div>

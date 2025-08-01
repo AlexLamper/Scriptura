@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, Plus } from 'lucide-react';
+import { CreateNote } from './CreateNote';
 
 type Props = {
   version: string | null;
   book: string;
   chapter: number;
   maxChapter: number;
+  language?: string;
 };
 
 type VerseData = { [key: string]: string };
+
+interface SelectedVerse {
+  verseNumber: string;
+  text: string;
+  reference: string;
+}
 
 export default function ChapterViewer({
   version,
   book,
   chapter,
   maxChapter,
+  language = "en",
 }: Props) {
   const [verses, setVerses] = useState<VerseData>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedVerse, setSelectedVerse] = useState<SelectedVerse | null>(null);
+  const [showCreateNote, setShowCreateNote] = useState(false);
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
@@ -94,6 +105,26 @@ export default function ChapterViewer({
     }
   }, [book, chapter, version]);
 
+  const handleVerseClick = (verseNumber: string, text: string) => {
+    const reference = `${book} ${chapter}:${verseNumber}`;
+    setSelectedVerse({
+      verseNumber,
+      text,
+      reference
+    });
+    setShowCreateNote(true);
+  };
+
+  const handleNoteSaved = () => {
+    setShowCreateNote(false);
+    setSelectedVerse(null);
+  };
+
+  const handleCancelNote = () => {
+    setShowCreateNote(false);
+    setSelectedVerse(null);
+  };
+
   return (
     <div>
       {loading && (
@@ -116,21 +147,53 @@ export default function ChapterViewer({
       )}
 
       {!loading && !error && Object.keys(verses).length > 0 && (
-        <div className="space-y-2 text-justify">
-          {Object.entries(verses).map(([verseNumber, text]) => (
-            <p key={verseNumber} className="dark:text-gray-100">
-              <sup className="font-semibold text-gray-700 dark:text-gray-300">
-                {verseNumber}
-              </sup>{' '}
-              {text}
-            </p>
-          ))}
-        </div>
-      )}
-      {!loading && !error && Object.keys(verses).length === 0 && (
-          <div className="py-12 text-center text-gray-500 dark:text-gray-300">
-            Geen bijbeltekst gevonden voor dit hoofdstuk. Probeer een ander hoofdstuk.
+        <>
+          <div className="space-y-2 text-justify">
+            {Object.entries(verses).map(([verseNumber, text]) => (
+              <div key={verseNumber} className="group relative">
+                <p className="dark:text-gray-100 leading-relaxed">
+                  <sup className="font-semibold text-gray-700 dark:text-gray-300 mr-1">
+                    {verseNumber}
+                  </sup>
+                  <span className="hover:bg-yellow-100 dark:hover:bg-yellow-900/30 cursor-pointer transition-colors rounded px-1"
+                        onClick={() => handleVerseClick(verseNumber, text)}>
+                    {text}
+                  </span>
+                </p>
+                <button
+                  onClick={() => handleVerseClick(verseNumber, text)}
+                  className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-1.5 shadow-md"
+                  title="Add note to this verse"
+                >
+                  <Plus className="h-3 w-3" />
+                </button>
+              </div>
+            ))}
           </div>
+
+          {/* Note Creation Component */}
+          {showCreateNote && selectedVerse && (
+            <div className="mt-6 p-4 border-t border-gray-200 dark:border-gray-700">
+              <CreateNote
+                verseReference={selectedVerse.reference}
+                book={book}
+                chapter={chapter}
+                verse={parseInt(selectedVerse.verseNumber)}
+                verseText={selectedVerse.text}
+                translation={version || "Statenvertaling"}
+                language={language}
+                onSave={handleNoteSaved}
+                onCancel={handleCancelNote}
+              />
+            </div>
+          )}
+        </>
+      )}
+
+      {!loading && !error && Object.keys(verses).length === 0 && (
+        <div className="py-12 text-center text-gray-500 dark:text-gray-300">
+          Geen bijbeltekst gevonden voor dit hoofdstuk. Probeer een ander hoofdstuk.
+        </div>
       )}
     </div>
   );

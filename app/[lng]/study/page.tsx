@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users } from 'lucide-react';
 import BibleSelector from '../../../components/study/BibleSelector';
 import ChapterViewer from '../../../components/study/ChapterViewer';
+import { ChapterNotes } from '../../../components/study/ChapterNotes';
 
 // Define interfaces for API responses
 interface Version {
@@ -24,7 +25,7 @@ function TabComponent({ selectedBook, selectedChapter }: TabComponentProps) {
     { id: 'explanation', label: 'Uitleg', icon: MessageCircle },
     { id: 'historical', label: 'Historische Context', icon: Clock },
     { id: 'related', label: 'Gerelateerde Verzen', icon: Link },
-    { id: 'community', label: 'Community Notes', icon: Users },
+    { id: 'notes', label: 'Mijn Notities', icon: Users },
   ];
 
   const renderTabContent = () => {
@@ -107,43 +108,13 @@ function TabComponent({ selectedBook, selectedChapter }: TabComponentProps) {
             </div>
           </div>
         );
-      case 'community':
+      case 'notes':
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold mb-2 dark:text-gray-100">Community Notes voor {reference}</h3>
-            <div className="space-y-3">
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 dark:bg-[#232325] dark:border-blue-500">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                    JD
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-blue-800 dark:text-blue-300">Johannes de Vries</p>
-                    <p className="text-sm text-gray-700 mt-1 dark:text-gray-200">
-                      Belangrijk om te zien dat God niet alleen spreekt, maar dat Zijn woord ook daadkracht heeft. &quot;Hij sprak en het geschiedde.&quot;
-                    </p>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">2 dagen geleden</span>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-green-50 p-3 rounded-lg border border-green-200 dark:bg-[#232325] dark:border-green-500">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                    MJ
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-green-800 dark:text-green-300">Maria Janssen</p>
-                    <p className="text-sm text-gray-700 mt-1 dark:text-gray-200">
-                      De herhaalde uitdrukking &quot;en God zag dat het goed was&quot; benadrukt Gods volmaakte werk en Zijn goedkeuring van de schepping.
-                    </p>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">1 week geleden</span>
-                  </div>
-                </div>
-              </div>
-              <button className="w-full py-2 px-4 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition dark:border-gray-500 dark:text-gray-200 dark:hover:bg-[#2a2d35]">
-                + Voeg je eigen notitie toe
-              </button>
-            </div>
+            <ChapterNotes 
+              book={selectedBook} 
+              chapter={selectedChapter} 
+            />
           </div>
         );
       default:
@@ -182,7 +153,10 @@ function TabComponent({ selectedBook, selectedChapter }: TabComponentProps) {
   );
 }
 
-export default function StudyPage() {
+export default function StudyPage({ params }: { params: Promise<{ lng: string }> }) {
+  const resolvedParams = React.use(params);
+  const lng = resolvedParams.lng;
+  
   const [versions, setVersions] = useState<string[]>([]);
   const [books, setBooks] = useState<string[]>([]);
   const [chapters, setChapters] = useState<number[]>([]);
@@ -475,6 +449,7 @@ export default function StudyPage() {
               book={selectedBook}
               chapter={selectedChapter}
               maxChapter={maxChapter}
+              language={lng}
             />
           )}
           {/* Add a message if no book/chapter is selected yet */}
