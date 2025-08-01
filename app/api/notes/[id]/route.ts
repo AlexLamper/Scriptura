@@ -6,13 +6,14 @@ import Note from "../../../../models/Note";
 import User from "../../../../models/User";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    const resolvedParams = await params;
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     }
 
     const note = await Note.findOne({ 
-      _id: params.id, 
+      _id: resolvedParams.id, 
       userId: user._id 
     }).lean();
 
@@ -48,6 +49,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
+    const resolvedParams = await params;
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
@@ -77,7 +79,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     } = body;
 
     const updatedNote = await Note.findOneAndUpdate(
-      { _id: params.id, userId: user._id },
+      { _id: resolvedParams.id, userId: user._id },
       {
         $set: {
           verseReference,
@@ -113,6 +115,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
+    const resolvedParams = await params;
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
@@ -127,7 +130,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     }
 
     const deletedNote = await Note.findOneAndDelete({ 
-      _id: params.id, 
+      _id: resolvedParams.id, 
       userId: user._id 
     });
 
