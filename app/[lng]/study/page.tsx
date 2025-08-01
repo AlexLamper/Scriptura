@@ -16,9 +16,10 @@ interface TabComponentProps {
   selectedBook: string;
   selectedChapter: number;
   selectedVersion?: string | null;
+  language?: string;
 }
 
-function TabComponent({ selectedBook, selectedChapter }: TabComponentProps) {
+function TabComponent({ selectedBook, selectedChapter, language = "en" }: TabComponentProps) {
   const [activeTab, setActiveTab] = useState('explanation');
 
   const tabs = [
@@ -113,7 +114,8 @@ function TabComponent({ selectedBook, selectedChapter }: TabComponentProps) {
           <div className="space-y-4">
             <ChapterNotes 
               book={selectedBook} 
-              chapter={selectedChapter} 
+              chapter={selectedChapter}
+              language={language}
             />
           </div>
         );
@@ -486,7 +488,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           </div>
           
           {/* Tab Navigation */}
-          <TabComponent selectedBook={selectedBook} selectedChapter={selectedChapter} />
+          <TabComponent selectedBook={selectedBook} selectedChapter={selectedChapter} language={lng} />
         </section>
       </div>
     </div>

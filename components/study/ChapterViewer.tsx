@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Loader2, AlertCircle, Plus } from 'lucide-react';
-import { CreateNote } from './CreateNote';
+import { CreateNoteModal } from './CreateNoteModal';
 
 type Props = {
   version: string | null;
@@ -29,7 +29,7 @@ export default function ChapterViewer({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedVerse, setSelectedVerse] = useState<SelectedVerse | null>(null);
-  const [showCreateNote, setShowCreateNote] = useState(false);
+  const [showCreateNoteModal, setShowCreateNoteModal] = useState(false);
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
@@ -112,16 +112,16 @@ export default function ChapterViewer({
       text,
       reference
     });
-    setShowCreateNote(true);
+    setShowCreateNoteModal(true);
   };
 
   const handleNoteSaved = () => {
-    setShowCreateNote(false);
+    setShowCreateNoteModal(false);
     setSelectedVerse(null);
   };
 
   const handleCancelNote = () => {
-    setShowCreateNote(false);
+    setShowCreateNoteModal(false);
     setSelectedVerse(null);
   };
 
@@ -171,21 +171,20 @@ export default function ChapterViewer({
             ))}
           </div>
 
-          {/* Note Creation Component */}
-          {showCreateNote && selectedVerse && (
-            <div className="mt-6 p-4 border-t border-gray-200 dark:border-gray-700">
-              <CreateNote
-                verseReference={selectedVerse.reference}
-                book={book}
-                chapter={chapter}
-                verse={parseInt(selectedVerse.verseNumber)}
-                verseText={selectedVerse.text}
-                translation={version || "Statenvertaling"}
-                language={language}
-                onSave={handleNoteSaved}
-                onCancel={handleCancelNote}
-              />
-            </div>
+          {/* Note Creation Modal */}
+          {selectedVerse && (
+            <CreateNoteModal
+              isOpen={showCreateNoteModal}
+              onClose={handleCancelNote}
+              verseReference={selectedVerse.reference}
+              book={book}
+              chapter={chapter}
+              verse={parseInt(selectedVerse.verseNumber)}
+              verseText={selectedVerse.text}
+              translation={version || "Statenvertaling"}
+              language={language}
+              onSave={handleNoteSaved}
+            />
           )}
         </>
       )}

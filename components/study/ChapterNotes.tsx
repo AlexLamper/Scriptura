@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { StickyNote, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
+import { useTranslation } from "../../app/i18n/client";
 
 interface Note {
   _id: string;
@@ -25,10 +26,12 @@ interface ChapterNotesProps {
   book: string;
   chapter: number;
   className?: string;
+  language?: string;
 }
 
-export function ChapterNotes({ book, chapter, className = "" }: ChapterNotesProps) {
+export function ChapterNotes({ book, chapter, className = "", language = "en" }: ChapterNotesProps) {
   const { data: session } = useSession();
+  const { t } = useTranslation(language, "notes");
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +85,7 @@ export function ChapterNotes({ book, chapter, className = "" }: ChapterNotesProp
       <CardHeader className="pb-3">
         <CardTitle className="text-base font-semibold flex items-center gap-2">
           <StickyNote className="h-4 w-4 text-indigo-600" />
-          Notes for {book} {chapter}
+          {t("notes_for_chapter")} {book} {chapter}
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
@@ -101,7 +104,7 @@ export function ChapterNotes({ book, chapter, className = "" }: ChapterNotesProp
         {!loading && !error && notes.length === 0 && (
           <div className="text-center py-4">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              No notes for this chapter yet
+              {t("no_notes_chapter")}
             </p>
           </div>
         )}
