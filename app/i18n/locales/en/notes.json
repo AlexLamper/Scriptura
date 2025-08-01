@@ -38,5 +38,6 @@
   "error_note_text_required": "Please add some text to your note",
   "error_save_failed": "Failed to save note",
   "notes_for_chapter": "Notes for",
-  "no_notes_chapter": "No notes for this chapter yet"
+  "no_notes_chapter": "No notes for this chapter yet",
+  "edit_note_title": "Edit Note"
 }

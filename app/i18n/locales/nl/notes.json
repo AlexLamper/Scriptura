@@ -38,5 +38,6 @@
   "error_note_text_required": "Voeg alstublieft wat tekst toe aan je notitie",
   "error_save_failed": "Opslaan van notitie mislukt",
   "notes_for_chapter": "Notities voor",
-  "no_notes_chapter": "Nog geen notities voor dit hoofdstuk"
+  "no_notes_chapter": "Nog geen notities voor dit hoofdstuk",
+  "edit_note_title": "Notitie Bewerken"
 }

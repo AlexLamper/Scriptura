@@ -38,5 +38,6 @@
   "error_note_text_required": "Bitte füge etwas Text zu deiner Notiz hinzu",
   "error_save_failed": "Speichern der Notiz fehlgeschlagen",
   "notes_for_chapter": "Notizen für",
-  "no_notes_chapter": "Noch keine Notizen für dieses Kapitel"
+  "no_notes_chapter": "Noch keine Notizen für dieses Kapitel",
+  "edit_note_title": "Notiz Bearbeiten"
 }

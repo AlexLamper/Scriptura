@@ -30,6 +30,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from "../../../components/ui/dropdown-menu";
+import { EditNoteModal } from "../../../components/study/EditNoteModal";
 
 interface Note {
   _id: string;
@@ -71,6 +72,8 @@ export default function NotesPage({ params }: NotesPageProps) {
   const [selectedTag, setSelectedTag] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   // Get unique books and tags from notes for filters
   const uniqueBooks = Array.from(new Set(notes.map(note => note.book))).sort();
@@ -156,6 +159,25 @@ export default function NotesPage({ params }: NotesPageProps) {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete note");
     }
+  };
+
+  const editNote = (note: Note) => {
+    setEditingNote(note);
+    setShowEditModal(true);
+  };
+
+  const handleEditNoteSaved = (updatedNote: Note) => {
+    // Update the note in the local state
+    setNotes(notes.map(note => 
+      note._id === updatedNote._id ? updatedNote : note
+    ));
+    setShowEditModal(false);
+    setEditingNote(null);
+  };
+
+  const handleEditModalClose = () => {
+    setShowEditModal(false);
+    setEditingNote(null);
   };
 
   const formatDate = (dateString: string) => {
@@ -363,7 +385,7 @@ export default function NotesPage({ params }: NotesPageProps) {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => editNote(note)}>
                               <Edit className="h-4 w-4 mr-2" />
                               {t("edit_note", { defaultValue: "Edit" })}
                             </DropdownMenuItem>
@@ -454,6 +476,15 @@ export default function NotesPage({ params }: NotesPageProps) {
           </>
         )}
       </div>
+
+      {/* Edit Note Modal */}
+      <EditNoteModal
+        isOpen={showEditModal}
+        onClose={handleEditModalClose}
+        note={editingNote}
+        language={lng}
+        onSave={handleEditNoteSaved}
+      />
     </div>
   );
 }
