@@ -16,6 +16,7 @@
   "no_books_available": "Geen boeken beschikbaar voor deze vertaling.",
   "select_book_chapter": "Selecteer een boek en hoofdstuk om te beginnen.",
   "select_translation_start": "Selecteer een Bijbelvertaling om te beginnen.",
+  "select_passage": "Selecteer een passage om te lezen",
   "tabs": {
     "explanation": "Uitleg",
     "historical": "Historische Context",

@@ -5,6 +5,7 @@ const CourseSchema = new mongoose.Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
+    theme: { type: String, required: true }, // New field for theme-based filtering
     instructor: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: true },
     totalDuration: { type: Number, required: true },
@@ -14,6 +15,11 @@ const CourseSchema = new mongoose.Schema(
     learning_objectives: { type: [String], required: true },
     imageUrl: { type: String, required: true },
     isPremium: { type: Boolean, default: false },
+    passages: [{ // New field for related Bible passages
+      book: { type: String, required: true },
+      chapter: { type: Number, required: true },
+      verses: { type: String, required: true }
+    }],
     generalInformation: {
       originLanguage: { type: String, required: true },
       author: { type: String, required: true },

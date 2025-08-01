@@ -16,6 +16,7 @@
   "no_books_available": "No books available for this translation.",
   "select_book_chapter": "Select a book and chapter to start.",
   "select_translation_start": "Select a Bible translation to start.",
+  "select_passage": "Select a passage to read",
   "tabs": {
     "explanation": "Explanation",
     "historical": "Historical Context",

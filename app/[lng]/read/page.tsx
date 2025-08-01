@@ -108,36 +108,51 @@ export default function ReadPage({ params }: { params: Promise<{ lng: string }> 
   }, [selectedBook, selectedVersion])
 
   return (
-    <div className="min-h-screen">
-
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-12">
-        <BibleSelector
-          versions={versions}
-          books={books}
-          chapters={chapters}
-          selectedVersion={selectedVersion}
-          selectedBook={selectedBook}
-          selectedChapter={selectedChapter}
-          onVersionChange={(version) => setSelectedVersion(version)}
-          onBookChange={(book) => {
-            setSelectedBook(book)
-            setSelectedChapter(1)
-          }}
-          onChapterChange={setSelectedChapter}
-          loadingVersions={loadingVersions}
-          loadingBooks={loadingBooks}
-          loadingChapters={loadingChapters}
-          t={t}
-        />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
+        {/* Header Section */}
+        <div className="mb-6 lg:mb-8">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            {t('read_scripture')}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 text-sm lg:text-base">
+            {t('explore_bible')}
+          </p>
+        </div>
 
-        <ChapterViewer
-          version={selectedVersion}
-          book={selectedBook}
-          chapter={selectedChapter}
-          maxChapter={Math.max(...chapters)}
-          language={lng}
-        />
+        {/* Bible Selector */}
+        <div className="mb-6 lg:mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 lg:p-6">
+          <BibleSelector
+            versions={versions}
+            books={books}
+            chapters={chapters}
+            selectedVersion={selectedVersion}
+            selectedBook={selectedBook}
+            selectedChapter={selectedChapter}
+            onVersionChange={(version) => setSelectedVersion(version)}
+            onBookChange={(book) => {
+              setSelectedBook(book)
+              setSelectedChapter(1)
+            }}
+            onChapterChange={setSelectedChapter}
+            loadingVersions={loadingVersions}
+            loadingBooks={loadingBooks}
+            loadingChapters={loadingChapters}
+            t={t}
+          />
+        </div>
+
+        {/* Chapter Viewer */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <ChapterViewer
+            version={selectedVersion}
+            book={selectedBook}
+            chapter={selectedChapter}
+            maxChapter={Math.max(...chapters)}
+            language={lng}
+          />
+        </div>
       </div>
     </div>
   )
