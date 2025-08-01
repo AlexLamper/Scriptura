@@ -65,6 +65,16 @@ export function WelcomeCard({ lng }: WelcomeCardProps) {
             </svg>
           </div>
         </Link>
+        
+        {/* Onboarding Test Button - For Development/Testing */}
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <Link 
+            href="/onboarding" 
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors"
+          >
+            🚀 Test Onboarding Flow
+          </Link>
+        </div>
       </CardContent>
     </Card>
   );
