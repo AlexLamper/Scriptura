@@ -1,0 +1,54 @@
+{
+  "page_title": "Study the Bible",
+  "loading_translations": "Loading translations...",
+  "no_translations": "No translations",
+  "select_translation": "Select translation",
+  "loading_books": "Loading books...",
+  "no_books": "No books",
+  "select_book": "Select book",
+  "loading_chapters": "Loading chapters...",
+  "no_chapters": "No chapters",
+  "select_chapter": "Select chapter",
+  "previous_chapter": "Previous chapter",
+  "next_chapter": "Next chapter",
+  "print_download": "Print or download chapter",
+  "no_translations_available": "No translations available.",
+  "no_books_available": "No books available for this translation.",
+  "select_book_chapter": "Select a book and chapter to start.",
+  "select_translation_start": "Select a Bible translation to start.",
+  "tabs": {
+    "explanation": "Explanation",
+    "historical": "Historical Context",
+    "related": "Related Verses",
+    "notes": "My Notes"
+  },
+  "thinking_question": {
+    "title": "Thinking Question",
+    "default_text": "What does this biblical passage tell us about God's character and His relationship with humanity? How can we apply these truths in our daily lives?"
+  },
+  "explanation": {
+    "title": "What does this biblical passage say about creation?",
+    "intro": "tells us about God's creative work. But what does this mean for us today? How can we apply this text to our lives and worldview?",
+    "commentary_title": "Commentary",
+    "commentary_text": "tells us about God's creative work. The seven days form the first week of God's action. The expressions 'God', 'create' and 'heaven and earth' appear at the beginning and in reverse order at the end of this passage.",
+    "creation_text": "Creation takes place in an ascending series of events, in a different order than contemporary evolutionary theory does. Humans do not emerge from animals, in a process of chance and survival of the fittest, but they arose through God's creative words."
+  },
+  "historical": {
+    "title": "Historical Context of",
+    "time_period": "Time Period",
+    "time_period_text": "Genesis was written in the context of the ancient Near East, probably during the time of Moses (ca. 1400 BC).",
+    "cultural_background": "Cultural Background",
+    "cultural_background_text": "The creation story distinguishes itself from other ancient Near Eastern creation myths by its monotheistic character and the dignity of man.",
+    "literary_context": "Literary Context",
+    "literary_context_text": "Genesis 1-11 forms the 'primeval history' that lays the foundation for the stories of the patriarchs that follow."
+  },
+  "related_verses": {
+    "title": "Related Bible Passages",
+    "john_1": "In the beginning was the Word, and the Word was with God, and the Word was God.",
+    "john_1_theme": "Theme: Creation through the Word",
+    "psalm_33": "By the word of the LORD the heavens were made, and by the breath of his mouth all their host.",
+    "psalm_33_theme": "Theme: God's creative word",
+    "hebrews_11": "By faith we understand that the universe was created by the word of God, so that what is seen was not made out of things that are visible.",
+    "hebrews_11_theme": "Theme: Faith in creation"
+  }
+}

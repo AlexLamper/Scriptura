@@ -1,0 +1,54 @@
+{
+  "page_title": "Bestudeer de Bijbel",
+  "loading_translations": "Laden vertalingen...",
+  "no_translations": "Geen vertalingen",
+  "select_translation": "Selecteer vertaling",
+  "loading_books": "Laden boeken...",
+  "no_books": "Geen boeken",
+  "select_book": "Selecteer boek",
+  "loading_chapters": "Laden hoofdstukken...",
+  "no_chapters": "Geen hoofdstukken",
+  "select_chapter": "Selecteer hoofdstuk",
+  "previous_chapter": "Vorige hoofdstuk",
+  "next_chapter": "Volgende hoofdstuk",
+  "print_download": "Print of download hoofdstuk",
+  "no_translations_available": "Geen vertalingen beschikbaar.",
+  "no_books_available": "Geen boeken beschikbaar voor deze vertaling.",
+  "select_book_chapter": "Selecteer een boek en hoofdstuk om te beginnen.",
+  "select_translation_start": "Selecteer een Bijbelvertaling om te beginnen.",
+  "tabs": {
+    "explanation": "Uitleg",
+    "historical": "Historische Context",
+    "related": "Gerelateerde Verzen",
+    "notes": "Mijn Notities"
+  },
+  "thinking_question": {
+    "title": "Denkvraag",
+    "default_text": "Wat zegt dit bijbelgedeelte over Gods karakter en Zijn relatie met de mensheid? Hoe kunnen we deze waarheden toepassen in ons dagelijks leven?"
+  },
+  "explanation": {
+    "title": "Wat zegt dit bijbelgedeelte over de schepping?",
+    "intro": "wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie?",
+    "commentary_title": "Commentaar",
+    "commentary_text": "wordt over Gods scheppingswerk verteld. De zeven dagen vormen de eerste week van Gods handelen. De uitdrukkingen 'God', 'scheppen' en 'hemel en aarde' komen voor in het begin en in omgekeerde volgorde in het slot van dit gedeelte.",
+    "creation_text": "De schepping vindt plaats in een oplopende reeks van gebeurtenissen, in een andere volgorde dan de hedendaagse evolutietheorie dat doet. De mensen komen niet voort uit dieren, in een proces van toeval en overleving van de sterkste, maar zij zijn ontstaan door Gods scheppingswoorden."
+  },
+  "historical": {
+    "title": "Historische Context van",
+    "time_period": "Tijdperiode",
+    "time_period_text": "Genesis werd geschreven in de context van het oude Nabije Oosten, waarschijnlijk tijdens de tijd van Mozes (ca. 1400 v.Chr.).",
+    "cultural_background": "Culturele Achtergrond",
+    "cultural_background_text": "Het scheppingsverhaal onderscheidt zich van andere oude Nabije Oosterse scheppingsmythen door zijn monotheïstische karakter en de waardigheid van de mens.",
+    "literary_context": "Literaire Context",
+    "literary_context_text": "Genesis 1-11 vormt de 'oergeschiedenis' die de basis legt voor de verhalen van de aartsvaders die volgen."
+  },
+  "related_verses": {
+    "title": "Gerelateerde Bijbelpassages",
+    "john_1": "In den beginne was het Woord, en het Woord was bij God, en het Woord was God.",
+    "john_1_theme": "Thema: Schepping door het Woord",
+    "psalm_33": "Door des HEEREN woord zijn de hemelen gemaakt, en door den geest zijns monds al hun heir.",
+    "psalm_33_theme": "Thema: Gods scheppende woord",
+    "hebrews_11": "Door het geloof verstaan wij, dat de wereld door Gods woord toebereid is, alzo dat hetgene, dat men ziet, niet geworden is uit zichtbare dingen.",
+    "hebrews_11_theme": "Thema: Geloof in de schepping"
+  }
+}

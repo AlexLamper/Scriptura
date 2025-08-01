@@ -1,0 +1,54 @@
+{
+  "page_title": "Bibel studieren",
+  "loading_translations": "Lade Übersetzungen...",
+  "no_translations": "Keine Übersetzungen",
+  "select_translation": "Übersetzung auswählen",
+  "loading_books": "Lade Bücher...",
+  "no_books": "Keine Bücher",
+  "select_book": "Buch auswählen",
+  "loading_chapters": "Lade Kapitel...",
+  "no_chapters": "Keine Kapitel",
+  "select_chapter": "Kapitel auswählen",
+  "previous_chapter": "Vorheriges Kapitel",
+  "next_chapter": "Nächstes Kapitel",
+  "print_download": "Kapitel drucken oder herunterladen",
+  "no_translations_available": "Keine Übersetzungen verfügbar.",
+  "no_books_available": "Keine Bücher für diese Übersetzung verfügbar.",
+  "select_book_chapter": "Wählen Sie ein Buch und Kapitel zum Starten.",
+  "select_translation_start": "Wählen Sie eine Bibelübersetzung zum Starten.",
+  "tabs": {
+    "explanation": "Erklärung",
+    "historical": "Historischer Kontext",
+    "related": "Verwandte Verse",
+    "notes": "Meine Notizen"
+  },
+  "thinking_question": {
+    "title": "Denkfrage",
+    "default_text": "Was sagt diese Bibelstelle über Gottes Charakter und seine Beziehung zur Menschheit? Wie können wir diese Wahrheiten in unserem täglichen Leben anwenden?"
+  },
+  "explanation": {
+    "title": "Was sagt diese Bibelstelle über die Schöpfung?",
+    "intro": "wird über Gottes Schöpfungswerk erzählt. Aber was bedeutet das für uns heute? Wie können wir diesen Text in unserem Leben und unserer Weltanschauung anwenden?",
+    "commentary_title": "Kommentar",
+    "commentary_text": "wird über Gottes Schöpfungswerk erzählt. Die sieben Tage bilden die erste Woche von Gottes Handeln. Die Ausdrücke 'Gott', 'schaffen' und 'Himmel und Erde' kommen am Anfang und in umgekehrter Reihenfolge am Ende dieses Abschnitts vor.",
+    "creation_text": "Die Schöpfung findet in einer aufsteigenden Reihe von Ereignissen statt, in einer anderen Reihenfolge als die zeitgenössische Evolutionstheorie. Menschen entstehen nicht aus Tieren, in einem Prozess des Zufalls und des Überlebens der Stärksten, sondern sie entstanden durch Gottes schöpferische Worte."
+  },
+  "historical": {
+    "title": "Historischer Kontext von",
+    "time_period": "Zeitperiode",
+    "time_period_text": "Genesis wurde im Kontext des alten Nahen Ostens geschrieben, wahrscheinlich zur Zeit von Mose (ca. 1400 v. Chr.).",
+    "cultural_background": "Kultureller Hintergrund",
+    "cultural_background_text": "Die Schöpfungsgeschichte unterscheidet sich von anderen altorientalischen Schöpfungsmythen durch ihren monotheistischen Charakter und die Würde des Menschen.",
+    "literary_context": "Literarischer Kontext",
+    "literary_context_text": "Genesis 1-11 bildet die 'Urgeschichte', die das Fundament für die folgenden Erzählungen der Patriarchen legt."
+  },
+  "related_verses": {
+    "title": "Verwandte Bibelstellen",
+    "john_1": "Im Anfang war das Wort, und das Wort war bei Gott, und das Wort war Gott.",
+    "john_1_theme": "Thema: Schöpfung durch das Wort",
+    "psalm_33": "Durch des HERRN Wort sind die Himmel gemacht und all ihr Heer durch den Hauch seines Mundes.",
+    "psalm_33_theme": "Thema: Gottes schöpferisches Wort",
+    "hebrews_11": "Durch den Glauben erkennen wir, dass die Welt durch Gottes Wort geschaffen ist, sodass alles, was man sieht, aus nichts Sichtbarem geworden ist.",
+    "hebrews_11_theme": "Thema: Glaube an die Schöpfung"
+  }
+}
