@@ -13,6 +13,7 @@ type Props = {
   loadingVersions: boolean;
   loadingBooks: boolean;
   loadingChapters: boolean;
+  t: (key: string) => string;
 };
 
 export default function BibleSelector({
@@ -28,6 +29,7 @@ export default function BibleSelector({
   loadingVersions,
   loadingBooks,
   loadingChapters,
+  t,
 }: Props) {
   console.groupCollapsed('--- BibleSelector Render ---');
   console.log('Props received by BibleSelector:', {
@@ -53,7 +55,7 @@ export default function BibleSelector({
         disabled={loadingVersions || versions.length === 0}
       >
         <option value="" disabled>
-          {loadingVersions ? 'Laden vertalingen...' : (versions.length === 0 ? 'Geen vertalingen' : 'Selecteer vertaling')}
+          {loadingVersions ? t('loading_translations') : (versions.length === 0 ? t('no_translations') : t('select_translation'))}
         </option>
         {versions.map((version) => (
           <option key={version} value={version}>
@@ -70,7 +72,7 @@ export default function BibleSelector({
         disabled={loadingBooks || books.length === 0}
       >
         <option value="" disabled>
-          {loadingBooks ? 'Laden boeken...' : (books.length === 0 ? 'Geen boeken' : 'Selecteer boek')}
+          {loadingBooks ? t('loading_books') : (books.length === 0 ? t('no_books') : t('select_book'))}
         </option>
         {books.map((book) => (
           <option key={book} value={book}>
@@ -88,7 +90,7 @@ export default function BibleSelector({
       >
         {/* Value of 0 for the disabled option, as chapters start from 1 */}
         <option value={0} disabled>
-          {loadingChapters ? 'Laden hoofdstukken...' : (chapters.length === 0 ? 'Geen hoofdstukken' : 'Selecteer hoofdstuk')}
+          {loadingChapters ? t('loading_chapters') : (chapters.length === 0 ? t('no_chapters') : t('select_chapter'))}
         </option>
         {chapters.map((c) => (
           <option key={c} value={c}>

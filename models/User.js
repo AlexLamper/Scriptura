@@ -15,6 +15,13 @@ const UserSchema = new mongoose.Schema(
     stripeCustomerId: { type: String },
     stripeSubscriptionId: { type: String },
     isAdmin: { type: Boolean, default: false },
+    preferences: {
+      language: { type: String },
+      translation: { type: String },
+      intent: { type: String },
+      onboardingCompleted: { type: Boolean, default: false },
+      updatedAt: { type: Date }
+    },
   },
   { timestamps: true },
 )

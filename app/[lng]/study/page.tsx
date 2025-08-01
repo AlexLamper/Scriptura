@@ -5,6 +5,7 @@ import { FileText, Edit, BookOpen, Folder, MessageCircle, Clock, Link, Users } f
 import BibleSelector from '../../../components/study/BibleSelector';
 import ChapterViewer from '../../../components/study/ChapterViewer';
 import { ChapterNotes } from '../../../components/study/ChapterNotes';
+import { useTranslation } from '../../i18n/client';
 
 // Define interfaces for API responses
 interface Version {
@@ -16,17 +17,18 @@ interface TabComponentProps {
   selectedBook: string;
   selectedChapter: number;
   selectedVersion?: string | null;
-  language?: string;
+  language: string;
+  t: (key: string) => string;
 }
 
-function TabComponent({ selectedBook, selectedChapter, language = "en" }: TabComponentProps) {
+function TabComponent({ selectedBook, selectedChapter, language = "en", t }: TabComponentProps) {
   const [activeTab, setActiveTab] = useState('explanation');
 
   const tabs = [
-    { id: 'explanation', label: 'Uitleg', icon: MessageCircle },
-    { id: 'historical', label: 'Historische Context', icon: Clock },
-    { id: 'related', label: 'Gerelateerde Verzen', icon: Link },
-    { id: 'notes', label: 'Mijn Notities', icon: Users },
+    { id: 'explanation', label: t('tabs.explanation'), icon: MessageCircle },
+    { id: 'historical', label: t('tabs.historical'), icon: Clock },
+    { id: 'related', label: t('tabs.related'), icon: Link },
+    { id: 'notes', label: t('tabs.notes'), icon: Users },
   ];
 
   const renderTabContent = () => {
@@ -40,43 +42,42 @@ function TabComponent({ selectedBook, selectedChapter, language = "en" }: TabCom
             <div className="p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg dark:bg-[#232325] dark:border-blue-400">
               <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-2 dark:text-blue-300">
                 <MessageCircle size={18} className="text-blue-600 dark:text-blue-300" />
-                Denkvraag
+                {t('thinking_question.title')}
               </h3>
               <p className="text-sm text-blue-900 leading-relaxed dark:text-blue-200">
-                Wat zegt dit bijbelgedeelte over Gods karakter en Zijn relatie met de mensheid? 
-                Hoe kunnen we deze waarheden toepassen in ons dagelijks leven?
+                {t('thinking_question.default_text')}
               </p>
             </div>
             
-            <h3 className="font-semibold mb-2 dark:text-gray-100">Wat zegt dit bijbelgedeelte over de schepping?</h3>
+            <h3 className="font-semibold mb-2 dark:text-gray-100">{t('explanation.title')}</h3>
             <p className="mb-4 dark:text-gray-200">
-              In <a href="#" className="text-blue-600 dark:text-blue-300">{reference}</a> wordt over Gods scheppingswerk verteld. Maar wat betekent dit voor ons vandaag de dag? Hoe kunnen we deze tekst toepassen in ons leven en onze wereldvisie? 
+              In <a href="#" className="text-blue-600 dark:text-blue-300">{reference}</a> {t('explanation.intro')}
             </p>
-            <h4 className="font-semibold mb-2 dark:text-gray-100">Commentaar</h4>
+            <h4 className="font-semibold mb-2 dark:text-gray-100">{t('explanation.commentary_title')}</h4>
             <p className="mb-4 dark:text-gray-200">
-              In <a href="#" className="text-blue-600 dark:text-blue-300">{reference}</a> wordt over Gods scheppingswerk verteld. De zeven dagen vormen de eerste week van Gods handelen. De uitdrukkingen &apos;God&apos;, &apos;scheppen&apos; en &apos;hemel en aarde&apos; komen voor in het begin en in omgekeerde volgorde in het slot van dit gedeelte.
+              In <a href="#" className="text-blue-600 dark:text-blue-300">{reference}</a> {t('explanation.commentary_text')}
             </p>
             <p className="mb-4 dark:text-gray-200">
-              <span className="bg-yellow-200 p-1 rounded dark:bg-yellow-600 dark:text-yellow-50">De schepping vindt plaats in een oplopende reeks van gebeurtenissen, in een andere volgorde dan de hedendaagse evolutietheorie dat doet. De mensen komen niet voort uit dieren, in een proces van toeval en overleving van de sterkste, maar zij zijn ontstaan door Gods scheppingswoorden.</span>
+              <span className="bg-yellow-200 p-1 rounded dark:bg-yellow-600 dark:text-yellow-50">{t('explanation.creation_text')}</span>
             </p>
           </div>
         );
       case 'historical':
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold mb-2 dark:text-gray-100">Historische Context van {reference}</h3>
+            <h3 className="font-semibold mb-2 dark:text-gray-100">{t('historical.title')} {reference}</h3>
             <div className="bg-gray-50 p-4 rounded-lg dark:bg-[#232325]">
-              <h4 className="font-medium mb-2 dark:text-gray-100">Tijdperiode</h4>
+              <h4 className="font-medium mb-2 dark:text-gray-100">{t('historical.time_period')}</h4>
               <p className="text-sm text-gray-700 mb-3 dark:text-gray-200">
-                Genesis werd geschreven in de context van het oude Nabije Oosten, waarschijnlijk tijdens de tijd van Mozes (ca. 1400 v.Chr.).
+                {t('historical.time_period_text')}
               </p>
-              <h4 className="font-medium mb-2 dark:text-gray-100">Culturele Achtergrond</h4>
+              <h4 className="font-medium mb-2 dark:text-gray-100">{t('historical.cultural_background')}</h4>
               <p className="text-sm text-gray-700 mb-3 dark:text-gray-200">
-                Het scheppingsverhaal onderscheidt zich van andere oude Nabije Oosterse scheppingsmythen door zijn monotheïstische karakter en de waardigheid van de mens.
+                {t('historical.cultural_background_text')}
               </p>
-              <h4 className="font-medium mb-2 dark:text-gray-100">Literaire Context</h4>
+              <h4 className="font-medium mb-2 dark:text-gray-100">{t('historical.literary_context')}</h4>
               <p className="text-sm text-gray-700 dark:text-gray-200">
-                Genesis 1-11 vormt de &apos;oergeschiedenis&apos; die de basis legt voor de verhalen van de aartsvaders die volgen.
+                {t('historical.literary_context_text')}
               </p>
             </div>
           </div>
@@ -84,27 +85,22 @@ function TabComponent({ selectedBook, selectedChapter, language = "en" }: TabCom
       case 'related':
         return (
           <div className="space-y-4">
-            <h3 className="font-semibold mb-2 dark:text-gray-100">Gerelateerde Bijbelpassages</h3>
+            <h3 className="font-semibold mb-2 dark:text-gray-100">{t('related_verses.title')}</h3>
             <div className="space-y-3">
               <div className="border-l-4 border-blue-500 pl-4 dark:border-blue-400">
                 <h4 className="font-medium text-blue-700 dark:text-blue-200">Johannes 1:1-3</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;In den beginne was het Woord, en het Woord was bij God, en het Woord was God.&quot;</p>
-                <span className="text-xs text-gray-500 dark:text-gray-300">Thema: Schepping door het Woord</span>
+                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;{t('related_verses.john_1')}&quot;</p>
+                <span className="text-xs text-gray-500 dark:text-gray-300">{t('related_verses.john_1_theme')}</span>
               </div>
               <div className="border-l-4 border-green-500 pl-4 dark:border-green-400">
                 <h4 className="font-medium text-green-700 dark:text-green-200">Psalm 33:6</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;Door des HEEREN woord zijn de hemelen gemaakt, en door den geest zijns monds al hun heir.&quot;</p>
-                <span className="text-xs text-gray-500 dark:text-gray-300">Thema: Gods scheppende woord</span>
+                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;{t('related_verses.psalm_33')}&quot;</p>
+                <span className="text-xs text-gray-500 dark:text-gray-300">{t('related_verses.psalm_33_theme')}</span>
               </div>
               <div className="border-l-4 border-purple-500 pl-4 dark:border-purple-400">
                 <h4 className="font-medium text-purple-700 dark:text-purple-200">Hebreeën 11:3</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;Door het geloof verstaan wij, dat de wereld door Gods woord is toebereid.&quot;</p>
-                <span className="text-xs text-gray-500 dark:text-gray-300">Thema: Geloof in de schepping</span>
-              </div>
-              <div className="border-l-4 border-red-500 pl-4 dark:border-red-400">
-                <h4 className="font-medium text-red-700 dark:text-red-200">Kolossenzen 1:16</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;Want door Hem zijn alle dingen geschapen, die in de hemelen en die op de aarde zijn.&quot;</p>
-                <span className="text-xs text-gray-500 dark:text-gray-300">Thema: Christus als Schepper</span>
+                <p className="text-sm text-gray-600 dark:text-gray-200">&quot;{t('related_verses.hebrews_11')}&quot;</p>
+                <span className="text-xs text-gray-500 dark:text-gray-300">{t('related_verses.hebrews_11_theme')}</span>
               </div>
             </div>
           </div>
@@ -158,6 +154,7 @@ function TabComponent({ selectedBook, selectedChapter, language = "en" }: TabCom
 export default function StudyPage({ params }: { params: Promise<{ lng: string }> }) {
   const resolvedParams = React.use(params);
   const lng = resolvedParams.lng;
+  const { t } = useTranslation(lng, 'study');
   
   const [versions, setVersions] = useState<string[]>([]);
   const [books, setBooks] = useState<string[]>([]);
@@ -174,9 +171,31 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
+  // Function to get default Bible version based on language
+  const getDefaultVersion = (availableVersions: string[], language: string): string | null => {
+    if (language === 'nl') {
+      // For Dutch, prefer Staten Vertaling (note the space)
+      if (availableVersions.includes('Staten Vertaling')) {
+        return 'Staten Vertaling';
+      }
+    } else if (language === 'en') {
+      // For English, prefer American Standard Version
+      if (availableVersions.includes('American Standard Version')) {
+        return 'American Standard Version';
+      }
+      if (availableVersions.includes('ASV')) {
+        return 'ASV';
+      }
+    }
+    
+    // Fallback to first available version
+    return availableVersions.length > 0 ? availableVersions[0] : null;
+  };
+
   // 1. Fetch available versions on initial load
   useEffect(() => {
     const fetchVersions = async () => {
+      console.log('📚 Starting to fetch Bible versions...');
       setLoadingVersions(true);
       try {
         const res = await fetch(`${API_BASE_URL}/versions`);
@@ -186,28 +205,24 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
         }
         const data: Version[] = await res.json();
         const versionNames = data.map((v) => v.name);
+        console.log('📚 Fetched versions:', versionNames);
         setVersions(versionNames);
 
-        // Set 'Statenvertaling' as default, otherwise the first one
-        if (versionNames.includes('Statenvertaling')) {
-          setSelectedVersion('Statenvertaling');
-        } else if (versionNames.length > 0) {
-          setSelectedVersion(versionNames[0]);
-        } else {
-          setSelectedVersion(null); // No versions found
-          console.warn('No versions found from API.');
-        }
+        // Set default version based on language preference
+        const defaultVersion = getDefaultVersion(versionNames, lng);
+        console.log(`📚 Selected default version for language '${lng}':`, defaultVersion);
+        setSelectedVersion(defaultVersion);
       } catch (err) {
-        console.error('Error fetching versions:', err);
+        console.error('❌ Error fetching versions:', err);
         setVersions([]);
         setSelectedVersion(null);
       } finally {
         setLoadingVersions(false);
-        console.groupEnd(); // End useEffect: Fetching versions... group
+        console.log('📚 Finished fetching versions');
       }
     };
     fetchVersions();
-  }, []); // Empty dependency array means this runs once on mount
+  }, [lng]); // Include lng in dependency array to refetch when language changes
 
   // 2. Fetch books when a version is selected or on initial load
   useEffect(() => {
@@ -278,12 +293,12 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
       setLoadingChapters(true);
       try {
         const params = new URLSearchParams({ book: selectedBook });
-        // Only append version if it's explicitly selected and not the default 'Statenvertaling'
-        if (selectedVersion && selectedVersion.toLowerCase() !== 'statenvertaling') {
+        // Only append version if it's explicitly selected and not the default 'Staten Vertaling'
+        if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
           params.append('version', selectedVersion);
           console.log(`Appending version parameter: ${selectedVersion}`);
         } else {
-          console.log(`Using default version (Statenvertaling) or no version specified in API call.`);
+          console.log(`Using default version (Staten Vertaling) or no version specified in API call.`);
         }
 
         const url = `${API_BASE_URL}/chapters?${params.toString()}`;
@@ -398,12 +413,13 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           loadingVersions={loadingVersions}
           loadingBooks={loadingBooks}
           loadingChapters={loadingChapters}
+          t={t}
         />
 
         {/* Prev/Next Arrows */}
         <button
           className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100"
-          title="Vorige hoofdstuk"
+          title={t('previous_chapter')}
           onClick={handlePreviousChapter}
           disabled={selectedChapter <= 1 || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === 0}
         >
@@ -413,7 +429,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
         </button>
         <button
           className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100"
-          title="Volgende hoofdstuk"
+          title={t('next_chapter')}
           onClick={handleNextChapter}
           disabled={selectedChapter >= maxChapter || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === chapters.length - 1}
         >
@@ -422,7 +438,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           </svg>
         </button>
         {/* Print/Download Button */}
-        <button className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition ml-auto dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100" title="Print of download hoofdstuk">
+        <button className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition ml-auto dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100" title={t('print_download')}>
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17 17v4H7v-4M12 12v6m0 0l-3-3m3 3l3-3M21 15V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8" />
           </svg>
@@ -457,12 +473,12 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           {/* Add a message if no book/chapter is selected yet */}
           {(!selectedBook || !selectedChapter || !selectedVersion) && !loadingBooks && !loadingChapters && (
             <div className="py-12 text-center text-gray-500 dark:text-gray-300">
-              {loadingVersions && 'Laden vertalingen...'}
-              {!loadingVersions && versions.length === 0 && 'Geen vertalingen beschikbaar.'}
-              {!loadingVersions && versions.length > 0 && selectedVersion && loadingBooks && 'Laden boeken...'}
-              {!loadingVersions && versions.length > 0 && selectedVersion && !loadingBooks && books.length === 0 && 'Geen boeken beschikbaar voor deze vertaling.'}
-              {!loadingVersions && versions.length > 0 && selectedVersion && !selectedBook && 'Selecteer een boek en hoofdstuk om te beginnen.'}
-              {!selectedVersion && 'Selecteer een Bijbelvertaling om te beginnen.'}
+              {loadingVersions && t('loading_translations')}
+              {!loadingVersions && versions.length === 0 && t('no_translations_available')}
+              {!loadingVersions && versions.length > 0 && selectedVersion && loadingBooks && t('loading_books')}
+              {!loadingVersions && versions.length > 0 && selectedVersion && !loadingBooks && books.length === 0 && t('no_books_available')}
+              {!loadingVersions && versions.length > 0 && selectedVersion && !selectedBook && t('select_book_chapter')}
+              {!selectedVersion && t('select_translation_start')}
             </div>
           )}
         </section>
@@ -488,7 +504,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
           </div>
           
           {/* Tab Navigation */}
-          <TabComponent selectedBook={selectedBook} selectedChapter={selectedChapter} language={lng} />
+          <TabComponent selectedBook={selectedBook} selectedChapter={selectedChapter} language={lng} t={t} />
         </section>
       </div>
     </div>
