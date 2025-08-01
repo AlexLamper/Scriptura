@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { WelcomeCard } from "../../../components/dashboard/WelcomeCard"
 import { DailyVerseCard } from "../../../components/dashboard/DailyVerseCard"
+import { RecentNotesCard } from "../../../components/dashboard/RecentNotesCard"
 // import { SummaryCard } from "../../../components/dashboard/SummaryCard"
 import { HomeworkCompletionRatesCard } from "../../../components/dashboard/HomeworkCompletionRatesCard"
 import { AssignmentsCard } from "../../../components/dashboard/AssignmentsCard"
@@ -23,8 +24,8 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   const { lng } = await params
 
   return (
-    <div className="container lg:px-2 pb-4 pt-2">
-      <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+    <div className="container lg:px-0 pb-2 pt-0">
+      <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
         <WelcomeCard lng={lng} />
         <DailyVerseCard lng={lng} />
         
@@ -52,6 +53,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         
         {/* Right sidebar */}
         <div className="space-y-6">
+          <RecentNotesCard lng={lng} />
           <HomeworkCompletionRatesCard BarChart={BarChart} />
           <AssignmentsCard />
         </div>

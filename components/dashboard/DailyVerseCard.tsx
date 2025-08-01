@@ -89,7 +89,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   }, [lng]);
 
   return (
-    <Card className="p-8 shadow-xl rounded-2xl border border-gray-200 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700">
+    <Card className="p-8 shadow-sm rounded-2xl border border-gray-200 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-6">
         <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
           <BookOpen className="text-indigo-600 lg:w-6 lg:h-6 w-5 h-5" />
@@ -107,7 +107,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
         )}
         {verse && (
           <div className="w-full">
-            <blockquote className="text-[1.24rem] md:text-2xl italic text-gray-700 dark:text-gray-200 mb-4 leading-relaxed relative" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
+            <blockquote className="text-[1.24rem] md:text-2xl text-gray-700 dark:text-gray-200 mb-4 leading-relaxed relative" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
               <span className="absolute top-0 left-0 text-5xl text-gray-300 dark:text-gray-600 -translate-x-4 -translate-y-4">“</span>
               <span className="text-[1.24rem]">{verse.text}</span>
               <span className="absolute bottom-0 right-0 text-5xl text-gray-300 dark:text-gray-600 translate-x-4 translate-y-4">”</span>

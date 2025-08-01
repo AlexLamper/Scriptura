@@ -123,19 +123,25 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     }
 
     fetchQuiz()
+  }, [quizId])
 
-    // Start the timer when the quiz begins (after study materials)
+  // Start the timer when study is completed and materials are hidden
+  useEffect(() => {
     if (!showStudyMaterials && studyCompleted) {
       setIsTimerRunning(true)
     }
+  }, [showStudyMaterials, studyCompleted])
 
+  // Save progress when component unmounts or timer changes
+  useEffect(() => {
     return () => {
       // Save timer value when component unmounts
       if (timer > 0) {
-        saveQuizProgress()
+        // We'll save the progress when the quiz is completed in handleNext
+        // This is just a placeholder for saving partial progress if needed
       }
     }
-  }, [quizId])
+  }, [timer])
 
   // Update timer state when study materials are hidden and study is completed
   useEffect(() => {
@@ -267,12 +273,6 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
     } catch (err) {
       console.error("Error saving quiz history:", err)
     }
-  }
-
-  // Save current quiz progress
-  const saveQuizProgress = () => {
-    // We'll save the progress when the quiz is completed in handleNext
-    // This is just a placeholder for saving partial progress if needed
   }
 
   // Navigate to a bookmarked question
