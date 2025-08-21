@@ -6,20 +6,20 @@ import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 import { generatePageMetadata } from "../../../lib/pageMetadata";
 
-interface CoursesLayoutProps {
+interface ReadLayoutProps {
   children: React.ReactNode;
   params: Promise<{ lng: string }>;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lng: string }> }): Promise<Metadata> {
   const { lng } = await params;
-  return generatePageMetadata('courses', lng);
+  return generatePageMetadata('read', lng);
 }
 
-export default async function CoursesLayout({
+export default async function ReadLayout({
   children,
   params,
-}: CoursesLayoutProps) {
+}: ReadLayoutProps) {
   const session = await getServerSession();
   const { lng } = await params;
 

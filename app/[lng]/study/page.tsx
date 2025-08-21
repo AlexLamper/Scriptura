@@ -34,7 +34,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
   // Wrapper for download functionality for keyboard shortcuts
   const handleDownload = useCallback(() => {
     // This will be handled by the DownloadButton component
-    console.log('Download triggered via keyboard shortcut');
+    // Download triggered via keyboard shortcut
   }, []);
 
   return (

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
-import { Eye, Brain, Heart, ChevronDown, ChevronRight, Lightbulb, Users, Book, Clock, MapPin } from 'lucide-react';
+import { Eye, Brain, Heart, ChevronDown, ChevronRight, Lightbulb, Book } from 'lucide-react';
 
 interface InductiveStudyProps {
   book: string;
@@ -24,7 +24,7 @@ interface StudyProgress {
 }
 
 // Professional Genesis 1 study content based on biblical scholarship
-const getGenesisStudyContent = (t: (key: string) => string) => {
+const getGenesisStudyContent = () => {
   return {
     observationQuestions: [
       {
@@ -118,8 +118,6 @@ const getGenesisStudyContent = (t: (key: string) => string) => {
 export default function InductiveStudy({
   book,
   chapter,
-  version,
-  t
 }: InductiveStudyProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -134,7 +132,7 @@ export default function InductiveStudy({
 
   // Only show Genesis 1 content for now
   const isGenesis1 = book.toLowerCase().includes('genesis') && chapter === 1;
-  const studyContent = getGenesisStudyContent(t);
+  const studyContent = getGenesisStudyContent();
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => ({
@@ -151,9 +149,9 @@ export default function InductiveStudy({
   };
 
   const steps = [
-    { id: 1, title: t('inductive.observe.title'), subtitle: t('inductive.observe.subtitle'), icon: Eye },
-    { id: 2, title: t('inductive.interpret.title'), subtitle: t('inductive.interpret.subtitle'), icon: Brain },
-    { id: 3, title: t('inductive.apply.title'), subtitle: t('inductive.apply.subtitle'), icon: Heart }
+    { id: 1, title: 'Observe', subtitle: 'What does the text say?', icon: Eye },
+    { id: 2, title: 'Interpret', subtitle: 'What does it mean?', icon: Brain },
+    { id: 3, title: 'Apply', subtitle: 'How does it apply to me?', icon: Heart }
   ];
 
   if (!isGenesis1) {
@@ -162,7 +160,7 @@ export default function InductiveStudy({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5" />
-            {t('inductive.title')}
+            Inductive Bible Study
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -243,7 +241,7 @@ export default function InductiveStudy({
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            {studyContent.observationQuestions.map((q, index) => (
+            {studyContent.observationQuestions.map((q) => (
               <div key={q.id} className="border rounded-lg p-4 dark:border-gray-700">
                 <button
                   onClick={() => toggleSection(`obs-${q.id}`)}
@@ -298,7 +296,7 @@ export default function InductiveStudy({
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            {studyContent.interpretationInsights.map((insight, index) => (
+            {studyContent.interpretationInsights.map((insight) => (
               <div key={insight.id} className="border rounded-lg p-4 dark:border-gray-700">
                 <button
                   onClick={() => toggleSection(`int-${insight.id}`)}
@@ -354,7 +352,7 @@ export default function InductiveStudy({
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            {studyContent.applicationAreas.map((area, index) => (
+            {studyContent.applicationAreas.map((area) => (
               <div key={area.id} className="border rounded-lg p-4 dark:border-gray-700">
                 <button
                   onClick={() => toggleSection(`app-${area.id}`)}

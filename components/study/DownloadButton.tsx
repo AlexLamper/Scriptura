@@ -62,7 +62,7 @@ export default function DownloadButton({
       const response = await fetch(`${API_BASE_URL}/chapter?${params.toString()}`);
       if (response.ok) {
         const data = await response.json();
-        console.log('API Response:', data); // Debug log
+        // API Response received
         
         // Handle different response formats
         let verses;

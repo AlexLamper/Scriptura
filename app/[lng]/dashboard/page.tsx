@@ -24,13 +24,18 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   const { lng } = await params
 
   return (
-    <div className="container lg:px-0 pb-2 pt-0">
-      <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
-        <WelcomeCard lng={lng} />
-        <DailyVerseCard lng={lng} />
+    <div className="w-full pb-2 pt-0">
+      <div className="grid gap-4 lg:grid-cols-4 lg:gap-6">
+        {/* Top row - spans 2 columns each */}
+        <div className="lg:col-span-2">
+          <WelcomeCard lng={lng} />
+        </div>
+        <div className="lg:col-span-2">
+          <DailyVerseCard lng={lng} />
+        </div>
         
         {/* Summary Cards */}
-        {/* <div className="lg:col-span-3 grid gap-6 md:grid-cols-3">
+        {/* <div className="lg:col-span-4 grid gap-6 md:grid-cols-3">
           <SummaryCard
             icon={<FileText className="h-6 w-6 text-gray-500" />}
             value="20/25"
@@ -48,11 +53,13 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
           />
         </div> */}
 
-        {/* Featured Courses */}
-        <CoursesCard lng={lng} />
+        {/* Featured Courses - takes 3 columns */}
+        <div className="lg:col-span-3">
+          <CoursesCard lng={lng} />
+        </div>
         
-        {/* Right sidebar */}
-        <div className="space-y-6">
+        {/* Right sidebar - takes 1 column */}
+        <div className="lg:col-span-1 space-y-6">
           <RecentNotesCard lng={lng} />
           {/* <HomeworkCompletionRatesCard BarChart={BarChart} />
           <AssignmentsCard /> */}

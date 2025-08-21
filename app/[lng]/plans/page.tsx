@@ -16,6 +16,7 @@ import { Plus, Search, X } from 'lucide-react';
 import { toast } from '../../../hooks/use-toast';
 
 interface Reading {
+  day: number;
   book: string;
   chapter: number;
   verses?: string;
@@ -382,7 +383,7 @@ export default function PlansPage({ params }: PlansPageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">
           {t('title', 'Bijbel Leesplannen')}

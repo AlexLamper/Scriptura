@@ -13,7 +13,7 @@ export default function QuizzesPage({
   const { t } = useTranslation(lng, "common")
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center dark:bg-gray-900">
       <div className="max-w-md w-full mx-auto text-center p-8">
         <div className="mb-8">
           <Construction className="h-24 w-24 text-orange-500 mx-auto mb-4" />
