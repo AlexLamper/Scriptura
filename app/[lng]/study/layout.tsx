@@ -4,63 +4,24 @@ import SessionProvider from "../../../components/SessionProvider";
 import { Header } from "../../../components/header";
 import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
+import { generatePageMetadata } from "../../../lib/pageMetadata";
 
-export const metadata: Metadata = {
-  title: "Scriptura | User Profile",
-  description: "Manage your Scriptura user profile, track your progress, and personalize your biblical learning experience.",
-  keywords: [
-    "User profile",
-  ],
-  openGraph: {
-    title: "Scriptura | User Profile",
-    description: "Access and manage your Scriptura user profile to enhance your personalized biblical learning journey.",
-    url: "https://scriptura-edu.com/profile",
-    siteName: "Scriptura",
-    images: [
-      {
-        url: "https://scriptura-edu.com/og-profile.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Scriptura - User Profile",
-      },
-    ],
-    locale: "en_US",
-    type: "profile",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Scriptura | User Profile",
-    description: "Personalize your Scriptura experience by managing your user profile and tracking your biblical learning progress.",
-    site: "@ScripturaEdu",
-    creator: "@ScripturaEdu",
-    images: ["https://scriptura-edu.com/og-profile.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  alternates: {
-    canonical: "https://scriptura-edu.com/profile",
-    languages: {
-      en: "https://scriptura-edu.com/en/profile",
-      nl: "https://scriptura-edu.nl/nl/profile",
-    },
-  },
-};
-
-export default async function LearnLayout({
-  children,
-}: Readonly<{
+interface StudyLayoutProps {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ lng: string }>;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lng: string }> }): Promise<Metadata> {
+  const { lng } = await params;
+  return generatePageMetadata('study', lng);
+}
+
+export default async function StudyLayout({
+  children,
+  params,
+}: StudyLayoutProps) {
   const session = await getServerSession();
+  const { lng } = await params;
 
   return (
     <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
@@ -68,7 +29,7 @@ export default async function LearnLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
-            <Header params={{ lng: "" }} />
+            <Header params={{ lng }} />
             <div className="px-8 pb-8 pt-4">
               {children}
             </div>

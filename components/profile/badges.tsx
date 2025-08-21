@@ -11,7 +11,6 @@ import {
   MessageCircle,
   Camera,
   CheckCircle,
-  Heart,
   FlaskConical,
   Gift,
 } from "lucide-react"
@@ -43,7 +42,6 @@ const badges: BadgeInfo[] = [
   { id: "commenter", icon: <MessageCircle />, description: "Post a comment" },
   { id: "profilepic", icon: <Camera />, description: "Upload a profile picture" },
   { id: "firstlesson", icon: <CheckCircle />, description: "Complete first lesson" },
-  { id: "community", icon: <Heart />, description: "Join the community" },
   { id: "tester", icon: <FlaskConical />, description: "Beta tester" },
   { id: "anniversary", icon: <Gift />, description: "One year anniversary" },
 ]

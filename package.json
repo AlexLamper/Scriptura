@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-inductive-study": "node scripts/setup-inductive-study.js",
+    "setup-code-only": "node scripts/setup-code-only.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",
@@ -16,6 +18,7 @@
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-scroll-area": "^1.2.9",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-switch": "^1.1.2",
@@ -27,6 +30,7 @@
     "accept-language": "^3.0.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.1",
     "framer-motion": "^12.4.7",
     "i18n": "^0.15.1",
     "i18next": "^24.2.2",

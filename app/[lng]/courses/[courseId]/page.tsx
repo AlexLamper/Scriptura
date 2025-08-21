@@ -274,8 +274,8 @@ export default function CoursePage({
   const processedContent = processContent(course.content)
 
   return (
-    <div className="min-h-screen bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
-      <main className="container mx-auto px-6 py-8">
+    <div className="min-h-screen dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
+      <main className="mx-auto px-6 py-8">
         <Button onClick={() => router.push(`/${lng}/courses`)} className="mb-6 flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("back_to_courses")}

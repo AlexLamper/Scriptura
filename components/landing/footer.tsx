@@ -30,14 +30,6 @@ export function Footer({ params: { lng } }: FooterProps) {
               </li>
               <li>
                 <Link
-                  href={`/${lng}/community`}
-                  className="text-gray-400 hover:text-white"
-                >
-                  {t("community")}
-                </Link>
-              </li>
-              <li>
-                <Link
                   href={`/${lng}/pricing`}
                   className="text-gray-400 hover:text-white"
                 >
