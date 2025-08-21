@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seed Bible Plans</title>
+</head>
+<body>
+    <h1>Seed Bible Plans</h1>
+    <button onclick="seedPlans()">Seed Database</button>
+    <div id="result"></div>
+
+    <script>
+        async function seedPlans() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Seeding...';
+            
+            try {
+                const response = await fetch('/api/seed-bible-plans', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                resultDiv.innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

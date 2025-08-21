@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, User, Briefcase, Settings, BookText, StickyNote
+import { Home, BookOpen, User, Briefcase, Settings, BookText, StickyNote, Calendar
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
@@ -30,6 +30,11 @@ const mainNavItems = [
     titleKey: "study",
     url: "/study",
     icon: BookText,
+  },
+  {
+    titleKey: "plans",
+    url: "/plans",
+    icon: Calendar,
   },
   {
     titleKey: "notes",

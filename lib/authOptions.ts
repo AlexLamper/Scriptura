@@ -34,6 +34,14 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async session({ session }) {
+      if (session.user?.email) {
+        await connectMongoDB();
+        const user = await User.findOne({ email: session.user.email });
+        if (user) {
+          session.user.id = user._id.toString();
+          session.user.isAdmin = user.isAdmin || false;
+        }
+      }
       return session;
     },
   },
