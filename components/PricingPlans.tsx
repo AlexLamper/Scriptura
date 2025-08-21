@@ -5,7 +5,7 @@ const plans = [
   {
     name: "Basic",
     price: "Free",
-    features: ["Access to basic courses", "Community forum participation", "Personal study tracker"],
+    features: ["Access to basic courses", "Personal study tracker"],
     cta: "Sign Up",
   },
   {

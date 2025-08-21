@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, User, Briefcase, Settings, Users, BookText, StickyNote
+import { Home, BookOpen, User, Briefcase, Settings, BookText, StickyNote
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
@@ -55,11 +55,6 @@ const mainNavItems = [
     titleKey: "settings",
     url: "/settings",
     icon: Settings,
-  },
-  {
-    titleKey: "community",
-    url: "/community",
-    icon: Users,
   },
 ]
 

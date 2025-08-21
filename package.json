@@ -2,11 +2,14 @@
   "name": "scriptura",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-inductive-study": "node scripts/setup-inductive-study.js",
+    "setup-code-only": "node scripts/setup-code-only.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",

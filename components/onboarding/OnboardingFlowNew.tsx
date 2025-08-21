@@ -16,7 +16,6 @@ import {
   Check,
   ArrowRight,
   Target,
-  Heart,
   Brain,
   GraduationCap
 } from "lucide-react";
@@ -94,7 +93,7 @@ function OnboardingFlow() {
               <BookOpen className="w-8 h-8 text-white" />
             </div>
             <p className="text-gray-600 leading-relaxed">
-              Scriptura helpt je dieper de Bijbel te bestuderen met moderne tools en een ondersteunende gemeenschap. 
+              Scriptura helpt je dieper de Bijbel te bestuderen met moderne tools en professionele hulpmiddelen. 
               Laten we je wegwijs maken in de belangrijkste functies!
             </p>
           </div>
@@ -230,16 +229,6 @@ function OnboardingFlow() {
                 <h4 className="font-medium text-gray-900">Quizzes & Tracking</h4>
               </div>
               <p className="text-sm text-gray-600">Test je kennis en volg je voortgang</p>
-            </div>
-
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Heart className="w-4 h-4 text-purple-600" />
-                </div>
-                <h4 className="font-medium text-gray-900">Gemeenschap</h4>
-              </div>
-              <p className="text-sm text-gray-600">Verbind met andere studenten en deel inzichten</p>
             </div>
           </div>
         </div>

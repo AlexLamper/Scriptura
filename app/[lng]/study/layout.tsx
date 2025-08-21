@@ -6,14 +6,14 @@ import { AppSidebar } from "../../../components/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | User Profile",
-  description: "Manage your Scriptura user profile, track your progress, and personalize your biblical learning experience.",
+  title: "Scriptura | Study",
+  description: "Manage your Scriptura study materials, track your progress, and personalize your biblical learning experience.",
   keywords: [
-    "User profile",
+    "Study materials",
   ],
   openGraph: {
-    title: "Scriptura | User Profile",
-    description: "Access and manage your Scriptura user profile to enhance your personalized biblical learning journey.",
+    title: "Scriptura | Study",
+    description: "Access and manage your Scriptura study materials to enhance your personalized biblical learning journey.",
     url: "https://scriptura-edu.com/profile",
     siteName: "Scriptura",
     images: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         url: "https://scriptura-edu.com/og-profile.jpg",
         width: 1200,
         height: 630,
-        alt: "Scriptura - User Profile",
+        alt: "Scriptura - Study",
       },
     ],
     locale: "en_US",
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Scriptura | User Profile",
-    description: "Personalize your Scriptura experience by managing your user profile and tracking your biblical learning progress.",
+    title: "Scriptura | Study",
+    description: "Personalize your Scriptura experience by managing your study materials and tracking your biblical learning progress.",
     site: "@ScripturaEdu",
     creator: "@ScripturaEdu",
     images: ["https://scriptura-edu.com/og-profile.jpg"],
