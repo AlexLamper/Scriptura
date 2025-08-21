@@ -11,16 +11,16 @@ const samplePlans = [
     isPublic: true,
     duration: 30,
     readings: [
-      { day: 1, reference: "Johannes 1:1-18", title: "Het Woord werd vlees" },
-      { day: 2, reference: "Johannes 1:19-34", title: "Johannes de Doper getuigt" },
-      { day: 3, reference: "Johannes 1:35-51", title: "De eerste discipelen" },
-      { day: 4, reference: "Johannes 2:1-12", title: "Water wordt wijn" },
-      { day: 5, reference: "Johannes 2:13-25", title: "Reiniging van de tempel" },
-      { day: 6, reference: "Johannes 3:1-21", title: "Nicodemus bezoekt Jezus" },
-      { day: 7, reference: "Johannes 3:22-36", title: "Jezus en Johannes de Doper" },
-      { day: 8, reference: "Johannes 4:1-26", title: "De vrouw bij de put" },
-      { day: 9, reference: "Johannes 4:27-42", title: "Geloof van de Samaritanen" },
-      { day: 10, reference: "Johannes 4:43-54", title: "Genezing van de zoon" }
+      { day: 1, book: "Johannes", chapter: 1, title: "Het Woord werd vlees" },
+      { day: 2, book: "Johannes", chapter: 1, title: "Johannes de Doper getuigt" },
+      { day: 3, book: "Johannes", chapter: 1, title: "De eerste discipelen" },
+      { day: 4, book: "Johannes", chapter: 2, title: "Water wordt wijn" },
+      { day: 5, book: "Johannes", chapter: 2, title: "Reiniging van de tempel" },
+      { day: 6, book: "Johannes", chapter: 3, title: "Nicodemus bezoekt Jezus" },
+      { day: 7, book: "Johannes", chapter: 3, title: "Jezus en Johannes de Doper" },
+      { day: 8, book: "Johannes", chapter: 4, title: "De vrouw bij de put" },
+      { day: 9, book: "Johannes", chapter: 4, title: "Geloof van de Samaritanen" },
+      { day: 10, book: "Johannes", chapter: 4, title: "Genezing van de zoon" }
     ]
   },
   {
@@ -30,20 +30,20 @@ const samplePlans = [
     isPublic: true,
     duration: 14,
     readings: [
-      { day: 1, reference: "Psalm 23", title: "De Heer is mijn herder" },
-      { day: 2, reference: "Psalm 46", title: "God is onze toevlucht" },
-      { day: 3, reference: "Psalm 91", title: "Bescherming van de Allerhoogste" },
-      { day: 4, reference: "Psalm 121", title: "Hulp komt van de Heer" },
-      { day: 5, reference: "Psalm 139", title: "God kent mij volkomen" },
-      { day: 6, reference: "Psalm 27", title: "De Heer is mijn licht" },
-      { day: 7, reference: "Psalm 62", title: "Stilte voor God" },
-      { day: 8, reference: "Psalm 103", title: "Loof de Heer, mijn ziel" },
-      { day: 9, reference: "Psalm 34", title: "Ik zal de Heer altijd loven" },
-      { day: 10, reference: "Psalm 40", title: "Geduldig gewacht op de Heer" },
-      { day: 11, reference: "Psalm 86", title: "Gebed in nood" },
-      { day: 12, reference: "Psalm 118", title: "Zijn liefde houdt eeuwig stand" },
-      { day: 13, reference: "Psalm 130", title: "Uit de diepten roep ik" },
-      { day: 14, reference: "Psalm 145", title: "Lofzang op Gods grootheid" }
+      { day: 1, book: "Psalm", chapter: 23, title: "De Heer is mijn herder" },
+      { day: 2, book: "Psalm", chapter: 46, title: "God is onze toevlucht" },
+      { day: 3, book: "Psalm", chapter: 91, title: "Bescherming van de Allerhoogste" },
+      { day: 4, book: "Psalm", chapter: 121, title: "Hulp komt van de Heer" },
+      { day: 5, book: "Psalm", chapter: 139, title: "God kent mij volkomen" },
+      { day: 6, book: "Psalm", chapter: 27, title: "De Heer is mijn licht" },
+      { day: 7, book: "Psalm", chapter: 62, title: "Stilte voor God" },
+      { day: 8, book: "Psalm", chapter: 103, title: "Loof de Heer, mijn ziel" },
+      { day: 9, book: "Psalm", chapter: 34, title: "Ik zal de Heer altijd loven" },
+      { day: 10, book: "Psalm", chapter: 40, title: "Geduldig gewacht op de Heer" },
+      { day: 11, book: "Psalm", chapter: 86, title: "Gebed in nood" },
+      { day: 12, book: "Psalm", chapter: 118, title: "Zijn liefde houdt eeuwig stand" },
+      { day: 13, book: "Psalm", chapter: 130, title: "Uit de diepten roep ik" },
+      { day: 14, book: "Psalm", chapter: 145, title: "Lofzang op Gods grootheid" }
     ]
   },
   {
@@ -53,16 +53,16 @@ const samplePlans = [
     isPublic: true,
     duration: 10,
     readings: [
-      { day: 1, reference: "Spreuken 1:1-19", title: "Het doel van Spreuken" },
-      { day: 2, reference: "Spreuken 2:1-22", title: "Voordelen van wijsheid" },
-      { day: 3, reference: "Spreuken 3:1-12", title: "Vertrouw op de Heer" },
-      { day: 4, reference: "Spreuken 4:1-19", title: "Wijsheid van vader op zoon" },
-      { day: 5, reference: "Spreuken 6:1-19", title: "Waarschuwingen en zeven gruwelen" },
-      { day: 6, reference: "Spreuken 8:1-21", title: "Wijsheid roept" },
-      { day: 7, reference: "Spreuken 10:1-16", title: "Spreuken van Salomo" },
-      { day: 8, reference: "Spreuken 12:1-14", title: "Wijze en dwaze woorden" },
-      { day: 9, reference: "Spreuken 15:1-17", title: "Een zacht antwoord" },
-      { day: 10, reference: "Spreuken 16:1-15", title: "De Heer weegt de harten" }
+      { day: 1, book: "Spreuken", chapter: 1, title: "Het doel van Spreuken" },
+      { day: 2, book: "Spreuken", chapter: 2, title: "Voordelen van wijsheid" },
+      { day: 3, book: "Spreuken", chapter: 3, title: "Vertrouw op de Heer" },
+      { day: 4, book: "Spreuken", chapter: 4, title: "Wijsheid van vader op zoon" },
+      { day: 5, book: "Spreuken", chapter: 6, title: "Waarschuwingen en zeven gruwelen" },
+      { day: 6, book: "Spreuken", chapter: 8, title: "Wijsheid roept" },
+      { day: 7, book: "Spreuken", chapter: 10, title: "Spreuken van Salomo" },
+      { day: 8, book: "Spreuken", chapter: 12, title: "Wijze en dwaze woorden" },
+      { day: 9, book: "Spreuken", chapter: 15, title: "Een zacht antwoord" },
+      { day: 10, book: "Spreuken", chapter: 16, title: "De Heer weegt de harten" }
     ]
   }
 ];

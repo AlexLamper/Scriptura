@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
+import { toast } from '../../hooks/use-toast';
 
 interface Reading {
+  day: number;
   book: string;
   chapter: number;
   verses?: string;
+  title?: string;
 }
 
 interface BiblePlan {
@@ -42,7 +46,147 @@ const categoryColors = {
 };
 
 export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  
   console.log('PlanCard rendering plan:', plan.title, 'readings:', plan.readings?.length);
+
+  const handleEnrollment = async () => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/bible-plans/enrollment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ planId: plan._id }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Succesvol ingeschreven!',
+          description: `Je bent nu ingeschreven voor "${plan.title}"`,
+        });
+        onEnrollmentChange?.();
+      } else {
+        const error = await response.json();
+        toast({
+          title: 'Inschrijving mislukt',
+          description: error.error || 'Er is een fout opgetreden',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error enrolling:', error);
+      toast({
+        title: 'Inschrijving mislukt',
+        description: 'Er is een onverwachte fout opgetreden',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUnenrollment = async () => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/bible-plans/enrollment?planId=${plan._id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Uitgeschreven',
+          description: `Je bent uitgeschreven van "${plan.title}"`,
+        });
+        onEnrollmentChange?.();
+      } else {
+        const error = await response.json();
+        toast({
+          title: 'Uitschrijving mislukt',
+          description: error.error || 'Er is een fout opgetreden',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error unenrolling:', error);
+      toast({
+        title: 'Uitschrijving mislukt',
+        description: 'Er is een onverwachte fout opgetreden',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleContinue = async () => {
+    try {
+      // Fetch the plan details to get the current day's reading
+      const response = await fetch(`/api/bible-plans/${plan._id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch plan details');
+      }
+      
+      const { plan: planDetails } = await response.json();
+      
+      // Find the next uncompleted day or first day if none completed
+      const completedDays = planDetails.completedDays || [];
+      let currentDay = 1;
+      
+      if (completedDays.length > 0) {
+        // Find the next day after the latest completed day
+        const maxCompletedDay = Math.max(...completedDays);
+        currentDay = maxCompletedDay < planDetails.duration ? maxCompletedDay + 1 : maxCompletedDay;
+      }
+      
+      // Find the reading for the current day
+      const currentReading = planDetails.readings?.find((reading: Reading) => reading.day === currentDay);
+      
+      if (currentReading) {
+        // Navigate to /read with the specific book and chapter
+        const queryParams = new URLSearchParams({
+          book: currentReading.book,
+          chapter: currentReading.chapter.toString(),
+          plan: plan._id,
+          day: currentDay.toString()
+        });
+        
+        router.push(`/read?${queryParams.toString()}`);
+      } else {
+        // Fallback to plan detail page
+        router.push(`/plans/${plan._id}`);
+      }
+    } catch (error) {
+      console.error('Error continuing plan:', error);
+      // Fallback to plan detail page
+      router.push(`/plans/${plan._id}`);
+    }
+  };
+
+  const handleStartReading = async () => {
+    try {
+      // For non-enrolled users, start with day 1
+      const firstReading = plan.readings?.[0];
+      if (firstReading) {
+        const queryParams = new URLSearchParams({
+          book: firstReading.book,
+          chapter: firstReading.chapter.toString(),
+          plan: plan._id,
+          day: firstReading.day.toString()
+        });
+        
+        router.push(`/read?${queryParams.toString()}`);
+      }
+    } catch (error) {
+      console.error('Error starting reading:', error);
+    }
+  };
   
   return (
     <Card className="h-full">
@@ -84,14 +228,41 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
 
           <div className="flex gap-2">
             {!plan.isEnrolled && (
-              <Button onClick={onEnrollmentChange} className="flex-1">
-                Inschrijven
-              </Button>
+              <>
+                <Button 
+                  onClick={handleEnrollment} 
+                  className="flex-1"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Bezig...' : 'Inschrijven'}
+                </Button>
+                <Button 
+                  onClick={handleStartReading}
+                  variant="outline"
+                  disabled={isLoading}
+                >
+                  Preview
+                </Button>
+              </>
             )}
             {plan.isEnrolled && (
-              <Button variant="outline" className="flex-1">
-                Doorgaan
-              </Button>
+              <>
+                <Button 
+                  onClick={handleContinue}
+                  className="flex-1"
+                  disabled={isLoading}
+                >
+                  Lees verder
+                </Button>
+                <Button 
+                  onClick={handleUnenrollment}
+                  variant="outline"
+                  size="sm"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Bezig...' : 'Uitschrijven'}
+                </Button>
+              </>
             )}
           </div>
 
