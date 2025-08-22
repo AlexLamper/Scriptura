@@ -1,2 +1,0 @@
-- admin boolean to User model in database
-- 'pro' functionality 

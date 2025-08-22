@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import stripe from "../../../lib/stripe"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../../../lib/authOptions"
-import connectMongoDB from "../../../libs/mongodb"
+import connectMongoDB from "../../../lib/mongodb"
 import User from "../../../models/User"
 
 export async function POST(req: NextRequest) {

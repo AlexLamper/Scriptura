@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import connectMongoDB from "../../../../libs/mongodb"
+import connectMongoDB from "../../../../lib/mongodb"
 import ThemeCollection from "../../../../models/ThemeCollection"
 
 export async function GET(
