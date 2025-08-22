@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../../../lib/authOptions"
-import connectMongoDB from "../../../libs/mongodb"
+import connectMongoDB from "../../../lib/mongodb"
 import User from "../../../models/User"
 import DailyBibleProgress from "../../../models/DailyBibleProgress"
 import { dailyBibleTasks } from "../../../lib/dailyBibleTasks"

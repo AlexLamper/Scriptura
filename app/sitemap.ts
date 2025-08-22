@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import connectMongoDB from "../libs/mongodb";
+import connectMongoDB from "../lib/mongodb";
 import Course from "../models/Course";
 import Quiz from "../models/Quiz";
 
