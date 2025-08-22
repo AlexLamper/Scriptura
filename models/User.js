@@ -4,6 +4,9 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    password: { type: String }, // Optional for OAuth users
+    resetToken: { type: String },
+    resetTokenExpires: { type: Date },
     bio: { type: String },
     image: { type: String },
     enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],

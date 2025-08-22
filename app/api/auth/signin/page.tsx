@@ -5,7 +5,7 @@ import Link from "next/link"
 import { getProviders, type ClientSafeProvider, signIn } from "next-auth/react"
 import { Button } from "../../../../components/ui/button"
 import Image from "next/image"
-import { Info, Loader2 } from "lucide-react" // Import Loader2
+import { Info, Loader2, Eye, EyeOff } from "lucide-react"
 import {
   Dialog,
   DialogTrigger,
@@ -58,6 +58,13 @@ const translations = {
     or: "or",
     continueWithGoogle: "Continue with Google",
     continueWithFacebook: "Continue with Facebook",
+    signInButton: "Sign in",
+    signingInEmail: "Signing in...",
+    errors: {
+      invalidCredentials: "Invalid email or password",
+      missingFields: "Please enter both email and password",
+      signInFailed: "Sign in failed. Please try again.",
+    },
     introducingFeatures: "Introducing new features",
     analyzeTrends: "Analyzing previous trends ensures that businesses always make the right decision. And as the scale of the decision and its impact magnifies...",
     trackProgress: "Track Your Progress",
@@ -99,6 +106,13 @@ const translations = {
     or: "of",
     continueWithGoogle: "Doorgaan met Google",
     continueWithFacebook: "Doorgaan met Facebook",
+    signInButton: "Inloggen",
+    signingInEmail: "Inloggen...",
+    errors: {
+      invalidCredentials: "Ongeldig e-mailadres of wachtwoord",
+      missingFields: "Voer zowel e-mailadres als wachtwoord in",
+      signInFailed: "Inloggen mislukt. Probeer opnieuw.",
+    },
     introducingFeatures: "Introductie van nieuwe functies",
     analyzeTrends: "Het analyseren van eerdere trends zorgt ervoor dat bedrijven altijd de juiste beslissing nemen. En naarmate de schaal van de beslissing en de impact ervan toenemen...",
     trackProgress: "Volg je voortgang",
@@ -140,6 +154,13 @@ const translations = {
     or: "oder",
     continueWithGoogle: "Mit Google fortfahren",
     continueWithFacebook: "Mit Facebook fortfahren",
+    signInButton: "Anmelden",
+    signingInEmail: "Anmeldung...",
+    errors: {
+      invalidCredentials: "Ungültige E-Mail oder Passwort",
+      missingFields: "Bitte geben Sie sowohl E-Mail als auch Passwort ein",
+      signInFailed: "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    },
     introducingFeatures: "Neue Funktionen werden vorgestellt",
     analyzeTrends: "Die Analyse früherer Trends stellt sicher, dass Unternehmen immer die richtige Entscheidung treffen. Und wenn das Ausmaß der Entscheidung und ihre Auswirkungen zunehmen...",
     trackProgress: "Verfolgen Sie Ihren Fortschritt",
@@ -155,6 +176,16 @@ export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null)
   const [language, setLanguage] = useState<"en" | "nl" | "de">("en")
+  
+  // Email/Password sign-in state
+  const [emailFormData, setEmailFormData] = useState({
+    email: "",
+    password: "",
+  })
+  const [showPassword, setShowPassword] = useState(false)
+  const [emailSignInLoading, setEmailSignInLoading] = useState(false)
+  const [emailSignInError, setEmailSignInError] = useState("")
+  
   const t = translations[language]
 
   // Carousel state for right side
@@ -196,6 +227,43 @@ export default function SignInPage() {
       setIsLoading(false)
       setLoadingProvider(null)
     }, 5000)
+  }
+
+  const handleEmailSignIn = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setEmailSignInError("")
+
+    if (!emailFormData.email || !emailFormData.password) {
+      setEmailSignInError(t.errors.missingFields)
+      return
+    }
+
+    setEmailSignInLoading(true)
+
+    try {
+      const result = await signIn("credentials", {
+        email: emailFormData.email,
+        password: emailFormData.password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        setEmailSignInError(t.errors.invalidCredentials)
+      } else if (result?.ok) {
+        window.location.href = "/"
+      }
+    } catch (error) {
+      console.error("Sign in error:", error)
+      setEmailSignInError(t.errors.signInFailed)
+    } finally {
+      setEmailSignInLoading(false)
+    }
+  }
+
+  const handleEmailFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setEmailFormData(prev => ({ ...prev, [name]: value }))
+    setEmailSignInError("") // Clear error when user types
   }
 
   return (
@@ -279,36 +347,83 @@ export default function SignInPage() {
           </div>
           <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] rounded-2xl shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 mb-2 text-left">Sign in</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-left">Don&apos;t have an account? <a href="#" className="text-blue-600 hover:underline">{t.createNow}</a></p> {/* Translated */}
-            <form className="space-y-5">
+            <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-left">Don&apos;t have an account? <Link href="/en/auth/register" className="text-blue-600 hover:underline">{t.createNow}</Link></p>
+            
+            {/* Error Message */}
+            {emailSignInError && (
+              <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 rounded-lg text-sm">
+                {emailSignInError}
+              </div>
+            )}
+
+            <form onSubmit={handleEmailSignIn} className="space-y-5">
               <div className="text-left">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t.email}</label> {/* Translated */}
-                <input id="email" name="email" type="email" autoComplete="email" placeholder={t.email} className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" disabled />
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t.email}</label>
+                <input 
+                  id="email" 
+                  name="email" 
+                  type="email" 
+                  autoComplete="email" 
+                  placeholder={t.email}
+                  value={emailFormData.email}
+                  onChange={handleEmailFormChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                />
               </div>
               <div className="text-left">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t.password}</label> {/* Translated */}
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t.password}</label>
                 <div className="relative">
-                  <input id="password" name="password" type="password" autoComplete="current-password" placeholder={t.password} className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" disabled />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer select-none">👁️</span>
+                  <input 
+                    id="password" 
+                    name="password" 
+                    type={showPassword ? "text" : "password"} 
+                    autoComplete="current-password" 
+                    placeholder={t.password}
+                    value={emailFormData.password}
+                    onChange={handleEmailFormChange}
+                    className="w-full px-4 py-2 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
                 </div>
               </div>
               <div className="flex items-center justify-between mb-2">
                 <label className="flex items-center text-sm text-gray-600 dark:text-blue-200">
-                  <input type="checkbox" className="mr-2 rounded border-gray-300 dark:border-gray-700" disabled />
-                  {t.saveAccount} {/* Translated */}
+                  <input type="checkbox" className="mr-2 rounded border-gray-300 dark:border-gray-700" />
+                  {t.saveAccount}
                 </label>
-                <a href="#" className="text-xs text-blue-600 hover:underline">{t.forgotPassword}</a> {/* Translated */}
+                <Link href="/en/auth/forgot-password" className="text-xs text-blue-600 hover:underline">{t.forgotPassword}</Link>
               </div>
-              <button type="button" className="w-full py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg transition-colors">Sign in</button>
+              <button 
+                type="submit" 
+                disabled={emailSignInLoading}
+                className="w-full py-2 rounded-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white font-semibold text-lg transition-colors"
+              >
+                {emailSignInLoading ? (
+                  <span className="flex items-center justify-center">
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    {t.signingInEmail}
+                  </span>
+                ) : (
+                  t.signInButton
+                )}
+              </button>
               <div className="flex items-center my-4">
                 <div className="flex-grow h-px bg-gray-200 dark:bg-gray-700" />
                 <span className="mx-2 text-gray-400 text-xs">{t.or}</span> {/* Translated */}
                 <div className="flex-grow h-px bg-gray-200 dark:bg-gray-700" />
               </div>
 
-              {/* Dynamic Provider Buttons */}
+              {/* Dynamic Provider Buttons - Exclude credentials provider */}
               {providers ? (
-                Object.values(providers).map((provider) => (
+                Object.values(providers)
+                  .filter((provider) => provider.id !== "credentials") // Filter out credentials provider
+                  .map((provider) => (
                   <Button
                     key={provider.id}
                     variant="outline"
