@@ -7,12 +7,12 @@
     "price": "Gratis",
     "description": "Perfect om te starten",
     "features": [
-      "Toegang tot basiscursussen",
-      "Deelname aan het community forum",
-      "Toegang tot 100+ quizzen",
-      "Advertenties"
+      "Basis bijbelstudie tools",
+      "Beperkte leesplannen",
+      "Meerdere bijbelvertalingen",
+      "Persoonlijke notities"
     ],
-    "buttonText": "Aanmelden"
+    "buttonText": "Gratis beginnen"
   },
   "premium": {
     "name": "Premium",
@@ -20,10 +20,11 @@
     "priceSubtext": "/maand",
     "description": "Voor serieuze bijbelstudenten",
     "features": [
-      "Toegang tot alle cursussen",
-      "Forum + premium badge",
-      "Toegang tot alle quizzen",
-      "Geen advertenties"
+      "Alle inductieve studiehulpmiddelen",
+      "Onbeperkte leesplannen",
+      "Geavanceerde studiemateriaal",
+      "Voortgangsregistratie",
+      "Premium ondersteuning"
     ],
     "buttonText": "Probeer gratis"
   },
@@ -33,6 +34,7 @@
     "description": "Voor kerken en organisaties",
     "features": [
       "Alle premiumfuncties",
+      "Groepsbeheer",
       "Aangepaste cursussen",
       "Persoonlijke ondersteuning",
       "Inzichten en rapportage"
@@ -40,6 +42,6 @@
     "buttonText": "Neem contact op"
   },
   "cta_title": "Klaar om dieper de Schrift in te duiken?",
-  "cta_subtitle": "Sluit je aan bij duizenden gelovigen die samen Gods Woord bestuderen.",
+  "cta_subtitle": "Sluit je aan bij gelovigen die systematisch Gods Woord bestuderen.",
   "cta_buttonText": "Begin je gratis proefperiode"
 }

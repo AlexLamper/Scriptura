@@ -39,7 +39,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
 
   return (
     <div className="mt-2">
-      {/* Top controls: Bible/book/chapter selectors with navigation arrows */}
+      {/* Top controls */}
       <TopControls
         versions={versions}
         books={books}

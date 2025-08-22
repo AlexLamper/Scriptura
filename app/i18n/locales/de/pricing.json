@@ -7,12 +7,12 @@
     "price": "Kostenlos",
     "description": "Ideal für den Einstieg",
     "features": [
-      "Zugang zu Basiskursen",
-      "Teilnahme am Community-Forum",
-      "Zugang zu über 100 Quizzen",
-      "Werbung"
+      "Basis Bibelstudie-Tools",
+      "Begrenzte Lesepläne",
+      "Mehrere Bibelübersetzungen",
+      "Persönliche Notizen"
     ],
-    "buttonText": "Registrieren"
+    "buttonText": "Kostenlos starten"
   },
   "premium": {
     "name": "Premium",
@@ -20,10 +20,11 @@
     "priceSubtext": "/Monat",
     "description": "Für ernsthafte Bibelstudenten",
     "features": [
-      "Zugang zu allen Kursen",
-      "Forum + Premium-Abzeichen",
-      "Zugang zu allen Quizzen",
-      "Keine Werbung"
+      "Alle induktiven Studienhilfen",
+      "Unbegrenzte Lesepläne",
+      "Erweiterte Studienmaterialien",
+      "Fortschrittsverfolgung",
+      "Premium-Support"
     ],
     "buttonText": "Kostenlos testen"
   },
@@ -33,6 +34,7 @@
     "description": "Für Kirchen und Organisationen",
     "features": [
       "Alle Premium-Funktionen",
+      "Gruppenverwaltung",
       "Individuelle Kurse",
       "Dedizierter Support",
       "Analysen und Berichte"
@@ -40,6 +42,6 @@
     "buttonText": "Kontaktieren Sie uns"
   },
   "cta_title": "Bereit, tiefer in die Schrift einzutauchen?",
-  "cta_subtitle": "Schließe dich Tausenden von Gläubigen an, die gemeinsam Gottes Wort studieren.",
+  "cta_subtitle": "Schließe dich Gläubigen an, die systematisch Gottes Wort studieren.",
   "cta_buttonText": "Starte deine kostenlose Testphase"
 }

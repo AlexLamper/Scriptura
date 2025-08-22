@@ -7,23 +7,24 @@
     "price": "Free",
     "description": "Perfect for getting started",
     "features": [
-      "Access to basic courses",
-      "Participation in the community forum",
-      "Access to over 100+ quizzes",
-      "Advertisements"
+      "Basic Bible study tools",
+      "Limited reading plans",
+      "Multiple Bible translations",
+      "Personal notes"
     ],
-    "buttonText": "Sign Up"
+    "buttonText": "Start Free"
   },
   "premium": {
     "name": "Premium",
-    "price": "€9.99",
+    "price": "$9.99",
     "priceSubtext": "/month",
     "description": "For serious Bible students",
     "features": [
-      "Access to all courses",
-      "Community forum + premium badge",
-      "Access to all quizzes",
-      "No advertisements"
+      "All inductive study tools",
+      "Unlimited reading plans",
+      "Advanced study materials",
+      "Progress tracking",
+      "Premium support"
     ],
     "buttonText": "Start Free Trial"
   },
@@ -33,6 +34,7 @@
     "description": "For churches and organizations",
     "features": [
       "All Premium features",
+      "Group management",
       "Customized courses",
       "Dedicated support",
       "Analytics and reporting"
@@ -40,6 +42,6 @@
     "buttonText": "Contact Us"
   },
   "cta_title": "Ready to dive deeper into Scripture?",
-  "cta_subtitle": "Join thousands of believers studying God's Word together.",
+  "cta_subtitle": "Join believers studying God's Word systematically.",
   "cta_buttonText": "Start Your Free Trial"
 }

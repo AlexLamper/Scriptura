@@ -1,10 +1,10 @@
 {
   "faq_title": "Veelgestelde Vragen",
-  "faq_subtitle": "Alles wat je moet weten over bijbelstudie met Scriptura",
+  "faq_subtitle": "Alles wat je moet weten over ons bijbelstudieplatform.",
   "items": [
     {
       "question": "Wat is Scriptura?",
-      "answer": "Scriptura is een online platform dat ontworpen is om gebruikers te helpen de bijbel op een diepgaande en interactieve manier te bestuderen. Met AI-ondersteunde inzichten, flexibele tools en een breed scala aan studiematerialen maakt Scriptura bijbelstudie makkelijker en persoonlijker."
+      "answer": "Scriptura is een online bijbelstudie platform ontworpen om gebruikers te helpen bij het bestuderen van de Bijbel. Scriptura biedt interactieve studiehulpmiddelen, gestructureerde leesplannen, inductieve studiemethoden en meerdere bijbelvertalingen om je te helpen Gods Woord beter te begrijpen."
     },
     {
       "question": "Is Scriptura geschikt voor beginners?",
@@ -12,15 +12,15 @@
     },
     {
       "question": "Kan ik Scriptura gebruiken als bron voor informatie?",
-      "answer": "Scriptura is geen vervanging voor de Bijbel, ook is het geen informatiebron. Het is een hulpmiddel waarmee je de Bijbel kunt bestuderen en begrijpen. Het biedt AI-ondersteuning, interactieve lessen en een community van gebruikers die samenkomen om elkaar te helpen bij het bestuderen van de Bijbel."
+      "answer": "Scriptura is geen vervanging voor de Bijbel, ook is het geen informatiebron. Het is een hulpmiddel waarmee je de Bijbel kunt bestuderen en begrijpen. Het is een platform dat gebruikt dient te worden als aanvulling op enkel het lezen van de Bijbel."
     },
     {
       "question": "Welke vertalingen van de Bijbel zijn beschikbaar op Scriptura?",
-      "answer": "Op dit moment biedt Scriptura toegang tot een aantal populaire Bijbelvertalingen, waaronder de Statenvertaling, Herziene Statenvertaling en de King James vertaling. We willen in de toekomst nog enkele andere vertalingen toevoegen, afhankelijk van de versie."
+      "answer": "Op dit moment biedt Scriptura toegang tot een aantal populaire Bijbelvertalingen, waaronder de Statenvertaling, Herziene Statenvertaling, Afrikaans, American Standard Version en de King James vertaling. We willen in de toekomst nog enkele andere vertalingen toevoegen, afhankelijk van de versie."
     },
     {
-      "question": "Hoe vaak wordt er nieuwe inhoud toegevoegd aan Scriptura?",
-      "answer": "De inhoud van Scriptura wordt regelmatig uitgebreid. We voegen wekelijks of maandelijks nieuwe bijbelstudies, thematische cursussen en leermiddelen toe om gebruikers te helpen in hun geestelijke ontwikkeling. We streven ernaar altijd actueel en relevant materiaal aan te bieden."
+      "question": "Wat zijn de systeemvereisten voor het gebruik van Scriptura?",
+      "answer": "Scriptura is een webgebaseerd platform en kan worden gebruikt op elk apparaat met een moderne webbrowser. Voor de beste ervaring raden we aan een recente versie van Chrome, Firefox, Safari of Edge te gebruiken. Zorg ervoor dat je een stabiele internetverbinding hebt."
     }
   ]
 }

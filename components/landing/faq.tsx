@@ -18,7 +18,7 @@ export function FAQSection({ params: { lng } }: FAQSectionProps) {
   }[]
 
   return (
-    <section id="faq" className="py-24 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
+    <section id="faq" className="py-24 bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center space-y-4 mb-16"
@@ -45,7 +45,7 @@ export function FAQSection({ params: { lng } }: FAQSectionProps) {
               <AccordionItem
                 key={index}
                 value={`item-${index + 1}`}
-                className="bg-gray-50 dark:bg-[#23263a] rounded-lg px-6 border border-gray-200 dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10"
+                className="bg-white dark:bg-[#23263a] rounded-lg px-6 border border-gray-200 dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10"
               >
                 <AccordionTrigger className="text-left dark:text-blue-100">{faq.question}</AccordionTrigger>
                 <AccordionContent className="text-gray-600 dark:text-blue-200">{faq.answer}</AccordionContent>

@@ -64,7 +64,7 @@ export function PricingSection({ params: { lng } }: PricingSectionProps) {
   ]
 
   return (
-    <section id="pricing" className="py-24 dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
+    <section id="pricing" className="py-24 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("title")}</h2>
