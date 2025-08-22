@@ -78,7 +78,7 @@ export default function ProfilePage({
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 flex items-center justify-center bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
+      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 flex items-center justify-center dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
@@ -86,7 +86,7 @@ export default function ProfilePage({
 
   if (error || !user) {
     return (
-      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
+      <div className="min-h-screen w-full mx-auto px-4 pt-2 pb-4 dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23]">
         <Card className="dark:bg-[#292b2f] dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10">
           <CardContent className="p-6">
             <h2 className="text-xl font-semibold text-red-600 dark:text-red-400">{t("error_loading_profile")}</h2>
