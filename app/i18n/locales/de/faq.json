@@ -1,26 +1,26 @@
 {
   "faq_title": "Häufig gestellte Fragen",
-  "faq_subtitle": "Alles, was du über das Bibelstudium mit Scriptura wissen musst",
+  "faq_subtitle": "Alles, was du über unsere Bibelstudie-Plattform wissen musst.",
   "items": [
     {
       "question": "Was ist Scriptura?",
-      "answer": "Scriptura ist eine Online-Plattform, die Nutzern hilft, die Bibel auf tiefgehende und interaktive Weise zu studieren. Mit KI-gestützten Einblicken, flexiblen Tools und einer Vielzahl an Studienmaterialien macht Scriptura das Bibelstudium einfacher und persönlicher."
+      "answer": "Scriptura ist eine Online-Bibelstudie-Plattform, die entwickelt wurde, um Nutzern beim Studium der Bibel zu helfen. Scriptura bietet interaktive Studienhilfen, strukturierte Lesepläne, induktive Studienmethoden und mehrere Bibelübersetzungen, um dir zu helfen, Gottes Wort besser zu verstehen."
     },
     {
       "question": "Ist Scriptura für Anfänger geeignet?",
-      "answer": "Absolut. Scriptura wurde für alle Altersgruppen entwickelt und bietet eine intuitive Benutzererfahrung für Anfänger. Gleichzeitig bietet es genug Tiefe für Fortgeschrittene. Von einfachen Leseplänen bis hin zu tiefgehenden theologischen Einsichten – für jeden ist etwas dabei."
+      "answer": "Absolut. Scriptura wurde für alle Altersgruppen entwickelt und bietet eine intuitive Benutzererfahrung für Anfänger. Gleichzeitig bietet es genug Tiefe für Fortgeschrittene. Von einfachen Leseplänen bis hin zu tiefgehenden theologischen Einsichten. Für jeden ist etwas dabei."
     },
     {
       "question": "Kann ich Scriptura als Informationsquelle nutzen?",
-      "answer": "Scriptura ist kein Ersatz für die Bibel und auch keine Informationsquelle im klassischen Sinne. Es ist ein Werkzeug, das dir hilft, die Bibel zu studieren und besser zu verstehen. Es bietet KI-Unterstützung, interaktive Lektionen und eine Community von Nutzern, die sich gegenseitig beim Bibelstudium unterstützen."
+      "answer": "Scriptura ist kein Ersatz für die Bibel und auch keine Informationsquelle. Es ist ein Werkzeug, mit dem du die Bibel studieren und verstehen kannst. Es ist eine Plattform, die als Ergänzung zum reinen Lesen der Bibel genutzt werden sollte."
     },
     {
       "question": "Welche Bibelübersetzungen sind auf Scriptura verfügbar?",
-      "answer": "Derzeit bietet Scriptura Zugang zu mehreren beliebten Bibelübersetzungen, darunter die Statenvertaling, die Herziene Statenvertaling und die King-James-Version. In Zukunft möchten wir weitere Übersetzungen hinzufügen, abhängig von den verfügbaren Lizenzen."
+      "answer": "Derzeit bietet Scriptura Zugang zu mehreren beliebten Bibelübersetzungen, darunter die Statenvertaling, Herziene Statenvertaling, Afrikaans, American Standard Version und die King-James-Version. Wir möchten in Zukunft weitere Übersetzungen hinzufügen, je nach Version."
     },
     {
-      "question": "Wie oft wird neuer Inhalt zu Scriptura hinzugefügt?",
-      "answer": "Die Inhalte von Scriptura werden regelmäßig erweitert. Wöchentlich oder monatlich fügen wir neue Bibelstudien, thematische Kurse und Lernmaterialien hinzu, um die geistliche Entwicklung der Nutzer zu unterstützen. Unser Ziel ist es, stets aktuelle und relevante Inhalte bereitzustellen."
+      "question": "Was sind die Systemanforderungen für die Nutzung von Scriptura?",
+      "answer": "Scriptura ist eine webbasierte Plattform und kann auf jedem Gerät mit einem modernen Webbrowser verwendet werden. Für die beste Erfahrung empfehlen wir eine aktuelle Version von Chrome, Firefox, Safari oder Edge. Stelle sicher, dass du eine stabile Internetverbindung hast."
     }
   ]
 }

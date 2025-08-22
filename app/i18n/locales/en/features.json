@@ -1,16 +1,16 @@
 {
   "heading": "Features",
   "description": "Everything you need to study Scripture effectively",
-  "feature_1_title": "Bible Courses",
-  "feature_1_description": "Study through every book of the Bible with expert-guided courses covering theology and practical application.",
-  "feature_2_title": "Community Forum",
-  "feature_2_description": "Connect with fellow believers, ask questions, and share insights as you grow in your understanding of Scripture.",
-  "feature_3_title": "Interactive Quizzes",
-  "feature_3_description": "Test your knowledge with over 100+ quizzes and track your progress as you grow in biblical understanding.",
-  "feature_4_title": "Advanced Search",
-  "feature_4_description": "Find any verse, topic, or concept instantly across multiple Bible translations with powerful search tools.",
+  "feature_1_title": "Inductive Bible Study",
+  "feature_1_description": "Learn to understand the Bible through observation, interpretation and application.",
+  "feature_2_title": "Structured Reading Plans",
+  "feature_2_description": "Follow systematic Bible reading plans with progress tracking.",
+  "feature_3_title": "Multiple Bible Translations",
+  "feature_3_description": "Various available Bible translations for personal preference.",
+  "feature_4_title": "Interactive Study Tools",
+  "feature_4_description": "Study Bible passages with commentaries, cross-references and theological explanations.",
   "feature_5_title": "Personal Notes",
-  "feature_5_description": "Save your insights and reflections as you study through Scripture with our note-taking system.",
-  "feature_6_title": "Reading Plans",
-  "feature_6_description": "Follow structured reading plans to read through the entire Bible systematically at your own pace."
+  "feature_5_description": "Save your insights and reflections while studying Scripture.",
+  "feature_6_title": "Progress Tracking",
+  "feature_6_description": "Track your Bible reading progress and see your spiritual growth."
 }
