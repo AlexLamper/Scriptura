@@ -64,9 +64,9 @@ export function CoursesCard({ lng }: CoursesCardProps) {
 
   if (loading) {
     return (
-      <Card className="col-span-2 h-full shadow-sm border-gray-200">
-        <CardContent className="h-full px-6 py-6 flex flex-col">
-          <div className="flex items-center justify-between mb-4">
+      <Card className="h-full shadow-sm border-gray-200">
+        <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
+    <div className="flex items-center justify-between mb-4 gap-2">
             <h3 className="text-xl font-semibold text-gray-900">{t("courses")}</h3>
             <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
           </div>
@@ -85,14 +85,14 @@ export function CoursesCard({ lng }: CoursesCardProps) {
             ))}
           </div>
         </CardContent>
-      </Card>
+    </Card>
     )
   }
 
   return (
-  <Card className="col-span-2 h-full shadow-sm border-gray-200">
-  <CardContent className="h-full px-6 py-6 flex flex-col">
-        <div className="flex items-center justify-between mb-4">
+  <Card className="h-full shadow-sm border-gray-200">
+  <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
+  <div className="flex items-center justify-between mb-4 gap-2">
           <h3 className="text-xl font-semibold text-gray-900">{t("courses")}</h3>
           <Link href={`/${lng}/courses`}>
             <Button variant="ghost" className="text-[#3b82f6] font-medium hover:bg-[#3b82f6]/10">
@@ -117,9 +117,9 @@ export function CoursesCard({ lng }: CoursesCardProps) {
               className="block"
             >
               <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-sm transition-shadow duration-200">
-                <div className="flex items-start justify-between mb-3">
+        <div className="flex items-start justify-between mb-3 gap-3">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <h4 className="font-semibold text-gray-900">
                       {course.title}
                       </h4>
@@ -133,7 +133,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
                       {course.instructor} • {course.category}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 ml-4">
+                  <div className="flex items-center gap-2 ml-4 shrink-0">
                     <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                       {course.difficulty}
                     </span>
@@ -144,7 +144,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
                   {course.description}
                 </p>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <Clock className="w-4 h-4" />
                     {course.totalDuration} min

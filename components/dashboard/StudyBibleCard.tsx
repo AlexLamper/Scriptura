@@ -15,9 +15,9 @@ export function StudyBibleCard({ lng }: StudyBibleCardProps) {
 
   return (
     <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200">
-      <CardContent className="h-full px-6 py-6 flex flex-col">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4">
+      <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
+        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+          <div className="flex items-center gap-4 flex-wrap">
             <div className="w-12 h-12 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
@@ -42,8 +42,8 @@ export function StudyBibleCard({ lng }: StudyBibleCardProps) {
         </div>
 
         <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-6 flex-wrap">
               <div className="text-center">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
