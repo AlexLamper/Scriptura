@@ -1,9 +1,10 @@
 "use client"
 
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "../components/ui/button"
 import { Check, Languages } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
+import { cookieName } from "../app/i18n/settings"
 
 const languages = [
   { code: "en", name: "English" },
@@ -13,8 +14,9 @@ const languages = [
 
 export function LanguageSwitcher() {
   const pathname = usePathname()
+  const router = useRouter()
 
-  // Simple function to get current language from path
+  // Get current language from path
   const getCurrentLanguage = () => {
     if (!pathname) return "en"
     const pathSegments = pathname.split("/").filter(Boolean)
@@ -22,7 +24,7 @@ export function LanguageSwitcher() {
     return languages.some((lang) => lang.code === langFromPath) ? langFromPath : "en"
   }
 
-  // Simple function to switch language
+  // Function to switch language with proper cookie handling
   const switchLanguage = (newLanguage: string) => {
     const currentLang = getCurrentLanguage()
 
@@ -36,10 +38,12 @@ export function LanguageSwitcher() {
     // Construct the new path with the selected language
     const newPath = `/${newLanguage}${pathWithoutLang}`
 
-    // Navigate with a small delay to prevent any race conditions
-    setTimeout(() => {
-      window.location.href = newPath
-    }, 50)
+    // Set the cookie to remember the user's language preference
+    // This ensures the middleware will use this language for future visits
+    document.cookie = `${cookieName}=${newLanguage}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
+
+    // Navigate to the new path
+    router.push(newPath)
   }
 
   const currentLang = getCurrentLanguage()

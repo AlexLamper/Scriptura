@@ -67,7 +67,7 @@ export function Header({ params: { lng } }: HeaderProps) {
               <ModeToggle />
             </div>
             <div className="hidden sm:flex items-center space-x-2">
-              <Link href="/api/auth/signin" className="hover:cursor-pointer">
+              <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
                 <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
                   {t("signup")}
                 </Button>
@@ -104,7 +104,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                 {t("faq")}
               </Link>
               <div className="flex flex-col space-y-2 pt-3 border-t border-gray-100 dark:border-[#23263a]">
-                <Link href="/api/auth/signin" className="hover:cursor-pointer">
+                <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
                   <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
                     {t("login")}
                   </Button>

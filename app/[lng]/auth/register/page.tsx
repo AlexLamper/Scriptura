@@ -1,87 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "../../../i18n/client";
 import Link from "next/link";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "../../../../components/ui/button";
+import { LanguageSwitcher } from "../../../../components/language-switcher";
 import Image from "next/image";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 import { ModeToggle } from "../../../../components/dark-mode-toggle";
+import { use } from "react";
 
-const translations = {
-  en: {
-    title: "Create Account",
-    subtitle: "Join Scriptura and start your spiritual journey",
-    backButton: "Back to Sign In",
-    name: "Full Name",
-    email: "Email",
-    password: "Password",
-    confirmPassword: "Confirm Password",
-    createAccount: "Create Account",
-    creating: "Creating Account...",
-    alreadyHaveAccount: "Already have an account?",
-    signIn: "Sign in",
-    passwordRequirements: "Password must be at least 8 characters long",
-    errors: {
-      allFieldsRequired: "All fields are required",
-      passwordMismatch: "Passwords do not match",
-      passwordTooShort: "Password must be at least 8 characters long",
-      invalidEmail: "Please enter a valid email address",
-      userExists: "User with this email already exists",
-      registrationFailed: "Registration failed. Please try again.",
-    }
-  },
-  nl: {
-    title: "Account Aanmaken",
-    subtitle: "Word lid van Scriptura en begin je spirituele reis",
-    backButton: "Terug naar Inloggen",
-    name: "Volledige Naam",
-    email: "E-mail",
-    password: "Wachtwoord",
-    confirmPassword: "Bevestig Wachtwoord",
-    createAccount: "Account Aanmaken",
-    creating: "Account Aanmaken...",
-    alreadyHaveAccount: "Heb je al een account?",
-    signIn: "Inloggen",
-    passwordRequirements: "Wachtwoord moet minimaal 8 tekens lang zijn",
-    errors: {
-      allFieldsRequired: "Alle velden zijn verplicht",
-      passwordMismatch: "Wachtwoorden komen niet overeen",
-      passwordTooShort: "Wachtwoord moet minimaal 8 tekens lang zijn",
-      invalidEmail: "Voer een geldig e-mailadres in",
-      userExists: "Gebruiker met dit e-mailadres bestaat al",
-      registrationFailed: "Registratie mislukt. Probeer opnieuw.",
-    }
-  },
-  de: {
-    title: "Konto Erstellen",
-    subtitle: "Tritt Scriptura bei und beginne deine spirituelle Reise",
-    backButton: "Zurück zur Anmeldung",
-    name: "Vollständiger Name",
-    email: "E-Mail",
-    password: "Passwort",
-    confirmPassword: "Passwort Bestätigen",
-    createAccount: "Konto Erstellen",
-    creating: "Konto Erstellen...",
-    alreadyHaveAccount: "Hast du bereits ein Konto?",
-    signIn: "Anmelden",
-    passwordRequirements: "Passwort muss mindestens 8 Zeichen lang sein",
-    errors: {
-      allFieldsRequired: "Alle Felder sind erforderlich",
-      passwordMismatch: "Passwörter stimmen nicht überein",
-      passwordTooShort: "Passwort muss mindestens 8 Zeichen lang sein",
-      invalidEmail: "Bitte gib eine gültige E-Mail-Adresse ein",
-      userExists: "Benutzer mit dieser E-Mail existiert bereits",
-      registrationFailed: "Registrierung fehlgeschlagen. Bitte versuche es erneut.",
-    }
-  }
-};
+interface RegisterPageProps {
+  params: Promise<{ lng: string }>;
+}
 
-export default function RegisterPage() {
-  const params = useParams();
-  const lng = params.lng as string;
-  const language = (lng === "nl" ? "nl" : lng === "de" ? "de" : "en") as "en" | "nl" | "de";
-  const t = translations[language];
+export default function RegisterPage({ params }: RegisterPageProps) {
+  const { lng } = use(params);
+  const { t } = useTranslation(lng, "auth");
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -103,23 +39,23 @@ export default function RegisterPage() {
 
   const validateForm = () => {
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError(t.errors.allFieldsRequired);
+      setError(t("register.errors.allFieldsRequired"));
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setError(t.errors.invalidEmail);
+      setError(t("register.errors.invalidEmail"));
       return false;
     }
 
     if (formData.password.length < 8) {
-      setError(t.errors.passwordTooShort);
+      setError(t("register.errors.passwordTooShort"));
       return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError(t.errors.passwordMismatch);
+      setError(t("register.errors.passwordMismatch"));
       return false;
     }
 
@@ -153,13 +89,13 @@ export default function RegisterPage() {
 
       if (response.ok) {
         // Registration successful, redirect to sign in
-        router.push("/api/auth/signin?message=Registration successful! Please sign in.");
+        router.push(`/${lng}/auth/signin?message=Registration successful! Please sign in.`);
       } else {
-        setError(data.error || t.errors.registrationFailed);
+        setError(data.error || t("register.errors.registrationFailed"));
       }
     } catch (error) {
       console.error("Registration error:", error);
-      setError(t.errors.registrationFailed);
+      setError(t("register.errors.registrationFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -169,16 +105,17 @@ export default function RegisterPage() {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href="/api/auth/signin" className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors">
+        <Link href={`/${lng}/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-          {t.backButton}
+          {t("register.backButton")}
         </Link>
       </div>
 
-      {/* Top-right theme toggle */}
-      <div className="fixed top-4 right-4 z-30">
+      {/* Top-right controls */}
+      <div className="fixed top-4 right-4 z-30 flex items-center gap-3">
+        <LanguageSwitcher />
         <ModeToggle />
       </div>
 
@@ -198,8 +135,8 @@ export default function RegisterPage() {
           </div>
 
           {/* Header */}
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 mb-2 text-center">{t.title}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-center">{t.subtitle}</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 mb-2 text-center">{t("register.title")}</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-center">{t("register.subtitle")}</p>
 
           {/* Error Message */}
           {error && (
@@ -213,7 +150,7 @@ export default function RegisterPage() {
             {/* Name Field */}
             <div className="text-left">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
-                {t.name}
+                {t("register.name")}
               </label>
               <input
                 id="name"
@@ -223,14 +160,14 @@ export default function RegisterPage() {
                 value={formData.name}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder={t.name}
+                placeholder={t("register.name")}
               />
             </div>
 
             {/* Email Field */}
             <div className="text-left">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
-                {t.email}
+                {t("register.email")}
               </label>
               <input
                 id="email"
@@ -240,14 +177,14 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder={t.email}
+                placeholder={t("register.email")}
               />
             </div>
 
             {/* Password Field */}
             <div className="text-left">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
-                {t.password}
+                {t("register.password")}
               </label>
               <div className="relative">
                 <input
@@ -258,7 +195,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder={t.password}
+                  placeholder={t("register.password")}
                 />
                 <button
                   type="button"
@@ -268,13 +205,13 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t.passwordRequirements}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t("register.passwordRequirements")}</p>
             </div>
 
             {/* Confirm Password Field */}
             <div className="text-left">
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
-                {t.confirmPassword}
+                {t("register.confirmPassword")}
               </label>
               <div className="relative">
                 <input
@@ -285,7 +222,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder={t.confirmPassword}
+                  placeholder={t("register.confirmPassword")}
                 />
                 <button
                   type="button"
@@ -306,19 +243,19 @@ export default function RegisterPage() {
               {isLoading ? (
                 <span className="flex items-center justify-center">
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  {t.creating}
+                  {t("register.creating")}
                 </span>
               ) : (
-                t.createAccount
+                t("register.createAccount")
               )}
             </Button>
           </form>
 
           {/* Sign In Link */}
           <p className="text-sm text-gray-500 dark:text-gray-200/80 mt-6 text-center">
-            {t.alreadyHaveAccount}{" "}
-            <Link href="/api/auth/signin" className="text-blue-600 hover:underline font-medium">
-              {t.signIn}
+            {t("register.alreadyHaveAccount")}{" "}
+            <Link href={`/${lng}/auth/signin`} className="text-blue-600 hover:underline font-medium">
+              {t("register.signIn")}
             </Link>
           </p>
         </div>
