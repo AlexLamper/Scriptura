@@ -79,8 +79,8 @@ export function RecentNotesCard({ lng }: RecentNotesCardProps) {
 
   return (
     <Card className="shadow-sm border-gray-200">
-      <CardContent className="px-6 py-6">
-        <div className="flex items-center justify-between mb-4">
+      <CardContent className="px-4 py-4 sm:px-6 sm:py-6">
+        <div className="flex items-center justify-between mb-4 gap-2">
           <h3 className="text-lg font-semibold text-gray-900">Recent Notes</h3>
           <Link href={`/${lng}/notes`}>
             <Button variant="ghost" size="sm" className="text-[#3b82f6] font-medium hover:bg-[#3b82f6]/10">

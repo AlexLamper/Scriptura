@@ -15,7 +15,7 @@ function AssignmentItem({ text, completed, dueDate }: AssignmentItemProps) {
     <div className="flex items-center gap-2">
       {completed ? <CheckCircle className="h-5 w-5 text-gray-500" /> : <span className="h-5 w-5 rounded-full bg-gray-300 inline-block" />}
       <div className="flex flex-col">
-        <span className={completed ? "text-gray-800 line-through text-gray-500" : "text-gray-800"}>{text}</span>
+        <span className={completed ? "text-gray-500 line-through" : "text-gray-800"}>{text}</span>
         {dueDate && <span className="text-xs text-gray-500">{dueDate}</span>}
       </div>
     </div>
@@ -25,7 +25,7 @@ function AssignmentItem({ text, completed, dueDate }: AssignmentItemProps) {
 export function AssignmentsCard() {
   return (
     <Card className="p-6 bg-white shadow-sm rounded-lg">
-      <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
+      <CardHeader className="flex flex-row items-center justify-between p-0 pb-4 gap-2">
         <CardTitle className="text-lg font-semibold text-gray-800">Assignments</CardTitle>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

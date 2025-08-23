@@ -90,7 +90,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
 
   return (
     <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200">
-      <CardContent className="h-full px-6 py-6 flex flex-col">
+      <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 bg-[#3b82f6] rounded-lg flex items-center justify-center">
             <Calendar className="w-5 h-5 text-white" />
@@ -107,7 +107,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
         )}
         {verse && (
           <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-            <blockquote className="text-gray-800 mb-3 text-sm leading-relaxed">
+            <blockquote className="text-gray-800 mb-3 text-sm leading-relaxed break-words">
               &ldquo;{verse.text}&rdquo;
             </blockquote>
             {/* Show reference and translation */}
