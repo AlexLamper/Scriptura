@@ -1,20 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import connectMongoDB from "../../../../lib/mongodb";
+import { connectDB } from "../../../../lib/connectDB";
 import User from "../../../../models/User";
-
-export async function GET() {
-  return NextResponse.json(
-    { error: "Method not allowed. Use POST to register a new user." },
-    { status: 405 }
-  );
-}
 
 export async function POST(request: NextRequest) {
   try {
+    await connectDB();
+
     const { name, email, password } = await request.json();
 
-    // Validate input
+    // Validate required fields
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "All fields are required" },
@@ -26,20 +21,18 @@ export async function POST(request: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: "Invalid email format" },
+        { error: "Please enter a valid email address" },
         { status: 400 }
       );
     }
 
-    // Validate password strength
+    // Validate password length
     if (password.length < 8) {
       return NextResponse.json(
         { error: "Password must be at least 8 characters long" },
         { status: 400 }
       );
     }
-
-    await connectMongoDB();
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -51,27 +44,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Hash password
-    const saltRounds = 12;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create user
-    const user = await User.create({
+    // Create new user
+    const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      bio: "",
-      image: "",
+      provider: "credentials",
+      emailVerified: false,
+      createdAt: new Date(),
     });
 
-    // Return success response (don't include password)
-    const userResponse = {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    };
+    await newUser.save();
 
     return NextResponse.json(
-      { message: "User created successfully", user: userResponse },
+      { message: "User created successfully" },
       { status: 201 }
     );
   } catch (error) {
