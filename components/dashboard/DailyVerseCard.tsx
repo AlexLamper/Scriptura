@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 import { useEffect, useState } from "react";
 import { useTranslation } from "../../app/i18n/client";
-import { BookOpen } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface DailyVerseCardProps {
   lng: string;
@@ -89,14 +89,14 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   }, [lng]);
 
   return (
-    <Card className="p-8 shadow-sm rounded-2xl border border-gray-200 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700">
-      <CardHeader className="flex flex-row items-center justify-between p-0 pb-6">
-        <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
-          <BookOpen className="text-indigo-600 lg:w-6 lg:h-6 w-5 h-5" />
-          {t("daily_verse_title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col items-center p-0">
+    <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200">
+      <CardContent className="h-full px-6 py-6 flex flex-col">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-[#3b82f6] rounded-lg flex items-center justify-center">
+            <Calendar className="w-5 h-5 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900">{t("daily_verse_title")}</h3>
+        </div>
         {loading && <p className="text-gray-600 dark:text-gray-400 text-lg py-6 font-medium">{t("loading")}</p>}
         {error && (
           <div className="text-red-700 text-base py-4 bg-red-50 p-4 rounded-lg border border-red-200 dark:bg-red-950 dark:border-red-700 dark:text-red-300">
@@ -106,13 +106,11 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
           </div>
         )}
         {verse && (
-          <div className="w-full">
-            <blockquote className="text-[1.24rem] md:text-2xl text-gray-700 dark:text-gray-200 mb-4 leading-relaxed relative" style={{ fontFamily: 'Montserrat, Nunito, Lato, Arial, sans-serif' }}>
-              <span className="absolute top-0 left-0 text-5xl text-gray-300 dark:text-gray-600 -translate-x-4 -translate-y-4">“</span>
-              <span className="text-[1.24rem]">{verse.text}</span>
-              <span className="absolute bottom-0 right-0 text-5xl text-gray-300 dark:text-gray-600 translate-x-4 translate-y-4">”</span>
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <blockquote className="text-gray-800 mb-3 text-sm leading-relaxed">
+              &ldquo;{verse.text}&rdquo;
             </blockquote>
-            {/* Toon book, chapter, verse indien aanwezig in the API-respons */}
+            {/* Show reference and translation */}
             {rawResponse && typeof rawResponse === 'object' && (
               (() => {
                 type ApiResponse = {
@@ -126,7 +124,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                 const chapter = resp.chapter ?? null;
                 const verseNum = resp.verse ?? null;
                 if (book || chapter || verseNum) {
-                  // Bouw string: 'book chapter:verse' (chapter en verse optioneel)
+                  // Build string: 'book chapter:verse' (chapter and verse optional)
                   let refString = book ? book : '';
                   if (chapter) {
                     refString += (refString ? ' ' : '') + chapter;
@@ -135,9 +133,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                     }
                   }
                   return (
-                    <div className="lg:text-md lg:text-gray-400 text-sm text-gray-500 dark:text-gray-400 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <span className="font-medium text-gray-700 dark:text-gray-300">{refString || '-'} ({verse.translation})</span>
-                    </div>
+                    <cite className="text-xs text-gray-500 font-medium">{refString || '-'} ({verse.translation})</cite>
                   );
                 }
                 return null;
