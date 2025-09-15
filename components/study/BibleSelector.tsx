@@ -31,19 +31,6 @@ export default function BibleSelector({
   loadingChapters,
   t,
 }: Props) {
-  console.groupCollapsed('--- BibleSelector Render ---');
-  console.log('Props received by BibleSelector:', {
-    selectedVersion,
-    selectedBook,
-    selectedChapter,
-    versionsCount: versions.length,
-    booksCount: books.length,
-    chaptersCount: chapters.length,
-    loadingVersions,
-    loadingBooks,
-    loadingChapters,
-  });
-  console.groupEnd();
 
   return (
     <div className="space-y-4">
