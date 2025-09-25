@@ -163,7 +163,7 @@ export default function PlansPage({ params }: PlansPageProps) {
             ...formData,
             duration: readings.length,
             readings: readings,
-            isPublic: isAdmin ? formData.isPublic : false // Alleen admins kunnen publieke plannen maken
+            isPublic: isAdmin ? formData.isPublic : false
           })
         });
 
