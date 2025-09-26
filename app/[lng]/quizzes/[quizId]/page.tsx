@@ -74,15 +74,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   const [randomizedOptions, setRandomizedOptions] = useState<string[][]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  // Debug logs to verify state
-  useEffect(() => {
-    console.log("Timer:", timer)
-    console.log("Is timer running:", isTimerRunning)
-    console.log("Bookmarked questions:", bookmarkedQuestions)
-    console.log("Randomized options:", randomizedOptions)
-    console.log("Show study materials:", showStudyMaterials)
-    console.log("Study completed:", studyCompleted)
-  }, [timer, isTimerRunning, bookmarkedQuestions, randomizedOptions, showStudyMaterials, studyCompleted])
+  // Debug logs removed to prevent unnecessary re-renders
 
   useEffect(() => {
     const fetchQuiz = async () => {

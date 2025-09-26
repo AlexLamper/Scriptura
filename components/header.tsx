@@ -53,7 +53,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
       .catch((error) => {
         console.error("Error fetching user data:", error)
       })
-  }, [session?.user?.email, mounted, userImage])
+  }, [session?.user?.email, mounted])
 
   // Handle authentication redirect
   useEffect(() => {

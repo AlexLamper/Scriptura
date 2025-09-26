@@ -4,8 +4,9 @@ import { Button } from "../components/ui/button"
 import { ArrowLeft, Home } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import { useTranslation } from "./i18n/client"
+import "./globals.css"
 
-export default function NotFoundPage() {
+export default function NotFound() {
   const router = useRouter()
   const pathname = usePathname()
   
