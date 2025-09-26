@@ -34,9 +34,9 @@ export function Header({ params: { lng }, title }: HeaderProps) {
     setMounted(true)
   }, [])
 
-  // Fetch user image
+  // Fetch user image (only once per session)
   useEffect(() => {
-    if (!mounted || !session?.user?.email) return
+    if (!mounted || !session?.user?.email || userImage) return
 
     fetch("/api/user")
       .then((response) => {
@@ -53,7 +53,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
       .catch((error) => {
         console.error("Error fetching user data:", error)
       })
-  }, [session, mounted])
+  }, [session?.user?.email, mounted])
 
   // Handle authentication redirect
   useEffect(() => {

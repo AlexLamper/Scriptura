@@ -27,7 +27,7 @@ interface RecentNotesCardProps {
   lng: string;
 }
 
-export function RecentNotesCard({ lng }: RecentNotesCardProps) {
+export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: RecentNotesCardProps) {
   const { data: session } = useSession();
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ export function RecentNotesCard({ lng }: RecentNotesCardProps) {
 
   useEffect(() => {
     const fetchRecentNotes = async () => {
-      if (!session) return;
+      if (!session?.user) return;
 
       try {
         setLoading(true);
@@ -56,7 +56,7 @@ export function RecentNotesCard({ lng }: RecentNotesCardProps) {
     };
 
     fetchRecentNotes();
-  }, [session]);
+  }, [session?.user]); // Only re-fetch when user changes
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -159,4 +159,4 @@ export function RecentNotesCard({ lng }: RecentNotesCardProps) {
       </CardContent>
     </Card>
   );
-}
+});

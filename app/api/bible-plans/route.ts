@@ -49,10 +49,6 @@ export async function GET(request: NextRequest) {
       .sort({ createdAt: -1 })
       .lean();
 
-    console.log('API: Query used:', JSON.stringify(query, null, 2));
-    console.log('API: Found plans count:', plans.length);
-    console.log('API: Plans data:', JSON.stringify(plans, null, 2));
-
     // Add enrollment status and progress for each plan
     const plansWithStatus = plans.map(plan => {
       const isEnrolled = plan.enrolledUsers.some((userId: string) => userId.toString() === user._id.toString());

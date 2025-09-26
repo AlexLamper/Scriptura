@@ -118,39 +118,6 @@ const userSchema = new mongoose.Schema<UserType>({
   updatedAt: { type: Date, default: Date.now },
 })
 
-export interface PostType {
-  _id: mongoose.Schema.Types.ObjectId;
-  title: string;
-  content: string;
-  author: mongoose.Schema.Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const postSchema = new mongoose.Schema<PostType>({
-  title: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
 export interface QuizType {
   _id: mongoose.Schema.Types.ObjectId;
   title: string;
@@ -213,7 +180,6 @@ const quizSchema = new mongoose.Schema<QuizType>({
   },
 });
 
-export const Post = mongoose.models.Post || mongoose.model('Post', postSchema);
 export const Course = mongoose.models.Course || mongoose.model('Course', courseSchema);
 export const Quiz = mongoose.models.Quiz || mongoose.model('Quiz', quizSchema);
 export const User = mongoose.models.User || mongoose.model('User', userSchema);

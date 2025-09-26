@@ -22,7 +22,6 @@ export default function ChapterViewer({
   version,
   book,
   chapter,
-  maxChapter,
   language = "en",
 }: Props) {
   const [verses, setVerses] = useState<VerseData>({});
@@ -33,17 +32,7 @@ export default function ChapterViewer({
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
-  console.groupCollapsed('--- ChapterViewer Render ---');
-  console.log('Props received by ChapterViewer:', {
-    version,
-    book,
-    chapter,
-    maxChapter,
-  });
-  console.groupEnd();
-
   useEffect(() => {
-    console.groupCollapsed(`useEffect: Fetching chapter content for ${book} ${chapter} (${version})`);
     const fetchChapter = async () => {
       setLoading(true);
       setError(null);
@@ -57,13 +46,11 @@ export default function ChapterViewer({
 
         if (version && version.toLowerCase() !== 'statenvertaling') {
           params.append('version', version);
-          console.log(`Appending version parameter: ${version}`);
         } else {
             console.log(`Using default version (Statenvertaling) or no version specified in API call.`);
         }
 
         const url = `${API_BASE_URL}/chapter?${params.toString()}`;
-        console.log('API URL for chapter fetch:', url);
 
         const res = await fetch(url);
 
@@ -73,14 +60,12 @@ export default function ChapterViewer({
         }
 
         const data = await res.json();
-        console.log('Raw API response for chapter:', data);
 
         if (!data.verses || Object.keys(data.verses).length === 0) {
           throw new Error('Geen verzen gevonden in response. Mogelijk is het hoofdstuk leeg of ongeldig.');
         }
 
         setVerses(data.verses);
-        console.log('Successfully set verses for chapter.');
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);

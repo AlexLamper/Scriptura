@@ -22,7 +22,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!session) {
+      if (!session?.user) {
         router.push("/api/auth/signin")
         return
       }
@@ -64,7 +64,7 @@ export default function AdminDashboard() {
     }
 
     fetchUserData()
-  }, [session, router])
+  }, [session?.user, router])
 
   if (loading) {
     return (

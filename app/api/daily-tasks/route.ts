@@ -31,23 +31,8 @@ export async function GET(request: NextRequest) {
     const completedToday = progress.lastCompletedAt && progress.lastCompletedAt >= startOfToday
     const dayNumber = completedToday ? progress.currentDay - 1 : progress.currentDay
     const task = dailyBibleTasks.find((t) => t.day === dayNumber)
-    let text = ""
-    if (task) {
-      try {
-        const passageRef = encodeURIComponent(task.passage)
-        const apiRes = await fetch(
-          `https://bible-api.com/${passageRef}?translation=web`
-        )
-        if (apiRes.ok) {
-          const data = await apiRes.json()
-          text = data.text
-        }
-      } catch (err) {
-        console.error("Error fetching passage from Bible API:", err)
-      }
-    }
 
-    return NextResponse.json({ task: task ? { ...task, text } : null, completed: completedToday })
+    return NextResponse.json({ task: task || null, completed: completedToday })
   } catch (error) {
     console.error("Error fetching daily task:", error)
     return NextResponse.json({ error: "Failed to fetch task" }, { status: 500 })

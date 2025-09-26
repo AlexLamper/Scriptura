@@ -17,19 +17,12 @@ interface Verse {
 }
 
 export default function DailyBibleVerse({ params: { lng } }: DailyBibleVerseProps) {
-  console.log('🚀 DailyBibleVerse component RENDERED with lng:', lng);
-  
   const { t } = useTranslation(lng, "daily");
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  console.log('🔄 DailyBibleVerse component state:', { verse, loading, error });
-
   useEffect(() => {
-    console.log('🎯 DailyBibleVerse useEffect triggered');
-    console.log('🌍 Current language (lng):', lng);
-    console.log('🔧 Translation function t:', typeof t);
     
     setLoading(true);
     setError(null);

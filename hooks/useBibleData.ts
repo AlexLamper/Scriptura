@@ -69,7 +69,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   // 1. Fetch available versions on initial load
   useEffect(() => {
     const fetchVersions = async () => {
-      console.log('📚 Starting to fetch Bible versions...');
       setLoadingVersions(true);
       try {
         const res = await fetch(`${API_BASE_URL}/versions`);
@@ -79,12 +78,10 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         }
         const data: Version[] = await res.json();
         const versionNames = data.map((v) => v.name);
-        console.log('📚 Fetched versions:', versionNames);
         setVersions(versionNames);
 
         // Set default version based on language preference
         const defaultVersion = getDefaultVersion(versionNames, lng);
-        console.log(`📚 Selected default version for language '${lng}':`, defaultVersion);
         setSelectedVersion(defaultVersion);
       } catch (err) {
         console.error('❌ Error fetching versions:', err);
@@ -92,7 +89,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         setSelectedVersion(null);
       } finally {
         setLoadingVersions(false);
-        console.log('📚 Finished fetching versions');
       }
     };
     fetchVersions();
@@ -101,7 +97,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   // 2. Fetch books when a version is selected or on initial load
   useEffect(() => {
     if (!selectedVersion) {
-      console.log('useEffect: No selected version yet, skipping book fetch.');
       setBooks([]);
       setSelectedBook('');
       setChapters([]); // Clear dependent states
@@ -110,7 +105,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       return;
     }
 
-    console.groupCollapsed(`useEffect: Fetching books for version: ${selectedVersion}`);
     const fetchBooks = async () => {
       setLoadingBooks(true);
       try {
@@ -118,13 +112,9 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         const params = new URLSearchParams();
         if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
           params.append('version', selectedVersion);
-          console.log(`Fetching books for version: ${selectedVersion}`);
-        } else {
-          console.log('Fetching books for default version (Staten Vertaling)');
         }
 
         const url = `${API_BASE_URL}/books${params.toString() ? `?${params.toString()}` : ''}`;
-        console.log('API URL for book fetch:', url);
         
         const res = await fetch(url);
         if (!res.ok) {
@@ -133,7 +123,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         }
         // The /api/books endpoint returns an array of strings directly
         const bookNames: string[] = await res.json();
-        console.log('API Response for books:', bookNames);
 
         setBooks(bookNames);
 
@@ -160,7 +149,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
         if (defaultBook) {
           setSelectedBook(defaultBook);
-          console.log('Default book set to:', defaultBook);
         } else {
           setSelectedBook(''); // No books found
           console.warn('No books found from API.');
@@ -180,7 +168,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   // 3. Fetch chapters for a selected book and version
   useEffect(() => {
     if (!selectedBook) {
-      console.log('useEffect: No selected book yet, skipping chapter fetch.');
       setChapters([]);
       setSelectedChapter(1);
       setMaxChapter(1);
@@ -191,7 +178,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       return; // Should ideally not happen if logic flows correctly
     }
 
-    console.groupCollapsed(`useEffect: Fetching chapters for book: ${selectedBook}, version: ${selectedVersion}`);
     const fetchChapters = async () => {
       setLoadingChapters(true);
       try {
@@ -199,13 +185,9 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         // Only append version if it's explicitly selected and not the default 'Staten Vertaling'
         if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
           params.append('version', selectedVersion);
-          console.log(`Appending version parameter: ${selectedVersion}`);
-        } else {
-          console.log(`Using default version (Staten Vertaling) or no version specified in API call.`);
         }
 
         const url = `${API_BASE_URL}/chapters?${params.toString()}`;
-        console.log('API URL for chapter fetch:', url);
         const res = await fetch(url);
 
         if (!res.ok) {
@@ -213,7 +195,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           throw new Error(`Failed to fetch chapters for ${selectedBook}: ${res.status} ${res.statusText} - ${errorText}`);
         }
         const chapterStrings: string[] = await res.json();
-        console.log(`API response for chapters of ${selectedBook}:`, chapterStrings);
 
         const chapterNumbers = chapterStrings.map(Number).sort((a,b) => a-b);
         const numberOfChapters = chapterNumbers.length > 0 ? chapterNumbers[chapterNumbers.length - 1] : 0;
@@ -226,14 +207,12 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           return;
         }
 
-        console.log(`Processed chapter numbers for ${selectedBook}:`, chapterNumbers);
         setChapters(chapterNumbers);
         setMaxChapter(numberOfChapters);
 
         setSelectedChapter((prevChapter) => {
           // If the previous chapter is still in the new list, keep it. Otherwise, default to 1.
           const newChapter = chapterNumbers.includes(prevChapter) ? prevChapter : (chapterNumbers.length > 0 ? chapterNumbers[0] : 1);
-          console.log(`Adjusting selected chapter from ${prevChapter} to ${newChapter} (available: ${chapterNumbers.join(',')})`);
           return newChapter;
         });
 
@@ -252,7 +231,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
   // Callback handlers for BibleSelector
   const handleVersionChange = useCallback((version: string) => {
-    console.log('handleVersionChange called with:', version);
     setSelectedVersion(version);
     // Reset book and chapter when version changes, to trigger re-fetch of books/chapters
     // Clear current selections since different versions have different book names
@@ -264,13 +242,11 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   }, []);
 
   const handleBookChange = useCallback((book: string) => {
-    console.log('handleBookChange called with:', book);
     setSelectedBook(book);
     setSelectedChapter(1); // Always reset chapter to 1 when book changes
   }, []);
 
   const handleChapterChange = useCallback((chapter: number) => {
-    console.log('handleChapterChange called with:', chapter);
     setSelectedChapter(chapter);
   }, []);
 

@@ -5,6 +5,7 @@ import { MessageCircle, Clock, Users, Brain } from 'lucide-react';
 import { ChapterNotes } from './ChapterNotes';
 import InductiveStudy from './InductiveStudy';
 import { useKeyboardShortcuts, KeyboardShortcut } from '../../hooks/useKeyboardShortcuts';
+import CommentaryComponent from './CommentaryComponent';
 
 interface TabComponentProps {
   selectedBook: string;
@@ -72,30 +73,11 @@ export default function TabComponent({
         />;
       case 'explanation':
         return (
-          <div className="space-y-4">
-            {/* Thinking Question Section - Prominent placement at top of explanation tab */}
-            <div className="p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg dark:bg-[#232325] dark:border-blue-400">
-              <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-2 dark:text-blue-300">
-                <MessageCircle size={18} className="text-blue-600 dark:text-blue-300" />
-                {t('thinking_question.title')}
-              </h3>
-              <p className="text-sm text-blue-900 leading-relaxed dark:text-blue-200">
-                {t('thinking_question.default_text')}
-              </p>
-            </div>
-            
-            <h3 className="font-semibold mb-2 dark:text-gray-100">{t('explanation.title')}</h3>
-            <p className="mb-4 dark:text-gray-200">
-              In <a href="#" className="text-blue-600 dark:text-blue-300">{reference}</a> {t('explanation.intro')}
-            </p>
-            <h4 className="font-semibold mb-2 dark:text-gray-100">{t('explanation.commentary_title')}</h4>
-            <p className="mb-4 dark:text-gray-200">
-              In <a href="#" className="text-blue-600 dark:text-blue-300">{reference}</a> {t('explanation.commentary_text')}
-            </p>
-            <p className="mb-4 dark:text-gray-200">
-              <span className="bg-yellow-200 p-1 rounded dark:bg-yellow-600 dark:text-yellow-50">{t('explanation.creation_text')}</span>
-            </p>
-          </div>
+          <CommentaryComponent
+            book={selectedBook}
+            chapter={selectedChapter}
+            source="matthew-henry"
+          />
         );
       case 'historical':
         return (
