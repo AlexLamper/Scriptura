@@ -45,3 +45,6 @@ next-env.d.ts
 /app/api/check-session-status/*
 /app/api/create-checkout-session/*
 /app/api/webhook/*
+
+# todo.txt
+/todo.txt
