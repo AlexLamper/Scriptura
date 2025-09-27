@@ -89,24 +89,24 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   }, [lng]);
 
   return (
-    <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200">
+  <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200 rounded-none">
       <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-[#3b82f6] rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-[#3b82f6] rounded-none flex items-center justify-center">
             <Calendar className="w-5 h-5 text-white" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900">{t("daily_verse_title")}</h3>
         </div>
         {loading && <p className="text-gray-600 dark:text-gray-400 text-lg py-6 font-medium">{t("loading")}</p>}
         {error && (
-          <div className="text-red-700 text-base py-4 bg-red-50 p-4 rounded-lg border border-red-200 dark:bg-red-950 dark:border-red-700 dark:text-red-300">
+          <div className="text-red-700 text-base py-4 bg-red-50 p-4 rounded-none border border-red-200 dark:bg-red-950 dark:border-red-700 dark:text-red-300">
             <div className="font-semibold mb-2">Error: {error}</div>
             {status && <div className="text-sm">Status Code: {status}</div>}
             {rawResponse && <pre className="text-xs text-red-500 bg-red-100 p-3 rounded mt-3 max-w-full overflow-x-auto border border-red-200 dark:bg-red-800 dark:text-red-200 dark:border-red-600">{JSON.stringify(rawResponse, null, 2)}</pre>}
           </div>
         )}
         {verse && (
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <div className="bg-gray-50 rounded-none p-4 border border-gray-200">
             <blockquote className="text-gray-800 mb-3 text-sm leading-relaxed break-words">
               &ldquo;{verse.text}&rdquo;
             </blockquote>

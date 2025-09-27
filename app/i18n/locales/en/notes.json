@@ -39,5 +39,10 @@
   "error_save_failed": "Failed to save note",
   "notes_for_chapter": "Notes for",
   "no_notes_chapter": "No notes for this chapter yet",
-  "edit_note_title": "Edit Note"
+  "edit_note_title": "Edit Note",
+  "recent_notes_title": "Recent Notes",
+  "view_all": "View All →",
+  "no_notes_yet": "No notes yet",
+  "start_taking_notes": "Start Taking Notes",
+  "new_note_button": "New note"
 }

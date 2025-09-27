@@ -39,5 +39,10 @@
   "error_save_failed": "Speichern der Notiz fehlgeschlagen",
   "notes_for_chapter": "Notizen für",
   "no_notes_chapter": "Noch keine Notizen für dieses Kapitel",
-  "edit_note_title": "Notiz Bearbeiten"
+  "edit_note_title": "Notiz Bearbeiten",
+  "recent_notes_title": "Letzte Notizen",
+  "view_all": "Alle anzeigen →",
+  "no_notes_yet": "Noch keine Notizen",
+  "start_taking_notes": "Beginne mit dem Notizenmachen",
+  "new_note_button": "Neue Notiz"
 }

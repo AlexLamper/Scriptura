@@ -10,7 +10,7 @@ interface HomeworkCompletionRatesCardProps {
 
 export function HomeworkCompletionRatesCard({ BarChart }: HomeworkCompletionRatesCardProps) {
   return (
-    <Card className="lg:col-span-2 p-6 bg-white shadow-sm rounded-lg">
+  <Card className="lg:col-span-2 p-6 bg-white shadow-sm rounded-none">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
         <CardTitle className="text-lg font-semibold text-gray-800">Course Completion Rates</CardTitle>
         <DropdownMenu>

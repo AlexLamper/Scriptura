@@ -30,15 +30,15 @@ export function WelcomeCard({ lng }: WelcomeCardProps) {
   }, []);
 
   return (
-    <div className="mb-6 p-6 rounded-lg shadow-sm bg-white">
-      <h2 className="text-2xl font-semibold mb-2 text-gray-900">
-        {t(greeting)}, {userName}!
-      </h2>
-      <p className="text-gray-600">
-        {t("study_card_description", {
-          defaultValue: "Ready to dive deeper? Go to the Study page to read, take notes, and highlight your favorite Bible passages!"
-        })}
-      </p>
+    <div className="mb-4 p-6 shadow-sm bg-white">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <h2 className="text-xl font-semibold text-gray-900">
+          {t(greeting)}, {userName}!
+        </h2>
+        <p className="text-gray-600 text-right">
+          {new Intl.DateTimeFormat(lng, { dateStyle: "full" }).format(new Date())}
+        </p>
+      </div>
     </div>
   );
 }
