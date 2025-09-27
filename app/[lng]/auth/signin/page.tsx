@@ -314,10 +314,9 @@ export default function SignInPage({ params }: SignInPageProps) {
           </div>
         </div>
         
-        {/* Right Side: Carousel */}
-        <div className="w-full md:w-1/2 min-h-[400px] flex items-center justify-center relative overflow-hidden">
+        {/* Right Side: Carousel (hidden on small screens, visible md+ ) */}
+        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-white via-[#e3e8ff] to-[#bfcaff] dark:from-[#23263a] dark:via-[#23263a] dark:to-[#181b23] opacity-90 z-0" />
-          
           {/* Right Side Content with arrows and carousel */}
           <div className="relative z-10 flex flex-col items-center justify-center px-8 py-16 w-full">
             <div className="mb-8 w-full flex justify-center items-center gap-4">

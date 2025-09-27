@@ -39,5 +39,10 @@
   "error_save_failed": "Opslaan van notitie mislukt",
   "notes_for_chapter": "Notities voor",
   "no_notes_chapter": "Nog geen notities voor dit hoofdstuk",
-  "edit_note_title": "Notitie Bewerken"
+  "edit_note_title": "Notitie Bewerken",
+  "recent_notes_title": "Recente notities",
+  "view_all": "Bekijk alles →",
+  "no_notes_yet": "Nog geen notities",
+  "start_taking_notes": "Begin met notities maken",
+  "new_note_button": "Nieuwe notitie"
 }

@@ -148,5 +148,12 @@
       "save_progress": "Voortgang Opslaan",
       "load_progress": "Voortgang Laden"
     }
-  }
+  },
+  "study_self_title": "Bestudeer de Bijbel zelf",
+  "study_self_description": "Open de Studie-pagina om te lezen, notities te maken en verzen te markeren.",
+  "start_study": "Start studie",
+  "studies_completed": "Studies voltooid",
+  "notes_made": "Notities gemaakt",
+  "last_active": "Laatst actief",
+  "last_activity_example": "Genesis 3 - 2 uur geleden"
 }

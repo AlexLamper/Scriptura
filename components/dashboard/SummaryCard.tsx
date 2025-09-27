@@ -11,7 +11,7 @@ interface SummaryCardProps {
 
 export function SummaryCard({ icon, value, description }: SummaryCardProps) {
   return (
-    <Card className="p-6 bg-white shadow-sm rounded-lg">
+  <Card className="p-6 bg-white shadow-sm rounded-none">
       <CardContent className="p-0">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">{icon}</div>

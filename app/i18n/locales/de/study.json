@@ -120,5 +120,12 @@
       "save_progress": "Fortschritt Speichern",
       "load_progress": "Fortschritt Laden"
     }
-  }
+  },
+  "study_self_title": "Studieren Sie die Bibel selbst",
+  "study_self_description": "Öffnen Sie die Studienseite, um zu lesen, Notizen zu machen und Ihre Lieblingverse zu markieren.",
+  "start_study": "Studium starten",
+  "studies_completed": "Studien abgeschlossen",
+  "notes_made": "Notizen erstellt",
+  "last_active": "Zuletzt aktiv",
+  "last_activity_example": "Genesis 3 - vor 2 Stunden"
 }

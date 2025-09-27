@@ -7,6 +7,7 @@ import { StickyNote } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { useTranslation } from "../../app/i18n/client";
 
 interface Note {
   _id: string;
@@ -29,6 +30,7 @@ interface RecentNotesCardProps {
 
 export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: RecentNotesCardProps) {
   const { data: session } = useSession();
+  const { t } = useTranslation(lng, "notes");
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -78,13 +80,13 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
   if (!session) return null;
 
   return (
-    <Card className="shadow-sm border-gray-200">
+  <Card className="shadow-sm border-gray-200 rounded-none">
       <CardContent className="px-4 py-4 sm:px-6 sm:py-6">
         <div className="flex items-center justify-between mb-4 gap-2">
-          <h3 className="text-lg font-semibold text-gray-900">Recent Notes</h3>
+          <h3 className="text-lg font-semibold text-gray-900">{t("recent_notes_title")}</h3>
           <Link href={`/${lng}/notes`}>
             <Button variant="ghost" size="sm" className="text-[#3b82f6] font-medium hover:bg-[#3b82f6]/10">
-              View All →
+              {t("view_all")}
             </Button>
           </Link>
         </div>
@@ -104,11 +106,11 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
           <div className="text-center py-8">
             <StickyNote className="h-8 w-8 text-gray-400 mx-auto mb-3" />
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-              No notes yet
+              {t("no_notes_yet")}
             </p>
             <Link href={`/${lng}/study`}>
               <Button size="sm" variant="outline">
-                Start Taking Notes
+                {t("start_taking_notes")}
               </Button>
             </Link>
           </div>
@@ -119,7 +121,7 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
             {notes.map((note) => (
               <div
                 key={note._id}
-                className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-sm transition-shadow duration-200"
+                className="bg-gray-50 rounded-none p-3 border border-gray-200 hover:shadow-sm transition-shadow duration-200"
               >
                 <div className="flex items-start justify-between mb-2">
                   <p className="font-medium text-gray-900">{note.verseReference}</p>
@@ -154,7 +156,7 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
           size="sm"
           className="mt-4 w-full text-gray-700 border-gray-300 bg-white py-2 hover:bg-gray-50"
         >
-          Nieuwe notitie
+          {t("new_note_button")}
         </Button>
       </CardContent>
     </Card>

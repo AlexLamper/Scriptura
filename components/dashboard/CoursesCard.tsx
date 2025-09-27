@@ -64,7 +64,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
 
   if (loading) {
     return (
-      <Card className="h-full shadow-sm border-gray-200">
+      <Card className="h-full shadow-sm border-gray-200 rounded-none">
         <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
     <div className="flex items-center justify-between mb-4 gap-2">
             <h3 className="text-xl font-semibold text-gray-900">{t("courses")}</h3>
@@ -72,14 +72,14 @@ export function CoursesCard({ lng }: CoursesCardProps) {
           </div>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-gray-50 rounded-lg p-4 border border-gray-200 animate-pulse">
+              <div key={i} className="bg-gray-50 rounded-none p-4 border border-gray-200 animate-pulse">
                 <div className="mb-3">
                   <div className="space-y-2 mb-2">
-                    <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div className="h-3 w-1/2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-none"></div>
+                    <div className="h-3 w-1/2 bg-gray-200 dark:bg-gray-700 rounded-none"></div>
                   </div>
-                  <div className="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                  <div className="h-3 w-2/3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-none mb-2"></div>
+                  <div className="h-3 w-2/3 bg-gray-200 dark:bg-gray-700 rounded-none"></div>
                 </div>
               </div>
             ))}
@@ -90,7 +90,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
   }
 
   return (
-  <Card className="h-full shadow-sm border-gray-200">
+  <Card className="h-full shadow-sm border-gray-200 rounded-none">
   <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
   <div className="flex items-center justify-between mb-4 gap-2">
           <h3 className="text-xl font-semibold text-gray-900">{t("courses")}</h3>
@@ -116,7 +116,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
               href={`/${lng}/courses/${course._id}`}
               className="block"
             >
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-sm transition-shadow duration-200">
+              <div className="bg-gray-50 rounded-none p-4 border border-gray-200 hover:shadow-sm transition-shadow duration-200">
         <div className="flex items-start justify-between mb-3 gap-3">
                   <div className="flex-1">
           <div className="flex items-center gap-2 mb-2 flex-wrap">

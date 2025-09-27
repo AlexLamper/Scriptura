@@ -148,5 +148,12 @@
       "save_progress": "Save Progress",
       "load_progress": "Load Progress"
     }
-  }
+  },
+  "study_self_title": "Study the Bible yourself",
+  "study_self_description": "Open the Study page to read, take notes, and highlight your favorite Bible passages.",
+  "start_study": "Start study",
+  "studies_completed": "Studies completed",
+  "notes_made": "Notes made",
+  "last_active": "Last active",
+  "last_activity_example": "Genesis 3 - 2 hours ago"
 }
