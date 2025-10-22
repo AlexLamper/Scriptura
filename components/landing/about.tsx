@@ -68,12 +68,18 @@ export function AboutSection({ params: { lng } }: AboutSectionProps) {
 
           {/* Image Section */}
           <div className="w-full max-w-5xl mx-auto mb-16">
-            <div className="relative w-full h-64 sm:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-2xl dark:shadow-gray-900/50">
+            <div 
+              className="relative w-full rounded-2xl"
+              style={{
+                boxShadow: '0 0 40px rgba(0, 0, 0, 0.15), 0 0 80px rgba(0, 0, 0, 0.08)'
+              }}
+            >
               <Image
-                src={`/en/images/hero.png`}
+                src={`/en/images/dashboard1.png`}
                 alt="Scripture study illustration"
-                fill
-                className="object-cover"
+                width={1200}
+                height={800}
+                className="w-full h-auto rounded-2xl dark:brightness-95"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
                 quality={95}
                 priority={false}
