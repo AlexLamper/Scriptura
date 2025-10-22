@@ -14,16 +14,20 @@ export function Footer({ params: { lng } }: FooterProps) {
   const { t } = useTranslation(lng, "footer")
 
   return (
-    <footer className="bg-gray-900 py-12 border-t border-gray-700">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">{t("about_scriptura")}</h3>
-            <ul className="space-y-2">
+    <footer className="bg-[#262626] dark:bg-[#0d0f17] py-16 lg:py-20">
+      <div className="container mx-auto px-6 lg:px-8">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 max-w-6xl mx-auto">
+          {/* About Scriptura */}
+          <div className="space-y-4">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+              {t("about_scriptura")}
+            </h3>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href={`/${lng}/courses`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("our_courses")}
                 </Link>
@@ -31,7 +35,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               <li>
                 <Link
                   href={`/${lng}/pricing`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("pricing")}
                 </Link>
@@ -39,13 +43,16 @@ export function Footer({ params: { lng } }: FooterProps) {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">{t("resources")}</h3>
-            <ul className="space-y-2">
+          {/* Resources */}
+          <div className="space-y-4">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+              {t("resources")}
+            </h3>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href={`/${lng}/resources`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("resources")}
                 </Link>
@@ -53,7 +60,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               <li>
                 <Link
                   href={`/${lng}/quizzes`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("quizzes")}
                 </Link>
@@ -61,7 +68,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               <li>
                 <Link
                   href={`/${lng}/courses`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("courses")}
                 </Link>
@@ -69,13 +76,16 @@ export function Footer({ params: { lng } }: FooterProps) {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">{t("legal")}</h3>
-            <ul className="space-y-2">
+          {/* Legal */}
+          <div className="space-y-4">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+              {t("legal")}
+            </h3>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href={`/${lng}/privacy-policy`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("privacy_policy")}
                 </Link>
@@ -83,7 +93,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               <li>
                 <Link
                   href={`/${lng}/terms-of-service`}
-                  className="text-gray-400 hover:text-white"
+                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("terms_of_service")}
                 </Link>
@@ -91,27 +101,43 @@ export function Footer({ params: { lng } }: FooterProps) {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">{t("connect")}</h3>
+          {/* Connect/Social */}
+          <div className="space-y-4">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+              {t("connect")}
+            </h3>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-400 hover:text-white">
-                <Facebook />
+              <Link 
+                href="#" 
+                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+              >
+                <Facebook className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white">
-                <Twitter />
+              <Link 
+                href="#" 
+                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+              >
+                <Twitter className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white">
-                <Instagram />
+              <Link 
+                href="#" 
+                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+              >
+                <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white">
-                <Youtube />
+              <Link 
+                href="#" 
+                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+              >
+                <Youtube className="w-5 h-5" />
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-200 border-gray-700 text-center">
-          <p className="text-gray-600 text-gray-400">
+        {/* Bottom Copyright Section */}
+        <div className="mt-12 pt-8 border-t border-gray-600 text-center">
+          <p className="font-['Inter'] text-gray-400">
             &copy; {new Date().getFullYear()} Scriptura. All rights reserved.
           </p>
         </div>

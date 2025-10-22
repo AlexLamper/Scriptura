@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
+// Button intentionally not used here because the whole card is clickable
 import { ChevronRight, Clock } from "lucide-react";
 import { useTranslation } from "../../app/i18n/client";
 import Link from "next/link";
@@ -13,10 +13,9 @@ interface StudyBibleCardProps {
 export function StudyBibleCard({ lng }: StudyBibleCardProps) {
   const { t } = useTranslation(lng, "study");
 
-  // Icon removed per request — left-align the text content instead
-
   return (
-    <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200 rounded-none">
+    <Link href={`/${lng}/study`} className="block" aria-label={t("start_study")}>
+      <Card className="h-full shadow-sm border-gray-200 cursor-pointer hover:shadow-md transition-shadow duration-200 rounded-none">
       <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
         <div className="flex items-start justify-between mb-4 gap-4">
           <div className="flex-1">
@@ -27,15 +26,13 @@ export function StudyBibleCard({ lng }: StudyBibleCardProps) {
               {t("study_self_description")}
             </p>
           </div>
-          <Link href={`/${lng}/study`}>
-            <Button
-              size="sm"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#2563eb] hover:bg-[#1e40af] text-white font-semibold shadow-md"
-            >
-              {t("start_study")}
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#2563eb] hover:bg-[#1e40af] text-white font-semibold shadow-md rounded-md select-none"
+            aria-hidden
+          >
+            {t("start_study")}
+            <ChevronRight className="w-4 h-4" />
+          </div>
         </div>
 
         <div className="bg-gray-50 rounded-none border border-gray-200 overflow-hidden">
@@ -64,6 +61,7 @@ export function StudyBibleCard({ lng }: StudyBibleCardProps) {
           </div>
         </div>
       </CardContent>
-    </Card>
+      </Card>
+    </Link>
   );
 }
