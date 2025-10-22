@@ -105,7 +105,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href={`/${lng}/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors">
+        <Link href={`/${lng}/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -119,28 +119,27 @@ export default function RegisterPage({ params }: RegisterPageProps) {
         <ModeToggle />
       </div>
 
-      <div className="min-h-screen flex items-center justify-center bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23] text-gray-900 dark:text-white px-4">
-        <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] rounded-2xl shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#181b23] text-[#262626] dark:text-white px-4">
+        <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
           {/* Logo */}
           <div className="flex items-center justify-center mb-8">
             <Image
-              src="/en/logo/scriptura.png"
+              src="/en/images/logo-text.svg"
               alt="Scriptura Logo"
-              width={40}
-              height={40}
-              className="object-contain w-10 h-10 rounded-lg shadow mr-3"
+              width={30}
+              height={30}
+              className="object-contain w-40 h-15 mr-3"
               priority
             />
-            <span className="font-bold text-xl text-gray-800 dark:text-blue-100">Scriptura</span>
           </div>
 
           {/* Header */}
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 mb-2 text-center">{t("register.title")}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-center">{t("register.subtitle")}</p>
+          <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-white mb-2 text-center">{t("register.title")}</h1>
+          <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mb-6 text-center">{t("register.subtitle")}</p>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 rounded-lg text-sm">
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 text-sm font-['Inter']">
               {error}
             </div>
           )}
@@ -149,7 +148,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Field */}
             <div className="text-left">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
                 {t("register.name")}
               </label>
               <input
@@ -159,14 +158,14 @@ export default function RegisterPage({ params }: RegisterPageProps) {
                 required
                 value={formData.name}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                 placeholder={t("register.name")}
               />
             </div>
 
             {/* Email Field */}
             <div className="text-left">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
                 {t("register.email")}
               </label>
               <input
@@ -176,14 +175,14 @@ export default function RegisterPage({ params }: RegisterPageProps) {
                 required
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                 placeholder={t("register.email")}
               />
             </div>
 
             {/* Password Field */}
             <div className="text-left">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
                 {t("register.password")}
               </label>
               <div className="relative">
@@ -194,23 +193,23 @@ export default function RegisterPage({ params }: RegisterPageProps) {
                   required
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                   placeholder={t("register.password")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#798777] dark:hover:text-[#9aaa98] transition-colors"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t("register.passwordRequirements")}</p>
+              <p className="text-xs font-['Inter'] text-gray-500 dark:text-gray-400 mt-1">{t("register.passwordRequirements")}</p>
             </div>
 
             {/* Confirm Password Field */}
             <div className="text-left">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
                 {t("register.confirmPassword")}
               </label>
               <div className="relative">
@@ -221,13 +220,13 @@ export default function RegisterPage({ params }: RegisterPageProps) {
                   required
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                   placeholder={t("register.confirmPassword")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#798777] dark:hover:text-[#9aaa98] transition-colors"
                 >
                   {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -238,7 +237,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2 rounded-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white font-semibold text-lg transition-colors"
+              className="w-full py-3 bg-[#798777] hover:bg-[#6a7a68] disabled:bg-gray-400 text-white font-['Inter'] font-medium text-lg transition-colors rounded-none"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
@@ -252,9 +251,9 @@ export default function RegisterPage({ params }: RegisterPageProps) {
           </form>
 
           {/* Sign In Link */}
-          <p className="text-sm text-gray-500 dark:text-gray-200/80 mt-6 text-center">
+          <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mt-6 text-center">
             {t("register.alreadyHaveAccount")}{" "}
-            <Link href={`/${lng}/auth/signin`} className="text-blue-600 hover:underline font-medium">
+            <Link href={`/${lng}/auth/signin`} className="text-[#798777] hover:text-[#6a7a68] font-medium">
               {t("register.signIn")}
             </Link>
           </p>

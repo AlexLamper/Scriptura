@@ -8,15 +8,7 @@ import { Button } from "../../../../components/ui/button"
 import { LanguageSwitcher } from "../../../../components/language-switcher"
 import { ModeToggle } from "../../../../components/dark-mode-toggle"
 import { getProviders, signIn, ClientSafeProvider } from "next-auth/react"
-import { Loader2, Eye, EyeOff, Info } from "lucide-react"
-import { 
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "../../../../components/ui/dialog"
+import { Loader2, Eye, EyeOff } from "lucide-react"
 import { use } from "react"
 
 interface SignInPageProps {
@@ -28,7 +20,6 @@ export default function SignInPage({ params }: SignInPageProps) {
   const { t } = useTranslation(lng, "auth")
   
   const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null)
   
@@ -124,7 +115,7 @@ export default function SignInPage({ params }: SignInPageProps) {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href={`/${lng}`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors">
+        <Link href={`/${lng}`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -136,74 +127,41 @@ export default function SignInPage({ params }: SignInPageProps) {
       <div className="fixed top-4 right-4 z-30 flex items-center gap-3 w-auto">
         <LanguageSwitcher />
         <ModeToggle />
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <div className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:cursor-pointer">
-            <DialogTrigger>
-              <Info size={24} />
-            </DialogTrigger>
-          </div>
-          <DialogContent className="p-6 rounded-2xl max-w-lg border border-gray-200 dark:border-[#23263a] shadow-2xl bg-white/70 dark:bg-[#23263a]/70 backdrop-blur-xl text-gray-900 dark:text-gray-100">
-            <DialogHeader>
-              <DialogTitle className="text-lg font-semibold">{t("signin.info.title")}</DialogTitle>
-              <DialogDescription className="text-gray-600 dark:text-gray-300 mt-2">
-                <div className="space-y-4 mt-2 text-left">
-                  <p>{t("signin.info.description")}</p>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-800 dark:text-gray-200">{t("signin.info.secure")}</h3>
-                    <p>{t("signin.info.secureDesc")}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-800 dark:text-gray-200">{t("signin.info.providers")}</h3>
-                    <p>{t("signin.info.providersDesc")}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-800 dark:text-gray-200">{t("signin.info.account")}</h3>
-                    <p>{t("signin.info.accountDesc")}</p>
-                  </div>
-                </div>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
       </div>
 
-      <div className="min-h-screen flex flex-col md:flex-row bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#0d0f17] dark:to-[#181b23] text-gray-900 dark:text-white relative">
+      <div className="min-h-screen flex flex-col md:flex-row bg-white dark:bg-[#181b23] text-[#262626] dark:text-white relative">
         {/* Left Side: Sign In Form */}
         <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-8 py-16 md:py-0 relative z-10 bg-white dark:bg-[#181b23]">
           {/* Logo above form */}
-          <div className="w-full max-w-md mx-auto mb-8">
+          <div className="w-full max-w-md mx-auto mb-6">
             <div className="flex items-center">
               <Image
-                src="/en/logo/scriptura.png"
+                src="/en/images/logo-text.svg"
                 alt="Scriptura Logo"
-                width={40}
-                height={40}
-                className="object-contain w-10 h-10 rounded-lg shadow mr-3"
+                width={20}
+                height={20}
+                className="object-contain w-40 h-15 mr-3"
                 priority
               />
-              <span className="font-bold text-xl text-gray-800 dark:text-blue-100">Scriptura</span>
             </div>
           </div>
           
-          <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] rounded-2xl shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-blue-100 mb-2 text-left">{t("signin.title")}</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-200/80 mb-6 text-left">
-              {t("signin.alreadyHaveAccount")} <Link href={`/${lng}/auth/register`} className="text-blue-600 hover:underline">{t("signin.createNow")}</Link>
+          <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
+            <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-white mb-2 text-left">{t("signin.title")}</h1>
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mb-6 text-left">
+              {t("signin.alreadyHaveAccount")} <Link href={`/${lng}/auth/register`} className="text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.createNow")}</Link>
             </p>
             
             {/* Error Message */}
             {emailSignInError && (
-              <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 rounded-lg text-sm">
+              <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 text-sm font-['Inter']">
                 {emailSignInError}
               </div>
             )}
 
             <form onSubmit={handleEmailSignIn} className="space-y-5">
               <div className="text-left">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t("signin.email")}</label>
+                <label htmlFor="email" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">{t("signin.email")}</label>
                 <input 
                   id="email" 
                   name="email" 
@@ -212,12 +170,12 @@ export default function SignInPage({ params }: SignInPageProps) {
                   placeholder={t("signin.email")}
                   value={emailFormData.email}
                   onChange={handleEmailFormChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors" 
                 />
               </div>
               
               <div className="text-left">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-blue-100 mb-1">{t("signin.password")}</label>
+                <label htmlFor="password" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">{t("signin.password")}</label>
                 <div className="relative">
                   <input 
                     id="password" 
@@ -227,12 +185,12 @@ export default function SignInPage({ params }: SignInPageProps) {
                     placeholder={t("signin.password")}
                     value={emailFormData.password}
                     onChange={handleEmailFormChange}
-                    className="w-full px-4 py-2 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#181b23] text-gray-900 dark:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors" 
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#798777] dark:hover:text-[#9aaa98] transition-colors"
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -240,17 +198,17 @@ export default function SignInPage({ params }: SignInPageProps) {
               </div>
               
               <div className="flex items-center justify-between mb-2">
-                <label className="flex items-center text-sm text-gray-600 dark:text-blue-200">
-                  <input type="checkbox" className="mr-2 rounded border-gray-300 dark:border-gray-700" />
+                <label className="flex items-center text-sm font-['Inter'] text-gray-600 dark:text-gray-300">
+                  <input type="checkbox" className="mr-2 border-gray-300 dark:border-gray-600 text-[#798777] focus:ring-[#798777]" />
                   {t("signin.saveAccount")}
                 </label>
-                <Link href={`/${lng}/auth/forgot-password`} className="text-xs text-blue-600 hover:underline">{t("signin.forgotPassword")}</Link>
+                <Link href={`/${lng}/auth/forgot-password`} className="text-xs font-['Inter'] text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.forgotPassword")}</Link>
               </div>
               
               <button 
                 type="submit" 
                 disabled={emailSignInLoading}
-                className="w-full py-2 rounded-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white font-semibold text-lg transition-colors"
+                className="w-full py-3 bg-[#798777] hover:bg-[#6a7a68] disabled:bg-gray-400 text-white font-['Inter'] font-medium text-lg transition-colors"
               >
                 {emailSignInLoading ? (
                   <span className="flex items-center justify-center">
@@ -263,9 +221,9 @@ export default function SignInPage({ params }: SignInPageProps) {
               </button>
               
               <div className="flex items-center my-4">
-                <div className="flex-grow h-px bg-gray-200 dark:bg-gray-700" />
-                <span className="mx-2 text-gray-400 text-xs">{t("signin.or")}</span>
-                <div className="flex-grow h-px bg-gray-200 dark:bg-gray-700" />
+                <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600" />
+                <span className="mx-4 text-gray-500 dark:text-gray-400 text-sm font-['Inter']">{t("signin.or")}</span>
+                <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600" />
               </div>
 
               {/* Dynamic Provider Buttons - Exclude credentials provider */}
@@ -278,7 +236,7 @@ export default function SignInPage({ params }: SignInPageProps) {
                     variant="outline"
                     onClick={() => handleSignIn(provider.id)}
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-700 rounded-full py-2 text-gray-700 dark:text-blue-100 bg-white dark:bg-[#181b23] hover:bg-gray-50 dark:hover:bg-[#23263a] font-medium transition-colors"
+                    className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 py-3 text-[#262626] dark:text-white bg-white dark:bg-[#181b23] hover:bg-gray-50 dark:hover:bg-[#23263a] font-['Inter'] font-medium transition-colors rounded-none"
                   >
                     {isLoading && loadingProvider === provider.id ? (
                       <span className="flex items-center justify-center">
@@ -315,8 +273,8 @@ export default function SignInPage({ params }: SignInPageProps) {
         </div>
         
         {/* Right Side: Carousel (hidden on small screens, visible md+ ) */}
-        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-[#e3e8ff] to-[#bfcaff] dark:from-[#23263a] dark:via-[#23263a] dark:to-[#181b23] opacity-90 z-0" />
+        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden bg-gray-50 dark:bg-[#23263a]">
+          <div className="absolute inset-0 bg-gray-50 dark:bg-[#23263a] z-0" />
           {/* Right Side Content with arrows and carousel */}
           <div className="relative z-10 flex flex-col items-center justify-center px-8 py-16 w-full">
             <div className="mb-8 w-full flex justify-center items-center gap-4">
