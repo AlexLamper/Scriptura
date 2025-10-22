@@ -1,8 +1,7 @@
 "use client"
 
-import { BookOpen, Users, Trophy } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
-import { motion } from "framer-motion"
+import Image from "next/image"
 
 interface AboutSectionProps {
   params: {
@@ -13,92 +12,74 @@ interface AboutSectionProps {
 export function AboutSection({ params: { lng } }: AboutSectionProps) {
   const { t } = useTranslation(lng, "about")
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
+  const stats = [
+    {
+      label: t("stats_users"),
+      value: t("stats_users_value")
     },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
+    {
+      label: t("stats_courses"),
+      value: t("stats_courses_value")
     },
-  }
+    {
+      label: t("stats_studies"),
+      value: t("stats_studies_value")
+    },
+    {
+      label: t("stats_satisfaction"),
+      value: t("stats_satisfaction_value")
+    }
+  ]
 
   return (
-    <section id="about" className="py-24 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center space-y-4 mb-16"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.h2
-              className="text-4xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl"
-              variants={itemVariants}
-            >
+    <section id="about" className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col items-center text-center max-w-7xl mx-auto">
+          {/* Title and Subtitle */}
+          <div className="space-y-6 mb-16">
+            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-white">
               {t("heading")}
-            </motion.h2>
-            <motion.p
-              className="text-xl text-gray-600 dark:text-blue-200 max-w-3xl mx-auto dark:drop-shadow"
-              variants={itemVariants}
-            >
+            </h2>
+            <p className="font-['Inter'] text-lg sm:text-xl font-normal text-gray-900 dark:text-blue-200 leading-relaxed max-w-4xl mx-auto">
               {t("intro")}
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <motion.div
-            className="grid lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {/* Item 1 */}
-            <motion.div className="text-center space-y-4 dark:bg-[#23263a] dark:rounded-xl dark:shadow-lg dark:shadow-gray-600/10 p-6" variants={itemVariants}>
-              <div className="w-16 h-16 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-900 dark:to-blue-700/60 rounded-full flex items-center justify-center mx-auto shadow dark:shadow-blue-900/20">
-                <BookOpen className="w-8 h-8 text-blue-500 dark:text-blue-300" />
+          {/* Stats Section */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16 w-full max-w-4xl">
+            {stats.map((stat, index) => (
+              <div key={index} className="relative text-center">
+                {/* Vertical divider line - hide on first item */}
+                {index > 0 && (
+                  <div className="hidden lg:block absolute left-0 top-1/2 transform -translate-y-1/2 w-px h-16 bg-gray-300 dark:bg-gray-600"></div>
+                )}
+                
+                <div className="space-y-2">
+                  <div className="font-['Merriweather'] text-3xl lg:text-4xl font-bold text-[#798777] dark:text-[#9aaa98]">
+                    {stat.value}
+                  </div>
+                  <div className="font-['Inter'] text-sm lg:text-base text-gray-600 dark:text-gray-300">
+                    {stat.label}
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-blue-100">
-                {t("feature_1_title")}
-              </h3>
-              <p className="text-gray-600 dark:text-blue-200">{t("feature_1_text")}</p>
-            </motion.div>
+            ))}
+          </div>
 
-            {/* Item 2 */}
-            <motion.div className="text-center space-y-4 dark:bg-[#23263a] dark:rounded-xl dark:shadow-lg dark:shadow-gray-600/10 p-6" variants={itemVariants}>
-              <div className="w-16 h-16 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-900 dark:to-blue-700/60 rounded-full flex items-center justify-center mx-auto shadow dark:shadow-blue-900/20">
-                <Users className="w-8 h-8 text-blue-500 dark:text-blue-300" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-blue-100">
-                {t("feature_2_title")}
-              </h3>
-              <p className="text-gray-600 dark:text-blue-200">{t("feature_2_text")}</p>
-            </motion.div>
-
-            {/* Item 3 */}
-            <motion.div className="text-center space-y-4 dark:bg-[#23263a] dark:rounded-xl dark:shadow-lg dark:shadow-gray-600/10 p-6" variants={itemVariants}>
-              <div className="w-16 h-16 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-900 dark:to-blue-700/60 rounded-full flex items-center justify-center mx-auto shadow dark:shadow-blue-900/20">
-                <Trophy className="w-8 h-8 text-blue-500 dark:text-blue-300" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-blue-100">
-                {t("feature_3_title")}
-              </h3>
-              <p className="text-gray-600 dark:text-blue-200">{t("feature_3_text")}</p>
-            </motion.div>
-          </motion.div>
+          {/* Image Section */}
+          <div className="w-full max-w-5xl mx-auto mb-16">
+            <div className="relative w-full h-64 sm:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-2xl dark:shadow-gray-900/50">
+              <Image
+                src={`/en/images/hero.png`}
+                alt="Scripture study illustration"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                quality={95}
+                priority={false}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

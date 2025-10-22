@@ -2,7 +2,7 @@
 
 import { useTranslation } from "../../app/i18n/client"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion"
-import { motion } from "framer-motion"
+import Image from "next/image"
 
 interface FAQSectionProps {
   params: {
@@ -18,41 +18,56 @@ export function FAQSection({ params: { lng } }: FAQSectionProps) {
   }[]
 
   return (
-    <section id="faq" className="py-24 bg-[#f6f7ff] dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a]">
-      <div className="container mx-auto px-6 lg:px-8">
-        <motion.div
-          className="text-center space-y-4 mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">{t("faq_title")}</h2>
-          <p className="text-xl text-gray-600 dark:text-blue-200 dark:drop-shadow">
-            {t("faq_subtitle")}
-          </p>
-        </motion.div>
+    <section id="faq" className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          {/* Two Column Layout */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left Column - Image */}
+            <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
+              <div className="relative w-3/4 lg:w-4/5 h-80 sm:h-96 lg:h-[500px] shadow-lg dark:shadow-gray-900/20">
+                <Image
+                  src="/en/images/faq.svg"
+                  alt="FAQ illustration"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 75vw, (max-width: 1200px) 40vw, 30vw"
+                  quality={95}
+                />
+              </div>
+            </div>
 
-        <motion.div
-          className="max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          viewport={{ once: true }}
-        >
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index + 1}`}
-                className="bg-white dark:bg-[#23263a] rounded-lg px-6 border border-gray-200 dark:border-gray-700/40 dark:shadow-lg dark:shadow-gray-600/10"
-              >
-                <AccordionTrigger className="text-left dark:text-blue-100">{faq.question}</AccordionTrigger>
-                <AccordionContent className="text-gray-600 dark:text-blue-200">{faq.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
+            {/* Right Column - Title, Subtitle & FAQ Content */}
+            <div className="order-1 lg:order-2 space-y-8">
+              {/* Title and Subtitle */}
+              <div className="text-center lg:text-left space-y-6">
+                <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-white">
+                  {t("faq_title")}
+                </h2>
+              </div>
+
+              {/* FAQ Accordion */}
+              <div>
+                <Accordion type="single" collapsible className="space-y-4">
+                  {faqs.map((faq, index) => (
+                    <AccordionItem
+                      key={index}
+                      value={`item-${index + 1}`}
+                      className="border-b border-gray-200 dark:border-gray-700 pb-4"
+                    >
+                      <AccordionTrigger className="text-left font-['Inter'] text-lg font-medium text-[#262626] dark:text-white hover:no-underline py-4 px-0 border-none">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="font-['Inter'] text-gray-600 dark:text-gray-300 leading-relaxed pt-2 pb-4 px-0">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

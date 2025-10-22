@@ -20,7 +20,7 @@ export function Header({ params: { lng } }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="border-b border-gray-100 dark:border-[#23263a] bg-white/80 dark:bg-gradient-to-b dark:from-[#181b23]/90 dark:to-[#23263a]/90 backdrop-blur-md sticky top-0 z-50 shadow-sm dark:shadow-blue-900/20">
+    <header className="border-b border-gray-100/70 dark:border-[#23263a] bg-white/70 dark:bg-gradient-to-b dark:from-[#181b23]/90 dark:to-[#23263a]/90 backdrop-blur-md sticky top-0 z-50 shadow-sm dark:shadow-blue-900/20">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           {/* Logo */}
@@ -68,7 +68,7 @@ export function Header({ params: { lng } }: HeaderProps) {
             </div>
             <div className="hidden sm:flex items-center space-x-2">
               <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
-                <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
+                <Button size="sm" variant="dark" className="px-6">
                   {t("signup")}
                 </Button>
               </Link>
@@ -105,7 +105,7 @@ export function Header({ params: { lng } }: HeaderProps) {
               </Link>
               <div className="flex flex-col space-y-2 pt-3 border-t border-gray-100 dark:border-[#23263a]">
                 <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
-                  <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-blue-400 dark:text-white dark:hover:from-blue-700 dark:hover:to-blue-500 dark:shadow-lg">
+                  <Button size="sm" variant="dark" className="px-6">
                     {t("login")}
                   </Button>
                 </Link>
