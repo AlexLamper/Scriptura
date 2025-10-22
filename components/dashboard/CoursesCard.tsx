@@ -64,22 +64,22 @@ export function CoursesCard({ lng }: CoursesCardProps) {
 
   if (loading) {
     return (
-      <Card className="h-full shadow-sm border-gray-200 rounded-none">
+      <Card className="h-full shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300 border-gray-200 dark:border-gray-700 dark:bg-[#23263a]">
         <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
     <div className="flex items-center justify-between mb-4 gap-2">
-            <h3 className="text-xl font-semibold text-gray-900">{t("courses")}</h3>
-            <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+            <h3 className="text-xl font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("courses")}</h3>
+            <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
           </div>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-gray-50 rounded-none p-4 border border-gray-200 animate-pulse">
+              <div key={i} className="bg-gray-50 dark:bg-[#1a1d2a] p-4 border border-gray-200 dark:border-gray-700 animate-pulse">
                 <div className="mb-3">
                   <div className="space-y-2 mb-2">
-                    <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-none"></div>
-                    <div className="h-3 w-1/2 bg-gray-200 dark:bg-gray-700 rounded-none"></div>
+                    <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700"></div>
+                    <div className="h-3 w-1/2 bg-gray-200 dark:bg-gray-700"></div>
                   </div>
-                  <div className="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-none mb-2"></div>
-                  <div className="h-3 w-2/3 bg-gray-200 dark:bg-gray-700 rounded-none"></div>
+                  <div className="h-3 w-full bg-gray-200 dark:bg-gray-700 mb-2"></div>
+                  <div className="h-3 w-2/3 bg-gray-200 dark:bg-gray-700"></div>
                 </div>
               </div>
             ))}
@@ -90,12 +90,12 @@ export function CoursesCard({ lng }: CoursesCardProps) {
   }
 
   return (
-  <Card className="h-full shadow-sm border-gray-200 rounded-none">
+  <Card className="h-full shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300 border-gray-200 dark:border-gray-700 dark:bg-[#23263a]">
   <CardContent className="h-full px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
   <div className="flex items-center justify-between mb-4 gap-2">
-          <h3 className="text-xl font-semibold text-gray-900">{t("courses")}</h3>
+          <h3 className="text-xl font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("courses")}</h3>
           <Link href={`/${lng}/courses`}>
-            <Button variant="ghost" className="text-[#3b82f6] font-medium hover:bg-[#3b82f6]/10">
+            <Button variant="ghost" className="text-[#798777] font-['Inter'] font-medium hover:bg-[#798777]/10">
               {t("view_all")} →
             </Button>
           </Link>
@@ -103,7 +103,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
 
       {courses.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-gray-500 dark:text-gray-400 mb-4">{t("no_courses_found")}</p>
+          <p className="font-['Inter'] text-gray-500 dark:text-gray-400 mb-4">{t("no_courses_found")}</p>
           <Link href={`/${lng}/courses`}>
             <Button>{t("browse_courses")}</Button>
           </Link>
@@ -116,11 +116,11 @@ export function CoursesCard({ lng }: CoursesCardProps) {
               href={`/${lng}/courses/${course._id}`}
               className="block"
             >
-              <div className="bg-gray-50 rounded-none p-4 border border-gray-200 hover:shadow-sm transition-shadow duration-200">
+              <div className="bg-gray-50 dark:bg-[#1a1d2a] p-4 border border-gray-200 dark:border-gray-700 hover:shadow-[0_2px_4px_-1px_rgba(0,0,0,0.1),0_4px_8px_-2px_rgba(0,0,0,0.05)] transition-shadow duration-200">
         <div className="flex items-start justify-between mb-3 gap-3">
                   <div className="flex-1">
           <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <h4 className="font-semibold text-gray-900">
+                      <h4 className="font-['Merriweather'] font-semibold text-[#262626] dark:text-white">
                       {course.title}
                       </h4>
                       {course.isPremium && (
@@ -129,7 +129,7 @@ export function CoursesCard({ lng }: CoursesCardProps) {
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">
+                    <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {course.instructor} • {course.category}
                     </p>
                   </div>
@@ -140,19 +140,19 @@ export function CoursesCard({ lng }: CoursesCardProps) {
                   </div>
                 </div>
                 
-                <p className="text-sm text-gray-700 mb-3 leading-relaxed line-clamp-2">
+                <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-300 mb-3 leading-relaxed line-clamp-2">
                   {course.description}
                 </p>
                 
                 <div className="flex items-center justify-between gap-3 flex-wrap">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="flex items-center gap-2 font-['Inter'] text-sm text-gray-500 dark:text-gray-400">
                     <Clock className="w-4 h-4" />
                     {course.totalDuration} min
                   </div>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 px-4 text-[#3b82f6] border-[#3b82f6]/30 bg-white hover:bg-[#3b82f6]/10"
+                    className="h-8 px-4 font-['Inter'] text-[#798777] border-[#798777]/30 bg-white dark:bg-[#23263a] dark:border-[#9aaa98]/30 dark:text-[#9aaa98] hover:bg-[#798777]/10 dark:hover:bg-[#9aaa98]/10"
                   >
                     {t("start_study")} →
                   </Button>

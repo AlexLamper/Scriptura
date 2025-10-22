@@ -83,27 +83,27 @@ export function ChapterNotes({ book, chapter, className = "", language = "en" }:
   return (
     <Card className={`${className}`}>
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold flex items-center gap-2">
-          <StickyNote className="h-4 w-4 text-indigo-600" />
+        <CardTitle className="text-base font-['Merriweather'] font-semibold flex items-center gap-2 text-[#262626] dark:text-white">
+          <StickyNote className="h-4 w-4 text-[#798777]" />
           {t("notes_for_chapter")} {book} {chapter}
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
         {loading && (
           <div className="flex justify-center py-4">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600"></div>
+            <div className="animate-spin h-4 w-4 border-b-2 border-[#798777]"></div>
           </div>
         )}
 
         {error && (
           <div className="text-center py-4">
-            <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            <p className="font-['Inter'] text-red-600 dark:text-red-400 text-sm">{error}</p>
           </div>
         )}
 
         {!loading && !error && notes.length === 0 && (
           <div className="text-center py-4">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <p className="font-['Inter'] text-gray-600 dark:text-gray-400 text-sm">
               {t("no_notes_chapter")}
             </p>
           </div>
@@ -114,19 +114,19 @@ export function ChapterNotes({ book, chapter, className = "", language = "en" }:
             {notes.map((note) => (
               <div
                 key={note._id}
-                className="p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50"
+                className="p-3 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-indigo-600 dark:text-indigo-400 text-sm">
+                  <h4 className="font-['Merriweather'] font-medium text-[#798777] dark:text-[#9aaa98] text-sm">
                     {note.verseReference}
                   </h4>
-                  <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-1 font-['Inter'] text-xs text-gray-500 dark:text-gray-400">
                     <Calendar className="h-3 w-3" />
                     {formatDate(note.createdAt)}
                   </div>
                 </div>
                 
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
+                <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
                   {truncateText(note.noteText)}
                 </p>
                 

@@ -161,18 +161,18 @@ export function CreateNoteModal({
     >
       <div className="space-y-6">
         {/* Bible Verse Preview */}
-        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-indigo-300">
-          <p className="italic text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+        <div className="bg-gray-50 dark:bg-gray-800 p-4 border-l-4 border-[#798777]">
+          <p className="italic font-['Inter'] text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
             &ldquo;{verseText}&rdquo;
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="font-['Inter'] text-xs text-gray-500 dark:text-gray-400 mt-2">
             — {verseReference} ({translation})
           </p>
         </div>
 
         {/* Note Type Selection */}
         <div>
-          <label className="block text-sm font-medium mb-2">{t("note_type_label")}</label>
+          <label className="block text-sm font-['Inter'] font-medium mb-2">{t("note_type_label")}</label>
           <div className="flex gap-2">
             <Button
               type="button"
@@ -226,7 +226,7 @@ export function CreateNoteModal({
 
         {/* Note Text */}
         <div>
-          <label className="block text-sm font-medium mb-2">{t("note_thoughts_label")}</label>
+          <label className="block text-sm font-['Inter'] font-medium mb-2">{t("note_thoughts_label")}</label>
           <Textarea
             value={noteText}
             onChange={(e) => setNoteText(e.target.value)}
@@ -238,7 +238,7 @@ export function CreateNoteModal({
 
         {/* Tags */}
         <div>
-          <label className="block text-sm font-medium mb-2">{t("tags_label")}</label>
+          <label className="block text-sm font-['Inter'] font-medium mb-2">{t("tags_label")}</label>
           <div className="flex flex-wrap gap-1 mb-2">
             {tags.map((tag) => (
               <Badge key={tag} variant="secondary" className="gap-1">

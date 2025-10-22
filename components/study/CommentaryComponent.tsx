@@ -160,9 +160,9 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
       {loading && (
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
-            <Loader2 className="h-8 w-8 animate-spin text-indigo-500 mx-auto mb-4" />
-            <p className="text-gray-700 text-base font-medium dark:text-gray-200">
-              Commentary loading...
+            <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
+            <p className="font-['Inter'] text-gray-700 text-base font-medium dark:text-gray-200">
+              Commentaar laden...
             </p>
           </div>
         </div>
@@ -173,10 +173,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
         <div className="flex items-center justify-center py-12">
           <div className="text-center max-w-md">
             <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
-            <p className="text-red-600 font-semibold mb-2 text-base dark:text-red-400">
+            <p className="font-['Merriweather'] text-red-600 font-semibold mb-2 text-base dark:text-red-400">
               Error loading commentary
             </p>
-            <p className="text-gray-700 dark:text-gray-200 text-sm">{error}</p>
+            <p className="font-['Inter'] text-gray-700 dark:text-gray-200 text-sm">{error}</p>
           </div>
         </div>
       )}
@@ -195,10 +195,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
               value={`verse-${key}`}
               className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#232325]"
             >
-              <AccordionTrigger className="px-4 py-2 font-semibold text-gray-900 dark:text-gray-100 hover:no-underline">
+              <AccordionTrigger className="px-4 py-2 font-['Merriweather'] font-semibold text-[#262626] dark:text-gray-100 hover:no-underline">
                 Verse {key}
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-3 text-gray-700 text-sm leading-relaxed dark:text-gray-200 whitespace-pre-line">
+              <AccordionContent className="px-4 pb-3 font-['Inter'] text-gray-700 text-sm leading-relaxed dark:text-gray-200 whitespace-pre-line">
                 {text}
               </AccordionContent>
             </AccordionItem>

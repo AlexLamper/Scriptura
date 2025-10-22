@@ -155,7 +155,7 @@ export default function InductiveStudy({
             <Brain className="w-5 h-5" />
             Inductieve Bijbelstudie: {book} {chapter}
           </CardTitle>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
             Ontdek zelf de betekenis van Gods Woord in drie eenvoudige stappen
           </p>
         </CardHeader>
@@ -183,7 +183,7 @@ export default function InductiveStudy({
               <div className="flex items-center gap-3">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   isActive
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-[#798777] text-white'
                     : hasContent
                     ? 'bg-green-500 text-white'
                     : 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
@@ -191,8 +191,8 @@ export default function InductiveStudy({
                   <Icon size={16} />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium text-sm">{step.title}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">{step.subtitle}</div>
+                  <div className="font-['Merriweather'] font-medium text-sm">{step.title}</div>
+                  <div className="font-['Inter'] text-xs text-gray-500 dark:text-gray-400">{step.subtitle}</div>
                 </div>
               </div>
             </button>
@@ -208,10 +208,10 @@ export default function InductiveStudy({
               <Eye className="w-5 h-5" />
               Stap 1: Observeren - Wat staat er echt?
             </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
               Lees {book} {chapter} zorgvuldig en schrijf op wat je daadwerkelijk ziet staan. Let op:
             </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
+            <ul className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
               <li>Wie zijn de hoofdpersonen?</li>
               <li>Wat gebeurt er precies?</li>
               <li>Waar en wanneer speelt dit zich af?</li>
@@ -252,10 +252,10 @@ export default function InductiveStudy({
               <Brain className="w-5 h-5" />
               Stap 2: Interpreteren - Wat betekent dit?
             </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
               Denk na over de betekenis van wat je hebt geobserveerd. Probeer te begrijpen:
             </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
+            <ul className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
               <li>Wat is de hoofdboodschap van deze passage?</li>
               <li>Wat leren we over God en Zijn karakter?</li>
               <li>Wat leren we over mensen en hun relatie met God?</li>
@@ -299,10 +299,10 @@ export default function InductiveStudy({
               <Heart className="w-5 h-5" />
               Stap 3: Toepassen - Hoe pas ik dit toe?
             </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
               Denk na over hoe je de waarheden uit deze passage kunt toepassen in je eigen leven:
             </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
+            <ul className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
               <li>Welke concrete lessen kan ik hieruit trekken?</li>
               <li>Wat moet ik veranderen in mijn denken of handelen?</li>
               <li>Hoe kan dit mijn relatie met God verdiepen?</li>

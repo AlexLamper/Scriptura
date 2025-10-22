@@ -38,7 +38,7 @@ export default function StudyPage({ params }: { params: Promise<{ lng: string }>
   }, []);
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 font-['Inter']">
       {/* Top controls */}
       <TopControls
         versions={versions}

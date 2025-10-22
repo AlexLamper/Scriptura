@@ -24,13 +24,13 @@ export default async function DashboardLayout({
   const { lng } = await params;
 
   return (
-    <div className="antialiased bg-[#f7f7f7] dark:bg-[#18181bf2]">
+    <div className="antialiased bg-white dark:bg-[#181b23]">
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
             <Header params={{ lng }} />
-            <div className="p-4">
+            <div className="p-6">
               {children}
             </div>
           </div>
