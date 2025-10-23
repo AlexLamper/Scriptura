@@ -25,18 +25,17 @@ export function FAQSection({ params: { lng } }: FAQSectionProps) {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left Column - Image */}
             <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
-              <div className="relative w-3/4 lg:w-4/5 h-80 sm:h-96 lg:h-[500px] shadow-lg dark:shadow-gray-900/20">
+              <div className="relative w-full sm:w-3/4 lg:w-4/5 h-64 sm:h-80 lg:h-[500px]">
                 <Image
                   src="/en/images/faq.svg"
                   alt="FAQ illustration"
                   fill
                   className="object-contain"
-                  sizes="(max-width: 768px) 75vw, (max-width: 1200px) 40vw, 30vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 30vw"
                   quality={95}
                 />
               </div>
             </div>
-
             {/* Right Column - Title, Subtitle & FAQ Content */}
             <div className="order-1 lg:order-2 space-y-8">
               {/* Title and Subtitle */}

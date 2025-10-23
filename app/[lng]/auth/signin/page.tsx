@@ -273,60 +273,74 @@ export default function SignInPage({ params }: SignInPageProps) {
         </div>
         
         {/* Right Side: Carousel (hidden on small screens, visible md+ ) */}
-        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden bg-gray-50 dark:bg-[#23263a]">
-          <div className="absolute inset-0 bg-gray-50 dark:bg-[#23263a] z-0" />
-          {/* Right Side Content with arrows and carousel */}
-          <div className="relative z-10 flex flex-col items-center justify-center px-8 py-16 w-full">
-            <div className="mb-8 w-full flex justify-center items-center gap-4">
-              {/* Backward arrow */}
-              <button
-                aria-label="Previous"
-                onClick={goPrev}
-                className="rounded-full p-2 bg-white/80 dark:bg-[#23263a]/80 hover:bg-blue-100 dark:hover:bg-[#23263a] shadow transition-colors"
-                style={{ lineHeight: 0 }}
-                type="button"
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <path d="M15 19l-7-7 7-7" stroke="#64748b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              
-              <div className="rounded-lg shadow-2xl overflow-hidden bg-white/60 dark:bg-[#23263a]/60 backdrop-blur-lg">
-                <Image
-                  src={slides[current].image}
-                  alt={slides[current].heading}
-                  width={480}
-                  height={320}
-                  className="w-[480px] h-[320px] object-contain rounded-lg"
-                  style={{
-                    filter: 'brightness(0.98) saturate(1.1) blur(0.2px) drop-shadow(0 0 32px rgba(255,255,255,0.7))',
-                  }}
-                  priority
-                />
+        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#798777]/5 via-gray-50 to-[#798777]/10 dark:bg-gradient-to-br dark:from-[#23263a] dark:via-[#1a1d2a] dark:to-[#23263a] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1)] dark:shadow-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#798777]/5 via-gray-50 to-[#798777]/10 dark:bg-gradient-to-br dark:from-[#23263a] dark:via-[#1a1d2a] dark:to-[#23263a] z-0" />
+            <div className="relative z-10 flex flex-col items-center justify-center px-8 py-16 w-full">
+              <div className="mb-8 w-full flex justify-center items-center gap-4">
+                
+                {/* Backward arrow */}
+                <button
+                  aria-label="Previous"
+                  onClick={goPrev}
+                  className="p-3 hover:opacity-70 transition-opacity"
+                  style={{ lineHeight: 0 }}
+                  type="button"
+                >
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M15 19l-7-7 7-7"
+                      stroke="#798777"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+
+                {/* Image container */}
+                <div className="relative w-[90%] max-w-[480px] aspect-video overflow-hidden shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] bg-gray-100 dark:bg-[#1a1d2a]">
+                  <Image
+                    src={slides[current].image}
+                    alt={slides[current].heading}
+                    fill
+                    className="object-cover transition-all duration-300"
+                    sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 480px"
+                    quality={95}
+                    priority
+                    style={{
+                      filter: 'brightness(0.98) saturate(1.1)',
+                    }}
+                  />
+                </div>
+
+                {/* Forward arrow */}
+                <button
+                  aria-label="Next"
+                  onClick={goNext}
+                  className="p-3 hover:opacity-70 transition-opacity"
+                  style={{ lineHeight: 0 }}
+                  type="button"
+                >
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke="#798777"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
               </div>
-              
-              {/* Forward arrow */}
-              <button
-                aria-label="Next"
-                onClick={goNext}
-                className="rounded-full p-2 bg-white/80 dark:bg-[#23263a]/80 hover:bg-blue-100 dark:hover:bg-[#23263a] shadow transition-colors"
-                style={{ lineHeight: 0 }}
-                type="button"
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 5l7 7-7 7" stroke="#64748b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
+
+              <h2 className="font-['Merriweather'] font-semibold text-2xl md:text-3xl text-[#262626] dark:text-white text-center tracking-normal mb-3">
+                {slides[current].heading}
+              </h2>
+              <p className="font-['Inter'] font-normal text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl leading-relaxed mb-1">
+                {slides[current].text}
+              </p>
             </div>
-            
-            <h2 className="font-inter font-semibold text-2xl md:text-3xl text-gray-700 dark:text-gray-200 text-center tracking-normal mb-3">
-              {slides[current].heading}
-            </h2>
-            <p className="font-inter font-light text-sm md:text-base text-gray-500/80 dark:text-gray-200/80 text-center max-w-2xl leading-snug mb-1">
-              {slides[current].text}
-            </p>
           </div>
-        </div>
       </div>
     </div>
   )
