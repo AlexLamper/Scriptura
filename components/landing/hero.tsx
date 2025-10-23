@@ -22,7 +22,7 @@ export function HeroSection({ params: { lng } }: HeroSectionProps) {
       <div className="lg:hidden">
         <div className="min-h-screen flex flex-col">
           {/* Mobile Content Section */}
-          <div className="flex-1 px-0 text-center flex flex-col justify-center py-16 space-y-8 max-w-[70%] mx-auto">
+          <div className="flex-1 px-0 text-center flex flex-col justify-center py-16 space-y-8 lg:max-w-[70%] max-w-[95%] mx-auto">
             <div className="px-4">
               <h1 className="font-['Merriweather'] text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
                 <span className="text-[#262626] dark:text-white">{t("hero_title_part_1")}</span>
