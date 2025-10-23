@@ -55,10 +55,10 @@ export function LanguageSwitcher() {
         <Button
           variant="transparent"
           size="sm"
-          className="gap-2"
+          className="gap-1 sm:gap-2 px-2 sm:px-3 text-xs sm:text-sm"
         >
-          <Languages className="h-4 w-4" />
-          <span>{currentLanguageName}</span>
+          <Languages className="h-3 w-3 sm:h-4 sm:w-4" />
+          <span className="hidden xs:inline sm:inline">{currentLanguageName}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur-sm border-primary/20">

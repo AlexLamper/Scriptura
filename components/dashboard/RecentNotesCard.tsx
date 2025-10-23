@@ -80,32 +80,32 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
   if (!session) return null;
 
   return (
-  <Card className="shadow-sm border-gray-200 rounded-none">
+  <Card className="border rounded-none shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300 border-gray-200 dark:border-gray-700 dark:bg-[#23263a]">
       <CardContent className="px-4 py-4 sm:px-6 sm:py-6">
         <div className="flex items-center justify-between mb-4 gap-2">
-          <h3 className="text-lg font-semibold text-gray-900">{t("recent_notes_title")}</h3>
+          <h3 className="text-lg font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("recent_notes_title")}</h3>
           <Link href={`/${lng}/notes`}>
-            <Button variant="ghost" size="sm" className="text-[#3b82f6] font-medium hover:bg-[#3b82f6]/10">
+            <Button variant="ghost" size="sm" className="font-['Inter'] text-[#798777] font-medium hover:bg-[#798777]/10 dark:text-[#9aaa98] dark:hover:bg-[#9aaa98]/10">
               {t("view_all")}
             </Button>
           </Link>
         </div>
         {loading && (
           <div className="flex justify-center py-8">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
+            <div className="animate-spin h-6 w-6 border-b-2 border-[#798777] dark:border-[#9aaa98]"></div>
           </div>
         )}
 
         {error && (
           <div className="text-center py-8">
-            <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            <p className="font-['Inter'] text-red-600 dark:text-red-400 text-sm">{error}</p>
           </div>
         )}
 
         {!loading && !error && notes.length === 0 && (
           <div className="text-center py-8">
             <StickyNote className="h-8 w-8 text-gray-400 mx-auto mb-3" />
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+            <p className="font-['Inter'] text-gray-600 dark:text-gray-400 text-sm mb-3">
               {t("no_notes_yet")}
             </p>
             <Link href={`/${lng}/study`}>
@@ -121,14 +121,14 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
             {notes.map((note) => (
               <div
                 key={note._id}
-                className="bg-gray-50 rounded-none p-3 border border-gray-200 hover:shadow-sm transition-shadow duration-200"
+                className="bg-gray-50 dark:bg-[#1a1d2a] p-3 border border-gray-200 dark:border-gray-700 hover:shadow-[0_2px_4px_-1px_rgba(0,0,0,0.1),0_4px_8px_-2px_rgba(0,0,0,0.05)] transition-shadow duration-200"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <p className="font-medium text-gray-900">{note.verseReference}</p>
-                  <p className="text-xs text-gray-500">{formatDate(note.createdAt)}</p>
+                  <p className="font-['Merriweather'] font-medium text-[#262626] dark:text-white">{note.verseReference}</p>
+                  <p className="font-['Inter'] text-xs text-gray-500 dark:text-gray-400">{formatDate(note.createdAt)}</p>
                 </div>
                 
-                <p className="text-sm text-gray-700 mb-2">
+                <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-300 mb-2">
                   {truncateText(note.noteText)}
                 </p>
                 
@@ -154,7 +154,7 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
         <Button
           variant="outline"
           size="sm"
-          className="mt-4 w-full text-gray-700 border-gray-300 bg-white py-2 hover:bg-gray-50"
+          className="mt-4 w-full font-['Inter'] text-[#798777] border-[#798777]/30 bg-white dark:bg-[#23263a] dark:border-[#9aaa98]/30 dark:text-[#9aaa98] py-2 hover:bg-[#798777]/10 dark:hover:bg-[#9aaa98]/10"
         >
           {t("new_note_button")}
         </Button>

@@ -37,16 +37,16 @@ export default function EmptyState({
   }
 
   return (
-    <div className="py-12 text-center text-gray-500 dark:text-gray-300">
+    <div className="py-12 text-center font-['Inter'] text-gray-500 dark:text-gray-300">
       <div className="space-y-4">
-        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 rounded-full flex items-center justify-center mx-auto">
-          <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+        <div className="w-16 h-16 bg-gradient-to-br from-[#798777]/20 to-[#798777]/30 dark:from-[#9aaa98]/20 dark:to-[#9aaa98]/30 flex items-center justify-center mx-auto">
+          <BookOpen className="w-8 h-8 text-[#798777] dark:text-[#9aaa98]" />
         </div>
         <div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+          <h3 className="text-lg font-['Merriweather'] font-medium text-[#262626] dark:text-white mb-2">
             {t('ready_to_study')}
           </h3>
-          <div className="text-sm space-y-1">
+          <div className="text-sm font-['Inter'] space-y-1">
             {loadingVersions && <p>{t('loading_translations')}</p>}
             {!loadingVersions && versions.length === 0 && <p>{t('no_translations_available')}</p>}
             {!loadingVersions && versions.length > 0 && selectedVersion && loadingBooks && <p>{t('loading_books')}</p>}

@@ -115,8 +115,8 @@ export default function ChapterViewer({
       {loading && (
         <div className="flex items-center justify-center py-24">
           <div className="text-center">
-            <Loader2 className="h-10 w-10 animate-spin text-indigo-500 mx-auto mb-6" />
-            <p className="text-gray-700 text-lg font-medium dark:text-gray-200">Bijbeltekst laden...</p>
+            <Loader2 className="h-10 w-10 animate-spin text-[#798777] mx-auto mb-6" />
+            <p className="font-['Inter'] text-gray-700 text-lg font-medium dark:text-gray-200">Bijbeltekst laden...</p>
           </div>
         </div>
       )}
@@ -125,8 +125,8 @@ export default function ChapterViewer({
         <div className="flex items-center justify-center py-24">
           <div className="text-center max-w-md">
             <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-6" />
-            <p className="text-red-600 font-semibold mb-3 text-lg dark:text-red-400">Fout bij laden</p>
-            <p className="text-gray-700 dark:text-gray-200">{error}</p>
+            <p className="font-['Merriweather'] text-red-600 font-semibold mb-3 text-lg dark:text-red-400">Fout bij laden</p>
+            <p className="font-['Inter'] text-gray-700 dark:text-gray-200">{error}</p>
           </div>
         </div>
       )}
@@ -136,18 +136,18 @@ export default function ChapterViewer({
           <div className="space-y-2 text-justify">
             {Object.entries(verses).map(([verseNumber, text]) => (
               <div key={verseNumber} className="group relative">
-                <p className="dark:text-gray-100 leading-relaxed">
+                <p className="font-['Inter'] dark:text-gray-100 leading-relaxed text-[#262626]">
                   <sup className="font-semibold text-gray-700 dark:text-gray-300 mr-1">
                     {verseNumber}
                   </sup>
-                  <span className="hover:bg-yellow-100 dark:hover:bg-yellow-900/30 cursor-pointer transition-colors rounded px-1"
+                  <span className="hover:bg-[#798777]/10 dark:hover:bg-[#9aaa98]/20 cursor-pointer transition-colors px-1"
                         onClick={() => handleVerseClick(verseNumber, text)}>
                     {text}
                   </span>
                 </p>
                 <button
                   onClick={() => handleVerseClick(verseNumber, text)}
-                  className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-1.5 shadow-md"
+                  className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[#798777] hover:bg-[#6a7a68] text-white p-1.5 shadow-[0_2px_4px_-1px_rgba(0,0,0,0.1)]"
                   title="Add note to this verse"
                 >
                   <Plus className="h-3 w-3" />
@@ -175,7 +175,7 @@ export default function ChapterViewer({
       )}
 
       {!loading && !error && Object.keys(verses).length === 0 && (
-        <div className="py-12 text-center text-gray-500 dark:text-gray-300">
+        <div className="py-12 text-center font-['Inter'] text-gray-500 dark:text-gray-300">
           Geen bijbeltekst gevonden voor dit hoofdstuk. Probeer een ander hoofdstuk.
         </div>
       )}

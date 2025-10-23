@@ -25,7 +25,6 @@ export default function InductiveStudy({
   version
 }: InductiveStudyProps) {
   const { data: session } = useSession();
-  const [currentStep, setCurrentStep] = useState(1);
   const [studyData, setStudyData] = useState<InductiveStudyData>({
     observation: '',
     interpretation: '',
@@ -111,247 +110,136 @@ export default function InductiveStudy({
     }));
   };
 
-  const steps = [
-    { 
-      id: 1, 
-      title: 'Observeren', 
-      subtitle: 'Wat staat er echt?', 
-      icon: Eye,
-      description: 'Lees de tekst zorgvuldig en schrijf op wat je daadwerkelijk ziet staan.'
-    },
-    { 
-      id: 2, 
-      title: 'Interpreteren', 
-      subtitle: 'Wat betekent dit?', 
-      icon: Brain,
-      description: 'Denk na over de betekenis van wat je hebt geobserveerd.'
-    },
-    { 
-      id: 3, 
-      title: 'Toepassen', 
-      subtitle: 'Hoe pas ik dit toe?', 
-      icon: Heart,
-      description: 'Hoe kun je deze waarheden toepassen in je eigen leven?'
-    }
-  ];
-
   if (isLoading) {
     return (
-      <Card>
-        <CardContent className="flex items-center justify-center py-8">
-          <Loader2 className="w-6 h-6 animate-spin mr-2" />
-          <span>Inductieve studie laden...</span>
-        </CardContent>
-      </Card>
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
+          <p className="font-['Inter'] text-gray-700 text-base font-medium dark:text-gray-200">
+            Inductieve studie laden...
+          </p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Brain className="w-5 h-5" />
-            Inductieve Bijbelstudie: {book} {chapter}
-          </CardTitle>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Ontdek zelf de betekenis van Gods Woord in drie eenvoudige stappen
-          </p>
-        </CardHeader>
-      </Card>
-
-      {/* Progress Steps */}
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-        {steps.map((step) => {
-          const Icon = step.icon;
-          const isActive = currentStep === step.id;
-          const hasContent = studyData[step.id === 1 ? 'observation' : step.id === 2 ? 'interpretation' : 'application'].length > 0;
+    <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 font-['Merriweather'] text-[#262626] dark:text-white">
+          <Brain className="w-6 h-6 text-[#798777]" />
+          Inductieve Bijbelstudie: {book} {chapter}
+        </CardTitle>
+        <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
+          Bestudeer Gods Woord in 3 eenvoudige stappen. Lees eerst de tekst goed door voordat je begint.
+        </p>
+      </CardHeader>
+      <CardContent className="p-6 pt-0 space-y-6">
           
-          return (
-            <button
-              key={step.id}
-              onClick={() => setCurrentStep(step.id)}
-              className={`flex-1 p-4 rounded-lg border transition-all ${
-                isActive
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : hasContent
-                  ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                  : 'border-gray-200 hover:border-gray-300 dark:border-gray-700'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  isActive
-                    ? 'bg-blue-500 text-white'
-                    : hasContent
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
-                }`}>
-                  <Icon size={16} />
-                </div>
-                <div className="text-left">
-                  <div className="font-medium text-sm">{step.title}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">{step.subtitle}</div>
-                </div>
+          {/* Step 1: Observation */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#798777] text-white flex items-center justify-center">
+                <Eye size={16} />
               </div>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Step Content */}
-      {currentStep === 1 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Stap 1: Observeren - Wat staat er echt?
-            </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Lees {book} {chapter} zorgvuldig en schrijf op wat je daadwerkelijk ziet staan. Let op:
+              <h3 className="font-['Merriweather'] text-lg font-semibold text-[#262626] dark:text-white">
+                1. Wat zie je?
+              </h3>
+            </div>
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 pl-11">
+              Lees de tekst aandachtig en schrijf op wat je opvalt: wie komt erin voor, wat gebeurt er, waar en wanneer speelt het zich af?
             </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
-              <li>Wie zijn de hoofdpersonen?</li>
-              <li>Wat gebeurt er precies?</li>
-              <li>Waar en wanneer speelt dit zich af?</li>
-              <li>Welke woorden worden herhaald?</li>
-              <li>Wat valt je op aan de tekst?</li>
-            </ul>
-          </CardHeader>
-          <CardContent>
+            
             <Textarea
-              placeholder="Schrijf hier je observaties van wat er daadwerkelijk in de tekst staat..."
+              placeholder="Wat staat er in de tekst? Schrijf op wat je ziet..."
               value={studyData.observation}
               onChange={(e) => updateStudyData('observation', e.target.value)}
-              className="min-h-[200px] mb-4"
+              className="min-h-[120px] font-['Inter'] border border-gray-300 dark:border-gray-600 focus:border-[#798777] dark:focus:border-[#9aaa98] dark:bg-[#181b23] rounded-none"
             />
-            
-            <div className="flex gap-2">
-              <Button onClick={() => setCurrentStep(2)} className="flex-1">
-                Ga naar Interpretatie <Brain className="w-4 h-4 ml-2" />
-              </Button>
-              <Button variant="outline" onClick={saveStudyData} disabled={isSaving}>
-                {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              </Button>
-            </div>
-            
-            {lastSaved && (
-              <p className="text-xs text-gray-500 mt-2">
-                Laatst opgeslagen: {lastSaved.toLocaleTimeString()}
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      )}
+          </div>
 
-      {currentStep === 2 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="w-5 h-5" />
-              Stap 2: Interpreteren - Wat betekent dit?
-            </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Denk na over de betekenis van wat je hebt geobserveerd. Probeer te begrijpen:
+          {/* Step 2: Interpretation */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#798777] text-white flex items-center justify-center">
+                <Brain size={16} />
+              </div>
+              <h3 className="font-['Merriweather'] text-lg font-semibold text-[#262626] dark:text-white">
+                2. Wat betekent het?
+              </h3>
+            </div>
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 pl-11">
+              Denk na over de betekenis: wat wil God hiermee zeggen? Wat leer je over God, mensen of het leven?
             </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
-              <li>Wat is de hoofdboodschap van deze passage?</li>
-              <li>Wat leren we over God en Zijn karakter?</li>
-              <li>Wat leren we over mensen en hun relatie met God?</li>
-              <li>Hoe past dit in het grotere verhaal van de Bijbel?</li>
-              <li>Wat wilde de auteur zijn lezers leren?</li>
-            </ul>
-          </CardHeader>
-          <CardContent>
+            
             <Textarea
-              placeholder="Schrijf hier je interpretatie van wat de tekst betekent..."
+              placeholder="Wat is de betekenis? Wat wil God je leren?"
               value={studyData.interpretation}
               onChange={(e) => updateStudyData('interpretation', e.target.value)}
-              className="min-h-[200px] mb-4"
+              className="min-h-[120px] font-['Inter'] border border-gray-300 dark:border-gray-600 focus:border-[#798777] dark:focus:border-[#9aaa98] dark:bg-[#181b23] rounded-none"
             />
-            
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setCurrentStep(1)} className="flex-1">
-                <Eye className="w-4 h-4 mr-2" /> Terug naar Observatie
-              </Button>
-              <Button onClick={() => setCurrentStep(3)} className="flex-1">
-                Ga naar Toepassing <Heart className="w-4 h-4 ml-2" />
-              </Button>
-              <Button variant="outline" onClick={saveStudyData} disabled={isSaving}>
-                {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              </Button>
-            </div>
-            
-            {lastSaved && (
-              <p className="text-xs text-gray-500 mt-2">
-                Laatst opgeslagen: {lastSaved.toLocaleTimeString()}
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      )}
+          </div>
 
-      {currentStep === 3 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Heart className="w-5 h-5" />
-              Stap 3: Toepassen - Hoe pas ik dit toe?
-            </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Denk na over hoe je de waarheden uit deze passage kunt toepassen in je eigen leven:
+          {/* Step 3: Application */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#798777] text-white flex items-center justify-center">
+                <Heart size={16} />
+              </div>
+              <h3 className="font-['Merriweather'] text-lg font-semibold text-[#262626] dark:text-white">
+                3. Hoe pas je het toe?
+              </h3>
+            </div>
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 pl-11">
+              Maak het persoonlijk: hoe ga je deze waarheid gebruiken in je dagelijks leven? Wat ga je anders doen?
             </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
-              <li>Welke concrete lessen kan ik hieruit trekken?</li>
-              <li>Wat moet ik veranderen in mijn denken of handelen?</li>
-              <li>Hoe kan dit mijn relatie met God verdiepen?</li>
-              <li>Welke praktische stappen ga ik nemen?</li>
-              <li>Hoe kan ik anderen helpen met deze waarheid?</li>
-            </ul>
-          </CardHeader>
-          <CardContent>
+            
             <Textarea
-              placeholder="Schrijf hier hoe je deze waarheden wilt toepassen in je eigen leven..."
+              placeholder="Hoe ga je dit toepassen in je leven?"
               value={studyData.application}
               onChange={(e) => updateStudyData('application', e.target.value)}
-              className="min-h-[200px] mb-4"
+              className="min-h-[120px] font-['Inter'] border border-gray-300 dark:border-gray-600 focus:border-[#798777] dark:focus:border-[#9aaa98] dark:bg-[#181b23] rounded-none"
             />
-            
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setCurrentStep(2)} className="flex-1">
-                <Brain className="w-4 h-4 mr-2" /> Terug naar Interpretatie
+          </div>
+
+          {/* Save Button */}
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <Button 
+                onClick={saveStudyData} 
+                disabled={isSaving}
+                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] px-6"
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Opslaan...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4 mr-2" />
+                    Opslaan
+                  </>
+                )}
               </Button>
-              <Button variant="outline" onClick={() => setCurrentStep(1)} className="flex-1">
-                <Eye className="w-4 h-4 mr-2" /> Naar Observatie
-              </Button>
-              <Button variant="outline" onClick={saveStudyData} disabled={isSaving}>
-                {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              </Button>
+              
+              {lastSaved && (
+                <p className="font-['Inter'] text-xs text-gray-500 dark:text-gray-400">
+                  Opgeslagen: {lastSaved.toLocaleTimeString()}
+                </p>
+              )}
             </div>
             
-            {lastSaved && (
-              <p className="text-xs text-gray-500 mt-2">
-                Laatst opgeslagen: {lastSaved.toLocaleTimeString()}
-              </p>
-            )}
-            
+            {/* Simple completion message */}
             {studyData.observation && studyData.interpretation && studyData.application && (
-              <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200 dark:bg-green-900/20 dark:border-green-800">
-                <div className="flex items-start gap-2">
-                  <Eye className="w-5 h-5 text-green-600 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-green-800 dark:text-green-200">Inductieve studie voltooid!</h4>
-                    <p className="text-sm text-green-700 dark:text-green-300 mt-1">
-                      Je hebt alle drie de stappen doorlopen. Neem tijd om te bidden over hoe God je wil veranderen door Zijn Woord.
-                    </p>
-                  </div>
-                </div>
+              <div className="mt-3 p-3 bg-[#798777]/10 border border-[#798777]/30 dark:bg-[#9aaa98]/10 dark:border-[#9aaa98]/30">
+                <p className="font-['Inter'] text-sm text-[#798777] dark:text-[#9aaa98]">
+                  ✓ Bijbelstudie voltooid!
+                </p>
               </div>
             )}
-          </CardContent>
-        </Card>
-      )}
-    </div>
+          </div>
+      </CardContent>
+    </Card>
   );
 }

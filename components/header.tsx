@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import { useSession, signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { LogOut, User, Settings, Menu } from "lucide-react"
 import { Button } from "./ui/button"
 import { motion, AnimatePresence } from "framer-motion"
@@ -10,6 +10,7 @@ import { SidebarTrigger } from "../components/ui/sidebar"
 import { ModeToggle } from "./dark-mode-toggle"
 import { LanguageSwitcher } from "./language-switcher"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
+import { useTranslation } from "../app/i18n/client"
 
 
 interface HeaderProps {
@@ -22,6 +23,9 @@ interface HeaderProps {
 export function Header({ params: { lng }, title }: HeaderProps) {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const pathname = usePathname()
+  const { t } = useTranslation(lng, "sidebar")
+  const { t: tHeader } = useTranslation(lng, "header")
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
@@ -53,7 +57,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
       .catch((error) => {
         console.error("Error fetching user data:", error)
       })
-  }, [session?.user?.email, mounted])
+  }, [session?.user?.email, mounted, userImage])
 
   // Handle authentication redirect
   useEffect(() => {
@@ -93,54 +97,35 @@ export function Header({ params: { lng }, title }: HeaderProps) {
     return null
   }
 
-  // Simple translation function to avoid i18n issues
-  const translate = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      en: {
-        profile: "Profile",
-        settings: "Settings",
-        sign_out: "Sign Out",
-      },
-      nl: {
-        profile: "Profiel",
-        settings: "Instellingen",
-        sign_out: "Uitloggen",
-      },
-      de: {
-        profile: "Profil",
-        settings: "Einstellungen",
-        sign_out: "Abmelden",
-      },
+  // Page title translation based on current pathname
+  const getPageTitle = () => {
+    if (title) return title;
+    
+    // Extract routes from pathname (e.g., /en/dashboard -> ['en', 'dashboard'])
+    const pathParts = pathname?.split('/').filter(Boolean) || [];
+    
+    // Skip the language code (first part) and get the main route
+    const mainRoute = pathParts.length > 1 ? pathParts[1] : 'dashboard';
+    
+    // Handle hyphenated routes (e.g., privacy-policy -> privacy_policy)
+    const translationKey = mainRoute.replace(/-/g, '_');
+    
+    // Use the i18n translation system
+    const translatedTitle = t(translationKey);
+    
+    // If translation exists and is different from the key, use it
+    if (translatedTitle && translatedTitle !== translationKey) {
+      return translatedTitle;
     }
-
-    return translations[lng]?.[key] || key
-  }
-
-  // Page title translation
-  const pageTitles: Record<string, Record<string, string>> = {
-    en: {
-      dashboard: "Dashboard",
-      study: "Study",
-    },
-    nl: {
-      dashboard: "Dashboard",
-      study: "Bijbelstudie",
-    },
-    de: {
-      dashboard: "Dashboard",
-      study: "Bibelstudium",
-    },
+    
+    // Fallback: capitalize and clean up route name
+    const cleanRoute = mainRoute.replace(/-/g, ' ');
+    return cleanRoute.split(' ').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
   };
-  // Fix: always use lowercase for translation keys, but fallback to title if not found
-  let pageTitle = pageTitles[lng]?.dashboard || "Dashboard";
-  if (title) {
-    const key = title.toLowerCase();
-    if (pageTitles[lng] && pageTitles[lng][key]) {
-      pageTitle = pageTitles[lng][key];
-    } else {
-      pageTitle = title;
-    }
-  }
+
+  const pageTitle = getPageTitle();
 
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b dark:border-b-[#91969e52] bg-white dark:bg-[#181b23] shadow-sm sticky top-0 z-50">
@@ -189,7 +174,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
                   onClick={() => router.push(`/profile`)}
                 >
                   <User className="h-4 w-4 mr-2" />
-                  {translate("Profile")}
+                  {tHeader("profile")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -197,7 +182,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
                   onClick={() => router.push(`/settings`)}
                 >
                   <Settings className="h-4 w-4 mr-2" />
-                  {translate("Settings")}
+                  {tHeader("settings")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -205,7 +190,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
                   onClick={() => signOut({ callbackUrl: `/${lng}` })}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  {translate("Sign Out")}
+                  {tHeader("sign_out")}
                 </Button>
               </motion.div>
             )}
@@ -247,7 +232,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
                 onClick={() => router.push(`/profile`)}
               >
                 <User className="h-4 w-4 mr-2" />
-                {translate("profile")}
+                {tHeader("profile")}
               </Button>
               <Button
                 variant="ghost"
@@ -255,7 +240,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
                 onClick={() => signOut({ callbackUrl: `/${lng}` })}
               >
                 <LogOut className="h-4 w-4 mr-2" />
-                {translate("sign_out")}
+                {tHeader("sign_out")}
               </Button>
             </motion.div>
           )}

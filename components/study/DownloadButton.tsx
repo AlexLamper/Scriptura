@@ -88,7 +88,7 @@ export default function DownloadButton({
   return (
     <div className="relative download-dropdown">
       <button 
-        className="p-2 rounded bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-indigo-200 transition dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-indigo-400 dark:text-gray-100" 
+        className="p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition rounded-none border border-gray-300 dark:bg-[#181b23] dark:hover:bg-[#23263a] dark:hover:ring-[#9aaa98] dark:text-gray-100 dark:border-gray-600" 
         title={t('print_download')}
         onClick={() => setShowDownloadOptions(!showDownloadOptions)}
       >
@@ -98,12 +98,12 @@ export default function DownloadButton({
       </button>
       
       {showDownloadOptions && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-10">
+        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#181b23] border border-gray-200 dark:border-gray-600 rounded-none z-10">
           <div className="p-2">
             <button
               onClick={handleDownloadChapter}
               disabled={!selectedBook || !selectedChapter}
-              className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full text-left px-3 py-2 text-sm font-['Inter'] text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#23263a] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {t('download_chapter')}
             </button>

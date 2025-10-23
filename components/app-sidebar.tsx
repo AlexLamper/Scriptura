@@ -14,10 +14,11 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, BookOpen, User, Settings, BookText, StickyNote, Calendar
+import { Home, User, Settings, BookText, StickyNote, Calendar
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
+import Image from "next/image"
 
 // Main navigation items/links with translation keys
 const mainNavItems = [
@@ -40,11 +41,6 @@ const mainNavItems = [
     titleKey: "notes",
     url: "/notes",
     icon: StickyNote,
-  },
-  {
-    titleKey: "courses",
-    url: "/courses",
-    icon: BookOpen,
   },
   {
     titleKey: "profile",
@@ -103,7 +99,7 @@ export function AppSidebar({ ...props }) {
   return (
     <Sidebar
       {...props}
-      className="dark:border-r-[#91969e52] font-sans text-gray-800 dark:text-gray-200"
+      className="dark:border-r-[#91969e52] font-['Inter'] text-sm text-gray-800 dark:text-gray-200"
       style={{
         backgroundColor: isClient && isDarkMode ? '#181b23' : '#ffffff',
         '--sidebar-background': isClient && isDarkMode ? '#181b23' : '#ffffff',
@@ -111,20 +107,9 @@ export function AppSidebar({ ...props }) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <div className="flex items-center">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Home className="size-4" />
-                </div>
-                <div className="ml-2 flex flex-col gap-0.5 leading-none">
-                  <Link href={prependLang("/")}>
-                    <span className="font-bold text-lg">Scriptura</span>
-                  </Link>
-                </div>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <Link href={prependLang('/dashboard')} className="flex items-center">
+            <Image src="/en/images/logo-text.svg" alt="Scriptura Logo" width={100} height={32} className="object-contain ml-2 mt-2 mb-2 mr-4" />
+          </Link>
         </SidebarMenu>
         <SearchForm />
       </SidebarHeader>
@@ -139,7 +124,7 @@ export function AppSidebar({ ...props }) {
                     <Link href={prependLang(item.url)}>
                       <span className="flex items-center space-x-2">
                         <item.icon className="h-5 w-5 text-gray-700 dark:text-gray-500" />
-                        <span className="text-gray-800/95 dark:text-gray-300 font-normal text-base">{t(item.titleKey)}</span>
+                        <span className="text-gray-800/95 dark:text-gray-300 font-normal text-sm">{t(item.titleKey)}</span>
                       </span>
                     </Link>
                   </SidebarMenuButton>

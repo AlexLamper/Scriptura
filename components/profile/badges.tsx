@@ -16,34 +16,34 @@ import {
 } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 import { cn } from "../../lib/utils"
-import { JSX } from "react"
+import type { LucideIcon } from "lucide-react"
 
 interface BadgeInfo {
   id: string
-  icon: JSX.Element
+  icon: LucideIcon
   description: string
 }
 
 const badges: BadgeInfo[] = [
-  { id: "streak30", icon: <Flame />, description: "30 day streak" },
-  { id: "streak60", icon: <Flame />, description: "60 day streak" },
-  { id: "streak90", icon: <Flame />, description: "90 day streak" },
-  { id: "streak120", icon: <Flame />, description: "120 day streak" },
-  { id: "verified", icon: <BadgeCheck />, description: "Verified user" },
-  { id: "contributor", icon: <Star />, description: "Course contributor" },
-  { id: "completed1", icon: <BookOpen />, description: "Complete 1 course" },
-  { id: "completed5", icon: <BookOpen />, description: "Complete 5 courses" },
-  { id: "completed10", icon: <BookOpen />, description: "Complete 10 courses" },
-  { id: "points100", icon: <Trophy />, description: "Earn 100 quiz points" },
-  { id: "points500", icon: <Trophy />, description: "Earn 500 quiz points" },
-  { id: "points1000", icon: <Trophy />, description: "Earn 1000 quiz points" },
-  { id: "premium", icon: <Crown />, description: "Premium subscriber" },
-  { id: "invite", icon: <Users />, description: "Invite a friend" },
-  { id: "commenter", icon: <MessageCircle />, description: "Post a comment" },
-  { id: "profilepic", icon: <Camera />, description: "Upload a profile picture" },
-  { id: "firstlesson", icon: <CheckCircle />, description: "Complete first lesson" },
-  { id: "tester", icon: <FlaskConical />, description: "Beta tester" },
-  { id: "anniversary", icon: <Gift />, description: "One year anniversary" },
+  { id: "streak30", icon: Flame, description: "30 day streak" },
+  { id: "streak60", icon: Flame, description: "60 day streak" },
+  { id: "streak90", icon: Flame, description: "90 day streak" },
+  { id: "streak120", icon: Flame, description: "120 day streak" },
+  { id: "verified", icon: BadgeCheck, description: "Verified user" },
+  { id: "contributor", icon: Star, description: "Course contributor" },
+  { id: "completed1", icon: BookOpen, description: "Complete 1 course" },
+  { id: "completed5", icon: BookOpen, description: "Complete 5 courses" },
+  { id: "completed10", icon: BookOpen, description: "Complete 10 courses" },
+  { id: "points100", icon: Trophy, description: "Earn 100 quiz points" },
+  { id: "points500", icon: Trophy, description: "Earn 500 quiz points" },
+  { id: "points1000", icon: Trophy, description: "Earn 1000 quiz points" },
+  { id: "premium", icon: Crown, description: "Premium subscriber" },
+  { id: "invite", icon: Users, description: "Invite a friend" },
+  { id: "commenter", icon: MessageCircle, description: "Post a comment" },
+  { id: "profilepic", icon: Camera, description: "Upload a profile picture" },
+  { id: "firstlesson", icon: CheckCircle, description: "Complete first lesson" },
+  { id: "tester", icon: FlaskConical, description: "Beta tester" },
+  { id: "anniversary", icon: Gift, description: "One year anniversary" },
 ]
 
 interface UserBadgesProps {
@@ -52,26 +52,29 @@ interface UserBadgesProps {
 
 export default function UserBadges({ earned }: UserBadgesProps) {
   return (
-    <div className="grid grid-cols-5 gap-4">
-      {badges.map((b) => (
-        <TooltipProvider key={b.id} delayDuration={100}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div
-                className={cn(
-                  "p-2 rounded-md border flex items-center justify-center",
-                  earned.includes(b.id)
-                    ? "bg-amber-400 text-white"
-                    : "bg-muted text-muted-foreground opacity-50"
-                )}
-              >
-                {b.icon}
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>{b.description}</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ))}
-    </div>
+    <TooltipProvider>
+      <div className="grid grid-cols-5 gap-4">
+        {badges.map((b) => {
+          const IconComponent = b.icon
+          return (
+            <Tooltip key={b.id}>
+              <TooltipTrigger asChild>
+                <div
+                  className={cn(
+                    "p-2 rounded-none border flex items-center justify-center cursor-pointer hover:shadow-md transition-shadow",
+                    earned.includes(b.id)
+                      ? "bg-[#798777] text-white border-[#6a7a68]"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 opacity-50 border-gray-200 dark:border-gray-700"
+                  )}
+                >
+                  <IconComponent className="w-5 h-5" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>{b.description}</TooltipContent>
+            </Tooltip>
+          )
+        })}
+      </div>
+    </TooltipProvider>
   )
 }

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MessageCircle, Clock, Users, Brain } from 'lucide-react';
 import { ChapterNotes } from './ChapterNotes';
 import InductiveStudy from './InductiveStudy';
+import HistoricalContext from './HistoricalContext';
 import { useKeyboardShortcuts, KeyboardShortcut } from '../../hooks/useKeyboardShortcuts';
 import CommentaryComponent from './CommentaryComponent';
 
@@ -62,8 +63,6 @@ export default function TabComponent({
   ];
 
   const renderTabContent = () => {
-    const reference = selectedBook && selectedChapter ? `${selectedBook} ${selectedChapter}` : t('select_book_chapter');
-    
     switch (activeTab) {
       case 'inductive':
         return <InductiveStudy 
@@ -81,23 +80,11 @@ export default function TabComponent({
         );
       case 'historical':
         return (
-          <div className="space-y-4">
-            <h3 className="font-semibold mb-2 dark:text-gray-100">{t('historical.title')} {reference}</h3>
-            <div className="bg-gray-50 p-4 rounded-lg dark:bg-[#232325]">
-              <h4 className="font-medium mb-2 dark:text-gray-100">{t('historical.time_period')}</h4>
-              <p className="text-sm text-gray-700 mb-3 dark:text-gray-200">
-                {t('historical.time_period_text')}
-              </p>
-              <h4 className="font-medium mb-2 dark:text-gray-100">{t('historical.cultural_background')}</h4>
-              <p className="text-sm text-gray-700 mb-3 dark:text-gray-200">
-                {t('historical.cultural_background_text')}
-              </p>
-              <h4 className="font-medium mb-2 dark:text-gray-100">{t('historical.literary_context')}</h4>
-              <p className="text-sm text-gray-700 dark:text-gray-200">
-                {t('historical.literary_context_text')}
-              </p>
-            </div>
-          </div>
+          <HistoricalContext 
+            book={selectedBook || ''} 
+            chapter={selectedChapter || 0} 
+            t={t}
+          />
         );
       case 'notes':
         return (
@@ -124,9 +111,9 @@ export default function TabComponent({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-2 sm:px-3 py-2 rounded-t-lg text-xs sm:text-sm font-medium transition whitespace-nowrap ${
+              className={`flex items-center space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-['Inter'] font-medium transition whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-500 dark:bg-[#232325] dark:text-blue-300 dark:border-blue-400'
+                  ? 'bg-[#798777]/10 text-[#798777] border-b-2 border-[#798777] dark:bg-[#232325] dark:text-[#9aaa98] dark:border-[#9aaa98]'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-[#2a2d35]'
               }`}
             >

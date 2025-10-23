@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema(
     resetTokenExpires: { type: Date },
     bio: { type: String },
     image: { type: String },
-    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     streak: { type: Number, default: 0 },
     lastStreakDate: { type: Date },
     freezeCount: { type: Number, default: 0 },

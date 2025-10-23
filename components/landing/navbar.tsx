@@ -26,18 +26,14 @@ export function Header({ params: { lng } }: HeaderProps) {
           {/* Logo */}
           <div className="flex items-center space-x-3 z-10">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-8 h-8 bg-blue-700 rounded-md flex items-center justify-center overflow-hidden">
+              <div className="relative w-28 h-10 sm:w-32 sm:h-12">
                 <Image
-                  src="/en/logo/scriptura.png"
+                  src="/en/images/logo-text.svg"
                   alt="Scriptura"
-                  width={32}
-                  height={32}
-                  className="rounded-md group-hover:scale-105 transition-transform"
+                  fill
+                  className="object-contain rounded-md group-hover:scale-105 transition-transform"
                 />
               </div>
-              <span className="text-xl font-semibold text-gray-900 dark:text-blue-100 drop-shadow dark:drop-shadow-xl">
-                Scriptura
-              </span>
             </Link>
           </div>
 
@@ -62,13 +58,13 @@ export function Header({ params: { lng } }: HeaderProps) {
 
           {/* Right controls */}
           <div className="flex items-center space-x-3 z-10">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <LanguageSwitcher />
               <ModeToggle />
             </div>
             <div className="hidden sm:flex items-center space-x-2">
               <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
-                <Button size="sm" variant="dark" className="px-6">
+                <Button size="sm" variant="dark" className="px-4 sm:px-6 text-xs sm:text-sm">
                   {t("signup")}
                 </Button>
               </Link>
@@ -76,7 +72,7 @@ export function Header({ params: { lng } }: HeaderProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden dark:text-blue-200 dark:hover:bg-[#23263a] dark:hover:text-blue-400"
+              className="md:hidden dark:text-blue-200 dark:hover:bg-[#23263a] dark:hover:text-blue-400 px-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
