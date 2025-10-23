@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
 import { toast } from '../../hooks/use-toast';
 
 interface Reading {
@@ -35,15 +33,6 @@ interface PlanCardProps {
   onEnrollmentChange?: () => void;
   t?: unknown; // Optional translation function
 }
-
-const categoryColors = {
-  evangelie: 'bg-blue-100 text-blue-800',
-  psalmen: 'bg-green-100 text-green-800',
-  proverbs: 'bg-yellow-100 text-yellow-800',
-  profeten: 'bg-purple-100 text-purple-800',
-  brieven: 'bg-red-100 text-red-800',
-  apocalyps: 'bg-gray-100 text-gray-800'
-};
 
 export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -189,94 +178,92 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
   };
   
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-lg">{plan.title}</CardTitle>
-            <CardDescription className="mt-1">{plan.description}</CardDescription>
+    <div className="h-full bg-white dark:bg-[#23263a] border border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-gray-900/20 flex flex-col">
+      <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-['Merriweather'] font-semibold text-gray-900 dark:text-white">{plan.title}</h3>
+            <p className="text-sm font-['Inter'] text-gray-600 dark:text-gray-400 mt-1">{plan.description}</p>
           </div>
-          <Badge className={categoryColors[plan.category as keyof typeof categoryColors] || categoryColors.evangelie}>
+          <span className="inline-block px-3 py-1 bg-gray-100 dark:bg-[#1a1d2e] text-gray-700 dark:text-gray-300 text-xs font-['Inter'] rounded-none border border-gray-200 dark:border-gray-700">
             {plan.category}
-          </Badge>
+          </span>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>{plan.duration || plan.readings?.length || 0} dagen</span>
-            <span>{plan.readings?.length || 0} lezingen</span>
-          </div>
-          
-          {plan.isEnrolled && (
-            <div className="bg-gray-50 p-3 rounded">
-              <div className="flex justify-between text-sm">
-                <span>Voortgang</span>
-                <span>{plan.progressPercentage || 0}%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
-                <div
-                  className="bg-blue-600 h-2 rounded-full"
-                  style={{ width: `${plan.progressPercentage || 0}%` }}
-                ></div>
-              </div>
-              <p className="text-xs text-gray-500 mt-1">
-                {plan.completedDays || 0} van {plan.duration || plan.readings?.length || 0} dagen voltooid
-              </p>
+      </div>
+      
+      <div className="flex-1 p-6 space-y-4">
+        <div className="flex justify-between text-sm font-['Inter'] text-gray-600 dark:text-gray-400">
+          <span>{plan.duration || plan.readings?.length || 0} dagen</span>
+          <span>{plan.readings?.length || 0} lezingen</span>
+        </div>
+        
+        {plan.isEnrolled && (
+          <div className="bg-gray-50 dark:bg-[#1a1d2e] p-3 border border-gray-200 dark:border-gray-700">
+            <div className="flex justify-between text-sm font-['Inter']">
+              <span className="text-gray-900 dark:text-gray-300">Voortgang</span>
+              <span className="text-gray-900 dark:text-gray-300">{plan.progressPercentage || 0}%</span>
             </div>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 mt-1">
+              <div
+                className="bg-[#798777] h-2"
+                style={{ width: `${plan.progressPercentage || 0}%` }}
+              ></div>
+            </div>
+            <p className="text-xs font-['Inter'] text-gray-500 dark:text-gray-400 mt-1">
+              {plan.completedDays || 0} van {plan.duration || plan.readings?.length || 0} dagen voltooid
+            </p>
+          </div>
+        )}
+
+        <div className="flex gap-2 pt-2">
+          {!plan.isEnrolled && (
+            <>
+              <Button 
+                onClick={handleEnrollment} 
+                className="flex-1 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none font-['Inter']"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Bezig...' : 'Inschrijven'}
+              </Button>
+              <Button 
+                onClick={handleStartReading}
+                className="bg-white dark:bg-[#1a1d2e] text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#262626] rounded-none font-['Inter']"
+                disabled={isLoading}
+              >
+                Preview
+              </Button>
+            </>
           )}
-
-          <div className="flex gap-2">
-            {!plan.isEnrolled && (
-              <>
-                <Button 
-                  onClick={handleEnrollment} 
-                  className="flex-1"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Bezig...' : 'Inschrijven'}
-                </Button>
-                <Button 
-                  onClick={handleStartReading}
-                  variant="outline"
-                  disabled={isLoading}
-                >
-                  Preview
-                </Button>
-              </>
-            )}
-            {plan.isEnrolled && (
-              <>
-                <Button 
-                  onClick={handleContinue}
-                  className="flex-1"
-                  disabled={isLoading}
-                >
-                  Lees verder
-                </Button>
-                <Button 
-                  onClick={handleUnenrollment}
-                  variant="outline"
-                  size="sm"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Bezig...' : 'Uitschrijven'}
-                </Button>
-              </>
-            )}
-          </div>
-
-          <div className="text-xs text-gray-500">
-            Gemaakt door {plan.createdBy?.name || 'Onbekend'}
-          </div>
-          
-          {plan.isPublic && (
-            <Badge variant="secondary" className="text-xs">
-              Openbaar
-            </Badge>
+          {plan.isEnrolled && (
+            <>
+              <Button 
+                onClick={handleContinue}
+                className="flex-1 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none font-['Inter']"
+                disabled={isLoading}
+              >
+                Lees verder
+              </Button>
+              <Button 
+                onClick={handleUnenrollment}
+                className="bg-white dark:bg-[#1a1d2e] text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#262626] rounded-none font-['Inter'] text-sm"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Bezig...' : 'Uitschrijven'}
+              </Button>
+            </>
           )}
         </div>
-      </CardContent>
-    </Card>
+
+        <div className="text-xs font-['Inter'] text-gray-500 dark:text-gray-400 pt-2">
+          Gemaakt door {plan.createdBy?.name || 'Onbekend'}
+        </div>
+        
+        {plan.isPublic && (
+          <span className="inline-block px-2 py-1 bg-gray-100 dark:bg-[#1a1d2e] text-gray-700 dark:text-gray-300 text-xs font-['Inter'] rounded-none border border-gray-200 dark:border-gray-700">
+            Openbaar
+          </span>
+        )}
+      </div>
+    </div>
   );
 }

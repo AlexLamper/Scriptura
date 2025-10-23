@@ -7,7 +7,6 @@ import PlanCard from '../../../components/plans/PlanCard';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Textarea } from '../../../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../../components/ui/dialog';
 import { Label } from '../../../components/ui/label';
 import { Switch } from '../../../components/ui/switch';
@@ -53,16 +52,15 @@ export default function PlansPage({ params }: PlansPageProps) {
   const [myPlans, setMyPlans] = useState<BiblePlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'public' | 'my'>('public');
+
+  const sessionUserId = (session?.user as { id?: string })?.id;
 
   const loadPlans = useCallback(async () => {
     try {
       setLoading(true);
       console.log('Frontend: Loading plans...');
-      console.log('Frontend: Session state:', !!session);
-      console.log('Frontend: Session user:', session?.user);
       
       const response = await fetch('/api/bible-plans');
       const data = await response.json();
@@ -75,12 +73,11 @@ export default function PlansPage({ params }: PlansPageProps) {
         // Verdeel plannen in publiek en persoonlijk
         const publicPlans = plans.filter((plan: BiblePlan) => plan.isPublic);
         const myPlans = plans.filter((plan: BiblePlan) => 
-          !plan.isPublic && plan.createdBy._id === (session?.user as { id?: string })?.id
+          !plan.isPublic && plan.createdBy._id === sessionUserId
         );
 
         console.log('Frontend: Public plans:', publicPlans.length);
         console.log('Frontend: My plans:', myPlans.length);
-        console.log('Frontend: Session user ID:', (session?.user as { id?: string })?.id);
 
         setPublicPlans(publicPlans);
         setMyPlans(myPlans);
@@ -92,13 +89,11 @@ export default function PlansPage({ params }: PlansPageProps) {
     } finally {
       setLoading(false);
     }
-  }, [session]);
+  }, [sessionUserId]);
 
   useEffect(() => {
-    if (session) {
-      loadPlans();
-    }
-  }, [session, loadPlans]);
+    loadPlans();
+  }, [loadPlans]);
 
   const handlePlanCreated = () => {
     loadPlans();
@@ -113,12 +108,9 @@ export default function PlansPage({ params }: PlansPageProps) {
     return plans.filter(plan => {
       const matchesSearch = plan.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            plan.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || plan.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      return matchesSearch;
     });
   };
-
-  const categories = ['all', 'evangelie', 'psalmen', 'proverbs', 'profeten', 'brieven', 'apocalyps'];
 
   // Inline CreatePlanModal component
   const CreatePlanModal = ({ isOpen, onClose, onPlanCreated }: {
@@ -237,48 +229,44 @@ export default function PlansPage({ params }: PlansPageProps) {
 
     return (
       <Dialog open={isOpen} onOpenChange={handleClose}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#23263a] border border-gray-200 dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>Nieuw Leesplan</DialogTitle>
+            <DialogTitle className="font-['Merriweather'] text-xl font-bold text-[#262626] dark:text-white">Nieuw Leesplan</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Titel *</Label>
+              <Label htmlFor="title" className="font-['Inter'] text-gray-900 dark:text-gray-300">Titel *</Label>
               <Input
                 id="title"
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                 placeholder="Bijv. 30 Dagen Genesis"
+                className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Beschrijving *</Label>
+              <Label htmlFor="description" className="font-['Inter'] text-gray-900 dark:text-gray-300">Beschrijving *</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                 placeholder="Beschrijf wat dit leesplan uniek maakt..."
+                className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Categorie</Label>
-              <Select value={formData.category} onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.filter(cat => cat !== 'all').map(category => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label className="font-['Inter'] text-gray-900 dark:text-gray-300">Categorie</Label>
+              <Input 
+                value={formData.category} 
+                onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                placeholder="Bijv. evangelie, psalmen, etc."
+                className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+              />
             </div>
 
             {isAdmin && (
@@ -289,7 +277,7 @@ export default function PlansPage({ params }: PlansPageProps) {
                     checked={formData.isPublic}
                     onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isPublic: checked }))}
                   />
-                  <Label htmlFor="public" className="text-sm">
+                  <Label htmlFor="public" className="font-['Inter'] text-sm text-gray-900 dark:text-gray-300">
                     Openbaar maken (alleen voor admins)
                   </Label>
                 </div>
@@ -298,8 +286,8 @@ export default function PlansPage({ params }: PlansPageProps) {
 
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <Label className="text-lg font-semibold">Lezingen</Label>
-                <Button type="button" onClick={addReading} size="sm">
+                <Label className="font-['Merriweather'] text-lg font-semibold text-[#262626] dark:text-white">Lezingen</Label>
+                <Button type="button" onClick={addReading} size="sm" className="bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">
                   <Plus className="h-4 w-4 mr-1" />
                   Voeg toe
                 </Button>
@@ -307,60 +295,62 @@ export default function PlansPage({ params }: PlansPageProps) {
 
               <div className="space-y-3 max-h-40 overflow-y-auto">
                 {readings.map((reading, index) => (
-                  <Card key={index} className="p-3">
-                    <CardContent className="p-0">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="font-medium">Dag {index + 1}</span>
-                        {readings.length > 1 && (
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeReading(index)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
+                  <div key={index} className="p-3 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#1a1d2e]">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-['Inter'] font-medium text-gray-900 dark:text-white">Dag {index + 1}</span>
+                      {readings.length > 1 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeReading(index)}
+                          className="text-gray-600 dark:text-gray-400 hover:text-red-600"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
 
-                      <div className="grid grid-cols-3 gap-2">
-                        <div>
-                          <Label className="text-xs">Boek</Label>
-                          <Input
-                            value={reading.book}
-                            onChange={(e) => updateReading(index, 'book', e.target.value)}
-                            placeholder="Genesis"
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-xs">Hoofdstuk</Label>
-                          <Input
-                            type="number"
-                            min="1"
-                            value={reading.chapter}
-                            onChange={(e) => updateReading(index, 'chapter', parseInt(e.target.value) || 1)}
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-xs">Verzen (optioneel)</Label>
-                          <Input
-                            value={reading.verses || ''}
-                            onChange={(e) => updateReading(index, 'verses', e.target.value)}
-                            placeholder="1-10"
-                          />
-                        </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div>
+                        <Label className="font-['Inter'] text-xs text-gray-900 dark:text-gray-300">Boek</Label>
+                        <Input
+                          value={reading.book}
+                          onChange={(e) => updateReading(index, 'book', e.target.value)}
+                          placeholder="Genesis"
+                          className="font-['Inter'] bg-white dark:bg-[#23263a] border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white text-xs"
+                        />
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div>
+                        <Label className="font-['Inter'] text-xs text-gray-900 dark:text-gray-300">Hoofdstuk</Label>
+                        <Input
+                          type="number"
+                          min="1"
+                          value={reading.chapter}
+                          onChange={(e) => updateReading(index, 'chapter', parseInt(e.target.value) || 1)}
+                          className="font-['Inter'] bg-white dark:bg-[#23263a] border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white text-xs"
+                        />
+                      </div>
+                      <div>
+                        <Label className="font-['Inter'] text-xs text-gray-900 dark:text-gray-300">Verzen (optioneel)</Label>
+                        <Input
+                          value={reading.verses || ''}
+                          onChange={(e) => updateReading(index, 'verses', e.target.value)}
+                          placeholder="1-10"
+                          className="font-['Inter'] bg-white dark:bg-[#23263a] border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t">
-              <Button type="button" variant="outline" onClick={handleClose}>
+            <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <Button type="button" variant="outline" onClick={handleClose} className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-none">
                 Annuleren
               </Button>
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={loading} className="bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">
                 {loading ? 'Bezig...' : 'Opslaan'}
               </Button>
             </div>
@@ -372,9 +362,9 @@ export default function PlansPage({ params }: PlansPageProps) {
 
   if (!session) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <p className="text-lg text-muted-foreground">
+      <div className="w-full pb-6 pt-0">
+        <div className="p-8 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+          <p className="font-['Inter'] text-lg text-gray-600 dark:text-gray-300">
             {t('loginRequired', 'Log in om leesplannen te bekijken')}
           </p>
         </div>
@@ -383,73 +373,66 @@ export default function PlansPage({ params }: PlansPageProps) {
   }
 
   return (
-    <div className="mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">
-          {t('title', 'Bijbel Leesplannen')}
-        </h1>
-        <Button onClick={() => setIsCreateModalOpen(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          {t('createPlan', 'Nieuw Plan')}
-        </Button>
-      </div>
-
-      {/* Tabs */}
-      <div className="flex space-x-1 bg-muted p-1 rounded-lg mb-6 w-fit">
-        <button
-          onClick={() => setActiveTab('public')}
-          className={`px-4 py-2 rounded-md transition-colors ${
-            activeTab === 'public'
-              ? 'bg-primary text-white'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          {t('publicPlans', 'Openbare Plannen')}
-        </button>
-        <button
-          onClick={() => setActiveTab('my')}
-          className={`px-4 py-2 rounded-md transition-colors ${
-            activeTab === 'my'
-              ? 'bg-primary text-primary-foreground'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          {t('myPlans', 'Mijn Plannen')}
-        </button>
-      </div>
-
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-          <Input
-            placeholder={t('searchPlans', 'Zoek leesplannen...')}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9"
-          />
+    <div className="w-full pb-6 pt-0">
+      <div className="mb-6">
+        {/* Header */}
+        <div className="p-8 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a] mb-6">
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white">
+              {t('title', 'Bijbel Leesplannen')}
+            </h1>
+            <Button onClick={() => setIsCreateModalOpen(true)} className="bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none whitespace-nowrap">
+              <Plus className="w-4 h-4 mr-2" />
+              {t('createPlan', 'Nieuw Plan')}
+            </Button>
+          </div>
         </div>
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder={t('selectCategory', 'Selecteer categorie')} />
-          </SelectTrigger>
-          <SelectContent>
-            {categories.map((category) => (
-              <SelectItem key={category} value={category}>
-                {category === 'all' ? t('allCategories', 'Alle categorieën') : category}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
 
-      {/* Content */}
-      {loading ? (
-        <div className="text-center py-8">
-          <p className="text-muted-foreground">{t('loading', 'Laden...')}</p>
+        {/* Tabs */}
+        <div className="flex space-x-0 mb-6 w-fit">
+          <button
+            onClick={() => setActiveTab('public')}
+            className={`px-6 py-3 transition-colors border font-['Inter'] ${
+              activeTab === 'public'
+                ? 'bg-[#798777] text-white border-[#6a7a68]'
+                : 'bg-white dark:bg-[#23263a] text-gray-900 dark:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
+            }`}
+          >
+            {t('publicPlans', 'Openbare Plannen')}
+          </button>
+          <button
+            onClick={() => setActiveTab('my')}
+            className={`px-6 py-3 transition-colors border font-['Inter'] ${
+              activeTab === 'my'
+                ? 'bg-[#798777] text-white border-[#6a7a68]'
+                : 'bg-white dark:bg-[#23263a] text-gray-900 dark:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
+            }`}
+          >
+            {t('myPlans', 'Mijn Plannen')}
+          </button>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6 p-6 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              placeholder={t('searchPlans', 'Zoek leesplannen...')}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9 font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+
+        {/* Content */}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin h-8 w-8 border-b-2 border-[#262626] dark:border-white mx-auto"></div>
+            <p className="font-['Inter'] text-gray-600 dark:text-gray-400 mt-4">{t('loading', 'Laden...')}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {activeTab === 'public' && filteredPlans(publicPlans).map((plan) => (
             <PlanCard
               key={plan._id}
@@ -467,15 +450,15 @@ export default function PlansPage({ params }: PlansPageProps) {
             />
           ))}
           {activeTab === 'public' && filteredPlans(publicPlans).length === 0 && (
-            <div className="col-span-full text-center py-8">
-              <p className="text-muted-foreground">
+            <div className="col-span-full text-center py-12 p-6 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+              <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
                 {t('noPublicPlans', 'Geen openbare leesplannen gevonden')}
               </p>
             </div>
           )}
           {activeTab === 'my' && filteredPlans(myPlans).length === 0 && (
-            <div className="col-span-full text-center py-8">
-              <p className="text-muted-foreground">
+            <div className="col-span-full text-center py-12 p-6 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+              <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
                 {t('noMyPlans', 'Je hebt nog geen persoonlijke leesplannen')}
               </p>
             </div>
@@ -488,6 +471,7 @@ export default function PlansPage({ params }: PlansPageProps) {
         onClose={() => setIsCreateModalOpen(false)}
         onPlanCreated={handlePlanCreated}
       />
+      </div>
     </div>
   );
 }

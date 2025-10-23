@@ -106,10 +106,13 @@ export const metadata: Metadata = {
 
 export default async function ProfileLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lng: string }>;
 }>) {
   const session = await getServerSession();
+  const { lng } = await params;
 
   return (
     <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
@@ -117,7 +120,7 @@ export default async function ProfileLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
-            <Header params={{ lng: "" }} />
+            <Header params={{ lng }} />
             <div className="px-8 pb-8 pt-4">
               {children}
             </div>

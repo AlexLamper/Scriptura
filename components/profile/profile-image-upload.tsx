@@ -120,7 +120,7 @@ export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImage
         </Avatar>
         <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageChange} />
       </div>
-      <Button onClick={handleImageClick} disabled={isUploading} variant="outline">
+      <Button onClick={handleImageClick} disabled={isUploading} className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-none">
         {isUploading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("uploading")}

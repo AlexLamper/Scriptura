@@ -9,7 +9,6 @@ import { useToast } from "../../hooks/use-toast"
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
 import { AnimatePresence, motion } from "framer-motion"
-import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert"
 
 interface ProfileFormProps {
   initialName: string
@@ -100,15 +99,19 @@ export function ProfileForm({ initialName, initialEmail, initialBio, lng }: Prof
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-900">
-              <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-              <AlertTitle className="text-green-800 dark:text-green-400 ml-2">
-                {t("profile_updated")}
-              </AlertTitle>
-              <AlertDescription className="text-green-700 dark:text-green-500 ml-2">
-                {t("profile_updated_success")}
-              </AlertDescription>
-            </Alert>
+            <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400 mt-0.5" />
+                <div>
+                  <h3 className="font-['Inter'] font-semibold text-green-800 dark:text-green-400">
+                    {t("profile_updated")}
+                  </h3>
+                  <p className="font-['Inter'] text-sm text-green-700 dark:text-green-500 mt-1">
+                    {t("profile_updated_success")}
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
 
@@ -119,15 +122,19 @@ export function ProfileForm({ initialName, initialEmail, initialBio, lng }: Prof
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-900">
-              <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
-              <AlertTitle className="text-red-800 dark:text-red-400 ml-2">
-                {t("error")}
-              </AlertTitle>
-              <AlertDescription className="text-red-700 dark:text-red-500 ml-2">
-                {t("failed_update_profile_try_again")}
-              </AlertDescription>
-            </Alert>
+            <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 mt-0.5" />
+                <div>
+                  <h3 className="font-['Inter'] font-semibold text-red-800 dark:text-red-400">
+                    {t("error")}
+                  </h3>
+                  <p className="font-['Inter'] text-sm text-red-700 dark:text-red-500 mt-1">
+                    {t("failed_update_profile_try_again")}
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -135,37 +142,37 @@ export function ProfileForm({ initialName, initialEmail, initialBio, lng }: Prof
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="name">{t("display_name")}</Label>
+            <Label htmlFor="name" className="font-['Inter'] text-gray-900 dark:text-gray-300">{t("display_name")}</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2"
+              className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2"
             />
           </div>
         </div>
         <div>
-          <Label htmlFor="email">{t("email")}</Label>
+          <Label htmlFor="email" className="font-['Inter'] text-gray-900 dark:text-gray-300">{t("email")}</Label>
           <Input
             id="email"
             type="email"
             value={initialEmail}
             disabled
-            className="dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2 opacity-70"
+            className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2 opacity-70"
           />
-          <p className="text-sm text-muted-foreground mt-1">{t("email_cannot_change")}</p>
+          <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 mt-1">{t("email_cannot_change")}</p>
         </div>
         <div>
-          <Label htmlFor="bio">{t("bio")}</Label>
+          <Label htmlFor="bio" className="font-['Inter'] text-gray-900 dark:text-gray-300">{t("bio")}</Label>
           <textarea
             id="bio"
-            className="w-full min-h-[100px] p-2 border rounded-md dark:bg-[#18181a] dark:border-[#ffffff6f] mt-2"
+            className="font-['Inter'] w-full min-h-[100px] p-2 border bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           ></textarea>
         </div>
         <div className="flex items-center space-x-2">
-          <Button type="submit" disabled={isLoading} className="relative">
+          <Button type="submit" disabled={isLoading} className="bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("saving")}
@@ -188,7 +195,7 @@ export function ProfileForm({ initialName, initialEmail, initialBio, lng }: Prof
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="text-sm text-green-600 dark:text-green-400 flex items-center"
+              className="font-['Inter'] text-sm text-green-600 dark:text-green-400 flex items-center"
             >
               <CheckCircle2 className="mr-1 h-4 w-4" />
               {t("changes_saved")}

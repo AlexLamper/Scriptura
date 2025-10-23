@@ -1,6 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
 import { Button } from "../../components/ui/button"
-import { Badge } from "../../components/ui/badge"
 import { Crown, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 
@@ -19,55 +17,57 @@ export function SubscriptionStatus({
   isAdmin = false,
 }: SubscriptionStatusProps) {
   return (
-    <Card className="dark:bg-[#292b2f] dark:border-none">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Subscription Status</span>
+    <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+      <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between">
+          <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
+            Subscription Status
+          </h2>
           {isAdmin && (
-            <Badge className="bg-purple-600 text-white flex items-center gap-1">
+            <span className="text-xs px-2 py-1 bg-purple-600 text-white flex items-center gap-1">
               <ShieldCheck className="h-3 w-3" />
               <span>Admin</span>
-            </Badge>
+            </span>
           )}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+        </div>
+      </div>
+      <div className="p-6">
         {subscribed ? (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Badge className="bg-amber-500 text-white flex items-center gap-1">
+              <span className="text-xs px-2 py-1 bg-amber-500 text-white flex items-center gap-1">
                 <Crown className="h-3 w-3" />
                 <span>Premium</span>
-              </Badge>
-              <span className="text-sm text-gray-600 dark:text-gray-300">Active</span>
+              </span>
+              <span className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300">Active</span>
             </div>
-            <p className="text-sm">
+            <p className="font-['Inter'] text-sm text-gray-900 dark:text-gray-100">
               You have an active premium subscription. Enjoy access to all premium courses and features!
             </p>
-            <div className="text-xs text-gray-500">
+            <div className="font-['Inter'] text-xs text-gray-500">
               {stripeSubscriptionId && <p>Subscription ID: {stripeSubscriptionId}</p>}
             </div>
             <Link href={`/${lng}/account/billing`}>
-              <Button variant="outline" className="w-full mt-4">
+              <Button variant="outline" className="w-full mt-4 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">
                 Manage Subscription
               </Button>
             </Link>
           </div>
         ) : (
           <div className="space-y-4">
-            <p className="text-sm">
+            <p className="font-['Inter'] text-sm text-gray-900 dark:text-gray-100">
               {isAdmin
                 ? "As an admin, you have access to all premium content without a subscription."
                 : "Upgrade to premium to access exclusive courses and features."}
             </p>
             {!isAdmin && (
               <Link href={`/${lng}/pricing`}>
-                <Button className="w-full">Upgrade to Premium</Button>
+                <Button className="w-full bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">Upgrade to Premium</Button>
               </Link>
             )}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
