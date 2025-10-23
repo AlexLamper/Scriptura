@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import connectMongoDB from "../../../../lib/mongodb";
-import Course from "../../../../models/Course";
 import User from "../../../../models/User";
 import { getServerSession } from "next-auth";
 
@@ -21,21 +20,15 @@ export async function GET() {
   const auth = await verifyAdmin();
   if (auth.error) return auth.error;
 
-  const courses = await Course.find().lean();
-  return NextResponse.json({ courses });
+  // Courses are managed through BiblePlan model
+  // Return empty array as Course model is not used in this application
+  return NextResponse.json({ courses: [] });
 }
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   const auth = await verifyAdmin();
   if (auth.error) return auth.error;
 
-  const data = await req.json();
-  try {
-    const course = new Course(data);
-    await course.save();
-    return NextResponse.json({ course }, { status: 201 });
-  } catch (error) {
-    console.error("Error creating course:", error);
-    return NextResponse.json({ error: "Failed to create course" }, { status: 500 });
-  }
+  // Courses are managed through BiblePlan model
+  return NextResponse.json({ error: "Course management is not available. Use Bible Plans instead." }, { status: 400 });
 }
