@@ -5,12 +5,20 @@
   "study": "Studie",
   "plans": "Leesplannen",
   "notes": "Notities",
-  "courses": "Bijbelstudies",
   "quizzes": "Quizzen",
   "profile": "Profiel",
   "resources": "Hulpbronnen",
   "settings": "Instellingen",
   "extras": "Extra's",
   "terms_of_service": "Servicevoorwaarden",
-  "privacy_policy": "Privacybeleid"
+  "privacy_policy": "Privacybeleid",
+  "read": "Lezen",
+  "subscribe": "Abonneren",
+  "success": "Succes",
+  "community": "Gemeenschap",
+  "onboarding": "Onboarding",
+  "admin": "Beheer",
+  "pricing": "Prijzen",
+  "canceled": "Geannuleerd",
+  "auth": "Authenticatie"
 }

@@ -32,12 +32,6 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
     path: '/notes',
     type: 'website'
   },
-  courses: {
-    titleKey: 'courses',
-    descriptionKey: 'Explore comprehensive Bible courses on Scriptura to deepen your understanding.',
-    path: '/courses',
-    type: 'website'
-  },
   quizzes: {
     titleKey: 'quizzes',
     descriptionKey: 'Engage with interactive Bible quizzes to test and deepen your biblical knowledge.',
@@ -117,7 +111,6 @@ export function generatePageMetadata(
       study: 'Study',
       plans: 'Reading Plans',
       notes: 'Notes',
-      courses: 'Courses',
       quizzes: 'Quizzes',
       profile: 'Profile',
       resources: 'Resources',
@@ -130,7 +123,6 @@ export function generatePageMetadata(
       study: 'Studie',
       plans: 'Leesplannen',
       notes: 'Notities',
-      courses: 'Bijbelstudies',
       quizzes: 'Quizzen',
       profile: 'Profiel',
       resources: 'Hulpbronnen',
@@ -143,7 +135,6 @@ export function generatePageMetadata(
       study: 'Studium',
       plans: 'Lesepläne',
       notes: 'Notizen',
-      courses: 'Kurse',
       quizzes: 'Quizze',
       profile: 'Profil',
       resources: 'Ressourcen',
