@@ -1,4 +1,4 @@
-# Scriptura - Interactive Bible Learning Platform
+# Scriptura - Bible Study Platform
 
 <p>
   <!-- Latest release version -->
@@ -16,7 +16,7 @@
 </p>
 
 
-**Your Interactive Bible Learning Platform**
+**Your Bible Study Platform**
 
 ![Scriptura Banner Screenshot](public/screenshot1.png)
 <p>
