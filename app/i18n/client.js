@@ -39,12 +39,15 @@ export function useTranslation(lng, ns, options) {
   // Always call hooks - never conditionally
   // Sync language change on client side
   useEffect(() => {
-    if (!lng || i18n.resolvedLanguage === lng) return
+    if (!lng) return
+    if (i18n.resolvedLanguage === lng) return
+    
     const timer = setTimeout(() => {
       i18n.changeLanguage(lng)
     }, 0)
     return () => clearTimeout(timer)
-  }, [lng]) // Only depend on lng, not i18n object
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lng])
 
   // Sync cookie with language
   useEffect(() => {

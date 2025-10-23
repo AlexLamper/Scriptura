@@ -10,7 +10,6 @@ import { Textarea } from '../../../components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../../components/ui/dialog';
 import { Label } from '../../../components/ui/label';
 import { Switch } from '../../../components/ui/switch';
-import { Card, CardContent } from '../../../components/ui/card';
 import { Plus, Search, X } from 'lucide-react';
 import { toast } from '../../../hooks/use-toast';
 
