@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MessageCircle, Clock, Users, Brain } from 'lucide-react';
 import { ChapterNotes } from './ChapterNotes';
 import InductiveStudy from './InductiveStudy';
+import HistoricalContext from './HistoricalContext';
 import { useKeyboardShortcuts, KeyboardShortcut } from '../../hooks/useKeyboardShortcuts';
 import CommentaryComponent from './CommentaryComponent';
 
@@ -62,8 +63,6 @@ export default function TabComponent({
   ];
 
   const renderTabContent = () => {
-    const reference = selectedBook && selectedChapter ? `${selectedBook} ${selectedChapter}` : t('select_book_chapter');
-    
     switch (activeTab) {
       case 'inductive':
         return <InductiveStudy 
@@ -81,23 +80,11 @@ export default function TabComponent({
         );
       case 'historical':
         return (
-          <div className="space-y-4">
-            <h3 className="font-['Merriweather'] font-semibold mb-2 text-[#262626] dark:text-gray-100">{t('historical.title')} {reference}</h3>
-            <div className="bg-gray-50 p-4 dark:bg-[#232325]">
-              <h4 className="font-['Merriweather'] font-medium mb-2 text-[#262626] dark:text-gray-100">{t('historical.time_period')}</h4>
-              <p className="font-['Inter'] text-sm text-gray-700 mb-3 dark:text-gray-200">
-                {t('historical.time_period_text')}
-              </p>
-              <h4 className="font-['Merriweather'] font-medium mb-2 text-[#262626] dark:text-gray-100">{t('historical.cultural_background')}</h4>
-              <p className="font-['Inter'] text-sm text-gray-700 mb-3 dark:text-gray-200">
-                {t('historical.cultural_background_text')}
-              </p>
-              <h4 className="font-['Merriweather'] font-medium mb-2 text-[#262626] dark:text-gray-100">{t('historical.literary_context')}</h4>
-              <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-200">
-                {t('historical.literary_context_text')}
-              </p>
-            </div>
-          </div>
+          <HistoricalContext 
+            book={selectedBook || ''} 
+            chapter={selectedChapter || 0} 
+            t={t}
+          />
         );
       case 'notes':
         return (

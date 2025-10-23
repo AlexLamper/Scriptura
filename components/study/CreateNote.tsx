@@ -186,7 +186,7 @@ export function CreateNote({
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Bible Verse Preview */}
-        <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-300">
+        <div className="bg-gray-50 dark:bg-gray-800 p-3 border-l-4 border-indigo-300">
           <p className="italic text-gray-700 dark:text-gray-300 text-sm">
             &ldquo;{verseText}&rdquo;
           </p>

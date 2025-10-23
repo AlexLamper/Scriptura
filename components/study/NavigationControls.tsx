@@ -27,7 +27,7 @@ export default function NavigationControls({
   const isNextDisabled = selectedChapter >= maxChapter || loadingChapters || !selectedBook || chapters.indexOf(selectedChapter) === chapters.length - 1;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-end gap-2 pb-0.5">
       <button
         className="p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-[#9aaa98] dark:text-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         title={t('previous_chapter')}

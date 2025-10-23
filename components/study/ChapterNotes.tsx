@@ -2,152 +2,161 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { StickyNote, Calendar } from "lucide-react";
+import { StickyNote, Calendar, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { useTranslation } from "../../app/i18n/client";
 
 interface Note {
   _id: string;
-  verseReference: string;
-  book: string;
-  chapter: number;
-  verse?: number;
-  verseText: string;
-  translation: string;
   noteText: string;
-  highlightColor: string;
+  verseReference?: string;
   tags: string[];
-  type: "note" | "highlight" | "both";
   createdAt: string;
 }
 
 interface ChapterNotesProps {
   book: string;
   chapter: number;
+  language: string;
   className?: string;
-  language?: string;
 }
 
-export function ChapterNotes({ book, chapter, className = "", language = "en" }: ChapterNotesProps) {
+export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
   const { data: session } = useSession();
-  const { t } = useTranslation(language, "notes");
+  const { t } = useTranslation(language, 'study');
+  
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchChapterNotes = async () => {
-      if (!session || !book || !chapter) return;
-
+    const fetchNotes = async () => {
+      if (!session?.user?.email) return;
+      
       try {
         setLoading(true);
-        const response = await fetch(`/api/notes?book=${encodeURIComponent(book)}&chapter=${chapter}&limit=10&page=1`);
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch notes");
-        }
-
-        const data = await response.json();
-        setNotes(data.notes || []);
         setError(null);
+        
+        const response = await fetch(`/api/notes?book=${book}&chapter=${chapter}&userEmail=${session.user.email}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setNotes(data.notes || []);
+        } else {
+          setError('Failed to load notes');
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
+        console.error('Error fetching notes:', err);
+        setError('Error loading notes');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchChapterNotes();
-  }, [session, book, chapter]);
+    fetchNotes();
+  }, [book, chapter, session?.user?.email]);
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    const now = new Date();
-    const diffInMs = now.getTime() - date.getTime();
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-    if (diffInDays === 0) return "Today";
-    if (diffInDays === 1) return "Yesterday";
-    if (diffInDays < 7) return `${diffInDays} days ago`;
-    return date.toLocaleDateString("en", { month: "short", day: "numeric" });
+    return date.toLocaleDateString('nl-NL', { 
+      day: 'numeric', 
+      month: 'short' 
+    });
   };
 
-  const truncateText = (text: string, maxLength: number = 60) => {
+  const truncateText = (text: string, maxLength: number = 150): string => {
     if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + "...";
+    return text.substring(0, maxLength).trim() + '...';
   };
 
   if (!session) return null;
 
+  {/* Loading State */}
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
+          <p className="font-['Inter'] text-gray-700 text-base font-medium dark:text-gray-200">
+            Notities laden...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  {/* Error State */}
+  if (error) {
+    return (
+      <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+        <CardContent className="py-12 text-center">
+          <p className="font-['Inter'] text-red-600 dark:text-red-400 text-sm">{error}</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  {/* Empty State */}
+  if (notes.length === 0) {
+    return (
+      <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+        <CardContent className="py-12 text-center text-gray-500 dark:text-gray-300">
+          <p className="font-['Inter'] text-sm">Nog geen notities voor dit hoofdstuk.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  {/* Notes Content */}
   return (
-    <Card className={`${className}`}>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base font-['Merriweather'] font-semibold flex items-center gap-2 text-[#262626] dark:text-white">
-          <StickyNote className="h-4 w-4 text-[#798777]" />
+    <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 font-['Merriweather'] text-[#262626] dark:text-white">
+          <StickyNote className="w-6 h-6 text-[#798777]" />
           {t("notes_for_chapter")} {book} {chapter}
         </CardTitle>
+        <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
+          Jouw persoonlijke notities en inzichten bij deze passage.
+        </p>
       </CardHeader>
-      <CardContent className="pt-0">
-        {loading && (
-          <div className="flex justify-center py-4">
-            <div className="animate-spin h-4 w-4 border-b-2 border-[#798777]"></div>
-          </div>
-        )}
-
-        {error && (
-          <div className="text-center py-4">
-            <p className="font-['Inter'] text-red-600 dark:text-red-400 text-sm">{error}</p>
-          </div>
-        )}
-
-        {!loading && !error && notes.length === 0 && (
-          <div className="text-center py-4">
-            <p className="font-['Inter'] text-gray-600 dark:text-gray-400 text-sm">
-              {t("no_notes_chapter")}
-            </p>
-          </div>
-        )}
-
-        {!loading && !error && notes.length > 0 && (
-          <div className="space-y-3 max-h-60 overflow-y-auto">
-            {notes.map((note) => (
-              <div
-                key={note._id}
-                className="p-3 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50"
-              >
-                <div className="flex items-start justify-between mb-2">
+      <CardContent className="p-6 pt-0">
+        <div className="space-y-4 max-h-80 overflow-y-auto">
+          {notes.map((note) => (
+            <div key={note._id} className="p-4 bg-gray-50 border border-gray-200 dark:bg-[#232325] dark:border-gray-700">
+              <div className="flex items-start justify-between mb-2">
+                {note.verseReference && (
                   <h4 className="font-['Merriweather'] font-medium text-[#798777] dark:text-[#9aaa98] text-sm">
                     {note.verseReference}
                   </h4>
-                  <div className="flex items-center gap-1 font-['Inter'] text-xs text-gray-500 dark:text-gray-400">
-                    <Calendar className="h-3 w-3" />
-                    {formatDate(note.createdAt)}
-                  </div>
-                </div>
-                
-                <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
-                  {truncateText(note.noteText)}
-                </p>
-                
-                {note.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {note.tags.slice(0, 2).map((tag, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        #{tag}
-                      </Badge>
-                    ))}
-                    {note.tags.length > 2 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{note.tags.length - 2}
-                      </Badge>
-                    )}
-                  </div>
                 )}
+                <div className="flex items-center gap-1 font-['Inter'] text-xs text-gray-500 dark:text-gray-400 ml-auto">
+                  <Calendar className="h-3 w-3" />
+                  {formatDate(note.createdAt)}
+                </div>
               </div>
-            ))}
-          </div>
-        )}
+              
+              <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
+                {truncateText(note.noteText)}
+              </p>
+              
+              {note.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {note.tags.slice(0, 2).map((tag, index) => (
+                    <Badge key={index} variant="secondary" className="text-xs">
+                      #{tag}
+                    </Badge>
+                  ))}
+                  {note.tags.length > 2 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{note.tags.length - 2}
+                    </Badge>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
