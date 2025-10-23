@@ -89,7 +89,7 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
   }, [lng]);
 
   return (
-  <Card className="h-full shadow-lg dark:shadow-gray-900/20 border-gray-200 dark:border-gray-700 bg-white dark:bg-[#23263a]">
+  <Card className="h-full shadow-lg border rounded-none dark:shadow-gray-900/20 border-gray-200 dark:border-gray-700 bg-white dark:bg-[#23263a]">
       <CardContent className="h-full px-6 py-6 sm:px-8 sm:py-8 flex flex-col">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-12 h-12 bg-[#798777] flex items-center justify-center">

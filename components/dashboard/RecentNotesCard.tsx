@@ -80,7 +80,7 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
   if (!session) return null;
 
   return (
-  <Card className="shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300 border-gray-200 dark:border-gray-700 dark:bg-[#23263a]">
+  <Card className="border rounded-none shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300 border-gray-200 dark:border-gray-700 dark:bg-[#23263a]">
       <CardContent className="px-4 py-4 sm:px-6 sm:py-6">
         <div className="flex items-center justify-between mb-4 gap-2">
           <h3 className="text-lg font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("recent_notes_title")}</h3>

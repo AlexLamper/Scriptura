@@ -30,7 +30,7 @@ export function WelcomeCard({ lng }: WelcomeCardProps) {
   }, []);
 
   return (
-    <div className="p-8 shadow-lg dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+    <div className="p-8 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h2 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white">
           {t(greeting)}, {userName}!
