@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server"
 import connectMongoDB from "../../../../../../lib/mongodb"
-import Course from "../../../../../../models/Course"
 import User from "../../../../../../models/User"
 import { getServerSession } from "next-auth"
 
-// This route toggles a course's premium status (admin only)
+// This route is deprecated - courses are managed through BiblePlan model
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ courseId: string }> }
 ) {
   try {
     // Await the dynamic route parameter
-    const { courseId } = await params
+    await params
 
     // Check for admin authentication
     const session = await getServerSession()
@@ -27,25 +26,8 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized. Admin access required." }, { status: 403 })
     }
 
-    // Extract the requested premium flag from the body
-    const { isPremium } = await req.json()
-    if (isPremium === undefined) {
-      return NextResponse.json({ error: "isPremium field is required" }, { status: 400 })
-    }
-
-    // Locate the course and update its premium status
-    const course = await Course.findById(courseId)
-    if (!course) {
-      return NextResponse.json({ error: "Course not found" }, { status: 404 })
-    }
-
-    course.isPremium = isPremium
-    await course.save()
-
-    return NextResponse.json({
-      message: `Successfully updated course premium status to ${isPremium}`,
-      course,
-    })
+    // Courses are managed through BiblePlan model
+    return NextResponse.json({ error: "Course management is not available. Use Bible Plans instead." }, { status: 400 })
   } catch (error) {
     console.error("Error updating course premium status:", error)
     return NextResponse.json(
