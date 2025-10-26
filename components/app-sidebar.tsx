@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, User, Settings, BookText, StickyNote, Calendar
+import { User, Settings, BookText, StickyNote, Calendar
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
@@ -22,11 +22,6 @@ import Image from "next/image"
 
 // Main navigation items/links with translation keys
 const mainNavItems = [
-  {
-    titleKey: "dashboard",
-    url: "/dashboard",
-    icon: Home,
-  },
   {
     titleKey: "study",
     url: "/study",
@@ -107,7 +102,7 @@ export function AppSidebar({ ...props }) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <Link href={prependLang('/dashboard')} className="flex items-center">
+          <Link href={prependLang('/study')} className="flex items-center">
             <Image src="/en/images/logo-text.svg" alt="Scriptura Logo" width={100} height={32} className="object-contain ml-2 mt-2 mb-2 mr-4" />
           </Link>
         </SidebarMenu>

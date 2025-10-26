@@ -1,3 +1,4 @@
+/*
 "use client";
 
 import { Card, CardContent } from "../ui/card";
@@ -64,4 +65,10 @@ export function StudyBibleCard({ lng }: StudyBibleCardProps) {
       </Card>
     </Link>
   );
+}
+*/
+
+// Dashboard component commented out - Study page is now the default
+export function StudyBibleCard() {
+  return null;
 }

@@ -66,7 +66,7 @@ export default function SignInPage({ params }: SignInPageProps) {
   const handleSignIn = async (providerId: string) => {
     setIsLoading(true)
     setLoadingProvider(providerId)
-    await signIn(providerId, { callbackUrl: `/${lng}/dashboard` })
+    await signIn(providerId, { callbackUrl: `/${lng}/study` })
     // Note: The page will redirect, but we set this in case there's a delay
     setTimeout(() => {
       setIsLoading(false)
@@ -95,7 +95,7 @@ export default function SignInPage({ params }: SignInPageProps) {
       if (result?.error) {
         setEmailSignInError(t("signin.errors.invalidCredentials"))
       } else if (result?.ok) {
-        window.location.href = `/${lng}/dashboard`
+        window.location.href = `/${lng}/study`
       }
     } catch (error) {
       console.error("Sign in error:", error)

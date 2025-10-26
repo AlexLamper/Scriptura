@@ -1,3 +1,4 @@
+/*
 "use client";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "../../app/i18n/client";
@@ -41,4 +42,10 @@ export function WelcomeCard({ lng }: WelcomeCardProps) {
       </div>
     </div>
   );
+}
+*/
+
+// Dashboard component commented out - Study page is now the default
+export function WelcomeCard() {
+  return null;
 }

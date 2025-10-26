@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Define your static routes
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: "https://scriptura-edu.com", lastModified: new Date() },
-    { url: "https://scriptura-edu.com/dashboard", lastModified: new Date() },
+    { url: "https://scriptura-edu.com/study", lastModified: new Date() },
     { url: "https://scriptura-edu.com/community", lastModified: new Date() },
     { url: "https://scriptura-edu.com/pricing", lastModified: new Date() },
     { url: "https://scriptura-edu.com/privacy-policy", lastModified: new Date() },

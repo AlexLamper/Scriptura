@@ -68,15 +68,15 @@ function OnboardingFlow() {
       });
 
       if (response.ok) {
-        // Redirect to the selected language version of the dashboard
-        router.push(`/${selectedLanguage}/dashboard`);
+        // Redirect to the selected language version of the study page
+        router.push(`/${selectedLanguage}/study`);
       } else {
         console.error("Failed to save preferences");
-        router.push(`/${selectedLanguage}/dashboard`);
+        router.push(`/${selectedLanguage}/study`);
       }
     } catch (error) {
       console.error("Error saving preferences:", error);
-      router.push(`/${selectedLanguage}/dashboard`);
+      router.push(`/${selectedLanguage}/study`);
     } finally {
       setIsSubmitting(false);
     }

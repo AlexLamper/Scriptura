@@ -1,21 +1,5 @@
-"use client";
-
-import { Card, CardContent } from "../ui/card";
-import { useEffect, useState } from "react";
-import { useTranslation } from "../../app/i18n/client";
-import { Calendar } from "lucide-react";
-
-interface DailyVerseCardProps {
-  lng: string;
-}
-
-interface Verse {
-  reference?: string;
-  text: string;
-  translation?: string;
-}
-
-export function DailyVerseCard({ lng }: DailyVerseCardProps) {
+/*
+export function DailyVerseCardOld({ lng }: DailyVerseCardProps) {
   const { t } = useTranslation(lng, "dailyverse");
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -110,7 +94,6 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
             <blockquote className="font-['Inter'] text-[#262626] dark:text-white mb-4 text-base leading-relaxed break-words">
               &ldquo;{verse.text}&rdquo;
             </blockquote>
-            {/* Show reference and translation */}
             {rawResponse && typeof rawResponse === 'object' && (
               (() => {
                 type ApiResponse = {
@@ -124,7 +107,6 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
                 const chapter = resp.chapter ?? null;
                 const verseNum = resp.verse ?? null;
                 if (book || chapter || verseNum) {
-                  // Build string: 'book chapter:verse' (chapter and verse optional)
                   let refString = book ? book : '';
                   if (chapter) {
                     refString += (refString ? ' ' : '') + chapter;
@@ -144,4 +126,10 @@ export function DailyVerseCard({ lng }: DailyVerseCardProps) {
       </CardContent>
     </Card>
   );
+}
+*/
+
+// Dashboard component commented out - Study page is now the default
+export function DailyVerseCard() {
+  return null;
 }

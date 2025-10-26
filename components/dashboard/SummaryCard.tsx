@@ -1,3 +1,9 @@
+// Dashboard component commented out - Study page is now the default
+export function SummaryCard() {
+  return null;
+}
+
+/*
 import { Card, CardContent, CardFooter } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -9,7 +15,7 @@ interface SummaryCardProps {
   description: string;
 }
 
-export function SummaryCard({ icon, value, description }: SummaryCardProps) {
+export function SummaryCardOld({ icon, value, description }: SummaryCardProps) {
   return (
   <Card className="p-6 bg-white shadow-sm rounded-none">
       <CardContent className="p-0">
@@ -29,3 +35,4 @@ export function SummaryCard({ icon, value, description }: SummaryCardProps) {
     </Card>
   );
 }
+*/

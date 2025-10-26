@@ -1,3 +1,9 @@
+// Dashboard component commented out - Study page is now the default
+export function HomeworkCompletionRatesCard() {
+  return null;
+}
+
+/*
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../components/ui/dropdown-menu";
@@ -8,7 +14,7 @@ interface HomeworkCompletionRatesCardProps {
   BarChart: React.ComponentType;
 }
 
-export function HomeworkCompletionRatesCard({ BarChart }: HomeworkCompletionRatesCardProps) {
+export function HomeworkCompletionRatesCardOld({ BarChart }: HomeworkCompletionRatesCardProps) {
   return (
   <Card className="lg:col-span-2 p-6 bg-white shadow-sm rounded-none">
       <CardHeader className="flex flex-row items-center justify-between p-0 pb-4">
@@ -32,3 +38,4 @@ export function HomeworkCompletionRatesCard({ BarChart }: HomeworkCompletionRate
     </Card>
   );
 }
+*/
