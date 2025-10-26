@@ -103,13 +103,13 @@ export default async function SubscribeLayout({
   const session = await getServerSession();
 
   return (
-    <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
+    <div className="antialiased">
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
             <Header params={{ lng: "" }} />
-            <div className="px-8 pb-8 pt-4">
+            <div className="">
               {children}
             </div>
           </div>
