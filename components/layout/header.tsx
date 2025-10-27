@@ -4,13 +4,13 @@ import { useEffect, useState, useRef } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter, usePathname } from "next/navigation"
 import { LogOut, User, Settings, Menu } from "lucide-react"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { motion, AnimatePresence } from "framer-motion"
-import { SidebarTrigger } from "../components/ui/sidebar"
-import { ModeToggle } from "./dark-mode-toggle"
-import { LanguageSwitcher } from "./language-switcher"
+import { SidebarTrigger } from "../ui/sidebar"
+import { ModeToggle } from "../dark-mode-toggle"
+import { LanguageSwitcher } from "../language-switcher"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
-import { useTranslation } from "../app/i18n/client"
+import { useTranslation } from "../../app/i18n/client"
 
 
 interface HeaderProps {

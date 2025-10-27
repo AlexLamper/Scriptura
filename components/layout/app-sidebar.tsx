@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useParams, usePathname } from "next/navigation"
-import { useTranslation } from "../app/i18n/client"
+import { useTranslation } from "../../app/i18n/client"
 import {
   Sidebar,
   SidebarContent,
@@ -12,10 +12,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "../components/ui/sidebar"
+} from "../ui/sidebar"
 import { User, Settings, BookText, StickyNote, Calendar
   } from "lucide-react"
-import SidebarProCTA from "./sidebar-pro-cta"
+import SidebarProCTA from "../pricing/sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
 import Image from "next/image"
 

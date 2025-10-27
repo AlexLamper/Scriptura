@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import SessionProvider from "../../../components/SessionProvider";
-import { Header } from "../../../components/header";
-import { AppSidebar } from "../../../components/app-sidebar";
+import SessionProvider from "../../../components/providers/SessionProvider";
+import { Header } from "../../../components/layout/header";
+import { AppSidebar } from "../../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 
 export const metadata: Metadata = {
@@ -80,18 +80,20 @@ export default async function NotesLayout({ children, params }: NotesLayoutProps
   const resolvedParams = await params;
 
   return (
-    <SessionProvider session={session}>
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AppSidebar />
-          <div className="flex-1 flex flex-col">
-            <Header params={{ lng: resolvedParams.lng }} />
-            <main className="flex-1">
-              {children}
-            </main>
+    <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
+      <SessionProvider session={session}>
+        <SidebarProvider>
+          <div className="flex min-h-screen w-full">
+            <AppSidebar />
+            <div className="flex-1 flex flex-col">
+              <Header params={{ lng: resolvedParams.lng }} />
+              <div className="px-8 pb-8 pt-4">
+                {children}
+              </div>
+            </div>
           </div>
-        </div>
-      </SidebarProvider>
-    </SessionProvider>
+        </SidebarProvider>
+      </SessionProvider>
+    </div>
   );
 }

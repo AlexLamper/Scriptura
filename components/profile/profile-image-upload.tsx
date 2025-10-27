@@ -22,7 +22,6 @@ export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImage
   const { toast } = useToast()
   const [mounted, setMounted] = useState(false)
 
-  // Add this effect to prevent hydration issues
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -35,7 +34,7 @@ export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImage
     const file = e.target.files?.[0]
     if (!file) return
 
-    // Check file size (max 5MB)
+    // Max file size 5MB
     if (file.size > 5 * 1024 * 1024) {
       toast({
         title: t("file_too_large"),
@@ -45,7 +44,6 @@ export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImage
       return
     }
 
-    // Check file type
     if (!file.type.startsWith("image/")) {
       toast({
         title: t("invalid_file_type"),
@@ -58,12 +56,9 @@ export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImage
     setIsUploading(true)
 
     try {
-      // Create a FormData object to upload the file
       const formData = new FormData()
       formData.append("file", file)
 
-      // In a real implementation, you would upload to a storage service like Vercel Blob
-      // For this example, we'll simulate by creating a data URL
       const reader = new FileReader()
       reader.onload = async (event) => {
         const imageUrl = event.target?.result as string

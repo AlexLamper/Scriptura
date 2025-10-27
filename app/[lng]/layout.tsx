@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
-import { ThemeProvider } from "../../components/theme-provider";
+import { ThemeProvider } from "../../components/providers/theme-provider";
 import { languages } from "../../app/i18n/settings";
 
 export const metadata: Metadata = {

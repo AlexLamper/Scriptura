@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import OnboardingFlow from "../../../components/onboarding/OnboardingFlow";
-import SessionProvider from "../../../components/SessionProvider";
+import SessionProvider from "../../../components/providers/SessionProvider";
 
 export default function OnboardingPage() {
   return (
