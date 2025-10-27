@@ -3,12 +3,77 @@
 import { Button } from "../../../components/ui/button"
 import { ArrowRight, CheckCircle } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import { useSession } from "next-auth/react"
+import { useState } from "react"
+import { useToast } from "../../../hooks/use-toast"
+import getStripe from "../../../lib/stripe-client"
 
 export default function SubscribePage() {
   const { t } = useTranslation("subscribe")
+  const { data: session } = useSession()
+  const [loading, setLoading] = useState(false)
+  const { toast } = useToast()
 
   const sellingPoints = t("selling_points", { returnObjects: true }) as string[]
   const features = t("features", { returnObjects: true }) as string[]
+
+  const handleCheckout = async () => {
+    if (!session) {
+      toast({
+        title: "Not logged in",
+        description: "Please sign in to subscribe.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setLoading(true)
+    try {
+      // Don't need to pass priceId - the API will get it from environment variables
+      console.log("[Subscribe] Starting checkout process")
+
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error("[Subscribe] Checkout API error:", errorData)
+        throw new Error(errorData?.error || "Failed to start checkout")
+      }
+
+      const data = await response.json()
+      console.log("[Subscribe] Checkout session created:", data.sessionId)
+
+      if (!data.sessionId) {
+        throw new Error("No session ID returned from checkout")
+      }
+
+      const stripe = await getStripe()
+      if (!stripe) {
+        throw new Error("Failed to load Stripe")
+      }
+
+      console.log("[Subscribe] Redirecting to Stripe checkout")
+      const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId })
+      if (error) {
+        throw error
+      }
+    } catch (error) {
+      console.error("[Subscribe] Checkout error:", error)
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to start checkout",
+        variant: "destructive",
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <main className="mt-12 flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden">
@@ -34,10 +99,12 @@ export default function SubscribePage() {
 
           <Button
             size="lg"
+            onClick={handleCheckout}
+            disabled={loading || !session}
             className="w-full px-4 py-4 bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] font-normal text-lg rounded-none"
           >
-            {t("cta")}
-            <ArrowRight className="ml-2 w-5 h-5" />
+            {loading ? "Processing..." : t("cta")}
+            {!loading && <ArrowRight className="ml-2 w-5 h-5" />}
           </Button>
 
           <div className="space-y-2 mt-5">
