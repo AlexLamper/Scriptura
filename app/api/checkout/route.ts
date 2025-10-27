@@ -22,10 +22,17 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     console.log("[Checkout API] Request body:", body)
 
-    const { priceId, customerId } = body
+    let { priceId } = body
+    const { customerId } = body
+
+    // If priceId not provided, get it from environment
+    if (!priceId) {
+      priceId = process.env.STRIPE_PRICE_ID
+      console.log("[Checkout API] Using price ID from environment:", priceId)
+    }
 
     if (!priceId) {
-      console.error("[Checkout API] Missing priceId in request")
+      console.error("[Checkout API] Missing priceId in request and environment")
       return NextResponse.json({ error: "Missing priceId" }, { status: 400 })
     }
 
@@ -82,6 +89,27 @@ export async function POST(req: NextRequest) {
           // Use existing Stripe customer ID
           stripeCustomerId = user.stripeCustomerId
           console.log(`[Checkout API] Using existing Stripe customer ID: ${stripeCustomerId}`)
+          
+          // In test mode, if the customer was created in live mode, create a new test customer
+          if (apiKeyMode === "test" && stripeCustomerId.startsWith("cus_")) {
+            try {
+              // Try to verify the customer exists in test mode
+              await stripe.customers.retrieve(stripeCustomerId)
+            } catch {
+              console.log(`[Checkout API] Customer ${stripeCustomerId} not found in test mode, creating new test customer`)
+              // Customer doesn't exist in test mode, create a new one
+              const testCustomer = await stripe.customers.create({
+                email: user.email,
+                name: user.name,
+                metadata: {
+                  userId: user._id.toString(),
+                },
+              })
+              stripeCustomerId = testCustomer.id
+              console.log(`[Checkout API] Created test mode customer: ${stripeCustomerId}`)
+              // Don't update the database with test customer ID - keep live one
+            }
+          }
         }
       }
     }
