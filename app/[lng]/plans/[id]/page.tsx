@@ -8,6 +8,7 @@ import { Button } from '../../../../components/ui/button';
 import { Badge } from '../../../../components/ui/badge';
 import { Progress } from '../../../../components/ui/progress';
 import { Check, CheckCircle, Circle, ArrowLeft, Book, ExternalLink } from 'lucide-react';
+import { LoadingSpinner } from '../../../../components/ui/loading-spinner';
 import { toast } from '../../../../hooks/use-toast';
 
 interface Reading {
@@ -198,13 +199,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
   }
 
   if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <p className="text-lg text-muted-foreground">Laden...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullHeight message="Plan laden..." />
   }
 
   if (!plan) {

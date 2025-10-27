@@ -12,6 +12,7 @@ import { Label } from '../../../components/ui/label';
 import { Switch } from '../../../components/ui/switch';
 import { Plus, Search, X } from 'lucide-react';
 import { toast } from '../../../hooks/use-toast';
+import { LoadingSpinner } from '../../../components/ui/loading-spinner';
 
 interface Reading {
   day: number;
@@ -426,10 +427,7 @@ export default function PlansPage({ params }: PlansPageProps) {
 
         {/* Content */}
         {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin h-8 w-8 border-b-2 border-[#262626] dark:border-white mx-auto"></div>
-            <p className="font-['Inter'] text-gray-600 dark:text-gray-400 mt-4">{t('loading', 'Laden...')}</p>
-          </div>
+          <LoadingSpinner />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {activeTab === 'public' && filteredPlans(publicPlans).map((plan) => (

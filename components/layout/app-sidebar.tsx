@@ -106,7 +106,7 @@ export function AppSidebar({ ...props }) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <Link href={prependLang('/study')} className="flex items-center">
+          <Link href={prependLang('/study')} className="flex items-center m-1">
             <Image src="/en/images/logo-text.svg" alt="Scriptura Logo" width={100} height={32} className="object-contain ml-2 mt-2 mb-2 mr-4" />
           </Link>
         </SidebarMenu>

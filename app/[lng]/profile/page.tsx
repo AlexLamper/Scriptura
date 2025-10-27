@@ -10,6 +10,7 @@ import { use } from "react"
 import { getSession } from "next-auth/react"
 import { ShieldCheck } from "lucide-react"
 import UserBadges from "../../../components/profile/badges"
+import { LoadingSpinner } from "../../../components/ui/loading-spinner"
 
 export default function ProfilePage({
   params,
@@ -75,11 +76,7 @@ export default function ProfilePage({
   }, [mounted]) // Only depend on mounted state
 
   if (!mounted || loading) {
-    return (
-      <div className="w-full pb-6 pt-0 flex items-center justify-center min-h-screen">
-        <div className="animate-spin h-8 w-8 border-b-2 border-[#262626] dark:border-white"></div>
-      </div>
-    )
+    return <LoadingSpinner fullHeight />
   }
 
   if (error || !user) {
