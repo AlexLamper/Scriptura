@@ -146,7 +146,7 @@ export default function InductiveStudy({
                 1. Wat zie je?
               </h3>
             </div>
-            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 pl-11">
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
               Lees de tekst aandachtig en schrijf op wat je opvalt: wie komt erin voor, wat gebeurt er, waar en wanneer speelt het zich af?
             </p>
             
@@ -168,7 +168,7 @@ export default function InductiveStudy({
                 2. Wat betekent het?
               </h3>
             </div>
-            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 pl-11">
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
               Denk na over de betekenis: wat wil God hiermee zeggen? Wat leer je over God, mensen of het leven?
             </p>
             
@@ -190,7 +190,7 @@ export default function InductiveStudy({
                 3. Hoe pas je het toe?
               </h3>
             </div>
-            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 pl-11">
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
               Maak het persoonlijk: hoe ga je deze waarheid gebruiken in je dagelijks leven? Wat ga je anders doen?
             </p>
             
@@ -208,7 +208,7 @@ export default function InductiveStudy({
               <Button 
                 onClick={saveStudyData} 
                 disabled={isSaving}
-                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] px-6"
+                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] px-6 rounded-none"
               >
                 {isSaving ? (
                   <>
