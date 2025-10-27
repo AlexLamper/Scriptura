@@ -1,146 +1,148 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link"
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card"
 import { Button } from "../../../components/ui/button"
-import { CheckCircle, Calendar, BookOpen, Sparkles } from "lucide-react"
+import { CheckCircle, BookOpen, Sparkles, Calendar } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { LoadingSpinner } from "../../../components/ui/loading-spinner"
+import { useTranslation } from "../../i18n/client"
+import { use } from "react"
 
-export default function SuccessPage() {
+interface SuccessPageProps {
+  params: Promise<{ lng: string }>
+}
+
+export default function SuccessPage({ params }: SuccessPageProps) {
+  const { lng } = use(params)
+  const { t } = useTranslation(lng, "success")
   const searchParams = useSearchParams()
+  const router = useRouter()
   const sessionId = searchParams.get("session_id")
   const [status, setStatus] = useState("loading")
   const { update } = useSession()
 
   useEffect(() => {
-    if (sessionId) {
-      // Verify the session and update the user's subscription status
-      const verifySession = async () => {
-        try {
-          // First, try to verify the subscription through our API
-          const response = await fetch("/api/verify-subscription", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ sessionId }),
-          })
-
-          if (response.ok) {
-            // Update the session to reflect the new subscription status
-            await update()
-            setStatus("success")
-          } else {
-            console.error("Failed to verify subscription through API, trying direct sync")
-
-            // If that fails, try to sync subscription status directly
-            const syncResponse = await fetch("/api/subscription/status", {
-              method: "POST",
-            })
-
-            if (syncResponse.ok) {
-              await update()
-              setStatus("success")
-            } else {
-              console.error("Failed to sync subscription status")
-              setStatus("success") // Still show success for now
-            }
-          }
-        } catch (error) {
-          console.error("Error verifying subscription:", error)
-          setStatus("success") // Still show success for now
-        }
-      }
-
-      verifySession()
+    // Redirect if no sessionId is found
+    if (!sessionId) {
+      router.replace("/subscribe")
+      return
     }
-  }, [sessionId, update])
+
+    const verifySession = async () => {
+      try {
+      
+        const response = await fetch("/api/verify-subscription", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sessionId }),
+        })
+
+        if (response.ok) {
+          await update()
+          setStatus("success")
+        } else {
+          router.replace("/subscribe")
+        }
+      } catch (err) {
+        console.log(err)
+        router.replace("/subscribe")
+      }
+    }
+
+    verifySession()
+  }, [sessionId, router, update])
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-slate-50">
-      <div className="w-full max-w-3xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 rounded-lg shadow-sm border dark:border-indigo-900/30 overflow-hidden transition-all duration-300">
-        <div className="bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
-          <CardHeader className="bg-indigo-600 text-white rounded-t-lg pb-10">
-            <CardTitle className="text-3xl font-bold">Subscription Successful!</CardTitle>
-            <CardDescription className="text-indigo-100 text-lg">Welcome to Scriptura Pro</CardDescription>
-          </CardHeader>
-          <CardContent className="pt-6 px-8">
-            {status === "loading" ? (
-              <LoadingSpinner />
-            ) : (
-              <div className="space-y-8 py-4">
-                <div className="flex items-center justify-center">
+    <div className="w-full pb-6 pt-0">
+      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-black px-4">
+        <div className="w-full max-w-2xl">
+          {status === "loading" ? (
+            <LoadingSpinner fullHeight message={t("verifying")} />
+          ) : (
+            <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+              {/* Header */}
+              <div className="p-8 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20">
+                <div className="flex items-center justify-center mb-4">
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-3">
-                    <CheckCircle className="h-16 w-16 text-green-600 dark:text-green-400" />
+                    <CheckCircle className="h-12 w-12 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
+                <h1 className="text-3xl font-['Merriweather'] font-bold text-center text-[#262626] dark:text-white mb-2">
+                  {t("title")}
+                </h1>
+                <p className="text-center text-gray-600 dark:text-gray-400 font-['Inter']">
+                  {t("subtitle")}
+                </p>
+              </div>
 
-                <h2 className="text-2xl font-semibold text-center text-gray-800 dark:text-white">
-                  Your Pro subscription is now active!
+              {/* Content */}
+              <div className="p-8">
+                <h2 className="text-xl font-['Merriweather'] font-semibold text-center text-[#262626] dark:text-white mb-3">
+                  {t("status")}
                 </h2>
 
-                <p className="text-center text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-                  Thank you for subscribing to Scriptura Pro. Your journey to deeper biblical understanding begins now.
+                <p className="text-center text-gray-600 dark:text-gray-300 max-w-xl mx-auto mb-8 font-['Inter']">
+                  {t("message")}
                 </p>
 
-                <div className="grid md:grid-cols-3 gap-4 pt-4">
-                  <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg border border-indigo-100 dark:border-indigo-900/30">
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  <div className="p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1d2e] shadow-sm">
                     <div className="flex items-center mb-3">
-                      <BookOpen className="h-5 w-5 text-indigo-600 dark:text-indigo-400 mr-2" />
-                      <h3 className="font-medium dark:text-white">Full Course Access</h3>
+                      <BookOpen className="h-5 w-5 text-[#798777] mr-3" />
+                      <h3 className="font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("features.full_access")}</h3>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Unlock all premium Bible courses and study materials
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-['Inter']">
+                      {t("features.full_access_desc")}
                     </p>
                   </div>
 
-                  <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg border border-purple-100 dark:border-purple-900/30">
+                  <div className="p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1d2e] shadow-sm">
                     <div className="flex items-center mb-3">
-                      <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
-                      <h3 className="font-medium dark:text-white">Advanced Features</h3>
+                      <Sparkles className="h-5 w-5 text-[#798777] mr-3" />
+                      <h3 className="font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("features.advanced")}</h3>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Enjoy note-taking, bookmarking, and personalized study plans
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-['Inter']">
+                      {t("features.advanced_desc")}
                     </p>
                   </div>
 
-                  <div className="bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg border border-pink-100 dark:border-pink-900/30">
+                  <div className="p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1d2e] shadow-sm">
                     <div className="flex items-center mb-3">
-                      <Calendar className="h-5 w-5 text-pink-600 dark:text-pink-400 mr-2" />
-                      <h3 className="font-medium dark:text-white">Monthly Billing</h3>
+                      <Calendar className="h-5 w-5 text-[#798777] mr-3" />
+                      <h3 className="font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("features.billing")}</h3>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Your subscription will renew automatically for €9.99/month
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-['Inter']">
+                      {t("features.billing_desc")}
                     </p>
                   </div>
                 </div>
 
                 {sessionId && (
-                  <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                    Reference: {sessionId.substring(0, 16)}...
+                  <div className="text-xs text-gray-500 dark:text-gray-400 text-center font-['Inter'] mb-8">
+                    {t("reference")} {sessionId.substring(0, 16)}...
                   </div>
                 )}
+
+                {/* Actions */}
+                <div className="flex justify-center gap-4">
+                  <Link href={`/${lng}/study`}>
+                    <Button className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] rounded-none">
+                      {t("cta_study")}
+                    </Button>
+                  </Link>
+                  <Link href={`/${lng}/courses`}>
+                    <Button variant="outline" className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 font-['Inter'] rounded-none">
+                      {t("cta_courses")}
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            )}
-          </CardContent>
-          <CardFooter className="flex justify-center gap-4 pb-8 pt-2">
-            <Link href="/study">
-              <Button className="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700">
-                Go to Study
-              </Button>
-            </Link>
-            <Link href="/courses">
-              <Button
-                variant="outline"
-                className="border-indigo-600 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-950/50"
-              >
-                Explore Courses
-              </Button>
-            </Link>
-          </CardFooter>
+            </div>
+          )}
         </div>
       </div>
     </div>
