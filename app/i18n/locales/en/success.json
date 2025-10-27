@@ -1,0 +1,18 @@
+{
+  "title": "Subscription Successful!",
+  "subtitle": "Welcome to Scriptura Pro",
+  "status": "Your Pro subscription is now active!",
+  "message": "Thank you for subscribing to Scriptura Pro. Your journey to deeper biblical understanding begins now.",
+  "features": {
+    "full_access": "Full Course Access",
+    "full_access_desc": "Unlock all premium Bible courses and study materials",
+    "advanced": "Advanced Features",
+    "advanced_desc": "Enjoy note-taking, bookmarking, and personalized study plans",
+    "billing": "Monthly Billing",
+    "billing_desc": "Your subscription will renew automatically for €9.99/month"
+  },
+  "reference": "Reference:",
+  "cta_study": "Go to Study",
+  "cta_courses": "Explore Courses",
+  "verifying": "Verifying your subscription..."
+}

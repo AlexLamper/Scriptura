@@ -1,0 +1,18 @@
+{
+  "title": "Abonnement succesvol!",
+  "subtitle": "Welkom bij Scriptura Pro",
+  "status": "Uw Pro-abonnement is nu actief!",
+  "message": "Bedankt dat u zich hebt geabonneerd op Scriptura Pro. Uw reis naar dieper bijbels inzicht begint nu.",
+  "features": {
+    "full_access": "Volledige cursustoegang",
+    "full_access_desc": "Ontgrendel alle premium bijbelcursussen en studiematerialen",
+    "advanced": "Geavanceerde functies",
+    "advanced_desc": "Geniet van notities, bladwijzers en persoonlijke studieplannen",
+    "billing": "Maandelijkse facturering",
+    "billing_desc": "Uw abonnement wordt maandelijks automatisch vernieuwd voor €9,99"
+  },
+  "reference": "Referentie:",
+  "cta_study": "Ga naar Studio",
+  "cta_courses": "Verken cursussen",
+  "verifying": "Abonnement wordt geverifieerd..."
+}
