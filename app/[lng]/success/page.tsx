@@ -7,6 +7,7 @@ import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from 
 import { Button } from "../../../components/ui/button"
 import { CheckCircle, Calendar, BookOpen, Sparkles } from "lucide-react"
 import { useSession } from "next-auth/react"
+import { LoadingSpinner } from "../../../components/ui/loading-spinner"
 
 export default function SuccessPage() {
   const searchParams = useSearchParams()
@@ -68,9 +69,7 @@ export default function SuccessPage() {
           </CardHeader>
           <CardContent className="pt-6 px-8">
             {status === "loading" ? (
-              <div className="flex justify-center py-12">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
-              </div>
+              <LoadingSpinner />
             ) : (
               <div className="space-y-8 py-4">
                 <div className="flex items-center justify-center">

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import SessionProvider from "../../../components/SessionProvider";
-import { Header } from "../../../components/header";
-import { AppSidebar } from "../../../components/app-sidebar";
+import SessionProvider from "../../../components/providers/SessionProvider";
+import { Header } from "../../../components/layout/header";
+import { AppSidebar } from "../../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../../components/ui/sidebar";
 
 export const metadata: Metadata = {

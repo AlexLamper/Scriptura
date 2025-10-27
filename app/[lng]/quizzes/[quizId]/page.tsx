@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Progress } from "../../../../components/ui/progress"
 import { StudyMaterials } from "../../../../components/study-materials"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../components/ui/tabs"
+import { LoadingSpinner } from "../../../../components/ui/loading-spinner"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../../components/ui/card"
 
 interface BibleVerse {
@@ -300,16 +301,7 @@ export default function QuizPage({ params }: { params: Promise<QuizPageParams> }
   }
 
   if (isLoading || !quiz) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="flex items-center justify-center h-screen"
-      >
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      </motion.div>
-    )
+    return <LoadingSpinner fullHeight />
   }
 
   // Show study materials if available and not completed

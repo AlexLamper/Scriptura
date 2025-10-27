@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useParams, usePathname } from "next/navigation"
-import { useTranslation } from "../app/i18n/client"
+import { useTranslation } from "../../app/i18n/client"
 import {
   Sidebar,
   SidebarContent,
@@ -12,10 +12,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "../components/ui/sidebar"
+} from "../ui/sidebar"
 import { User, Settings, BookText, StickyNote, Calendar
   } from "lucide-react"
-import SidebarProCTA from "./sidebar-pro-cta"
+import SidebarProCTA from "../pricing/sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
 import Image from "next/image"
 
@@ -106,7 +106,7 @@ export function AppSidebar({ ...props }) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <Link href={prependLang('/study')} className="flex items-center">
+          <Link href={prependLang('/study')} className="flex items-center m-1">
             <Image src="/en/images/logo-text.svg" alt="Scriptura Logo" width={100} height={32} className="object-contain ml-2 mt-2 mb-2 mr-4" />
           </Link>
         </SidebarMenu>

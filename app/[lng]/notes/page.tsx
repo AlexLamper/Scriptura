@@ -29,6 +29,7 @@ import {
   DropdownMenuSeparator
 } from "../../../components/ui/dropdown-menu";
 import { EditNoteModal } from "../../../components/study/EditNoteModal";
+import { LoadingSpinner } from "../../../components/ui/loading-spinner";
 
 interface Note {
   _id: string;
@@ -179,14 +180,7 @@ export default function NotesPage({ params }: NotesPageProps) {
   };
 
   if (status === "loading" || !session) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullHeight message="Loading..." />;
   }
 
   return (
@@ -316,9 +310,7 @@ export default function NotesPage({ params }: NotesPageProps) {
 
         {/* Loading State */}
         {loading && (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin h-8 w-8 border-b-2 border-[#262626] dark:border-white"></div>
-          </div>
+          <LoadingSpinner />
         )}
 
         {/* Notes Grid */}

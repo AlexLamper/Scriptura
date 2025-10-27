@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "../components/ui/button";
-import getStripe from "../lib/stripe-client";
-import { useToast } from "../hooks/use-toast";
+import { Button } from "../ui/button";
+import getStripe from "../../lib/stripe-client";
+import { useToast } from "../../hooks/use-toast";
 
 interface CheckoutButtonProps {
   priceId?: string;
