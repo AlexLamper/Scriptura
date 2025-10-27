@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useParams } from "next/navigation"
-import { SearchForm } from "./search-form"
+import { useParams, usePathname } from "next/navigation"
 import { useTranslation } from "../app/i18n/client"
 import {
   Sidebar,
@@ -14,7 +13,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../components/ui/sidebar"
-import { Home, User, Settings, BookText, StickyNote, Calendar
+import { User, Settings, BookText, StickyNote, Calendar
   } from "lucide-react"
 import SidebarProCTA from "./sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
@@ -22,11 +21,6 @@ import Image from "next/image"
 
 // Main navigation items/links with translation keys
 const mainNavItems = [
-  {
-    titleKey: "dashboard",
-    url: "/dashboard",
-    icon: Home,
-  },
   {
     titleKey: "study",
     url: "/study",
@@ -56,6 +50,7 @@ const mainNavItems = [
 
 export function AppSidebar({ ...props }) {
   const params = useParams()
+  const pathname = usePathname()
   const lang = params.lng || "en"
   const { t } = useTranslation(lang as string, "sidebar")
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -63,7 +58,11 @@ export function AppSidebar({ ...props }) {
 
   const prependLang = (url: string) => `/${lang}${url}`
 
-  // Check if dark mode is active
+  // Check if a route is active
+  const isActive = (url: string) => {
+    const fullUrl = prependLang(url)
+    return pathname === fullUrl
+  }
   useEffect(() => {
     setIsClient(true)
     
@@ -107,11 +106,10 @@ export function AppSidebar({ ...props }) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <Link href={prependLang('/dashboard')} className="flex items-center">
+          <Link href={prependLang('/study')} className="flex items-center">
             <Image src="/en/images/logo-text.svg" alt="Scriptura Logo" width={100} height={32} className="object-contain ml-2 mt-2 mb-2 mr-4" />
           </Link>
         </SidebarMenu>
-        <SearchForm />
       </SidebarHeader>
       <SidebarContent>
         {/* Main Navigation */}
@@ -121,11 +119,20 @@ export function AppSidebar({ ...props }) {
               {mainNavItems.map((item) => (
                 <SidebarMenuItem key={item.titleKey}>
                   <SidebarMenuButton asChild>
-                    <Link href={prependLang(item.url)}>
-                      <span className="flex items-center space-x-2">
-                        <item.icon className="h-5 w-5 text-gray-700 dark:text-gray-500" />
-                        <span className="text-gray-800/95 dark:text-gray-300 font-normal text-sm">{t(item.titleKey)}</span>
-                      </span>
+                    <Link 
+                      href={prependLang(item.url)}
+                      className={`flex items-center space-x-2 rounded-md px-2 py-1.5 transition-colors ${
+                        isActive(item.url)
+                          ? 'bg-[#798777]/15 text-[#798777] dark:bg-[#798777]/20 dark:text-[#9aaa98]'
+                          : 'text-gray-800/95 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50'
+                      }`}
+                    >
+                      <item.icon className={`h-5 w-5 ${
+                        isActive(item.url)
+                          ? 'text-[#798777] dark:text-[#9aaa98]'
+                          : 'text-gray-700 dark:text-gray-500'
+                      }`} />
+                      <span className="font-normal text-sm">{t(item.titleKey)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -1,3 +1,9 @@
+// Dashboard component commented out - Study page is now the default
+export default function WelcomeBanner() {
+  return null;
+}
+
+/*
 "use client"
 
 import { BookOpen, FileText } from "lucide-react"
@@ -13,7 +19,7 @@ interface WelcomeBannerProps {
   }
 }
 
-export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
+export default function WelcomeBannerOld({ params: { lng } }: WelcomeBannerProps) {
   const { data: session } = useSession()
   const userName = session?.user?.name?.split(" ")[0] || "Student"
   const { t } = useTranslation(lng, "welcome")
@@ -62,3 +68,4 @@ export default function WelcomeBanner({ params: { lng } }: WelcomeBannerProps) {
     </div>
   )
 }
+*/

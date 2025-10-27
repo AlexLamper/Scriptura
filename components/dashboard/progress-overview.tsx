@@ -1,7 +1,13 @@
+// Dashboard component commented out - Study page is now the default
+export default function ProgressOverview() {
+  return null;
+}
+
+/*
 import React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card'
 
-const ProgressOverview = () => {
+const ProgressOverviewOld = () => {
 
     const COLORS = {
         green: "#798777",
@@ -70,5 +76,4 @@ const ProgressOverview = () => {
     </div>
   )
 }
-
-export default ProgressOverview
+*/

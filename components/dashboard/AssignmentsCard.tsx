@@ -1,3 +1,9 @@
+// Dashboard component commented out - Study page is now the default
+export function AssignmentsCard() {
+  return null;
+}
+
+/*
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../components/ui/dropdown-menu";
@@ -57,3 +63,4 @@ export function AssignmentsCard() {
     </Card>
   );
 }
+*/

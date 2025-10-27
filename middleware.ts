@@ -90,13 +90,13 @@ export async function middleware(req: NextRequest) {
   // Authentication handling
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  // Redirect logged-in users from `/` to `/dashboard`
+  // Redirect logged-in users from `/` to `/study`
   if (session && pathname === `/${currentLocale}`) {
-    return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, req.url));
+    return NextResponse.redirect(new URL(`/${currentLocale}/study`, req.url));
   }
 
-  // Redirect unauthenticated users away from `/dashboard` and `/admin`
-  if (!session && (pathname.endsWith("/dashboard") || pathname.endsWith("/admin"))) {
+  // Redirect unauthenticated users away from `/study` and `/admin`
+  if (!session && (pathname.endsWith("/study") || pathname.endsWith("/admin"))) {
     return NextResponse.redirect(new URL(`/${currentLocale}/`, req.url));
   }
 

@@ -128,9 +128,9 @@ export default function SuccessPage() {
             )}
           </CardContent>
           <CardFooter className="flex justify-center gap-4 pb-8 pt-2">
-            <Link href="/dashboard">
+            <Link href="/study">
               <Button className="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700">
-                Go to Dashboard
+                Go to Study
               </Button>
             </Link>
             <Link href="/courses">

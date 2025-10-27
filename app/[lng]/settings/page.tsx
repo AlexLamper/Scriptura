@@ -6,40 +6,60 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui
 export default function SettingsPage() {
   return (
     <div className="min-h-screen">
-      <div className="mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Settings</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="dark:bg-[#292b2f] dark:border-none">
-            <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
+      <div className="w-full px-4 py-8">
+        <h1 className="text-4xl font-['Merriweather'] font-bold text-gray-800 dark:text-white mb-8">Settings</h1>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Notification Preferences */}
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-sm rounded-none">
+            <CardHeader className="pb-4">
+              <CardTitle className="font-['Merriweather'] text-xl font-bold text-gray-800 dark:text-white">
+                Notification Preferences
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="emailNotifications">Email Notifications</Label>
-                <Switch id="emailNotifications" className="dark:bg-[#18181a] border dark:border-[#ffffff2b]" />
+                <Label htmlFor="emailNotifications" className="font-['Inter'] text-gray-700 dark:text-gray-300">
+                  Email Notifications
+                </Label>
+                <Switch id="emailNotifications" className="dark:bg-gray-700 border dark:border-gray-600" />
               </div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="pushNotifications">Push Notifications</Label>
-                <Switch id="pushNotifications" className="dark:bg-[#18181a] border dark:border-[#ffffff2b]" />
+                <Label htmlFor="pushNotifications" className="font-['Inter'] text-gray-700 dark:text-gray-300">
+                  Push Notifications
+                </Label>
+                <Switch id="pushNotifications" className="dark:bg-gray-700 border dark:border-gray-600" />
               </div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="weeklyDigest">Weekly Digest</Label>
-                <Switch id="weeklyDigest" className="dark:bg-[#18181a] border dark:border-[#ffffff2b] " />
+                <Label htmlFor="weeklyDigest" className="font-['Inter'] text-gray-700 dark:text-gray-300">
+                  Weekly Digest
+                </Label>
+                <Switch id="weeklyDigest" className="dark:bg-gray-700 border dark:border-gray-600" />
               </div>
             </CardContent>
           </Card>
-          <Card className="dark:bg-[#292b2f] dark:border-none">
-            <CardHeader>
-              <CardTitle>Account Settings</CardTitle>
+
+          {/* Account Settings */}
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-sm rounded-none">
+            <CardHeader className="pb-4">
+              <CardTitle className="font-['Merriweather'] text-xl font-bold text-gray-800 dark:text-white">
+                Account Settings
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <Button variant="outline" className="dark:bg-[#18181a] dark:border-[#ffffff2b] w-full">
+            <CardContent className="space-y-3">
+              <Button 
+                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] w-full rounded-none"
+              >
                 Change Password
               </Button>
-              <Button variant="outline" className="dark:bg-[#18181a] dark:border-[#ffffff2b] w-full">
+              <Button 
+                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] w-full rounded-none"
+              >
                 Connected Accounts
               </Button>
-              <Button variant="destructive" className="w-full">
+              <Button 
+                className="bg-red-600 hover:bg-red-700 text-white font-['Inter'] w-full rounded-none"
+              >
                 Delete Account
               </Button>
             </CardContent>

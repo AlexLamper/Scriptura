@@ -1,23 +1,9 @@
-"use client";
+// Dashboard component commented out - Study page is now the default
+export function RecentNotesCard() {
+  return null;
+}
 
-import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { StickyNote } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
-import { useTranslation } from "../../app/i18n/client";
-
-interface Note {
-  _id: string;
-  verseReference: string;
-  book: string;
-  chapter: number;
-  verse?: number;
-  verseText: string;
-  translation: string;
-  noteText: string;
+/*
   highlightColor: string;
   tags: string[];
   type: "note" | "highlight" | "both";
@@ -162,3 +148,4 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
     </Card>
   );
 });
+*/

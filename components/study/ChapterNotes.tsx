@@ -114,14 +114,14 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 font-['Merriweather'] text-[#262626] dark:text-white">
           <StickyNote className="w-6 h-6 text-[#798777]" />
-          {t("notes_for_chapter")} {book} {chapter}
+          {t("notes")} {book} {chapter}
         </CardTitle>
         <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
           Jouw persoonlijke notities en inzichten bij deze passage.
         </p>
       </CardHeader>
       <CardContent className="p-6 pt-0">
-        <div className="space-y-4 max-h-80 overflow-y-auto">
+        <div className="space-y-4 max-h-96 overflow-y-auto">
           {notes.map((note) => (
             <div key={note._id} className="p-4 bg-gray-50 border border-gray-200 dark:bg-[#232325] dark:border-gray-700">
               <div className="flex items-start justify-between mb-2">
