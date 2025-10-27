@@ -1,56 +1,66 @@
-import CheckoutButton from "../../../components/checkout-button"
-import { CheckCircle } from "lucide-react"
+"use client"
 
-const PRICE_ID = process.env.STRIPE_PRICE_ID
-
-if (!PRICE_ID) {
-  console.error("[SubscribePage] Missing STRIPE_PRICE_ID environment variable")
-}
+import { Button } from "../../../components/ui/button"
+import { ArrowRight, CheckCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 export default function SubscribePage() {
+  const { t } = useTranslation("subscribe")
+
+  const sellingPoints = t("selling_points", { returnObjects: true }) as string[]
+  const features = t("features", { returnObjects: true }) as string[]
+
   return (
-    <main className="h-screen overflow-hidden bg-white dark:bg-black">
-      <div className="max-w-4xl mx-auto px-0 py-0 h-full flex flex-col">
-        {/* Header Section */}
-        <header className="text-center py-6 px-4 flex-shrink-0">
-          <h1 className="text-4xl font-['Merriweather'] font-bold text-gray-800 dark:text-white mb-2">Scriptura Pro</h1>
+    <main className="mt-12 flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden">
+      <div className="w-full max-w-lg text-center px-6">
+        <header className="mb-8">
+          <h1 className="text-4xl font-['Merriweather'] font-bold text-gray-800 dark:text-white mb-2">
+            {t("title")}
+          </h1>
           <p className="text-lg font-['Inter'] text-gray-600 dark:text-gray-500">
-            Everything you need for deeper biblical study
+            {t("subtitle")}
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 py-6 lg:px-12 flex-1 overflow-hidden mx-auto text-center">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-3 overflow-y-auto pr-4 mx-auto text-center">
-
-          {/* Sidebar - Pricing & CTA */}
-          <div className="flex flex-col justify-center mx-auto text-center">
-            <div className="p-6 lg:p-0">
-              <div className="mb-6 text-center">
-                <div className="text-5xl font-['Merriweather'] font-bold text-gray-800 dark:text-white mb-1">€9.99</div>
-                <div className="text-gray-600 dark:text-gray-500 font-['Inter'] text-xs">/month, billed monthly</div>
-              </div>
-
-              <CheckoutButton priceId={PRICE_ID} className="w-full px-8 py-3 text-base font-semibold h-auto whitespace-normal" />
-
-              <div className="space-y-2 mt-4">
-                <div className="flex items-center text-xs font-['Inter'] text-gray-600 dark:text-gray-500">
-                  <CheckCircle className="h-3 w-3 mr-2 text-[#798777] dark:text-[#9aaa98] flex-shrink-0" />
-                  <span>Cancel anytime</span>
-                </div>
-                <div className="flex items-center text-xs font-['Inter'] text-gray-600 dark:text-gray-500">
-                  <CheckCircle className="h-3 w-3 mr-2 text-[#798777] dark:text-[#9aaa98] flex-shrink-0" />
-                  <span>No commitment</span>
-                </div>
-                <div className="flex items-center text-xs font-['Inter'] text-gray-600 dark:text-gray-500">
-                  <CheckCircle className="h-3 w-3 mr-2 text-[#798777] dark:text-[#9aaa98] flex-shrink-0" />
-                  <span>Secure payment</span>
-                </div>
-              </div>
+        <div className="bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl p-8 shadow-sm">
+          <div className="mb-6">
+            <div className="text-5xl font-['Merriweather'] font-bold text-gray-800 dark:text-white mb-1">
+              €9.99
+            </div>
+            <div className="text-gray-600 dark:text-gray-500 font-['Inter'] text-xs">
+              {t("billing_info")}
             </div>
           </div>
+
+          <Button
+            size="lg"
+            className="w-full px-4 py-4 bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] font-normal text-lg rounded-none"
+          >
+            {t("cta")}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
+
+          <div className="space-y-2 mt-5">
+            {sellingPoints.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-center text-xs font-['Inter'] text-gray-600 dark:text-gray-500"
+              >
+                <CheckCircle className="h-3 w-3 mr-2 text-[#798777] dark:text-[#9aaa98]" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+
+        <section className="mt-10 text-gray-700 dark:text-gray-400 font-['Inter'] text-sm leading-relaxed max-w-md mx-auto">
+          <p className="mb-3">{t("description")}</p>
+          <ul className="space-y-1">
+            {features.map((feature, index) => (
+              <li key={index}>• {feature}</li>
+            ))}
+          </ul>
+        </section>
       </div>
     </main>
   )
