@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from '../../../lib/connectDB.js';
+import connectMongoDB from '../../../lib/mongodb';
 import BiblePlan from '../../../models/BiblePlan.js';
 import User from '../../../models/User.js';
 import { getServerSession } from 'next-auth';
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await connectDB();
+    await connectMongoDB();
 
     const user = await User.findOne({ email: session.user.email });
     if (!user) {
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    await connectDB();
+    await connectMongoDB();
 
     const user = await User.findOne({ email: session.user.email });
     if (!user) {
@@ -133,7 +133,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Plan ID required' }, { status: 400 });
     }
 
-    await connectDB();
+    await connectMongoDB();
 
     const user = await User.findOne({ email: session.user.email });
     if (!user) {

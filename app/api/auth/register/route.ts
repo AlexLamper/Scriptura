@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { connectDB } from "../../../../lib/connectDB";
+import connectMongoDB from "../../../../lib/mongodb";
 import User from "../../../../models/User";
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB();
+    await connectMongoDB();
 
     const { name, email, password } = await request.json();
 
