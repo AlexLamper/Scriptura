@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from '../../../../lib/connectDB.js';
+import connectMongoDB from '../../../../lib/mongodb';
 import BiblePlan from '../../../../models/BiblePlan.js';
 import User from '../../../../models/User.js';
 import { getServerSession } from 'next-auth';
@@ -44,7 +44,7 @@ export async function GET(
     const resolvedParams = await params;
     const { id } = resolvedParams;
 
-    await connectDB();
+    await connectMongoDB();
 
     const user = await User.findOne({ email: session.user.email });
     if (!user) {

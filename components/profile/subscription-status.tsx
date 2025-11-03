@@ -61,8 +61,8 @@ export function SubscriptionStatus({
                 : "Upgrade to premium to access exclusive courses and features."}
             </p>
             {!isAdmin && (
-              <Link href={`/${lng}/pricing`}>
-                <Button className="w-full bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">Upgrade to Premium</Button>
+              <Link href={`/${lng}/subscribe`}>
+                <Button className="w-full mt-4 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">Upgrade to Premium</Button>
               </Link>
             )}
           </div>

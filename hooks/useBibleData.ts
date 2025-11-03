@@ -42,6 +42,8 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   const [loadingVersions, setLoadingVersions] = useState(false);
   const [loadingBooks, setLoadingBooks] = useState(false);
   const [loadingChapters, setLoadingChapters] = useState(false);
+  
+  const [lastReadLoaded, setLastReadLoaded] = useState(false);
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
@@ -80,9 +82,32 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         const versionNames = data.map((v) => v.name);
         setVersions(versionNames);
 
-        // Set default version based on language preference
-        const defaultVersion = getDefaultVersion(versionNames, lng);
-        setSelectedVersion(defaultVersion);
+        let restored = false;
+        
+        // Try to fetch user's last read chapter
+        try {
+          const lastReadRes = await fetch('/api/user/last-read');
+          if (lastReadRes.ok) {
+            const { lastReadChapter } = await lastReadRes.json();
+            if (lastReadChapter && lastReadChapter.version && lastReadChapter.book && lastReadChapter.chapter) {
+              // Restore last read position
+              setSelectedVersion(lastReadChapter.version);
+              setSelectedBook(lastReadChapter.book);
+              setSelectedChapter(lastReadChapter.chapter);
+              setLastReadLoaded(true);
+              restored = true;
+              console.log('✅ Restored last read chapter:', lastReadChapter);
+            }
+          }
+        } catch {
+          console.log('No last read chapter found, using defaults');
+        }
+
+        // Set default version based on language preference (only if no last read found)
+        if (!restored) {
+          const defaultVersion = getDefaultVersion(versionNames, lng);
+          setSelectedVersion(defaultVersion);
+        }
       } catch (err) {
         console.error('❌ Error fetching versions:', err);
         setVersions([]);
@@ -126,32 +151,40 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
         setBooks(bookNames);
 
-        // Set appropriate default book based on language/version
-        let defaultBook = '';
-        if (selectedVersion === 'Staten Vertaling' || lng === 'nl') {
-          // For Dutch versions, look for "Genesis" or equivalent
-          if (bookNames.includes('Genesis')) {
-            defaultBook = 'Genesis';
-          } else if (bookNames.includes('1 Mozes')) {
-            defaultBook = '1 Mozes';
+        // Only set default book if we haven't already restored one from last read
+        if (!selectedBook) {
+          // Set appropriate default book based on language/version
+          let defaultBook = '';
+          if (selectedVersion === 'Staten Vertaling' || lng === 'nl') {
+            // For Dutch versions, look for "Genesis" or equivalent
+            if (bookNames.includes('Genesis')) {
+              defaultBook = 'Genesis';
+            } else if (bookNames.includes('1 Mozes')) {
+              defaultBook = '1 Mozes';
+            }
+          } else {
+            // For English and other versions, look for "Genesis"
+            if (bookNames.includes('Genesis')) {
+              defaultBook = 'Genesis';
+            }
           }
-        } else {
-          // For English and other versions, look for "Genesis"
-          if (bookNames.includes('Genesis')) {
-            defaultBook = 'Genesis';
+
+          // Fallback to first book if no preferred default found
+          if (!defaultBook && bookNames.length > 0) {
+            defaultBook = bookNames[0];
+          }
+
+          if (defaultBook) {
+            setSelectedBook(defaultBook);
+          } else {
+            setSelectedBook(''); // No books found
+            console.warn('No books found from API.');
           }
         }
-
-        // Fallback to first book if no preferred default found
-        if (!defaultBook && bookNames.length > 0) {
-          defaultBook = bookNames[0];
-        }
-
-        if (defaultBook) {
-          setSelectedBook(defaultBook);
-        } else {
-          setSelectedBook(''); // No books found
-          console.warn('No books found from API.');
+        
+        // Mark that initial load is complete, allowing saves to happen
+        if (!lastReadLoaded) {
+          setLastReadLoaded(true);
         }
       } catch (err) {
         console.error('Error fetching books:', err);
@@ -163,6 +196,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       }
     };
     fetchBooks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVersion, lng]);
 
   // 3. Fetch chapters for a selected book and version
@@ -228,6 +262,37 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     };
     fetchChapters();
   }, [selectedBook, selectedVersion]);
+
+  // 4. Save last read chapter whenever user changes book, chapter, or version
+  useEffect(() => {
+    // Only save if we have valid data and it's not the initial load
+    if (!selectedBook || !selectedChapter || !selectedVersion || !lastReadLoaded) {
+      return;
+    }
+
+    const saveLastRead = async () => {
+      try {
+        await fetch('/api/user/last-read', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            book: selectedBook,
+            chapter: selectedChapter,
+            version: selectedVersion,
+          }),
+        });
+        console.log('💾 Saved last read:', { book: selectedBook, chapter: selectedChapter, version: selectedVersion });
+      } catch (err) {
+        console.error('Error saving last read chapter:', err);
+      }
+    };
+
+    // Debounce the save to avoid too many requests
+    const timeoutId = setTimeout(saveLastRead, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [selectedBook, selectedChapter, selectedVersion, lastReadLoaded]);
 
   // Callback handlers for BibleSelector
   const handleVersionChange = useCallback((version: string) => {
