@@ -24,6 +24,12 @@ const UserSchema = new mongoose.Schema(
       onboardingCompleted: { type: Boolean, default: false },
       updatedAt: { type: Date }
     },
+    lastReadChapter: {
+      book: { type: String },
+      chapter: { type: Number },
+      version: { type: String },
+      updatedAt: { type: Date }
+    },
   },
   { timestamps: true },
 )

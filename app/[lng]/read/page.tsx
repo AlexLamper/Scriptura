@@ -66,9 +66,31 @@ export default function ReadPage({ params }: { params: Promise<{ lng: string }> 
         const versionNames = versionData.map((v: { name: string }) => v.name);
         setVersions(versionNames);
 
-        // Set default version based on language
-        const defaultVersion = getDefaultVersion(versionNames, lng);
-        setSelectedVersion(defaultVersion);
+        // Try to fetch user's last read chapter if no URL params provided
+        let lastReadRestored = false;
+        if (!bookParam && !chapterParam) {
+          try {
+            const lastReadRes = await fetch('/api/user/last-read');
+            if (lastReadRes.ok) {
+              const { lastReadChapter } = await lastReadRes.json();
+              if (lastReadChapter && lastReadChapter.version && lastReadChapter.book && lastReadChapter.chapter) {
+                setSelectedVersion(lastReadChapter.version);
+                setSelectedBook(lastReadChapter.book);
+                setSelectedChapter(lastReadChapter.chapter);
+                lastReadRestored = true;
+                console.log('✅ Restored last read chapter on /read page:', lastReadChapter);
+              }
+            }
+          } catch {
+            console.log('No last read chapter found, using defaults');
+          }
+        }
+
+        // Set version based on language if not restored from last read
+        if (!lastReadRestored) {
+          const defaultVersion = getDefaultVersion(versionNames, lng);
+          setSelectedVersion(defaultVersion);
+        }
 
         // Fetch books
         const resBooks = await fetch(`${API_BASE_URL}/books`);
@@ -78,7 +100,7 @@ export default function ReadPage({ params }: { params: Promise<{ lng: string }> 
         const dataBooks = await resBooks.json();
         setBooks(dataBooks);
 
-        // Set book and chapter from URL parameters if available
+        // URL parameters take precedence over last read
         if (bookParam && dataBooks.includes(bookParam)) {
           setSelectedBook(bookParam);
         }
@@ -134,6 +156,37 @@ export default function ReadPage({ params }: { params: Promise<{ lng: string }> 
 
     fetchChapters();
   }, [selectedBook, selectedVersion])
+
+  // Save last read chapter whenever user changes book, chapter, or version (except when from plan)
+  useEffect(() => {
+    // Don't save if reading from a plan or if we don't have valid data
+    if (fromPlan || !selectedBook || !selectedChapter || !selectedVersion) {
+      return;
+    }
+
+    const saveLastRead = async () => {
+      try {
+        await fetch('/api/user/last-read', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            book: selectedBook,
+            chapter: selectedChapter,
+            version: selectedVersion,
+          }),
+        });
+        console.log('💾 Saved last read on /read page:', { book: selectedBook, chapter: selectedChapter, version: selectedVersion });
+      } catch (err) {
+        console.error('Error saving last read chapter:', err);
+      }
+    };
+
+    // Debounce the save to avoid too many requests
+    const timeoutId = setTimeout(saveLastRead, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [selectedBook, selectedChapter, selectedVersion, fromPlan]);
 
   const handleMarkComplete = async () => {
     if (!fromPlan || !planDay) return;
