@@ -50,7 +50,7 @@ export default function TopControls({
   t
 }: TopControlsProps) {
   return (
-    <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-end gap-3 mb-6">
+    <div className="flex flex-col md:flex-row md:flex-wrap md:items-end gap-2 md:gap-3 mb-6">
       <BibleSelector
         versions={versions}
         books={books}
@@ -67,8 +67,8 @@ export default function TopControls({
         t={t}
       />
 
-      {/* Navigation Arrows - aligned with dropdown bottom */}
-      <div className="pb-0.5 self-end">
+      {/* Navigation Arrows and Download Button */}
+      <div className="flex items-center gap-2 md:ml-auto md:pb-0.5">
         <NavigationControls
           selectedChapter={selectedChapter}
           maxChapter={maxChapter}
@@ -79,10 +79,7 @@ export default function TopControls({
           onNextChapter={onNextChapter}
           t={t}
         />
-      </div>
 
-      {/* Download Button */}
-      <div className="ml-auto pb-0.5">
         <DownloadButton
           selectedBook={selectedBook}
           selectedChapter={selectedChapter}

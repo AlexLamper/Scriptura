@@ -33,21 +33,22 @@ export default function BibleSelector({
 }: Props) {
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="space-y-1 sm:space-y-2 md:space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 sm:gap-2 md:gap-4">
         {/* Version Selector */}
-        <div className="space-y-2">
-          <label className="block text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
+        <div className="space-y-1 sm:space-y-2 md:space-y-4">
+          <label className="hidden md:block text-xs md:text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
             {t('translation')}
           </label>
           <select
-            className="w-full px-3 py-2 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] text-sm font-['Inter'] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
+            className="w-full px-1.5 py-1 text-xs sm:text-sm font-['Inter'] border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
             value={selectedVersion || ''}
             onChange={(e) => onVersionChange(e.target.value)}
             disabled={loadingVersions || versions.length === 0}
+            title={t('translation')}
           >
             <option value="" disabled>
-              {loadingVersions ? t('loading_translations') : (versions.length === 0 ? t('no_translations') : t('select_translation'))}
+              {loadingVersions ? '...' : (versions.length === 0 ? t('no_translations') : 'Trans')}
             </option>
             {versions.map((version) => (
               <option key={version} value={version}>
@@ -57,48 +58,53 @@ export default function BibleSelector({
           </select>
         </div>
 
-        {/* Book Selector */}
-        <div className="space-y-2">
-          <label className="block text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
-            {t('book')}
-          </label>
-          <select
-            className="w-full px-3 py-2 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] text-sm font-['Inter'] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
-            value={selectedBook}
-            onChange={(e) => onBookChange(e.target.value)}
-            disabled={loadingBooks || books.length === 0}
-          >
-            <option value="" disabled>
-              {loadingBooks ? t('loading_books') : (books.length === 0 ? t('no_books') : t('select_book'))}
-            </option>
-            {books.map((book) => (
-              <option key={book} value={book}>
-                {book}
+        {/* Book and Chapter - Side by side on mobile, separate on desktop */}
+        <div className="grid grid-cols-2 md:contents gap-1 sm:gap-2 md:gap-4">
+          {/* Book Selector */}
+          <div className="space-y-1 sm:space-y-2 md:space-y-4">
+            <label className="hidden md:block text-xs md:text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
+              {t('book')}
+            </label>
+            <select
+              className="w-full px-1.5 py-1 text-xs sm:text-sm font-['Inter'] border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
+              value={selectedBook}
+              onChange={(e) => onBookChange(e.target.value)}
+              disabled={loadingBooks || books.length === 0}
+              title={t('book')}
+            >
+              <option value="" disabled>
+                {loadingBooks ? '...' : (books.length === 0 ? t('no_books') : 'Book')}
               </option>
-            ))}
-          </select>
-        </div>
+              {books.map((book) => (
+                <option key={book} value={book}>
+                  {book}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Chapter Selector */}
-        <div className="space-y-2">
-          <label className="block text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
-            {t('chapter')}
-          </label>
-          <select
-            className="w-full px-3 py-2 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] text-sm font-['Inter'] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
-            value={selectedChapter}
-            onChange={(e) => onChapterChange(Number(e.target.value))}
-            disabled={loadingChapters || chapters.length === 0}
-          >
-            <option value={0} disabled>
-              {loadingChapters ? t('loading_chapters') : (chapters.length === 0 ? t('no_chapters') : t('select_chapter'))}
-            </option>
-            {chapters.map((c) => (
-              <option key={c} value={c}>
-                {c}
+          {/* Chapter Selector */}
+          <div className="space-y-1 sm:space-y-2 md:space-y-4">
+            <label className="hidden md:block text-xs md:text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
+              {t('chapter')}
+            </label>
+            <select
+              className="w-full px-1.5 py-1 text-xs sm:text-sm font-['Inter'] border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
+              value={selectedChapter}
+              onChange={(e) => onChapterChange(Number(e.target.value))}
+              disabled={loadingChapters || chapters.length === 0}
+              title={t('chapter')}
+            >
+              <option value={0} disabled>
+                {loadingChapters ? '...' : (chapters.length === 0 ? t('no_chapters') : 'Ch')}
               </option>
-            ))}
-          </select>
+              {chapters.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     </div>

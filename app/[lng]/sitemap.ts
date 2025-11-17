@@ -1,8 +1,6 @@
 import { MetadataRoute } from "next";
 
-// Define static routes for the sitemap
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Define your static routes
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: "https://scriptura-edu.com", lastModified: new Date() },
     { url: "https://scriptura-edu.com/study", lastModified: new Date() },
