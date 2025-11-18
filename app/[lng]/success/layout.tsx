@@ -109,7 +109,7 @@ export default async function SubscribeLayout({
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
             <Header params={{ lng: "" }} />
-            <div className="px-8 pb-8 pt-4">
+            <div className="lg:px-4 lg:pb-4 lg:pt-2 px-1 pb-1 pt-1">
               {children}
             </div>
           </div>

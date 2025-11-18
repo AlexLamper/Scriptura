@@ -87,7 +87,7 @@ export default async function NotesLayout({ children, params }: NotesLayoutProps
             <AppSidebar />
             <div className="flex-1 flex flex-col">
               <Header params={{ lng: resolvedParams.lng }} />
-              <div className="px-8 pb-8 pt-4">
+              <div className="lg:px-4 lg:pb-4 lg:pt-2 px-1 pb-1 pt-1">
                 {children}
               </div>
             </div>
