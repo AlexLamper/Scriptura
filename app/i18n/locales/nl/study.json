@@ -149,6 +149,7 @@
       "load_progress": "Voortgang Laden"
     }
   },
+  "file_type": "Bestandstype",
   "study_self_title": "Bestudeer de Bijbel zelf",
   "study_self_description": "Open de Studie-pagina om te lezen, notities te maken en verzen te markeren.",
   "start_study": "Start studie",

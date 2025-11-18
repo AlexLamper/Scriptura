@@ -149,6 +149,7 @@
       "load_progress": "Load Progress"
     }
   },
+  "file_type": "File type",
   "study_self_title": "Study the Bible yourself",
   "study_self_description": "Open the Study page to read, take notes, and highlight your favorite Bible passages.",
   "start_study": "Start study",
