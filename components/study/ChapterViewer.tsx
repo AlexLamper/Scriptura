@@ -46,8 +46,6 @@ export default function ChapterViewer({
 
         if (version && version.toLowerCase() !== 'statenvertaling') {
           params.append('version', version);
-        } else {
-            console.log(`Using default version (Statenvertaling) or no version specified in API call.`);
         }
 
         const url = `${API_BASE_URL}/chapter?${params.toString()}`;
@@ -83,7 +81,6 @@ export default function ChapterViewer({
     if (book && chapter > 0 && version) {
       fetchChapter();
     } else {
-      console.log('Skipping chapter fetch in ChapterViewer: Missing book, chapter, or version.', { book, chapter, version });
       setVerses({});
       setLoading(false);
       setError(null);

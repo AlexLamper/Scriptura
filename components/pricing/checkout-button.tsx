@@ -30,11 +30,8 @@ export default function CheckoutButton({
     }
 
     setLoading(true);
-    console.log("[CheckoutButton] Starting checkout process");
 
     try {
-      console.log("[CheckoutButton] Making API request with:", { priceId, customerId });
-      
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
@@ -43,16 +40,12 @@ export default function CheckoutButton({
         body: JSON.stringify({ priceId, customerId }),
       });
 
-      console.log("[CheckoutButton] API response status:", response.status);
-
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("[CheckoutButton] API error:", errorData);
         throw new Error(errorData?.error || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log("[CheckoutButton] API response data:", data);
 
       if (!data.sessionId) {
         throw new Error("No session ID returned from API");
@@ -62,15 +55,12 @@ export default function CheckoutButton({
       if (!stripe) {
         throw new Error("Failed to load Stripe");
       }
-
-      console.log("[CheckoutButton] Redirecting to Stripe checkout");
       const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
       
       if (error) {
         throw error;
       }
     } catch (error) {
-      console.error("[CheckoutButton] Error:", error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to start checkout process. Please try again.",

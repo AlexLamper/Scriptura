@@ -29,8 +29,6 @@ export default function SubscribePage() {
 
     setLoading(true)
     try {
-      // Don't need to pass priceId - the API will get it from environment variables
-      console.log("[Subscribe] Starting checkout process")
 
       const response = await fetch("/api/checkout", {
         method: "POST",
@@ -47,7 +45,6 @@ export default function SubscribePage() {
       }
 
       const data = await response.json()
-      console.log("[Subscribe] Checkout session created:", data.sessionId)
 
       if (!data.sessionId) {
         throw new Error("No session ID returned from checkout")
@@ -58,7 +55,6 @@ export default function SubscribePage() {
         throw new Error("Failed to load Stripe")
       }
 
-      console.log("[Subscribe] Redirecting to Stripe checkout")
       const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId })
       if (error) {
         throw error

@@ -60,24 +60,17 @@ export default function PlansPage({ params }: PlansPageProps) {
   const loadPlans = useCallback(async () => {
     try {
       setLoading(true);
-      console.log('Frontend: Loading plans...');
-      
+
       const response = await fetch('/api/bible-plans');
       const data = await response.json();
-      console.log('Frontend: API response:', data);
 
       if (data.plans) {
         const plans = data.plans;
-        console.log('Frontend: Processing plans:', plans.length);
         
-        // Verdeel plannen in publiek en persoonlijk
         const publicPlans = plans.filter((plan: BiblePlan) => plan.isPublic);
         const myPlans = plans.filter((plan: BiblePlan) => 
           !plan.isPublic && plan.createdBy._id === sessionUserId
         );
-
-        console.log('Frontend: Public plans:', publicPlans.length);
-        console.log('Frontend: My plans:', myPlans.length);
 
         setPublicPlans(publicPlans);
         setMyPlans(myPlans);

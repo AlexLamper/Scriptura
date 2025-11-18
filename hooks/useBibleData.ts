@@ -96,7 +96,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
               setSelectedChapter(lastReadChapter.chapter);
               setLastReadLoaded(true);
               restored = true;
-              console.log('✅ Restored last read chapter:', lastReadChapter);
             }
           }
         } catch {
@@ -109,7 +108,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           setSelectedVersion(defaultVersion);
         }
       } catch (err) {
-        console.error('❌ Error fetching versions:', err);
+        console.log(err)
         setVersions([]);
         setSelectedVersion(null);
       } finally {
@@ -283,7 +282,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
             version: selectedVersion,
           }),
         });
-        console.log('💾 Saved last read:', { book: selectedBook, chapter: selectedChapter, version: selectedVersion });
       } catch (err) {
         console.error('Error saving last read chapter:', err);
       }
@@ -294,21 +292,18 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     return () => clearTimeout(timeoutId);
   }, [selectedBook, selectedChapter, selectedVersion, lastReadLoaded]);
 
-  // Callback handlers for BibleSelector
   const handleVersionChange = useCallback((version: string) => {
     setSelectedVersion(version);
-    // Reset book and chapter when version changes, to trigger re-fetch of books/chapters
-    // Clear current selections since different versions have different book names
-    setSelectedBook(''); // This will trigger the book useEffect
-    setBooks([]); // Clear current books list
-    setSelectedChapter(1); // Reset chapter to 1
-    setChapters([]); // Clear chapters
-    setMaxChapter(1); // Reset max chapter
+    setSelectedBook('');
+    setBooks([]);
+    setSelectedChapter(1);
+    setChapters([]);
+    setMaxChapter(1);
   }, []);
 
   const handleBookChange = useCallback((book: string) => {
     setSelectedBook(book);
-    setSelectedChapter(1); // Always reset chapter to 1 when book changes
+    setSelectedChapter(1);
   }, []);
 
   const handleChapterChange = useCallback((chapter: number) => {
@@ -318,34 +313,27 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   // Callback handlers for navigation buttons
   const handlePreviousChapter = useCallback(() => {
     setSelectedChapter((prev) => {
-      // Find the current chapter's index in the `chapters` array
       const currentIndex = chapters.indexOf(prev);
       if (currentIndex > 0) {
         const newChapter = chapters[currentIndex - 1];
-        console.log(`Navigating to previous chapter: ${prev} -> ${newChapter}`);
         return newChapter;
       }
-      console.log(`Cannot navigate to previous chapter from ${prev} (already first available or not found).`);
-      return prev; // Stay on current chapter if already first
+      return prev;
     });
   }, [chapters]);
 
   const handleNextChapter = useCallback(() => {
     setSelectedChapter((prev) => {
-      // Find the current chapter's index in the `chapters` array
       const currentIndex = chapters.indexOf(prev);
       if (currentIndex !== -1 && currentIndex < chapters.length - 1) {
         const newChapter = chapters[currentIndex + 1];
-        console.log(`Navigating to next chapter: ${prev} -> ${newChapter} (max available: ${chapters[chapters.length - 1]})`);
         return newChapter;
       }
-      console.log(`Cannot navigate to next chapter from ${prev} (already last available or not found).`);
-      return prev; // Stay on current chapter if already last
+      return prev;
     });
   }, [chapters]);
 
   return {
-    // State
     versions,
     books,
     chapters,
@@ -353,13 +341,9 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     selectedBook,
     selectedChapter,
     maxChapter,
-    
-    // Loading states
     loadingVersions,
     loadingBooks,
     loadingChapters,
-    
-    // Handlers
     handleVersionChange,
     handleBookChange,
     handleChapterChange,

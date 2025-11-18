@@ -27,7 +27,6 @@ export async function GET(req: NextRequest) {
 
     // If user has a stripeCustomerId, check their subscription status directly with Stripe
     if (user.stripeCustomerId) {
-      console.log(`[Subscription Status] Checking subscription status for customer: ${user.stripeCustomerId}`)
 
       // Get all subscriptions for this customer
       const subscriptions = await stripe.subscriptions.list({
@@ -38,26 +37,17 @@ export async function GET(req: NextRequest) {
 
       const hasActiveSubscription = subscriptions.data.length > 0
 
-      console.log(`[Subscription Status] Customer has active subscription: ${hasActiveSubscription}`)
-
       // If subscription status doesn't match what's in our database, update it
       if (hasActiveSubscription !== user.subscribed) {
-        console.log(
-          `[Subscription Status] Updating subscription status from ${user.subscribed} to ${hasActiveSubscription}`,
-        )
 
-        // If there's an active subscription, store its ID
         let stripeSubscriptionId = user.stripeSubscriptionId
         if (hasActiveSubscription && subscriptions.data[0]) {
           stripeSubscriptionId = subscriptions.data[0].id
         }
 
-        // Update the user record
         user.subscribed = hasActiveSubscription
         user.stripeSubscriptionId = stripeSubscriptionId
         await user.save()
-
-        console.log(`[Subscription Status] Updated user ${user._id} subscription status to ${hasActiveSubscription}`)
       }
 
       return NextResponse.json({
@@ -67,14 +57,13 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    // If no stripeCustomerId, they're definitely not subscribed
+    // If no stripeCustomerId, they're not subscribed
     return NextResponse.json({
       subscribed: false,
       stripeCustomerId: null,
       stripeSubscriptionId: null,
     })
   } catch (error) {
-    console.error("Error checking subscription status:", error)
     return NextResponse.json(
       {
         error: "Error checking subscription status",
@@ -95,18 +84,14 @@ export async function POST(req: NextRequest) {
     if (!session?.user?.email) {
       return NextResponse.json({ error: "User not authenticated" }, { status: 401 })
     }
-
-    // Connect to MongoDB
     await connectMongoDB()
-
-    // Find the user
     const user = await User.findOne({ email: session.user.email })
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
 
-    // If user has no stripeCustomerId, they can't be subscribed
+    // If user has no stripeCustomerId, they can't subscribed
     if (!user.stripeCustomerId) {
       return NextResponse.json({
         message: "User has no Stripe customer ID",
@@ -137,7 +122,6 @@ export async function POST(req: NextRequest) {
       stripeSubscriptionId: user.stripeSubscriptionId,
     })
   } catch (error) {
-    console.error("Error syncing subscription status:", error)
     return NextResponse.json(
       {
         error: "Error syncing subscription status",

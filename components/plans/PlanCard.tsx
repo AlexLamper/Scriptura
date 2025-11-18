@@ -31,14 +31,12 @@ interface BiblePlan {
 interface PlanCardProps {
   plan: BiblePlan;
   onEnrollmentChange?: () => void;
-  t?: unknown; // Optional translation function
+  t?: unknown;
 }
 
 export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  
-  console.log('PlanCard rendering plan:', plan.title, 'readings:', plan.readings?.length);
 
   const handleEnrollment = async () => {
     if (isLoading) return;

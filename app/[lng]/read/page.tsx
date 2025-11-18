@@ -78,7 +78,6 @@ export default function ReadPage({ params }: { params: Promise<{ lng: string }> 
                 setSelectedBook(lastReadChapter.book);
                 setSelectedChapter(lastReadChapter.chapter);
                 lastReadRestored = true;
-                console.log('✅ Restored last read chapter on /read page:', lastReadChapter);
               }
             }
           } catch {
@@ -177,7 +176,6 @@ export default function ReadPage({ params }: { params: Promise<{ lng: string }> 
             version: selectedVersion,
           }),
         });
-        console.log('💾 Saved last read on /read page:', { book: selectedBook, chapter: selectedChapter, version: selectedVersion });
       } catch (err) {
         console.error('Error saving last read chapter:', err);
       }

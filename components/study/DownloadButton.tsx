@@ -63,18 +63,18 @@ export default function DownloadButton({
       if (response.ok) {
         const data = await response.json();
         // API Response received
-        
-        // Handle different response formats
         let verses;
         if (Array.isArray(data)) {
           verses = data;
         } else if (data.verses && Array.isArray(data.verses)) {
           verses = data.verses;
+        } else if (data.verses && typeof data.verses === 'object') {
+          // Convert object to array
+          verses = Object.entries(data.verses).map(([verse, text]) => ({ verse: Number(verse), text }));
         } else {
           console.error('Unexpected API response format:', data);
           return;
         }
-        
         const content = verses.map((verse: { verse: number; text: string }) => `${verse.verse}: ${verse.text}`).join('\n');
         const filename = `${selectedBook}_${selectedChapter}_${selectedVersion || 'default'}.txt`;
         downloadContent(content, filename);

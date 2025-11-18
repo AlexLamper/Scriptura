@@ -15,10 +15,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not authenticated" }, { status: 401 })
     }
 
-    // Connect to MongoDB
     await connectMongoDB()
 
-    // Find the user
     const user = await User.findOne({ email: session.user.email })
 
     if (!user) {
@@ -29,8 +27,6 @@ export async function POST(req: NextRequest) {
     if (!user.subscribed || !user.stripeSubscriptionId) {
       return NextResponse.json({ error: "No active subscription found" }, { status: 400 })
     }
-
-    console.log(`[Cancel Subscription] Canceling subscription ${user.stripeSubscriptionId} for user ${user._id}`)
 
     // Cancel the subscription at period end (this allows the user to continue using the subscription until the end of the current billing period)
     const subscription = await stripe.subscriptions.update(user.stripeSubscriptionId, {
