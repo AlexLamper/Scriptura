@@ -38,7 +38,7 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
         setLoading(true);
         setError(null);
         
-        const response = await fetch(`/api/notes?book=${book}&chapter=${chapter}&userEmail=${session.user.email}`);
+        const response = await fetch(`/api/notes?book=${book}&chapter=${chapter}`);
         
         if (response.ok) {
           const data = await response.json();
