@@ -6,24 +6,16 @@ import { FAQSection } from "../components/landing/faq";
 import { Footer } from "../components/landing/footer";
 import { Header } from "../components/landing/navbar";
 
-interface LandingPageProps {
-  params: Promise<{
-    lng: string;
-  }>;
-}
-
-export default async function LandingPage({ params }: LandingPageProps) {
-  const { lng } = await params;
-
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header params={{ lng }} />
-      <HeroSection params={{ lng }} />
-      <UniqueFeaturesSection params={{ lng }} />
-      <AboutSection params={{ lng }} />
-      <FAQSection params={{ lng }} />
-      <PricingSection params={{ lng }} />
-      <Footer params={{ lng }} />
+      <Header />
+      <HeroSection />
+      <UniqueFeaturesSection />
+      <AboutSection />
+      <FAQSection />
+      <PricingSection />
+      <Footer />
     </div>
   );
 }
