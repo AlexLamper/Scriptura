@@ -1,13 +1,20 @@
 'use client'
 
-import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
-import { languages } from '../../app/i18n/settings'
+import { languages, cookieName } from '../../app/i18n/settings'
 import { useRouter } from 'next/navigation'
+import { useTranslation } from '../../app/i18n/client'
 
 export const FooterBase = ({ t, lng }) => {
   const router = useRouter()
-  const currentPath = router.asPath
+  const { i18n } = useTranslation('footer')
+
+  const switchLanguage = (l) => {
+    if (lng === l) return
+    document.cookie = `${cookieName}=${l}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
+    i18n.changeLanguage(l)
+    router.refresh()
+  }
 
   return (
     <footer style={{ marginTop: 50 }}>
@@ -17,9 +24,12 @@ export const FooterBase = ({ t, lng }) => {
       {languages.filter((l) => lng !== l).map((l, index) => (
         <span key={l}>
           {index > 0 && ' or '}
-          <Link href={`/${l}${currentPath}`}>
+          <button 
+            onClick={() => switchLanguage(l)}
+            className="text-blue-600 hover:underline bg-transparent border-none cursor-pointer p-0"
+          >
             {l}
-          </Link>
+          </button>
         </span>
       ))}
     </footer>

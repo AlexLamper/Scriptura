@@ -6,19 +6,7 @@
   scroll-behavior: smooth;
 }
 
-/* Fonts are loaded with next/font in app/layout.tsx and exposed as CSS variables:
-   --font-sans  -> Inter (or configured sans)
-   --font-serif -> Merriweather (serif headings)
-   We still provide fallbacks to system fonts if the webfont fails to load.
-*/
-body {
-  font-family: var(--font-sans, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif);
-}
 
-/* Headings should use Merriweather when available, otherwise fall back to serif stack */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif, "Merriweather", Georgia, "Times New Roman", Times, serif);
-}
 
 @layer base {
   :root {

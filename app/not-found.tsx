@@ -8,22 +8,19 @@ import "./globals.css"
 
 export default function NotFound() {
   const router = useRouter()
-  const pathname = usePathname()
   
-  // Extract language from pathname
-  const lng = pathname?.split('/')[1] || 'en'
-  const { t } = useTranslation(lng, "common")
+  const { t } = useTranslation("common")
 
   const handleGoBack = () => {
     if (typeof window !== 'undefined' && window.history.length > 1) {
       router.back()
     } else {
-      router.push(`/${lng}`)
+      router.push('/')
     }
   }
 
   const handleGoHome = () => {
-    router.push(`/${lng}`)
+    router.push('/')
   }
 
   return (

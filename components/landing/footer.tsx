@@ -4,14 +4,8 @@ import Link from "next/link"
 import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 import { useTranslation } from "../../app/i18n/client"
 
-interface FooterProps {
-  params: {
-    lng: string
-  }
-}
-
-export function Footer({ params: { lng } }: FooterProps) {
-  const { t } = useTranslation(lng, "footer")
+export function Footer() {
+  const { t } = useTranslation("footer")
 
   return (
     <footer className="bg-[#262626] dark:bg-[#0d0f17] py-16 lg:py-20">
@@ -26,7 +20,7 @@ export function Footer({ params: { lng } }: FooterProps) {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href={`/${lng}/courses`}
+                  href={`/courses`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("our_courses")}
@@ -34,7 +28,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               </li>
               <li>
                 <Link
-                  href={`/${lng}/pricing`}
+                  href={`/pricing`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("pricing")}
@@ -51,7 +45,7 @@ export function Footer({ params: { lng } }: FooterProps) {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href={`/${lng}/resources`}
+                  href={`/resources`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("resources")}
@@ -59,7 +53,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               </li>
               <li>
                 <Link
-                  href={`/${lng}/quizzes`}
+                  href={`/quizzes`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("quizzes")}
@@ -67,7 +61,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               </li>
               <li>
                 <Link
-                  href={`/${lng}/courses`}
+                  href={`/courses`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("courses")}
@@ -84,7 +78,7 @@ export function Footer({ params: { lng } }: FooterProps) {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href={`/${lng}/privacy-policy`}
+                  href={`/privacy-policy`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("privacy_policy")}
@@ -92,7 +86,7 @@ export function Footer({ params: { lng } }: FooterProps) {
               </li>
               <li>
                 <Link
-                  href={`/${lng}/terms-of-service`}
+                  href={`/terms-of-service`}
                   className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
                 >
                   {t("terms_of_service")}

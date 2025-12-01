@@ -180,24 +180,24 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex justify-between items-start gap-4">
           <div className="flex-1">
-            <h3 className="text-lg font-['Merriweather'] font-semibold text-gray-900 dark:text-white">{plan.title}</h3>
-            <p className="text-sm font-['Inter'] text-gray-600 dark:text-gray-400 mt-1">{plan.description}</p>
+            <h3 className="text-lg font-merriweather font-semibold text-gray-900 dark:text-white">{plan.title}</h3>
+            <p className="text-sm font-inter text-gray-600 dark:text-gray-400 mt-1">{plan.description}</p>
           </div>
-          <span className="inline-block px-3 py-1 bg-gray-100 dark:bg-[#1a1d2e] text-gray-700 dark:text-gray-300 text-xs font-['Inter'] rounded-none border border-gray-200 dark:border-gray-700">
+          <span className="inline-block px-3 py-1 bg-gray-100 dark:bg-[#1a1d2e] text-gray-700 dark:text-gray-300 text-xs font-inter rounded-none border border-gray-200 dark:border-gray-700">
             {plan.category}
           </span>
         </div>
       </div>
       
       <div className="flex-1 p-6 space-y-4">
-        <div className="flex justify-between text-sm font-['Inter'] text-gray-600 dark:text-gray-400">
+        <div className="flex justify-between text-sm font-inter text-gray-600 dark:text-gray-400">
           <span>{plan.duration || plan.readings?.length || 0} dagen</span>
           <span>{plan.readings?.length || 0} lezingen</span>
         </div>
         
         {plan.isEnrolled && (
           <div className="bg-gray-50 dark:bg-[#1a1d2e] p-3 border border-gray-200 dark:border-gray-700">
-            <div className="flex justify-between text-sm font-['Inter']">
+            <div className="flex justify-between text-sm font-inter">
               <span className="text-gray-900 dark:text-gray-300">Voortgang</span>
               <span className="text-gray-900 dark:text-gray-300">{plan.progressPercentage || 0}%</span>
             </div>
@@ -207,7 +207,7 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
                 style={{ width: `${plan.progressPercentage || 0}%` }}
               ></div>
             </div>
-            <p className="text-xs font-['Inter'] text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-xs font-inter text-gray-500 dark:text-gray-400 mt-1">
               {plan.completedDays || 0} van {plan.duration || plan.readings?.length || 0} dagen voltooid
             </p>
           </div>
@@ -218,14 +218,14 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
             <>
               <Button 
                 onClick={handleEnrollment} 
-                className="flex-1 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none font-['Inter']"
+                className="flex-1 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none font-inter"
                 disabled={isLoading}
               >
                 {isLoading ? 'Bezig...' : 'Inschrijven'}
               </Button>
               <Button 
                 onClick={handleStartReading}
-                className="bg-white dark:bg-[#1a1d2e] text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#262626] rounded-none font-['Inter']"
+                className="bg-white dark:bg-[#1a1d2e] text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#262626] rounded-none font-inter"
                 disabled={isLoading}
               >
                 Preview
@@ -236,14 +236,14 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
             <>
               <Button 
                 onClick={handleContinue}
-                className="flex-1 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none font-['Inter']"
+                className="flex-1 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none font-inter"
                 disabled={isLoading}
               >
                 Lees verder
               </Button>
               <Button 
                 onClick={handleUnenrollment}
-                className="bg-white dark:bg-[#1a1d2e] text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#262626] rounded-none font-['Inter'] text-sm"
+                className="bg-white dark:bg-[#1a1d2e] text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#262626] rounded-none font-inter text-sm"
                 disabled={isLoading}
               >
                 {isLoading ? 'Bezig...' : 'Uitschrijven'}
@@ -252,12 +252,12 @@ export default function PlanCard({ plan, onEnrollmentChange }: PlanCardProps) {
           )}
         </div>
 
-        <div className="text-xs font-['Inter'] text-gray-500 dark:text-gray-400 pt-2">
+        <div className="text-xs font-inter text-gray-500 dark:text-gray-400 pt-2">
           Gemaakt door {plan.createdBy?.name || 'Onbekend'}
         </div>
         
         {plan.isPublic && (
-          <span className="inline-block px-2 py-1 bg-gray-100 dark:bg-[#1a1d2e] text-gray-700 dark:text-gray-300 text-xs font-['Inter'] rounded-none border border-gray-200 dark:border-gray-700">
+          <span className="inline-block px-2 py-1 bg-gray-100 dark:bg-[#1a1d2e] text-gray-700 dark:text-gray-300 text-xs font-inter rounded-none border border-gray-200 dark:border-gray-700">
             Openbaar
           </span>
         )}

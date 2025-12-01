@@ -14,11 +14,10 @@ interface ProfileFormProps {
   initialName: string
   initialEmail: string
   initialBio: string
-  lng: string
 }
 
-export function ProfileForm({ initialName, initialEmail, initialBio, lng }: ProfileFormProps) {
-  const { t } = useTranslation(lng, "profile")
+export function ProfileForm({ initialName, initialEmail, initialBio }: ProfileFormProps) {
+  const { t } = useTranslation("profile")
   const [name, setName] = useState(initialName || "")
   const [bio, setBio] = useState(initialBio || "")
   const [isLoading, setIsLoading] = useState(false)

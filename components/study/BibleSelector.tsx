@@ -37,11 +37,11 @@ export default function BibleSelector({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-1 sm:gap-2 md:gap-4">
         {/* Version Selector */}
         <div className="space-y-1 sm:space-y-2 md:space-y-4">
-          <label className="hidden md:block text-xs md:text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
+          <label className="hidden md:block text-xs md:text-sm font-inter font-medium text-gray-700 dark:text-gray-300">
             {t('translation')}
           </label>
           <select
-            className="w-full px-1.5 py-1 text-xs sm:text-sm font-['Inter'] border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
+            className="w-full px-1.5 py-1 text-xs sm:text-sm font-inter border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
             value={selectedVersion || ''}
             onChange={(e) => onVersionChange(e.target.value)}
             disabled={loadingVersions || versions.length === 0}
@@ -62,11 +62,11 @@ export default function BibleSelector({
         <div className="grid grid-cols-2 md:contents gap-1 sm:gap-2 md:gap-4">
           {/* Book Selector */}
           <div className="space-y-1 sm:space-y-2 md:space-y-4">
-            <label className="hidden md:block text-xs md:text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
+            <label className="hidden md:block text-xs md:text-sm font-inter font-medium text-gray-700 dark:text-gray-300">
               {t('book')}
             </label>
             <select
-              className="w-full px-1.5 py-1 text-xs sm:text-sm font-['Inter'] border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
+              className="w-full px-1.5 py-1 text-xs sm:text-sm font-inter border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
               value={selectedBook}
               onChange={(e) => onBookChange(e.target.value)}
               disabled={loadingBooks || books.length === 0}
@@ -85,11 +85,11 @@ export default function BibleSelector({
 
           {/* Chapter Selector */}
           <div className="space-y-1 sm:space-y-2 md:space-y-4">
-            <label className="hidden md:block text-xs md:text-sm font-['Inter'] font-medium text-gray-700 dark:text-gray-300">
+            <label className="hidden md:block text-xs md:text-sm font-inter font-medium text-gray-700 dark:text-gray-300">
               {t('chapter')}
             </label>
             <select
-              className="w-full px-1.5 py-1 text-xs sm:text-sm font-['Inter'] border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
+              className="w-full px-1.5 py-1 text-xs sm:text-sm font-inter border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#798777] focus:border-[#798777] rounded-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-[#9aaa98] dark:focus:border-[#9aaa98]"
               value={selectedChapter}
               onChange={(e) => onChapterChange(Number(e.target.value))}
               disabled={loadingChapters || chapters.length === 0}

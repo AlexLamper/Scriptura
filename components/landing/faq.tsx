@@ -4,14 +4,8 @@ import { useTranslation } from "../../app/i18n/client"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion"
 import Image from "next/image"
 
-interface FAQSectionProps {
-  params: {
-    lng: string
-  }
-}
-
-export function FAQSection({ params: { lng } }: FAQSectionProps) {
-  const { t } = useTranslation(lng, "faq")
+export function FAQSection() {
+  const { t } = useTranslation("faq")
   const faqs = t("items", { returnObjects: true }) as {
     question: string
     answer: string

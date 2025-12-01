@@ -67,7 +67,10 @@ export default {
         sm: "calc(var(--radius) - 4px)"
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        sans: ["var(--font-inter)", "sans-serif"],
+        serif: ["var(--font-merriweather)", "serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
+        merriweather: ["var(--font-merriweather)", "serif"],
       }
     }
   },

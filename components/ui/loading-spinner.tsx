@@ -26,7 +26,7 @@ export function LoadingSpinner({
       <div className="text-center">
         <Loader2 className={`${sizeClasses[size]} animate-spin text-[#798777] mx-auto mb-4`} />
         {message && (
-          <p className="font-['Inter'] text-gray-700 text-base font-medium dark:text-gray-200">
+          <p className="font-inter text-gray-700 text-base font-medium dark:text-gray-200">
             {message}
           </p>
         )}

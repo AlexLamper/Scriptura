@@ -5,14 +5,8 @@ import { Star } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
 import { motion } from "framer-motion"
 
-interface TestimonialsSectionProps {
-  params: {
-    lng: string
-  }
-}
-
-export function TestimonialsSection({ params: { lng } }: TestimonialsSectionProps) {
-  const { t } = useTranslation(lng, "testimonials")
+export function TestimonialsSection() {
+  const { t } = useTranslation("testimonials")
 
   const testimonials = [
     {

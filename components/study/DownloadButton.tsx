@@ -115,7 +115,7 @@ export default function DownloadButton({
             <button
               onClick={handleDownloadChapter}
               disabled={!selectedBook || !selectedChapter}
-              className="w-full text-left px-2 py-1 text-xs sm:text-sm font-['Inter'] text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full text-left px-2 py-1 text-xs sm:text-sm font-inter text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {t('download_chapter')}
             </button>

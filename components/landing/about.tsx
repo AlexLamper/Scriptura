@@ -3,14 +3,8 @@
 import { useTranslation } from "../../app/i18n/client"
 import Image from "next/image"
 
-interface AboutSectionProps {
-  params: {
-    lng: string
-  }
-}
-
-export function AboutSection({ params: { lng } }: AboutSectionProps) {
-  const { t } = useTranslation(lng, "about")
+export function AboutSection() {
+  const { t } = useTranslation("about")
 
   const stats = [
     {

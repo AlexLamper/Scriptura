@@ -4,20 +4,15 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "../app/i18n/client";
 import { BookOpen } from "lucide-react";
 
-interface DailyBibleVerseProps {
-  params: {
-    lng: string;
-  };
-}
-
 interface Verse {
   reference?: string;
   text: string;
   translation?: string;
 }
 
-export default function DailyBibleVerse({ params: { lng } }: DailyBibleVerseProps) {
-  const { t } = useTranslation(lng, "daily");
+export default function DailyBibleVerse() {
+  const { t, i18n } = useTranslation("daily");
+  const lng = i18n.resolvedLanguage || "en";
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,7 +64,7 @@ export default function DailyBibleVerse({ params: { lng } }: DailyBibleVerseProp
       .finally(() => {
         setLoading(false);
       });
-  }, [lng, t]);
+  }, [t, lng]);
   
   return (
     <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-md p-6 max-w-3xl mx-auto my-6 transition-colors">

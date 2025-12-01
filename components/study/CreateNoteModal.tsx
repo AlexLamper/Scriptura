@@ -36,7 +36,6 @@ interface CreateNoteModalProps {
   verse?: number;
   verseText: string;
   translation?: string;
-  language?: string;
   onSave?: (note: Note) => void;
 }
 
@@ -58,10 +57,9 @@ export function CreateNoteModal({
   verse,
   verseText,
   translation = "ASV",
-  language = "en",
   onSave,
 }: CreateNoteModalProps) {
-  const { t } = useTranslation(language, "notes");
+  const { t } = useTranslation("notes");
   const [noteText, setNoteText] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
@@ -113,8 +111,7 @@ export function CreateNoteModal({
         highlightColor: selectedColor,
         tags,
         isPrivate,
-        type: noteType,
-        language
+        type: noteType
       };
 
       const response = await fetch("/api/notes", {

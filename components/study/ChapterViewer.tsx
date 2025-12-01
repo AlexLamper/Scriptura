@@ -7,7 +7,6 @@ type Props = {
   book: string;
   chapter: number;
   maxChapter: number;
-  language?: string;
 };
 
 type VerseData = { [key: string]: string };
@@ -22,7 +21,6 @@ export default function ChapterViewer({
   version,
   book,
   chapter,
-  language = "en",
 }: Props) {
   const [verses, setVerses] = useState<VerseData>({});
   const [loading, setLoading] = useState(false);
@@ -113,7 +111,7 @@ export default function ChapterViewer({
         <div className="flex items-center justify-center py-24">
           <div className="text-center">
             <Loader2 className="h-10 w-10 animate-spin text-[#798777] mx-auto mb-6" />
-            <p className="font-['Inter'] text-gray-700 text-lg font-medium dark:text-gray-200">Bijbeltekst laden...</p>
+            <p className="font-inter text-gray-700 text-lg font-medium dark:text-gray-200">Bijbeltekst laden...</p>
           </div>
         </div>
       )}
@@ -122,8 +120,8 @@ export default function ChapterViewer({
         <div className="flex items-center justify-center py-24">
           <div className="text-center max-w-md">
             <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-6" />
-            <p className="font-['Merriweather'] text-red-600 font-semibold mb-3 text-lg dark:text-red-400">Fout bij laden</p>
-            <p className="font-['Inter'] text-gray-700 dark:text-gray-200">{error}</p>
+            <p className="font-merriweather text-red-600 font-semibold mb-3 text-lg dark:text-red-400">Fout bij laden</p>
+            <p className="font-inter text-gray-700 dark:text-gray-200">{error}</p>
           </div>
         </div>
       )}
@@ -133,7 +131,7 @@ export default function ChapterViewer({
           <div className="space-y-2 text-justify">
             {Object.entries(verses).map(([verseNumber, text]) => (
               <div key={verseNumber} className="group relative">
-                <p className="font-['Inter'] dark:text-gray-100 leading-relaxed text-[#262626]">
+                <p className="font-inter dark:text-gray-100 leading-relaxed text-[#262626]">
                   <sup className="font-semibold text-gray-700 dark:text-gray-300 mr-1">
                     {verseNumber}
                   </sup>
@@ -164,7 +162,6 @@ export default function ChapterViewer({
               verse={parseInt(selectedVerse.verseNumber)}
               verseText={selectedVerse.text}
               translation={version || "Statenvertaling"}
-              language={language}
               onSave={handleNoteSaved}
             />
           )}
@@ -172,7 +169,7 @@ export default function ChapterViewer({
       )}
 
       {!loading && !error && Object.keys(verses).length === 0 && (
-        <div className="py-12 text-center font-['Inter'] text-gray-500 dark:text-gray-300">
+        <div className="py-12 text-center font-inter text-gray-500 dark:text-gray-300">
           Geen bijbeltekst gevonden voor dit hoofdstuk. Probeer een ander hoofdstuk.
         </div>
       )}

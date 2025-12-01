@@ -161,7 +161,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
-          <p className="font-['Inter'] text-gray-700 text-base font-medium dark:text-gray-200">
+          <p className="font-inter text-gray-700 text-base font-medium dark:text-gray-200">
             Commentaar laden...
           </p>
         </div>
@@ -175,10 +175,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
       <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
         <CardContent className="py-12 text-center">
           <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
-          <p className="font-['Merriweather'] text-red-600 font-semibold mb-2 text-base dark:text-red-400">
+          <p className="font-merriweather text-red-600 font-semibold mb-2 text-base dark:text-red-400">
             Error loading commentary
           </p>
-          <p className="font-['Inter'] text-gray-700 dark:text-gray-200 text-sm">{error}</p>
+          <p className="font-inter text-gray-700 dark:text-gray-200 text-sm">{error}</p>
         </CardContent>
       </Card>
     );
@@ -189,7 +189,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
     return (
       <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
         <CardContent className="py-12 text-center text-gray-500 dark:text-gray-300 text-sm">
-          <p className="font-['Inter']">Geen commentaar beschikbaar voor dit hoofdstuk.</p>
+          <p className="font-inter">Geen commentaar beschikbaar voor dit hoofdstuk.</p>
         </CardContent>
       </Card>
     );
@@ -199,11 +199,11 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   return (
     <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 font-['Merriweather'] text-[#262626] dark:text-white">
+        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-white">
           <MessageCircle className="w-6 h-6 text-[#798777]" />
           Bijbelcommentaar: {book} {chapter}
         </CardTitle>
-        <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
+        <p className="font-inter text-sm text-gray-600 dark:text-gray-400">
           Verdieping en uitleg bij de geselecteerde passage uit de Bijbel.
         </p>
       </CardHeader>
@@ -220,10 +220,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
               value={`verse-${key}`}
               className="border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#232325]"
             >
-              <AccordionTrigger className="px-4 py-3 font-['Merriweather'] font-semibold text-[#262626] dark:text-gray-100 hover:no-underline">
+              <AccordionTrigger className="px-4 py-3 font-merriweather font-semibold text-[#262626] dark:text-gray-100 hover:no-underline">
                 Vers {key}
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-4 font-['Inter'] text-gray-700 text-sm leading-relaxed dark:text-gray-200 whitespace-pre-line">
+              <AccordionContent className="px-4 pb-4 font-inter text-gray-700 text-sm leading-relaxed dark:text-gray-200 whitespace-pre-line">
                 {text}
               </AccordionContent>
             </AccordionItem>

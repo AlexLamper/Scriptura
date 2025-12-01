@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useParams, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useTranslation } from "../../app/i18n/client"
 import {
   Sidebar,
@@ -49,19 +49,14 @@ const mainNavItems = [
 ]
 
 export function AppSidebar({ ...props }) {
-  const params = useParams()
   const pathname = usePathname()
-  const lang = params.lng || "en"
-  const { t } = useTranslation(lang as string, "sidebar")
+  const { t } = useTranslation("sidebar")
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isClient, setIsClient] = useState(false)
 
-  const prependLang = (url: string) => `/${lang}${url}`
-
   // Check if a route is active
   const isActive = (url: string) => {
-    const fullUrl = prependLang(url)
-    return pathname === fullUrl
+    return pathname === url
   }
   useEffect(() => {
     setIsClient(true)
@@ -106,7 +101,7 @@ export function AppSidebar({ ...props }) {
     >
       <SidebarHeader>
         <SidebarMenu>
-          <Link href={prependLang('/study')} className="flex items-center m-1">
+          <Link href={'/study'} className="flex items-center m-1">
             <Image src="/en/images/logo-text.svg" alt="Scriptura Logo" width={100} height={32} className="object-contain ml-2 mt-2 mb-2 mr-4" />
           </Link>
         </SidebarMenu>
@@ -120,7 +115,7 @@ export function AppSidebar({ ...props }) {
                 <SidebarMenuItem key={item.titleKey}>
                   <SidebarMenuButton asChild>
                     <Link 
-                      href={prependLang(item.url)}
+                      href={item.url}
                       className={`flex items-center space-x-2 rounded-md px-2 py-1.5 transition-colors ${
                         isActive(item.url)
                           ? 'bg-[#798777]/15 text-[#798777] dark:bg-[#798777]/20 dark:text-[#9aaa98]'

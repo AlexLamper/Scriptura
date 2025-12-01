@@ -42,62 +42,37 @@ export async function middleware(req: NextRequest) {
   // Skip middleware for API routes
   if (pathname.startsWith("/api/")) {
     const response = NextResponse.next();
-    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Origin", "https://scriptura.cloud");
     response.headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");
     return response;
   }
 
-  // Check if the path already has a language prefix
-  const pathnameHasLocale = languages.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  const locale = getLocale(req);
+  const response = NextResponse.next();
 
-  // If there's no locale in the pathname, redirect to add the appropriate locale
-  if (!pathnameHasLocale) {
-    const locale = getLocale(req);
-    const redirectUrl = new URL(`/${locale}${pathname}`, req.url);
-    const response = NextResponse.redirect(redirectUrl);
-    
-    // Set the locale cookie for future requests
+  // Set the locale cookie if it's missing or different
+  if (!req.cookies.has(cookieName) || req.cookies.get(cookieName)?.value !== locale) {
     response.cookies.set(cookieName, locale, { 
       path: "/",
       maxAge: 60 * 60 * 24 * 365, // 1 year
-      httpOnly: false, // Allow client-side access for language switcher
+      httpOnly: false, 
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax'
     });
-    
-    return response;
   }
-
-  // If we reach here, the pathname already has a locale
-  // Extract the current locale from the pathname
-  const currentLocale = pathname.split("/")[1];
-
-  // Create a response object
-  const response = NextResponse.next();
-
-  // Set or update the language cookie
-  response.cookies.set(cookieName, currentLocale, { 
-    path: "/",
-    maxAge: 60 * 60 * 24 * 365, // 1 year
-    httpOnly: false, // Allow client-side access for language switcher
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax'
-  });
 
   // Authentication handling
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   // Redirect logged-in users from `/` to `/study`
-  if (session && pathname === `/${currentLocale}`) {
-    return NextResponse.redirect(new URL(`/${currentLocale}/study`, req.url));
+  if (session && pathname === `/`) {
+    return NextResponse.redirect(new URL(`/study`, req.url));
   }
 
   // Redirect unauthenticated users away from `/study` and `/admin`
-  if (!session && (pathname.endsWith("/study") || pathname.endsWith("/admin"))) {
-    return NextResponse.redirect(new URL(`/${currentLocale}/`, req.url));
+  if (!session && (pathname.startsWith("/study") || pathname.startsWith("/admin"))) {
+    return NextResponse.redirect(new URL(`/`, req.url));
   }
 
   return response;

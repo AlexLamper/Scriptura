@@ -18,18 +18,19 @@ i18next
     ...getOptions(),
     lng: undefined, // detect language on client side
     detection: {
-      order: ["path", "htmlTag", "cookie", "navigator"],
-      lookupFromPathIndex: 0,
-      excludeCacheFor: ["csp", "images"], // Ensures static paths are untouched
+      order: ["cookie", "htmlTag", "navigator"],
+      caches: ["cookie"],
+      cookieName: cookieName,
     },
     preload: runsOnServerSide ? languages : [],
   })
 
 
-export function useTranslation(lng, ns, options) {
+export function useTranslation(ns, options) {
   const [cookies, setCookie] = useCookies([cookieName])
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret
+  const lng = i18n.resolvedLanguage
 
   // Handle server-side language change
   if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
@@ -40,14 +41,10 @@ export function useTranslation(lng, ns, options) {
   // Sync language change on client side
   useEffect(() => {
     if (!lng) return
-    if (i18n.resolvedLanguage === lng) return
-    
-    const timer = setTimeout(() => {
-      i18n.changeLanguage(lng)
-    }, 0)
-    return () => clearTimeout(timer)
+    if (cookies[cookieName] === lng) return
+    setCookie(cookieName, lng, { path: '/' })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lng])
+  }, [lng, cookies, setCookie])
 
   // Sync cookie with language
   useEffect(() => {

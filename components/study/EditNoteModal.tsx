@@ -31,7 +31,6 @@ interface EditNoteModalProps {
   isOpen: boolean;
   onClose: () => void;
   note: Note | null;
-  language?: string;
   onSave?: (note: Note) => void;
 }
 
@@ -48,10 +47,9 @@ export function EditNoteModal({
   isOpen,
   onClose,
   note,
-  language = "en",
   onSave,
 }: EditNoteModalProps) {
-  const { t } = useTranslation(language, "notes");
+  const { t } = useTranslation("notes");
   const [noteText, setNoteText] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");

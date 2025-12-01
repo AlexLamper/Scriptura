@@ -11,11 +11,10 @@ import { useTranslation } from "../../app/i18n/client"
 interface ProfileImageUploadProps {
   initialImage?: string
   userName: string
-  lng: string
 }
 
-export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImageUploadProps) {
-  const { t } = useTranslation(lng, "profile")
+export function ProfileImageUpload({ initialImage, userName }: ProfileImageUploadProps) {
+  const { t } = useTranslation("profile")
   const [image, setImage] = useState(initialImage)
   const [isUploading, setIsUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -115,7 +114,7 @@ export function ProfileImageUpload({ initialImage, userName, lng }: ProfileImage
         </Avatar>
         <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageChange} />
       </div>
-      <Button onClick={handleImageClick} disabled={isUploading} className="bg-transparent border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 font-['Inter'] rounded-none">
+      <Button onClick={handleImageClick} disabled={isUploading} className="bg-transparent border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 font-inter rounded-none">
         {isUploading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("uploading")}

@@ -18,13 +18,12 @@ interface Note {
 interface ChapterNotesProps {
   book: string;
   chapter: number;
-  language: string;
   className?: string;
 }
 
-export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
+export function ChapterNotes({ book, chapter }: ChapterNotesProps) {
   const { data: session } = useSession();
-  const { t } = useTranslation(language, 'study');
+  const { t } = useTranslation('study');
   
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(false);
@@ -78,7 +77,7 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
-          <p className="font-['Inter'] text-gray-700 text-base font-medium dark:text-gray-200">
+          <p className="font-inter text-gray-700 text-base font-medium dark:text-gray-200">
             Notities laden...
           </p>
         </div>
@@ -91,7 +90,7 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
     return (
       <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
         <CardContent className="py-12 text-center">
-          <p className="font-['Inter'] text-red-600 dark:text-red-400 text-sm">{error}</p>
+          <p className="font-inter text-red-600 dark:text-red-400 text-sm">{error}</p>
         </CardContent>
       </Card>
     );
@@ -102,7 +101,7 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
     return (
       <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
         <CardContent className="py-12 text-center text-gray-500 dark:text-gray-300">
-          <p className="font-['Inter'] text-sm">Nog geen notities voor dit hoofdstuk.</p>
+          <p className="font-inter text-sm">Nog geen notities voor dit hoofdstuk.</p>
         </CardContent>
       </Card>
     );
@@ -112,11 +111,11 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
   return (
     <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 font-['Merriweather'] text-[#262626] dark:text-white">
+        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-white">
           <StickyNote className="w-6 h-6 text-[#798777]" />
           {t("notes")} {book} {chapter}
         </CardTitle>
-        <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400">
+        <p className="font-inter text-sm text-gray-600 dark:text-gray-400">
           Jouw persoonlijke notities en inzichten bij deze passage.
         </p>
       </CardHeader>
@@ -126,17 +125,17 @@ export function ChapterNotes({ book, chapter, language }: ChapterNotesProps) {
             <div key={note._id} className="p-4 bg-gray-50 border border-gray-200 dark:bg-[#232325] dark:border-gray-700">
               <div className="flex items-start justify-between mb-2">
                 {note.verseReference && (
-                  <h4 className="font-['Merriweather'] font-medium text-[#798777] dark:text-[#9aaa98] text-sm">
+                  <h4 className="font-merriweather font-medium text-[#798777] dark:text-[#9aaa98] text-sm">
                     {note.verseReference}
                   </h4>
                 )}
-                <div className="flex items-center gap-1 font-['Inter'] text-xs text-gray-500 dark:text-gray-400 ml-auto">
+                <div className="flex items-center gap-1 font-inter text-xs text-gray-500 dark:text-gray-400 ml-auto">
                   <Calendar className="h-3 w-3" />
                   {formatDate(note.createdAt)}
                 </div>
               </div>
               
-              <p className="font-['Inter'] text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
+              <p className="font-inter text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
                 {truncateText(note.noteText)}
               </p>
               

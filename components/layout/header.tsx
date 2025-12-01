@@ -14,18 +14,18 @@ import { useTranslation } from "../../app/i18n/client"
 
 
 interface HeaderProps {
-  params: {
+  params?: {
     lng: string
   }
   title?: string;
 }
 
-export function Header({ params: { lng }, title }: HeaderProps) {
+export function Header({ title }: HeaderProps) {
   const { data: session, status } = useSession()
   const router = useRouter()
   const pathname = usePathname()
-  const { t } = useTranslation(lng, "sidebar")
-  const { t: tHeader } = useTranslation(lng, "header")
+  const { t } = useTranslation("sidebar")
+  const { t: tHeader } = useTranslation("header")
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
@@ -187,7 +187,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
                 <Button
                   variant="ghost"
                   className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-                  onClick={() => signOut({ callbackUrl: `/${lng}` })}
+                  onClick={() => signOut({ callbackUrl: `/` })}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   {tHeader("sign_out")}
@@ -237,7 +237,7 @@ export function Header({ params: { lng }, title }: HeaderProps) {
               <Button
                 variant="ghost"
                 className="w-full justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#3b3b3f]"
-                onClick={() => signOut({ callbackUrl: `/${lng}` })}
+                  onClick={() => signOut({ callbackUrl: `/` })}
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 {tHeader("sign_out")}

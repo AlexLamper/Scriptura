@@ -5,14 +5,8 @@ import { useTranslation } from "../../app/i18n/client"
 import { Button } from "../../components/ui/button"
 import { Check, ArrowRight } from "lucide-react"
 
-interface PricingSectionProps {
-  params: {
-    lng: string
-  }
-}
-
-export function PricingSection({ params: { lng } }: PricingSectionProps) {
-  const { t } = useTranslation(lng, "pricing")
+export function PricingSection() {
+  const { t } = useTranslation("pricing")
 
   const plans = [
     {

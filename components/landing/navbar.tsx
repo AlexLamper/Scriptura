@@ -9,14 +9,8 @@ import { LanguageSwitcher } from "../language-switcher"
 import { ModeToggle } from "../dark-mode-toggle"
 import { useTranslation } from "../../app/i18n/client"
 
-interface HeaderProps {
-  params: {
-    lng: string
-  }
-}
-
-export function Header({ params: { lng } }: HeaderProps) {
-  const { t } = useTranslation(lng, "landing-navbar")
+export function Header() {
+  const { t } = useTranslation("landing-navbar")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -63,7 +57,7 @@ export function Header({ params: { lng } }: HeaderProps) {
               <ModeToggle />
             </div>
             <div className="hidden sm:flex items-center space-x-2">
-              <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
+              <Link href={`/auth/signin`} className="hover:cursor-pointer">
                 <Button size="sm" variant="dark" className="px-4 sm:px-6 text-xs sm:text-sm">
                   {t("signup")}
                 </Button>
@@ -100,7 +94,7 @@ export function Header({ params: { lng } }: HeaderProps) {
                 {t("faq")}
               </Link>
               <div className="flex flex-col space-y-2 pt-3 border-t border-gray-100 dark:border-[#23263a]">
-                <Link href={`/${lng}/auth/signin`} className="hover:cursor-pointer">
+                <Link href={`/auth/signin`} className="hover:cursor-pointer">
                   <Button size="sm" variant="dark" className="px-6">
                     {t("login")}
                   </Button>

@@ -5,15 +5,9 @@ import { Button } from "../components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { useTranslation } from "../app/i18n/client"
 
-interface WhereToStartProps {
-  params: {
-    lng: string
-  }
-}
+export default function WhereToStart() {
 
-export default function WhereToStart({ params: { lng } }: WhereToStartProps) {
-
-  const { t } = useTranslation(lng, "where-to-start")
+  const { t } = useTranslation("where-to-start")
 
   return (
     <div className="w-full mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">

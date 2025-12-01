@@ -5,14 +5,8 @@ import { Button } from "../../components/ui/button"
 import { ArrowRight, BookOpen, FileText, Globe, Cloud } from "lucide-react"
 import { useTranslation } from "../../app/i18n/client"
 
-interface UniqueFeaturesProps {
-  params: {
-    lng: string
-  }
-}
-
-export function UniqueFeaturesSection({ params: { lng } }: UniqueFeaturesProps) {
-  const { t } = useTranslation(lng, "unique-features")
+export function UniqueFeaturesSection() {
+  const { t } = useTranslation("unique-features")
 
   const features = [
     {

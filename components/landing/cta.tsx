@@ -4,14 +4,8 @@ import { useTranslation } from "../../app/i18n/client"
 import { Button } from "../../components/ui/button"
 import { motion } from "framer-motion"
 
-interface CTASectionProps {
-  params: {
-    lng: string
-  }
-}
-
-export function CTASection({ params: { lng } }: CTASectionProps) {
-  const { t } = useTranslation(lng, "cta")
+export function CTASection() {
+  const { t } = useTranslation("cta")
 
   return (
     <section className="py-20 bg-white dark:bg-gradient-to-b dark:from-[#181b23] dark:to-[#23263a] border-gray-200 dark:border-[#23263a]">

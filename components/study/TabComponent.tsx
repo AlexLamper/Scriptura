@@ -12,7 +12,6 @@ interface TabComponentProps {
   selectedBook: string;
   selectedChapter: number;
   selectedVersion?: string | null;
-  language: string;
   t: (key: string) => string;
   versions: string[];
   versionObjects?: { id: string; name: string; abbreviation: string }[];
@@ -25,7 +24,6 @@ export default function TabComponent({
   selectedBook, 
   selectedChapter, 
   selectedVersion, 
-  language = "en", 
   t, 
   onNextChapter,
   onPrevChapter,
@@ -92,7 +90,6 @@ export default function TabComponent({
             <ChapterNotes 
               book={selectedBook} 
               chapter={selectedChapter}
-              language={language}
             />
           </div>
         );
@@ -111,7 +108,7 @@ export default function TabComponent({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-['Inter'] font-medium transition whitespace-nowrap ${
+              className={`flex items-center space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-inter font-medium transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-[#798777]/10 text-[#798777] border-b-2 border-[#798777] dark:bg-[#232325] dark:text-[#9aaa98] dark:border-[#9aaa98]'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-[#2a2d35]'

@@ -1,10 +1,11 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Button } from "../components/ui/button"
 import { Check, Languages } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
 import { cookieName } from "../app/i18n/settings"
+import { useTranslation } from "../app/i18n/client"
 
 const languages = [
   { code: "en", name: "English" },
@@ -13,40 +14,24 @@ const languages = [
 ]
 
 export function LanguageSwitcher() {
-  const pathname = usePathname()
   const router = useRouter()
-
-  // Get current language from path
-  const getCurrentLanguage = () => {
-    if (!pathname) return "en"
-    const pathSegments = pathname.split("/").filter(Boolean)
-    const langFromPath = pathSegments[0]
-    return languages.some((lang) => lang.code === langFromPath) ? langFromPath : "en"
-  }
+  const { i18n } = useTranslation("common")
+  const currentLang = i18n.resolvedLanguage || "en"
 
   // Function to switch language with proper cookie handling
   const switchLanguage = (newLanguage: string) => {
-    const currentLang = getCurrentLanguage()
-
-    // Don't do anything if clicking the current language
     if (newLanguage === currentLang) return
 
-    // Extract the path without the language prefix
-    const pathSegments = pathname.split("/").filter(Boolean)
-    const pathWithoutLang = pathSegments.length > 1 ? `/${pathSegments.slice(1).join("/")}` : "/"
-
-    // Construct the new path with the selected language
-    const newPath = `/${newLanguage}${pathWithoutLang}`
-
     // Set the cookie to remember the user's language preference
-    // This ensures the middleware will use this language for future visits
     document.cookie = `${cookieName}=${newLanguage}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
 
-    // Navigate to the new path
-    router.push(newPath)
+    // Change language in i18next
+    i18n.changeLanguage(newLanguage)
+    
+    // Refresh the page to apply changes on server components
+    router.refresh()
   }
 
-  const currentLang = getCurrentLanguage()
   const currentLanguageName = languages.find((lang) => lang.code === currentLang)?.name || "English"
 
   return (

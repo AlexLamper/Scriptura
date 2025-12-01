@@ -9,12 +9,6 @@ import { Skeleton } from "./ui/skeleton"
 import { Clock, BookOpen, ArrowRight } from "lucide-react"
 import { Badge } from "./ui/badge"
 
-interface DashboardQuizzesProps {
-  params: {
-    lng: string
-  }
-}
-
 interface QuizType {
   _id: string
   title: string
@@ -26,8 +20,8 @@ interface QuizType {
   tags: string[]
 }
 
-export function DashboardQuizzes({ params: { lng } }: DashboardQuizzesProps) {
-  const { t } = useTranslation(lng, "dashboard-quizzes")
+export function DashboardQuizzes() {
+  const { t } = useTranslation("dashboard-quizzes")
   const [quizzes, setQuizzes] = useState<QuizType[]>([])
   const [loading, setLoading] = useState(true)
 

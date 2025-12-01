@@ -5,14 +5,8 @@ import { BookOpen, MessageCircle, Trophy, Search, Bookmark, Calendar } from "luc
 import { useTranslation } from "../../app/i18n/client"
 import { motion } from "framer-motion"
 
-interface FeaturesSectionProps {
-  params: {
-    lng: string
-  }
-}
-
-export function FeaturesSection({ params: { lng } }: FeaturesSectionProps) {
-  const { t } = useTranslation(lng, "features")
+export function FeaturesSection() {
+  const { t } = useTranslation("features")
 
   const features = [
     {

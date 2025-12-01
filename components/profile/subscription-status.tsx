@@ -4,14 +4,12 @@ import Link from "next/link"
 
 interface SubscriptionStatusProps {
   userId: string
-  lng: string
   subscribed?: boolean
   stripeSubscriptionId?: string
   isAdmin?: boolean
 }
 
 export function SubscriptionStatus({
-  lng,
   subscribed = false,
   stripeSubscriptionId,
   isAdmin = false,
@@ -20,7 +18,7 @@ export function SubscriptionStatus({
     <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
-          <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
+          <h2 className="font-merriweather text-lg font-bold text-[#262626] dark:text-white">
             Subscription Status
           </h2>
           {isAdmin && (
@@ -39,15 +37,15 @@ export function SubscriptionStatus({
                 <Crown className="h-3 w-3" />
                 <span>Premium</span>
               </span>
-              <span className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300">Active</span>
+              <span className="font-inter text-sm text-gray-600 dark:text-gray-300">Active</span>
             </div>
-            <p className="font-['Inter'] text-sm text-gray-900 dark:text-gray-100">
+            <p className="font-inter text-sm text-gray-900 dark:text-gray-100">
               You have an active premium subscription. Enjoy access to all premium courses and features!
             </p>
-            <div className="font-['Inter'] text-xs text-gray-500">
+            <div className="font-inter text-xs text-gray-500">
               {stripeSubscriptionId && <p>Subscription ID: {stripeSubscriptionId}</p>}
             </div>
-            <Link href={`/${lng}/account/billing`}>
+            <Link href={`/account/billing`}>
               <Button variant="outline" className="w-full mt-4 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">
                 Manage Subscription
               </Button>
@@ -55,13 +53,13 @@ export function SubscriptionStatus({
           </div>
         ) : (
           <div className="space-y-4">
-            <p className="font-['Inter'] text-sm text-gray-900 dark:text-gray-100">
+            <p className="font-inter text-sm text-gray-900 dark:text-gray-100">
               {isAdmin
                 ? "As an admin, you have access to all premium content without a subscription."
                 : "Upgrade to premium to access exclusive courses and features."}
             </p>
             {!isAdmin && (
-              <Link href={`/${lng}/subscribe`}>
+              <Link href={`/subscribe`}>
                 <Button className="w-full mt-4 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">Upgrade to Premium</Button>
               </Link>
             )}
