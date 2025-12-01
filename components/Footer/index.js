@@ -1,8 +1,8 @@
-import { useTranslation } from '../../../i18n'
+import { useTranslation as getTranslation } from '../../../i18n'
 import { FooterBase } from './FooterBase'
 
 export const Footer = async () => {
-  const { t } = await useTranslation('footer')
-  const lng = 'en' // Default or get from cookie if needed for display, but FooterBase handles it via client
+  const { t, i18n } = await getTranslation('footer')
+  const lng = i18n.language
   return <FooterBase t={t} lng={lng} />
 }

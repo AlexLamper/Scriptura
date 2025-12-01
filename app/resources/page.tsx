@@ -4,8 +4,7 @@ import { useTranslation } from "../i18n/client"
 import { Construction } from "lucide-react"
 
 export default function ResourcesPage() {
-  const { t, i18n } = useTranslation("resources")
-  const lng = i18n.resolvedLanguage
+  const { t } = useTranslation("resources")
 
   return (
     <div className="min-h-screen flex items-center justify-center">

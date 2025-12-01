@@ -43,7 +43,6 @@ export function useTranslation(ns, options) {
     if (!lng) return
     if (cookies[cookieName] === lng) return
     setCookie(cookieName, lng, { path: '/' })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lng, cookies, setCookie])
 
   // Sync cookie with language
