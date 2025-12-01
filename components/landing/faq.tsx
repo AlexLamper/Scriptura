@@ -21,7 +21,7 @@ export function FAQSection() {
             <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
               <div className="relative w-full sm:w-3/4 lg:w-4/5 h-64 sm:h-80 lg:h-[500px]">
                 <Image
-                  src="/en/images/faq.svg"
+                  src="/images/faq.svg"
                   alt="FAQ illustration"
                   fill
                   className="object-contain"

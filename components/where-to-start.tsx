@@ -26,7 +26,7 @@ export default function WhereToStart() {
         <div className="flex justify-center md:justify-end">
           <div className="relative w-full max-w-md">
             <Image
-              src="/en/images/start.png"
+              src="/images/start.png"
               alt="Where to start image"
               width={500}
               height={400}

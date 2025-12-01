@@ -57,7 +57,7 @@ export function HeroSection() {
           <div className="h-64 sm:h-80">
             <div className="relative w-full h-full">
               <Image
-                src={`/en/images/hero.png`}
+                src={`/images/hero.png`}
                 alt="Scripture study illustration"
                 fill
                 className="object-cover opacity-90"
@@ -113,7 +113,7 @@ export function HeroSection() {
         <div className="w-1/2 h-auto">
           <div className="relative w-full h-full min-h-[700px]">
             <Image
-              src={`/en/images/hero.png`}
+              src={`/images/hero.png`}
               alt="Scripture study illustration"
               fill
               className="object-cover opacity-90"

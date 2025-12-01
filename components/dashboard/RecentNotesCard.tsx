@@ -11,12 +11,11 @@ export function RecentNotesCard() {
 }
 
 interface RecentNotesCardProps {
-  lng: string;
 }
 
-export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: RecentNotesCardProps) {
+export const RecentNotesCard = React.memo(function RecentNotesCard({ }: RecentNotesCardProps) {
   const { data: session } = useSession();
-  const { t } = useTranslation(lng, "notes");
+  const { t } = useTranslation("notes");
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +69,7 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
       <CardContent className="px-4 py-4 sm:px-6 sm:py-6">
         <div className="flex items-center justify-between mb-4 gap-2">
           <h3 className="text-lg font-['Merriweather'] font-semibold text-[#262626] dark:text-white">{t("recent_notes_title")}</h3>
-          <Link href={`/${lng}/notes`}>
+          <Link href={`/notes`}>
             <Button variant="ghost" size="sm" className="font-['Inter'] text-[#798777] font-medium hover:bg-[#798777]/10 dark:text-[#9aaa98] dark:hover:bg-[#9aaa98]/10">
               {t("view_all")}
             </Button>
@@ -94,7 +93,7 @@ export const RecentNotesCard = React.memo(function RecentNotesCard({ lng }: Rece
             <p className="font-['Inter'] text-gray-600 dark:text-gray-400 text-sm mb-3">
               {t("no_notes_yet")}
             </p>
-            <Link href={`/${lng}/study`}>
+            <Link href={`/study`}>
               <Button size="sm" variant="outline">
                 {t("start_taking_notes")}
               </Button>

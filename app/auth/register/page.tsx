@@ -11,8 +11,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 import { ModeToggle } from "../../../components/dark-mode-toggle";
 
 export default function RegisterPage() {
-  const { t, i18n } = useTranslation("auth");
-  const lng = i18n.resolvedLanguage;
+  const { t } = useTranslation("auth");
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -84,7 +83,7 @@ export default function RegisterPage() {
 
       if (response.ok) {
         // Registration successful, redirect to sign in
-        router.push(`/${lng}/auth/signin?message=Registration successful! Please sign in.`);
+        router.push(`/auth/signin?message=Registration successful! Please sign in.`);
       } else {
         setError(data.error || t("register.errors.registrationFailed"));
       }
@@ -100,7 +99,7 @@ export default function RegisterPage() {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href={`/${lng}/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
+        <Link href={`/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -119,7 +118,7 @@ export default function RegisterPage() {
           {/* Logo */}
           <div className="flex items-center justify-center mb-8">
             <Image
-              src="/en/images/logo-text.svg"
+              src="/images/logo-text.svg"
               alt="Scriptura Logo"
               width={30}
               height={30}
@@ -248,7 +247,7 @@ export default function RegisterPage() {
           {/* Sign In Link */}
           <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mt-6 text-center">
             {t("register.alreadyHaveAccount")}{" "}
-            <Link href={`/${lng}/auth/signin`} className="text-[#798777] hover:text-[#6a7a68] font-medium">
+            <Link href={`/auth/signin`} className="text-[#798777] hover:text-[#6a7a68] font-medium">
               {t("register.signIn")}
             </Link>
           </p>

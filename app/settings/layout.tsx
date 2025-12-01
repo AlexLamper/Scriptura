@@ -98,10 +98,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://scriptura-edu.com/settings",
-    languages: {
-      en: "https://scriptura-edu.com/en/settings",
-      nl: "https://scriptura-edu.nl/nl/settings",
-    },
   },
 };
 

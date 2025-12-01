@@ -8,14 +8,13 @@ import { useTranslation } from "../../app/i18n/client";
 import Link from "next/link";
 
 interface StudyBibleCardProps {
-  lng: string;
 }
 
-export function StudyBibleCard({ lng }: StudyBibleCardProps) {
-  const { t } = useTranslation(lng, "study");
+export function StudyBibleCard({ }: StudyBibleCardProps) {
+  const { t } = useTranslation("study");
 
   return (
-    <Link href={`/${lng}/study`} className="block" aria-label={t("start_study")}>
+    <Link href={`/study`} className="block" aria-label={t("start_study")}>
       <Card className="h-full shadow-lg border rounded-none dark:shadow-gray-900/20 border-gray-200 dark:border-gray-700 cursor-pointer hover:shadow-xl transition-shadow duration-200 bg-white dark:bg-[#23263a]">
       <CardContent className="h-full px-6 py-6 sm:px-8 sm:py-8 flex flex-col">
         <div className="flex items-start justify-between mb-6 gap-4">

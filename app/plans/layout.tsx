@@ -52,10 +52,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://scriptura-edu.com/plans",
-    languages: {
-      en: "https://scriptura-edu.com/en/plans",
-      nl: "https://scriptura-edu.nl/nl/plans",
-    },
   },
 };
 

@@ -131,7 +131,7 @@ export default function ForgotPasswordPage() {
           {/* Logo */}
           <div className="flex items-center justify-center mb-8">
             <Image
-              src="/en/logo/scriptura.png"
+              src="/logo/scriptura.png"
               alt="Scriptura Logo"
               width={40}
               height={40}

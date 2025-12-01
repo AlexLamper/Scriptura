@@ -101,11 +101,11 @@ export function Header({ title }: HeaderProps) {
   const getPageTitle = () => {
     if (title) return title;
     
-    // Extract routes from pathname (e.g., /en/dashboard -> ['en', 'dashboard'])
+    // Extract routes from pathname (e.g., /dashboard -> ['dashboard'])
     const pathParts = pathname?.split('/').filter(Boolean) || [];
     
-    // Skip the language code (first part) and get the main route
-    const mainRoute = pathParts.length > 1 ? pathParts[1] : 'dashboard';
+    // Get the main route (first part since we removed language prefix)
+    const mainRoute = pathParts.length > 0 ? pathParts[0] : 'dashboard';
     
     // Handle hyphenated routes (e.g., privacy-policy -> privacy_policy)
     const translationKey = mainRoute.replace(/-/g, '_');

@@ -145,8 +145,8 @@ export function generatePageMetadata(
   };
 
   const pageTitle = customTitle || titleTranslations[lng]?.[config.titleKey] || titleTranslations['en'][config.titleKey] || 'Scriptura';
-  const baseUrl = lng === 'en' ? 'https://scriptura-edu.com' : `https://scriptura-edu.${lng}`;
-  const fullUrl = `${baseUrl}${lng !== 'en' ? `/${lng}` : ''}${config.path}`;
+  const baseUrl = 'https://scriptura-edu.com';
+  const fullUrl = `${baseUrl}${config.path}`;
 
   return {
     title: `Scriptura | ${pageTitle}`,
@@ -188,11 +188,6 @@ export function generatePageMetadata(
     },
     alternates: {
       canonical: fullUrl,
-      languages: {
-        en: `https://scriptura-edu.com${config.path}`,
-        nl: `https://scriptura-edu.nl/nl${config.path}`,
-        de: `https://scriptura-edu.de/de${config.path}`,
-      },
     },
   };
 }

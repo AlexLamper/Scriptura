@@ -10,8 +10,7 @@ import { LoadingSpinner } from "../../components/ui/loading-spinner"
 import { useTranslation } from "../i18n/client"
 
 export default function SuccessPage() {
-  const { t, i18n } = useTranslation("success")
-  const lng = i18n.resolvedLanguage
+  const { t } = useTranslation("success")
   const searchParams = useSearchParams()
   const router = useRouter()
   const sessionId = searchParams.get("session_id")
@@ -124,12 +123,12 @@ export default function SuccessPage() {
 
                 {/* Actions */}
                 <div className="flex justify-center gap-4">
-                  <Link href={`/${lng}/study`}>
+                  <Link href={`/study`}>
                     <Button className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] rounded-none">
                       {t("cta_study")}
                     </Button>
                   </Link>
-                  <Link href={`/${lng}/courses`}>
+                  <Link href={`/courses`}>
                     <Button variant="outline" className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 font-['Inter'] rounded-none">
                       {t("cta_courses")}
                     </Button>

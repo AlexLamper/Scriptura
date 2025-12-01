@@ -11,8 +11,7 @@ import { getProviders, signIn, ClientSafeProvider } from "next-auth/react"
 import { Loader2, Eye, EyeOff } from "lucide-react"
 
 export default function SignInPage() {
-  const { t, i18n } = useTranslation("auth")
-  const lng = i18n.resolvedLanguage
+  const { t } = useTranslation("auth")
   
   const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -30,17 +29,17 @@ export default function SignInPage() {
   // Carousel state for right side
   const slides = [
     {
-      image: "/en/images/signin/study.png",
+      image: "/images/signin/study.png",
       heading: t("signin.features.introducingFeatures"),
       text: t("signin.features.analyzeTrends")
     },
     {
-      image: "/en/images/signin/nature.jpg",
+      image: "/images/signin/nature.jpg",
       heading: t("signin.features.trackProgress"),
       text: t("signin.features.trackProgressDesc")
     },
     {
-      image: "/en/images/signin/sea.jpg",
+      image: "/images/signin/sea.jpg",
       heading: t("signin.features.joinCommunity"),
       text: t("signin.features.joinCommunityDesc")
     }
@@ -61,7 +60,7 @@ export default function SignInPage() {
   const handleSignIn = async (providerId: string) => {
     setIsLoading(true)
     setLoadingProvider(providerId)
-    await signIn(providerId, { callbackUrl: `/${lng}/study` })
+    await signIn(providerId, { callbackUrl: `/study` })
     // Note: The page will redirect, but we set this in case there's a delay
     setTimeout(() => {
       setIsLoading(false)
@@ -90,7 +89,7 @@ export default function SignInPage() {
       if (result?.error) {
         setEmailSignInError(t("signin.errors.invalidCredentials"))
       } else if (result?.ok) {
-        window.location.href = `/${lng}/study`
+        window.location.href = `/study`
       }
     } catch (error) {
       console.error("Sign in error:", error)
@@ -110,7 +109,7 @@ export default function SignInPage() {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href={`/${lng}`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
+        <Link href={`/`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -131,7 +130,7 @@ export default function SignInPage() {
           <div className="w-full max-w-md mx-auto mb-6">
             <div className="flex items-center">
               <Image
-                src="/en/images/logo-text.svg"
+                src="/images/logo-text.svg"
                 alt="Scriptura Logo"
                 width={20}
                 height={20}
@@ -144,7 +143,7 @@ export default function SignInPage() {
           <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
             <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-white mb-2 text-left">{t("signin.title")}</h1>
             <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mb-6 text-left">
-              {t("signin.alreadyHaveAccount")} <Link href={`/${lng}/auth/register`} className="text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.createNow")}</Link>
+              {t("signin.alreadyHaveAccount")} <Link href={`/auth/register`} className="text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.createNow")}</Link>
             </p>
             
             {/* Error Message */}
@@ -197,7 +196,7 @@ export default function SignInPage() {
                   <input type="checkbox" className="mr-2 border-gray-300 dark:border-gray-600 text-[#798777] focus:ring-[#798777]" />
                   {t("signin.saveAccount")}
                 </label>
-                <Link href={`/${lng}/auth/forgot-password`} className="text-xs font-['Inter'] text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.forgotPassword")}</Link>
+                <Link href={`/auth/forgot-password`} className="text-xs font-['Inter'] text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.forgotPassword")}</Link>
               </div>
               
               <button 

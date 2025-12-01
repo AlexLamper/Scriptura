@@ -22,7 +22,7 @@ export function Header() {
             <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative w-28 h-10 sm:w-32 sm:h-12">
                 <Image
-                  src="/en/images/logo-text.svg"
+                  src="/images/logo-text.svg"
                   alt="Scriptura"
                   fill
                   className="object-contain rounded-md group-hover:scale-105 transition-transform"
@@ -33,19 +33,19 @@ export function Header() {
 
           {/* Centered nav */}
           <nav className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center space-x-8">
-            <Link href="#about" className="text-gray-600 dark:text-blue-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <Link href="#about" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("about")}
             </Link>
-            <Link href="#features" className="text-gray-600 dark:text-blue-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <Link href="#features" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("features")}
             </Link>
-            <Link href="#testimonials" className="text-gray-600 dark:text-blue-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <Link href="#testimonials" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("testimonials")}
             </Link>
-            <Link href="#pricing" className="text-gray-600 dark:text-blue-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <Link href="#pricing" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("pricing")}
             </Link>
-            <Link href="#faq" className="text-gray-600 dark:text-blue-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <Link href="#faq" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("faq")}
             </Link>
           </nav>

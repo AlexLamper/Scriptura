@@ -101,10 +101,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://scriptura-edu.com/courses",
-    languages: {
-      en: "https://scriptura-edu.com/en/courses",
-      nl: "https://scriptura-edu.nl/nl/courses",
-    },
   },
 };
 

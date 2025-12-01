@@ -35,12 +35,12 @@ interface BiblePlan {
 }
 
 interface PlanDetailPageProps {
-  params: Promise<{ lng: string; id: string }>;
+  params: Promise<{ id: string }>;
 }
 
 export default function PlanDetailPage({ params }: PlanDetailPageProps) {
   const resolvedParams = React.use(params);
-  const { lng, id } = resolvedParams;
+  const { id } = resolvedParams;
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -61,7 +61,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
           description: 'Het gevraagde leesplan kon niet worden geladen',
           variant: 'destructive',
         });
-        router.push(`/${lng}/plans`);
+        router.push(`/plans`);
       }
     } catch (error) {
       console.error('Error loading plan:', error);
@@ -73,7 +73,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
     } finally {
       setLoading(false);
     }
-  }, [id, lng, router]);
+  }, [id, router]);
 
   useEffect(() => {
     if (session && id) {
@@ -176,7 +176,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
       day: reading.day.toString()
     });
     
-    router.push(`/${lng}/read?${queryParams.toString()}`);
+    router.push(`/read?${queryParams.toString()}`);
   };
 
   const getNextReading = () => {
@@ -221,7 +221,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
       <div className="mb-6">
         <Button 
           variant="ghost" 
-          onClick={() => router.push(`/${lng}/plans`)}
+          onClick={() => router.push(`/plans`)}
           className="mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
