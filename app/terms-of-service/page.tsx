@@ -6,8 +6,7 @@ import { useTranslation } from "../i18n/client";
 import { Footer } from "../../components/Footer/client";
 
 export default function TermsOfServicePage() {
-  const { t, i18n } = useTranslation("terms-of-service");
-  const lng = i18n.resolvedLanguage;
+  const { t } = useTranslation("terms-of-service");
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-[#18181bf2] flex flex-col">
