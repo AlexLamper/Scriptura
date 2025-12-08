@@ -5,6 +5,9 @@ import Script from "next/script";
 import { ThemeProvider } from "../components/providers/theme-provider";
 import { cookieName, fallbackLng } from "./i18n/settings";
 import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../lib/authOptions";
+import { OnboardingWrapper } from "../components/onboarding/onboarding-wrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -94,11 +97,10 @@ export const metadata: Metadata = {
   }
 };
 
-
-
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const lng = cookieStore.get(cookieName)?.value || fallbackLng;
 
@@ -160,6 +162,9 @@ export default async function RootLayout({
           <div id="main-content" className="min-h-screen mx-auto w-full">
             {children}
           </div>
+          {session?.user && (
+            <OnboardingWrapper shouldShow={!session.user.onboardingCompleted} />
+          )}
         </ThemeProvider>
         {/* Load External Scripts After Interactive */}
         <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />

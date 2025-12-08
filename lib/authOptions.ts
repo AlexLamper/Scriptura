@@ -78,6 +78,7 @@ export const authOptions: NextAuthOptions = {
         if (user) {
           session.user.id = user._id.toString();
           session.user.isAdmin = user.isAdmin || false;
+          session.user.onboardingCompleted = user.preferences?.onboardingCompleted || false;
         }
       }
       return session;

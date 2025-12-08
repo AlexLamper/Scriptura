@@ -14,30 +14,22 @@ export async function POST(request: NextRequest) {
 
     await connectMongoDB();
     
-    const { language, translation, intent } = await request.json();
+    const { language, translation, intent, onboardingCompleted } = await request.json();
 
-    if (!language || !translation || !intent) {
-      return NextResponse.json(
-        { error: "Missing required preferences: language, translation, and intent" },
-        { status: 400 }
-      );
-    }
+    const updateData: any = {
+      "preferences.updatedAt": new Date()
+    };
+
+    if (language) updateData["preferences.language"] = language;
+    if (translation) updateData["preferences.translation"] = translation;
+    if (intent) updateData["preferences.intent"] = intent;
+    if (onboardingCompleted !== undefined) updateData["preferences.onboardingCompleted"] = onboardingCompleted;
 
     // Update user preferences
     const updatedUser = await User.findOneAndUpdate(
       { email: session.user.email },
-      {
-        $set: {
-          preferences: {
-            language,
-            translation,
-            intent,
-            onboardingCompleted: true,
-            updatedAt: new Date()
-          }
-        }
-      },
-      { new: true, upsert: true }
+      { $set: updateData },
+      { new: true }
     );
 
     return NextResponse.json({

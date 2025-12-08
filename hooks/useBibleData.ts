@@ -102,7 +102,44 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           console.log('No last read chapter found, using defaults');
         }
 
-        // Set default version based on language preference (only if no last read found)
+        // If not restored from last read, try to use user preferences
+        if (!restored) {
+          try {
+            const prefRes = await fetch('/api/user/preferences');
+            if (prefRes.ok) {
+              const { preferences } = await prefRes.json();
+              if (preferences?.translation) {
+                // Try to find a matching version in the available versions
+                // The preference might be a code (e.g. "ESV") or a full name
+                // We try to find a version that contains the preference string or matches exactly
+                const pref = preferences.translation.toLowerCase();
+                const matchedVersion = versionNames.find(v => {
+                  const vLower = v.toLowerCase();
+                  return vLower === pref || 
+                         vLower.includes(`(${pref})`) || 
+                         vLower.includes(`${pref} `) ||
+                         vLower === pref; // exact match
+                });
+
+                if (matchedVersion) {
+                  setSelectedVersion(matchedVersion);
+                  restored = true;
+                } else {
+                   // Fallback: check if any version contains the code
+                   const looseMatch = versionNames.find(v => v.toLowerCase().includes(pref));
+                   if (looseMatch) {
+                     setSelectedVersion(looseMatch);
+                     restored = true;
+                   }
+                }
+              }
+            }
+          } catch (e) {
+            console.error('Error fetching preferences:', e);
+          }
+        }
+
+        // Set default version based on language preference (only if no last read found AND no preference found)
         if (!restored) {
           const defaultVersion = getDefaultVersion(versionNames, lng);
           setSelectedVersion(defaultVersion);

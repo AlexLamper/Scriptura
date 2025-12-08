@@ -16,7 +16,7 @@ i18next
   .use(resourcesToBackend((language, namespace) => import(`./locales/${language}/${namespace}.json`)))
   .init({
     ...getOptions(),
-    lng: undefined, // detect language on client side
+    lng: undefined,
     detection: {
       order: ["cookie", "htmlTag", "navigator"],
       caches: ["cookie"],
