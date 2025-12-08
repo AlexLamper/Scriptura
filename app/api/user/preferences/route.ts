@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     
     const { language, translation, intent, onboardingCompleted } = await request.json();
 
-    const updateData: any = {
+    const updateData: Record<string, string | boolean | Date> = {
       "preferences.updatedAt": new Date()
     };
 
