@@ -3,17 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { Loader2, AlertCircle, MessageCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '../ui/accordion';
 
 interface CommentaryComponentProps {
   book: string;
   chapter: number;
   source?: string; // e.g. matthew-henry
+  height?: number;
 }
 
 interface CommentaryData {
@@ -99,6 +94,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   book,
   chapter,
   source = 'matthew-henry',
+  height
 }) => {
   const [commentary, setCommentary] = useState<CommentaryData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -197,8 +193,8 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
 
   {/* Commentary Content */}
   return (
-    <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
-      <CardHeader>
+    <Card className={`border-0 shadow-none rounded-none dark:bg-[#23263a] ${height ? 'h-full flex flex-col' : ''}`}>
+      <CardHeader className="px-0 flex-none">
         <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-white">
           <MessageCircle className="w-6 h-6 text-[#798777]" />
           Bijbelcommentaar: {book} {chapter}
@@ -207,28 +203,17 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
           Verdieping en uitleg bij de geselecteerde passage uit de Bijbel.
         </p>
       </CardHeader>
-      <CardContent className="p-6 pt-0 space-y-4">
-        <Accordion
-          type="single"
-          collapsible={false}
-          defaultValue={`verse-${Object.keys(commentary)[0]}`}
-          className="w-full space-y-4"
-        >
-          {Object.entries(commentary).map(([key, text]) => (
-            <AccordionItem
-              key={key}
-              value={`verse-${key}`}
-              className="border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#232325]"
-            >
-              <AccordionTrigger className="px-4 py-3 font-merriweather font-semibold text-[#262626] dark:text-gray-100 hover:no-underline">
-                Vers {key}
-              </AccordionTrigger>
-              <AccordionContent className="px-4 pb-4 font-inter text-gray-700 text-sm leading-relaxed dark:text-gray-200 whitespace-pre-line">
-                {text}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      <CardContent className={`px-0 pt-0 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
+        {Object.entries(commentary).map(([key, text]) => (
+          <div key={key} className="border-b border-gray-100 dark:border-gray-800 pb-4 last:border-0 pr-2">
+            <h3 className="font-merriweather font-semibold text-[#262626] dark:text-gray-100 mb-2">
+              Vers {key}
+            </h3>
+            <p className="font-inter text-gray-700 text-sm leading-relaxed dark:text-gray-300 whitespace-pre-line">
+              {text}
+            </p>
+          </div>
+        ))}
       </CardContent>
     </Card>
   );

@@ -54,7 +54,6 @@ export function AppSidebar({ ...props }) {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isClient, setIsClient] = useState(false)
 
-  // Check if a route is active
   const isActive = (url: string) => {
     return pathname === url
   }

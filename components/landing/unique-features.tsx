@@ -32,7 +32,7 @@ export function UniqueFeaturesSection() {
   ]
 
   return (
-    <section className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
+    <section id="features" className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center max-w-7xl mx-auto">
           {/* Title and Subtitle */}

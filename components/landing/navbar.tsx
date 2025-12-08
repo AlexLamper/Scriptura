@@ -33,20 +33,17 @@ export function Header() {
 
           {/* Centered nav */}
           <nav className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center space-x-8">
-            <Link href="#about" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
-              {t("about")}
-            </Link>
             <Link href="#features" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("features")}
             </Link>
-            <Link href="#testimonials" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
-              {t("testimonials")}
-            </Link>
-            <Link href="#pricing" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
-              {t("pricing")}
+            <Link href="#about" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
+              {t("about")}
             </Link>
             <Link href="#faq" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
               {t("faq")}
+            </Link>
+            <Link href="#pricing" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
+              {t("pricing")}
             </Link>
           </nav>
 

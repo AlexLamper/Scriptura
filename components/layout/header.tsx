@@ -33,12 +33,10 @@ export function Header({ title }: HeaderProps) {
   const [userImage, setUserImage] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
 
-  // Set mounted state to prevent hydration issues
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Fetch user image (only once per session)
   useEffect(() => {
     if (!mounted || !session?.user?.email || userImage) return
 
@@ -101,24 +99,15 @@ export function Header({ title }: HeaderProps) {
   const getPageTitle = () => {
     if (title) return title;
     
-    // Extract routes from pathname (e.g., /dashboard -> ['dashboard'])
     const pathParts = pathname?.split('/').filter(Boolean) || [];
-    
-    // Get the main route (first part since we removed language prefix)
     const mainRoute = pathParts.length > 0 ? pathParts[0] : 'dashboard';
-    
-    // Handle hyphenated routes (e.g., privacy-policy -> privacy_policy)
     const translationKey = mainRoute.replace(/-/g, '_');
-    
-    // Use the i18n translation system
     const translatedTitle = t(translationKey);
     
-    // If translation exists and is different from the key, use it
     if (translatedTitle && translatedTitle !== translationKey) {
       return translatedTitle;
     }
     
-    // Fallback: capitalize and clean up route name
     const cleanRoute = mainRoute.replace(/-/g, ' ');
     return cleanRoute.split(' ').map(word => 
       word.charAt(0).toUpperCase() + word.slice(1)

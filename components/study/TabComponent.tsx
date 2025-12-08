@@ -18,6 +18,7 @@ interface TabComponentProps {
   onNextChapter: () => void;
   onPrevChapter: () => void;
   onDownload: () => void;
+  height?: number;
 }
 
 export default function TabComponent({ 
@@ -27,9 +28,10 @@ export default function TabComponent({
   t, 
   onNextChapter,
   onPrevChapter,
-  onDownload
+  onDownload,
+  height
 }: TabComponentProps) {
-  const [activeTab, setActiveTab] = useState('inductive');
+  const [activeTab, setActiveTab] = useState('commentary');
 
   // Define keyboard shortcuts
   const shortcuts: KeyboardShortcut[] = [
@@ -54,28 +56,29 @@ export default function TabComponent({
   useKeyboardShortcuts({ shortcuts });
 
   const tabs = [
+    { id: 'commentary', label: t('tabs.commentary'), icon: MessageCircle },
     { id: 'inductive', label: t('tabs.inductive_study'), icon: Brain },
-    { id: 'explanation', label: t('tabs.explanation'), icon: MessageCircle },
     { id: 'historical', label: t('tabs.historical'), icon: Clock },
     { id: 'notes', label: t('tabs.notes'), icon: Users },
   ];
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'commentary':
+        return (
+          <CommentaryComponent
+            book={selectedBook}
+            chapter={selectedChapter}
+            source="matthew-henry"
+            height={height}
+          />
+        );
       case 'inductive':
         return <InductiveStudy 
           book={selectedBook || ''} 
           chapter={selectedChapter || 0} 
           version={selectedVersion || ''} 
         />;
-      case 'explanation':
-        return (
-          <CommentaryComponent
-            book={selectedBook}
-            chapter={selectedChapter}
-            source="matthew-henry"
-          />
-        );
       case 'historical':
         return (
           <HistoricalContext 
@@ -99,9 +102,9 @@ export default function TabComponent({
   };
 
   return (
-    <div>
+    <div className={height ? "flex flex-col h-full" : ""}>
       {/* Tab Headers */}
-      <div className="flex flex-wrap space-x-1 mb-4 border-b border-gray-200 dark:border-gray-600 overflow-x-auto">
+      <div className="flex flex-wrap space-x-1 mb-4 border-b border-gray-200 dark:border-gray-600 overflow-x-auto flex-none">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
@@ -122,7 +125,7 @@ export default function TabComponent({
       </div>
 
       {/* Tab Content */}
-      <div className="min-h-[400px]">
+      <div className={height ? "flex-1 min-h-0 overflow-hidden" : "min-h-[400px]"}>
         {renderTabContent()}
       </div>
     </div>
