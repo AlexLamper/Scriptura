@@ -63,11 +63,11 @@ export const metadata: Metadata = {
     title: "Scriptura | Account Settings",
     description:
       "Customize your Scriptura experience by managing your account settings, including profile details, privacy options, and notification preferences.",
-    url: "https://scriptura-edu.com/settings",
+    url: "https://scriptura.cloud/settings",
     siteName: "Scriptura",
     images: [
       {
-        url: "https://scriptura-edu.com/og-settings.jpg",
+        url: "https://scriptura.cloud/og-settings.jpg",
         width: 1200,
         height: 630,
         alt: "Scriptura Account Settings",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
       "Adjust your Scriptura account settings to personalize your learning journey, including profile information, privacy settings, and notifications.",
     site: "@ScripturaEdu",
     creator: "@ScripturaEdu",
-    images: ["https://scriptura-edu.com/og-settings.jpg"],
+    images: ["https://scriptura.cloud/og-settings.jpg"],
   },
   robots: {
     index: true,
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://scriptura-edu.com/settings",
+    canonical: "https://scriptura.cloud/settings",
   },
 };
 

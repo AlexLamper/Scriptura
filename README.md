@@ -20,7 +20,7 @@
 
 ![Scriptura Banner Screenshot](public/screenshot1.png)
 <p>
-  <a href="https://scriptura-edu.com">
+  <a href="https://scriptura.cloud">
     <img src="https://img.shields.io/badge/Live_Demo-▶️-blue?style=for-the-badge" alt="Visit Scriptura" />
   </a>
   <a href="#get-started">

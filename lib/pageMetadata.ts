@@ -16,13 +16,13 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
   },
   study: {
     titleKey: 'study',
-    descriptionKey: 'Explore and study the Bible with advanced tools and resources on Scriptura.',
+    descriptionKey: 'Explore and study the Bible online with advanced tools. Scriptura offers the best study bible online experience.',
     path: '/study',
     type: 'website'
   },
   plans: {
     titleKey: 'plans',
-    descriptionKey: 'Discover and follow Bible reading plans to enhance your spiritual journey.',
+    descriptionKey: 'Discover and follow Bible reading plans. Enhance your spiritual journey with Scriptura bible study plans.',
     path: '/plans',
     type: 'website'
   },
@@ -34,7 +34,7 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
   },
   quizzes: {
     titleKey: 'quizzes',
-    descriptionKey: 'Engage with interactive Bible quizzes to test and deepen your biblical knowledge.',
+    descriptionKey: 'Engage with interactive Bible quizzes. Test your biblical knowledge with Scriptura\'s online bible courses and quizzes.',
     path: '/quizzes',
     type: 'website'
   },
@@ -46,7 +46,7 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
   },
   resources: {
     titleKey: 'resources',
-    descriptionKey: 'Explore a comprehensive collection of Bible study resources.',
+    descriptionKey: 'Explore a comprehensive collection of Bible study resources. Your go-to for biblical education and study bible online materials.',
     path: '/resources',
     type: 'website'
   },
@@ -58,13 +58,13 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
   },
   read: {
     titleKey: 'study',
-    descriptionKey: 'Read and study the Bible with our interactive reading tools.',
+    descriptionKey: 'Read and study the Bible online. Use our interactive tools for deep scriptura bible study.',
     path: '/read',
     type: 'website'
   },
   community: {
     titleKey: 'community',
-    descriptionKey: 'Join the Scriptura community to connect with fellow learners.',
+    descriptionKey: 'Join the Scriptura community. Connect with fellow learners for bible study online and spiritual growth.',
     path: '/community',
     type: 'website'
   },
@@ -76,7 +76,7 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
   },
   subscribe: {
     titleKey: 'subscribe',
-    descriptionKey: 'Subscribe to Scriptura for exclusive biblical learning resources.',
+    descriptionKey: 'Subscribe to Scriptura for exclusive biblical learning resources. Unlock the full potential of your study bible online.',
     path: '/subscribe',
     type: 'website'
   },
@@ -103,8 +103,6 @@ export function generatePageMetadata(
     };
   }
 
-  // For now, we'll use the sidebar translation keys for titles
-  // In a real implementation, you'd want to load the translations server-side
   const titleTranslations: Record<string, Record<string, string>> = {
     en: {
       dashboard: 'Dashboard',
@@ -116,7 +114,10 @@ export function generatePageMetadata(
       resources: 'Resources',
       settings: 'Settings',
       community: 'Community',
-      admin: 'Admin'
+      admin: 'Admin',
+      read: 'Read',
+      subscribe: 'Subscribe',
+      success: 'Success'
     },
     nl: {
       dashboard: 'Dashboard',
@@ -128,7 +129,10 @@ export function generatePageMetadata(
       resources: 'Hulpbronnen',
       settings: 'Instellingen',
       community: 'Gemeenschap',
-      admin: 'Beheer'
+      admin: 'Beheer',
+      read: 'Lezen',
+      subscribe: 'Abonneren',
+      success: 'Succes'
     },
     de: {
       dashboard: 'Dashboard',
@@ -140,12 +144,15 @@ export function generatePageMetadata(
       resources: 'Ressourcen',
       settings: 'Einstellungen',
       community: 'Gemeinschaft',
-      admin: 'Verwaltung'
+      admin: 'Verwaltung',
+      read: 'Lesen',
+      subscribe: 'Abonnieren',
+      success: 'Erfolg'
     }
   };
 
   const pageTitle = customTitle || titleTranslations[lng]?.[config.titleKey] || titleTranslations['en'][config.titleKey] || 'Scriptura';
-  const baseUrl = 'https://scriptura-edu.com';
+  const baseUrl = 'https://scriptura.cloud';
   const fullUrl = `${baseUrl}${config.path}`;
 
   return {

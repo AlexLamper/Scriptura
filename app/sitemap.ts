@@ -1,16 +1,23 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = "https://scriptura.cloud";
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: "https://scriptura.cloud", lastModified: new Date() },
-    { url: "https://scriptura.cloud/study", lastModified: new Date() },
-    { url: "https://scriptura.cloud/community", lastModified: new Date() },
-    { url: "https://scriptura.cloud/pricing", lastModified: new Date() },
-    { url: "https://scriptura.cloud/privacy-policy", lastModified: new Date() },
-    { url: "https://scriptura.cloud/profile", lastModified: new Date() },
-    { url: "https://scriptura.cloud/resources", lastModified: new Date() },
-    { url: "https://scriptura.cloud/settings", lastModified: new Date() },
-    { url: "https://scriptura.cloud/terms-of-service", lastModified: new Date() },
+    { url: `${baseUrl}`, lastModified: new Date() },
+    { url: `${baseUrl}/study`, lastModified: new Date() },
+    { url: `${baseUrl}/community`, lastModified: new Date() },
+    { url: `${baseUrl}/subscribe`, lastModified: new Date() },
+    { url: `${baseUrl}/privacy-policy`, lastModified: new Date() },
+    { url: `${baseUrl}/profile`, lastModified: new Date() },
+    { url: `${baseUrl}/resources`, lastModified: new Date() },
+    { url: `${baseUrl}/settings`, lastModified: new Date() },
+    { url: `${baseUrl}/terms-of-service`, lastModified: new Date() },
+    { url: `${baseUrl}/auth/signin`, lastModified: new Date() },
+    { url: `${baseUrl}/auth/register`, lastModified: new Date() },
+    { url: `${baseUrl}/read`, lastModified: new Date() },
+    { url: `${baseUrl}/plans`, lastModified: new Date() },
+    { url: `${baseUrl}/notes`, lastModified: new Date() },
+    { url: `${baseUrl}/onboarding`, lastModified: new Date() },
   ];
 
   return staticRoutes;

@@ -54,11 +54,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Scriptura | Success",
     description: "Subscribe to Scriptura for exclusive biblical learning resources and personalized content.",
-    url: "https://scriptura-edu.com/success",
+    url: "https://scriptura.cloud/success",
     siteName: "Scriptura",
     images: [
       {
-        url: "https://scriptura-edu.com/og-success.jpg",
+        url: "https://scriptura.cloud/og-success.jpg",
         width: 1200,
         height: 630,
         alt: "Scriptura - Success",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     description: "Success to Scriptura for exclusive biblical learning resources and personalized content.",
     site: "@ScripturaEdu",
     creator: "@ScripturaEdu",
-    images: ["https://scriptura-edu.com/og-Success.jpg"],
+    images: ["https://scriptura.cloud/og-Success.jpg"],
   },
   robots: {
     index: true,
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://scriptura-edu.com/Subscribe",
+    canonical: "https://scriptura.cloud/Subscribe",
   },
 };
 

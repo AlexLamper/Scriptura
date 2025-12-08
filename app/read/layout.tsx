@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Scriptura | User Profile",
     description: "Access and manage your Scriptura user profile to enhance your personalized biblical learning journey.",
-    url: "https://scriptura-edu.com/profile",
+    url: "https://scriptura.cloud/profile",
     siteName: "Scriptura",
     images: [
       {
-        url: "https://scriptura-edu.com/og-profile.jpg",
+        url: "https://scriptura.cloud/og-profile.jpg",
         width: 1200,
         height: 630,
         alt: "Scriptura - User Profile",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "Personalize your Scriptura experience by managing your user profile and tracking your biblical learning progress.",
     site: "@ScripturaEdu",
     creator: "@ScripturaEdu",
-    images: ["https://scriptura-edu.com/og-profile.jpg"],
+    images: ["https://scriptura.cloud/og-profile.jpg"],
   },
   robots: {
     index: true,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://scriptura-edu.com/profile",
+    canonical: "https://scriptura.cloud/profile",
   },
 };
 

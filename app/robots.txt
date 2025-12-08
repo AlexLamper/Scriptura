@@ -9,4 +9,4 @@ Allow: /
 # Crawl-delay: 10
 
 # Sitemap location
-Sitemap: https://scriptura-edu.com/sitemap.xml
+Sitemap: https://scriptura.cloud/sitemap.xml
