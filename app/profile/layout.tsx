@@ -112,7 +112,7 @@ export default async function ProfileLayout({
   const lng = cookieStore.get(cookieName)?.value || fallbackLng;
 
   return (
-    <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
+    <div className="antialiased bg-gray-100 dark:bg-background">
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />

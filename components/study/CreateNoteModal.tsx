@@ -158,11 +158,11 @@ export function CreateNoteModal({
     >
       <div className="space-y-6">
         {/* Bible Verse Preview */}
-        <div className="bg-gray-50 dark:bg-gray-800 p-4 border-l-4 border-[#798777]">
-          <p className="italic font-['Inter'] text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+        <div className="bg-gray-50 dark:bg-muted p-4 border-l-4 border-[#798777]">
+          <p className="italic font-['Inter'] text-gray-700 dark:text-foreground text-sm leading-relaxed">
             &ldquo;{verseText}&rdquo;
           </p>
-          <p className="font-['Inter'] text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="font-['Inter'] text-xs text-gray-500 dark:text-muted-foreground mt-2">
             — {verseReference} ({translation})
           </p>
         </div>
@@ -291,13 +291,13 @@ export function CreateNoteModal({
 
         {/* Error Message */}
         {error && (
-          <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 p-3 rounded border border-red-200 dark:border-red-700">
+          <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 p-3 rounded border border-red-200 dark:border-red-900">
             {error}
           </div>
         )}
 
         {/* Action Buttons */}
-        <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-border">
           <Button
             onClick={handleClose}
             variant="outline"
@@ -308,7 +308,7 @@ export function CreateNoteModal({
           <Button
             onClick={handleSave}
             disabled={isSaving || !noteText.trim()}
-            className="gap-2"
+            className="gap-2 bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none"
           >
             {isSaving ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />

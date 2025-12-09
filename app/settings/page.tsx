@@ -48,12 +48,12 @@ export default function SettingsPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <Button 
-                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] w-full rounded-none"
+                className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black font-['Inter'] w-full rounded-none"
               >
                 Change Password
               </Button>
               <Button 
-                className="bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] w-full rounded-none"
+                className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black font-['Inter'] w-full rounded-none"
               >
                 Connected Accounts
               </Button>

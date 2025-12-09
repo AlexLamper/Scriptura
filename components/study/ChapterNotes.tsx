@@ -76,8 +76,8 @@ export function ChapterNotes({ book, chapter }: ChapterNotesProps) {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
-          <p className="font-inter text-gray-700 text-base font-medium dark:text-gray-200">
+          <Loader2 className="h-8 w-8 animate-spin text-[#798777] dark:text-[#9aaa98] mx-auto mb-4" />
+          <p className="font-inter text-gray-700 text-base font-medium dark:text-muted-foreground">
             Notities laden...
           </p>
         </div>
@@ -88,7 +88,7 @@ export function ChapterNotes({ book, chapter }: ChapterNotesProps) {
   {/* Error State */}
   if (error) {
     return (
-      <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+      <Card className="border-0 shadow-none rounded-none dark:bg-card">
         <CardContent className="py-12 text-center">
           <p className="font-inter text-red-600 dark:text-red-400 text-sm">{error}</p>
         </CardContent>
@@ -99,8 +99,8 @@ export function ChapterNotes({ book, chapter }: ChapterNotesProps) {
   {/* Empty State */}
   if (notes.length === 0) {
     return (
-      <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
-        <CardContent className="py-12 text-center text-gray-500 dark:text-gray-300">
+      <Card className="border-0 shadow-none rounded-none dark:bg-card">
+        <CardContent className="py-12 text-center text-gray-500 dark:text-muted-foreground">
           <p className="font-inter text-sm">Nog geen notities voor dit hoofdstuk.</p>
         </CardContent>
       </Card>
@@ -109,33 +109,33 @@ export function ChapterNotes({ book, chapter }: ChapterNotesProps) {
 
   {/* Notes Content */}
   return (
-    <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+    <Card className="border-0 shadow-none rounded-none dark:bg-card">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-white">
-          <StickyNote className="w-6 h-6 text-[#798777]" />
+        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-foreground">
+          <StickyNote className="w-6 h-6 text-[#798777] dark:text-[#9aaa98]" />
           {t("notes")} {book} {chapter}
         </CardTitle>
-        <p className="font-inter text-sm text-gray-600 dark:text-gray-400">
+        <p className="font-inter text-sm text-gray-600 dark:text-muted-foreground">
           Jouw persoonlijke notities en inzichten bij deze passage.
         </p>
       </CardHeader>
       <CardContent className="p-6 pt-0">
         <div className="space-y-4 max-h-96 overflow-y-auto">
           {notes.map((note) => (
-            <div key={note._id} className="p-4 bg-gray-50 border border-gray-200 dark:bg-[#232325] dark:border-gray-700">
+            <div key={note._id} className="p-4 bg-gray-50 border border-gray-200 dark:bg-secondary dark:border-border">
               <div className="flex items-start justify-between mb-2">
                 {note.verseReference && (
                   <h4 className="font-merriweather font-medium text-[#798777] dark:text-[#9aaa98] text-sm">
                     {note.verseReference}
                   </h4>
                 )}
-                <div className="flex items-center gap-1 font-inter text-xs text-gray-500 dark:text-gray-400 ml-auto">
+                <div className="flex items-center gap-1 font-inter text-xs text-gray-500 dark:text-muted-foreground ml-auto">
                   <Calendar className="h-3 w-3" />
                   {formatDate(note.createdAt)}
                 </div>
               </div>
               
-              <p className="font-inter text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">
+              <p className="font-inter text-sm text-gray-700 dark:text-foreground mb-2 leading-relaxed">
                 {truncateText(note.noteText)}
               </p>
               

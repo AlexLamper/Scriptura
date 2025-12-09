@@ -47,7 +47,7 @@ export default function StartupAnimation({ isReady, onComplete }: StartupAnimati
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#181b23]"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f8f9fa] dark:bg-background"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -59,13 +59,24 @@ export default function StartupAnimation({ isReady, onComplete }: StartupAnimati
             }}
             className="relative w-64 h-24 sm:w-80 sm:h-32 mb-8"
           >
-            <Image
-              src="/images/logo-text.svg"
-              alt="Scriptura"
-              fill
-              className="object-contain dark:brightness-0 dark:invert"
-              priority
-            />
+            <div className="relative w-full h-full dark:hidden">
+              <Image
+                src="/images/logo-text.svg"
+                alt="Scriptura"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="relative w-full h-full hidden dark:block">
+              <Image
+                src="/images/Logo-text-dark-mode.svg"
+                alt="Scriptura"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </motion.div>
           
           <motion.div

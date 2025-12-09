@@ -368,7 +368,7 @@ export default function BookmarkSystem({
               >
                 Cancel
               </Button>
-              <Button onClick={addBookmark}>
+              <Button onClick={addBookmark} className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none">
                 Add Bookmark
               </Button>
             </div>

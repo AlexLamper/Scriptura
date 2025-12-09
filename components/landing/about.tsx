@@ -26,15 +26,15 @@ export function AboutSection() {
   ]
 
   return (
-    <section id="about" className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
+    <section id="about" className="relative bg-white dark:bg-background py-16 lg:py-24 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center max-w-7xl mx-auto">
           {/* Title and Subtitle */}
           <div className="space-y-6 mb-16">
-            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-white">
+            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-foreground">
               {t("heading")}
             </h2>
-            <p className="font-['Inter'] text-lg sm:text-xl font-normal text-gray-900 dark:text-blue-200 leading-relaxed max-w-4xl mx-auto">
+            <p className="font-['Inter'] text-lg sm:text-xl font-normal text-gray-900 dark:text-muted-foreground leading-relaxed max-w-4xl mx-auto">
               {t("intro")}
             </p>
           </div>
@@ -45,14 +45,14 @@ export function AboutSection() {
               <div key={index} className="relative text-center">
                 {/* Vertical divider line - hide on first item */}
                 {index > 0 && (
-                  <div className="hidden lg:block absolute left-0 top-1/2 transform -translate-y-1/2 w-px h-16 bg-gray-300 dark:bg-gray-600"></div>
+                  <div className="hidden lg:block absolute left-0 top-1/2 transform -translate-y-1/2 w-px h-16 bg-gray-300 dark:bg-border"></div>
                 )}
                 
                 <div className="space-y-2">
-                  <div className="font-['Merriweather'] text-3xl lg:text-4xl font-bold text-[#798777] dark:text-[#9aaa98]">
+                  <div className="font-['Merriweather'] text-3xl lg:text-4xl font-bold text-brand dark:text-foreground">
                     {stat.value}
                   </div>
-                  <div className="font-['Inter'] text-sm lg:text-base text-gray-600 dark:text-gray-300">
+                  <div className="font-['Inter'] text-sm lg:text-base text-gray-600 dark:text-muted-foreground">
                     {stat.label}
                   </div>
                 </div>

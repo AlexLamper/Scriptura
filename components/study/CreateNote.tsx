@@ -186,11 +186,11 @@ export function CreateNote({
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Bible Verse Preview */}
-        <div className="bg-gray-50 dark:bg-gray-800 p-3 border-l-4 border-indigo-300">
-          <p className="italic text-gray-700 dark:text-gray-300 text-sm">
+        <div className="bg-gray-50 dark:bg-muted p-3 border-l-4 border-indigo-300">
+          <p className="italic text-gray-700 dark:text-foreground text-sm">
             &ldquo;{verseText}&rdquo;
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-xs text-gray-500 dark:text-muted-foreground mt-1">
             — {verseReference} ({translation})
           </p>
         </div>
@@ -317,7 +317,7 @@ export function CreateNote({
 
         {/* Error Message */}
         {error && (
-          <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 p-2 rounded">
+          <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 p-2 rounded">
             {error}
           </div>
         )}
@@ -334,7 +334,7 @@ export function CreateNote({
           <Button
             onClick={handleSave}
             disabled={isSaving || !noteText.trim()}
-            className="gap-2"
+            className="gap-2 bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none"
           >
             {isSaving ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />

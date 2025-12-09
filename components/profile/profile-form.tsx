@@ -146,7 +146,7 @@ export function ProfileForm({ initialName, initialEmail, initialBio }: ProfileFo
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2"
+              className="font-['Inter'] bg-gray-50 dark:bg-background border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2"
             />
           </div>
         </div>
@@ -157,7 +157,7 @@ export function ProfileForm({ initialName, initialEmail, initialBio }: ProfileFo
             type="email"
             value={initialEmail}
             disabled
-            className="font-['Inter'] bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2 opacity-70"
+            className="font-['Inter'] bg-gray-50 dark:bg-background border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2 opacity-70"
           />
           <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-400 mt-1">{t("email_cannot_change")}</p>
         </div>
@@ -165,13 +165,13 @@ export function ProfileForm({ initialName, initialEmail, initialBio }: ProfileFo
           <Label htmlFor="bio" className="font-['Inter'] text-gray-900 dark:text-gray-300">{t("bio")}</Label>
           <textarea
             id="bio"
-            className="font-['Inter'] w-full min-h-[100px] p-2 border bg-gray-50 dark:bg-[#1a1d2e] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2"
+            className="font-['Inter'] w-full min-h-[100px] p-2 border bg-gray-50 dark:bg-background border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white mt-2"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           ></textarea>
         </div>
         <div className="flex items-center space-x-2">
-          <Button type="submit" disabled={isLoading} className="bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">
+          <Button type="submit" disabled={isLoading} className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none">
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("saving")}

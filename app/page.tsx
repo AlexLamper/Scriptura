@@ -8,7 +8,7 @@ import { Header } from "../components/landing/navbar";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-background">
       <Header />
       <HeroSection />
       <UniqueFeaturesSection />

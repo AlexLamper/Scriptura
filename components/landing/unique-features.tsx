@@ -32,19 +32,19 @@ export function UniqueFeaturesSection() {
   ]
 
   return (
-    <section id="features" className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
+    <section id="features" className="relative bg-white dark:bg-background py-16 lg:py-24 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center max-w-7xl mx-auto">
           {/* Title and Subtitle */}
           <div className="space-y-6 mb-12">
-            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-white">
+            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-foreground">
               {t("title_part_1")}{" "}
-              <span className="text-[#798777]">{t("title_part_2")}</span>{" "}
+              <span className="text-brand dark:text-foreground">{t("title_part_2")}</span>{" "}
               {t("title_part_3")}
             </h2>
 
             {/* Subtitle */}
-            <p className="font-['Inter'] text-lg font-normal text-[#262626] dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
+            <p className="font-['Inter'] text-lg font-normal text-[#262626] dark:text-muted-foreground leading-relaxed max-w-3xl mx-auto">
               {t("subtitle")}
             </p>
           </div>
@@ -54,15 +54,15 @@ export function UniqueFeaturesSection() {
             {features.map((feature, index) => {
               const IconComponent = feature.icon
               return (
-                <div key={index} className="flex flex-col items-center text-center p-8 bg-gray-50 dark:bg-[#23263a] rounded-lg shadow-sm hover:shadow-md transition-shadow min-h-[200px]">
-                  <div className="flex-shrink-0 w-12 h-12 bg-[#798777] rounded-lg flex items-center justify-center mb-4">
-                    <IconComponent className="w-6 h-6 text-white" />
+                <div key={index} className="flex flex-col items-center text-center p-8 bg-gray-50 dark:bg-card rounded-lg shadow-sm hover:shadow-md transition-shadow min-h-[200px]">
+                  <div className="flex-shrink-0 w-12 h-12 bg-brand dark:bg-secondary rounded-lg flex items-center justify-center mb-4">
+                    <IconComponent className="w-6 h-6 text-white dark:text-foreground" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-['Inter'] text-lg font-semibold text-[#262626] dark:text-white mb-3">
+                    <h3 className="font-['Inter'] text-lg font-semibold text-[#262626] dark:text-card-foreground mb-3">
                       {feature.title}
                     </h3>
-                    <p className="font-['Inter'] text-sm text-[#262626] dark:text-gray-300 leading-relaxed">
+                    <p className="font-['Inter'] text-sm text-[#262626] dark:text-muted-foreground leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -76,7 +76,7 @@ export function UniqueFeaturesSection() {
             <Link href="/api/auth/signin" className="hover:cursor-pointer">
               <Button 
                 size="lg" 
-                className="px-12 py-6 bg-[#798777] hover:bg-[#6a7a68] text-white font-['Inter'] font-normal text-xl rounded-none"
+                className="px-12 py-6 bg-brand hover:bg-brand/90 text-white dark:bg-[#e0e0e0] dark:text-black dark:hover:bg-[#d0d0d0] font-['Inter'] font-normal text-xl rounded-none"
               >
                 {t("cta_button")}
                 <ArrowRight className="ml-2 w-5 h-5" />

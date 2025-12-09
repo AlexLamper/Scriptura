@@ -109,7 +109,7 @@ export default function SignInPage() {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href={`/`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
+        <Link href={`/`} className="flex items-center gap-2 text-gray-500 dark:text-muted-foreground hover:text-[#798777] dark:hover:text-foreground text-sm font-['Inter'] font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -123,9 +123,9 @@ export default function SignInPage() {
         <ModeToggle />
       </div>
 
-      <div className="min-h-screen flex flex-col md:flex-row bg-white dark:bg-[#181b23] text-[#262626] dark:text-white relative">
+      <div className="min-h-screen flex flex-col md:flex-row bg-white dark:bg-background text-[#262626] dark:text-foreground relative">
         {/* Left Side: Sign In Form */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-8 py-16 md:py-0 relative z-10 bg-white dark:bg-[#181b23]">
+        <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-8 py-16 md:py-0 relative z-10 bg-white dark:bg-background">
           {/* Logo above form */}
           <div className="w-full max-w-md mx-auto mb-6">
             <div className="flex items-center">
@@ -134,16 +134,16 @@ export default function SignInPage() {
                 alt="Scriptura Logo"
                 width={20}
                 height={20}
-                className="object-contain w-40 h-15 mr-3"
+                className="object-contain w-40 h-15 mr-3 dark:invert"
                 priority
               />
             </div>
           </div>
           
-          <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
-            <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-white mb-2 text-left">{t("signin.title")}</h1>
-            <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mb-6 text-left">
-              {t("signin.alreadyHaveAccount")} <Link href={`/auth/register`} className="text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.createNow")}</Link>
+          <div className="w-full max-w-md mx-auto bg-white dark:bg-card shadow-xl border border-gray-200 dark:border-border p-8">
+            <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-card-foreground mb-2 text-left">{t("signin.title")}</h1>
+            <p className="font-['Inter'] text-sm text-gray-600 dark:text-muted-foreground mb-6 text-left">
+              {t("signin.alreadyHaveAccount")} <Link href={`/auth/register`} className="text-[#798777] hover:text-[#6a7a68] dark:text-[#e0e0e0] dark:hover:text-[#d0d0d0] font-medium">{t("signin.createNow")}</Link>
             </p>
             
             {/* Error Message */}
@@ -155,7 +155,7 @@ export default function SignInPage() {
 
             <form onSubmit={handleEmailSignIn} className="space-y-5">
               <div className="text-left">
-                <label htmlFor="email" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">{t("signin.email")}</label>
+                <label htmlFor="email" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-card-foreground mb-1">{t("signin.email")}</label>
                 <input 
                   id="email" 
                   name="email" 
@@ -164,12 +164,12 @@ export default function SignInPage() {
                   placeholder={t("signin.email")}
                   value={emailFormData.email}
                   onChange={handleEmailFormChange}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors" 
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-border bg-white dark:bg-background text-[#262626] dark:text-foreground font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors" 
                 />
               </div>
               
               <div className="text-left">
-                <label htmlFor="password" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">{t("signin.password")}</label>
+                <label htmlFor="password" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-card-foreground mb-1">{t("signin.password")}</label>
                 <div className="relative">
                   <input 
                     id="password" 
@@ -179,7 +179,7 @@ export default function SignInPage() {
                     placeholder={t("signin.password")}
                     value={emailFormData.password}
                     onChange={handleEmailFormChange}
-                    className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors" 
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-border bg-white dark:bg-background text-[#262626] dark:text-foreground font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors" 
                   />
                   <button
                     type="button"
@@ -192,17 +192,17 @@ export default function SignInPage() {
               </div>
               
               <div className="flex items-center justify-between mb-2">
-                <label className="flex items-center text-sm font-['Inter'] text-gray-600 dark:text-gray-300">
-                  <input type="checkbox" className="mr-2 border-gray-300 dark:border-gray-600 text-[#798777] focus:ring-[#798777]" />
+                <label className="flex items-center text-sm font-['Inter'] text-gray-600 dark:text-muted-foreground">
+                  <input type="checkbox" className="mr-2 border-gray-300 dark:border-border text-[#798777] focus:ring-[#798777]" />
                   {t("signin.saveAccount")}
                 </label>
-                <Link href={`/auth/forgot-password`} className="text-xs font-['Inter'] text-[#798777] hover:text-[#6a7a68] font-medium">{t("signin.forgotPassword")}</Link>
+                <Link href={`/auth/forgot-password`} className="text-xs font-['Inter'] text-[#798777] hover:text-[#6a7a68] dark:text-[#e0e0e0] dark:hover:text-[#d0d0d0] font-medium">{t("signin.forgotPassword")}</Link>
               </div>
               
               <button 
                 type="submit" 
                 disabled={emailSignInLoading}
-                className="w-full py-3 bg-[#798777] hover:bg-[#6a7a68] disabled:bg-gray-400 text-white font-['Inter'] font-medium text-lg transition-colors"
+                className="w-full py-3 bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] disabled:bg-gray-400 text-white dark:text-black font-['Inter'] font-medium text-lg transition-colors"
               >
                 {emailSignInLoading ? (
                   <span className="flex items-center justify-center">
@@ -215,9 +215,9 @@ export default function SignInPage() {
               </button>
               
               <div className="flex items-center my-4">
-                <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600" />
-                <span className="mx-4 text-gray-500 dark:text-gray-400 text-sm font-['Inter']">{t("signin.or")}</span>
-                <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600" />
+                <div className="flex-grow h-px bg-gray-300 dark:bg-border" />
+                <span className="mx-4 text-gray-500 dark:text-muted-foreground text-sm font-['Inter']">{t("signin.or")}</span>
+                <div className="flex-grow h-px bg-gray-300 dark:bg-border" />
               </div>
 
               {/* Dynamic Provider Buttons - Exclude credentials provider */}
@@ -230,7 +230,7 @@ export default function SignInPage() {
                     variant="outline"
                     onClick={() => handleSignIn(provider.id)}
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 py-3 text-[#262626] dark:text-white bg-white dark:bg-[#181b23] hover:bg-gray-50 dark:hover:bg-[#23263a] font-['Inter'] font-medium transition-colors rounded-none"
+                    className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-border py-3 text-[#262626] dark:text-foreground bg-white dark:bg-background hover:bg-gray-50 dark:hover:bg-accent font-['Inter'] font-medium transition-colors rounded-none"
                   >
                     {isLoading && loadingProvider === provider.id ? (
                       <span className="flex items-center justify-center">
@@ -259,7 +259,7 @@ export default function SignInPage() {
                 ))
               ) : (
                 <div className="flex justify-center py-4">
-                  <Loader2 className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-400" />
+                  <Loader2 className="h-8 w-8 animate-spin text-gray-500 dark:text-muted-foreground" />
                 </div>
               )}
             </form>
@@ -267,8 +267,8 @@ export default function SignInPage() {
         </div>
         
         {/* Right Side: Carousel (hidden on small screens, visible md+ ) */}
-        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#798777]/5 via-gray-50 to-[#798777]/10 dark:bg-gradient-to-br dark:from-[#23263a] dark:via-[#1a1d2a] dark:to-[#23263a] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1)] dark:shadow-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#798777]/5 via-gray-50 to-[#798777]/10 dark:bg-gradient-to-br dark:from-[#23263a] dark:via-[#1a1d2a] dark:to-[#23263a] z-0" />
+        <div className="hidden md:flex w-full md:w-1/2 min-h-[400px] items-center justify-center relative overflow-hidden dark:bg-card shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1)] dark:shadow-none">
+          <div className="absolute inset-0 bg-background dark:bg-card z-0" />
             <div className="relative z-10 flex flex-col items-center justify-center px-8 py-16 w-full">
               <div className="mb-8 w-full flex justify-center items-center gap-4">
                 
@@ -283,7 +283,7 @@ export default function SignInPage() {
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M15 19l-7-7 7-7"
-                      stroke="#798777"
+                      className="stroke-[#798777] dark:stroke-[#e0e0e0]"
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -318,7 +318,7 @@ export default function SignInPage() {
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M9 5l7 7-7 7"
-                      stroke="#798777"
+                      className="stroke-[#798777] dark:stroke-[#e0e0e0]"
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -327,10 +327,10 @@ export default function SignInPage() {
                 </button>
               </div>
 
-              <h2 className="font-['Merriweather'] font-semibold text-2xl md:text-3xl text-[#262626] dark:text-white text-center tracking-normal mb-3">
+              <h2 className="font-['Merriweather'] font-semibold text-2xl md:text-3xl text-[#262626] dark:text-foreground text-center tracking-normal mb-3">
                 {slides[current].heading}
               </h2>
-              <p className="font-['Inter'] font-normal text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl leading-relaxed mb-1">
+              <p className="font-['Inter'] font-normal text-sm md:text-base text-gray-600 dark:text-muted-foreground text-center max-w-2xl leading-relaxed mb-1">
                 {slides[current].text}
               </p>
             </div>

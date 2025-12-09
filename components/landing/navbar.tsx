@@ -14,7 +14,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="border-b border-gray-100/70 dark:border-[#23263a] bg-white/70 dark:bg-gradient-to-b dark:from-[#181b23]/90 dark:to-[#23263a]/90 backdrop-blur-md sticky top-0 z-50 shadow-sm dark:shadow-blue-900/20">
+    <header className="border-b border-gray-100/70 dark:border-border bg-white/70 dark:bg-background/90 backdrop-blur-md sticky top-0 z-50 shadow-sm dark:shadow-none">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           {/* Logo */}
@@ -25,7 +25,7 @@ export function Header() {
                   src="/images/logo-text.svg"
                   alt="Scriptura"
                   fill
-                  className="object-contain rounded-md group-hover:scale-105 transition-transform"
+                  className="object-contain rounded-md group-hover:scale-102 transition-transform dark:invert"
                 />
               </div>
             </Link>
@@ -33,16 +33,16 @@ export function Header() {
 
           {/* Centered nav */}
           <nav className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center space-x-8">
-            <Link href="#features" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
+            <Link href="#features" className="text-gray-600 dark:text-muted-foreground hover:text-brand dark:hover:text-foreground transition-colors">
               {t("features")}
             </Link>
-            <Link href="#about" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
+            <Link href="#about" className="text-gray-600 dark:text-muted-foreground hover:text-brand dark:hover:text-foreground transition-colors">
               {t("about")}
             </Link>
-            <Link href="#faq" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
+            <Link href="#faq" className="text-gray-600 dark:text-muted-foreground hover:text-brand dark:hover:text-foreground transition-colors">
               {t("faq")}
             </Link>
-            <Link href="#pricing" className="text-gray-600 dark:text-blue-200 hover:text-[#798677] dark:hover:text-blue-400 transition-colors">
+            <Link href="#pricing" className="text-gray-600 dark:text-muted-foreground hover:text-brand dark:hover:text-foreground transition-colors">
               {t("pricing")}
             </Link>
           </nav>
@@ -63,7 +63,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden dark:text-blue-200 dark:hover:bg-[#23263a] dark:hover:text-blue-400 px-2"
+              className="md:hidden dark:text-muted-foreground dark:hover:bg-accent dark:hover:text-foreground px-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -73,24 +73,24 @@ export function Header() {
 
         {/* Mobile nav */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 dark:border-[#23263a] py-4 bg-white dark:bg-[#181b23]">
+          <div className="md:hidden border-t border-gray-100 dark:border-border py-4 bg-white dark:bg-background">
             <nav className="flex flex-col space-y-3">
-              <Link href="#about" className="text-gray-600 dark:text-blue-200 dark:hover:text-blue-400">
+              <Link href="#about" className="text-gray-600 dark:text-muted-foreground dark:hover:text-foreground">
                 {t("about")}
               </Link>
-              <Link href="#features" className="text-gray-600 dark:text-blue-200 dark:hover:text-blue-400">
+              <Link href="#features" className="text-gray-600 dark:text-muted-foreground dark:hover:text-foreground">
                 {t("features")}
               </Link>
-              <Link href="#testimonials" className="text-gray-600 dark:text-blue-200 dark:hover:text-blue-400">
+              <Link href="#testimonials" className="text-gray-600 dark:text-muted-foreground dark:hover:text-foreground">
                 {t("testimonials")}
               </Link>
-              <Link href="#pricing" className="text-gray-600 dark:text-blue-200 dark:hover:text-blue-400">
+              <Link href="#pricing" className="text-gray-600 dark:text-muted-foreground dark:hover:text-foreground">
                 {t("pricing")}
               </Link>
-              <Link href="#faq" className="text-gray-600 dark:text-blue-200 dark:hover:text-blue-400">
+              <Link href="#faq" className="text-gray-600 dark:text-muted-foreground dark:hover:text-foreground">
                 {t("faq")}
               </Link>
-              <div className="flex flex-col space-y-2 pt-3 border-t border-gray-100 dark:border-[#23263a]">
+              <div className="flex flex-col space-y-2 pt-3 border-t border-gray-100 dark:border-border">
                 <Link href={`/auth/signin`} className="hover:cursor-pointer">
                   <Button size="sm" variant="dark" className="px-6">
                     {t("login")}

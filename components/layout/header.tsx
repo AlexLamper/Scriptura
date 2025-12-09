@@ -117,7 +117,7 @@ export function Header({ title }: HeaderProps) {
   const pageTitle = getPageTitle();
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b dark:border-b-[#91969e52] bg-white dark:bg-[#181b23] shadow-sm sticky top-0 z-50">
+    <header className="flex items-center justify-between px-6 py-4 border-b dark:border-b-[#91969e52] bg-white dark:bg-[#16191D] shadow-sm sticky top-0 z-50">
       {/* Left Side: Sidebar Trigger + Logo */}
       <div className="flex items-center space-x-2">
         <SidebarTrigger />

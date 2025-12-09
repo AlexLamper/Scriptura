@@ -99,7 +99,7 @@ export default function RegisterPage() {
     <div>
       {/* Top-left back button */}
       <div className="fixed top-4 left-4 z-30">
-        <Link href={`/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-[#798777] dark:hover:text-[#9aaa98] text-sm font-['Inter'] font-medium transition-colors">
+        <Link href={`/auth/signin`} className="flex items-center gap-2 text-gray-500 dark:text-muted-foreground hover:text-[#798777] dark:hover:text-foreground text-sm font-['Inter'] font-medium transition-colors">
           <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className="inline-block">
             <path d="M12.5 16L7.5 10L12.5 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -113,8 +113,8 @@ export default function RegisterPage() {
         <ModeToggle />
       </div>
 
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#181b23] text-[#262626] dark:text-white px-4">
-        <div className="w-full max-w-md mx-auto bg-white dark:bg-[#23263a] shadow-xl border border-gray-200 dark:border-[#23263a] p-8">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-background text-[#262626] dark:text-foreground px-4">
+        <div className="w-full max-w-md mx-auto bg-white dark:bg-card shadow-xl border border-gray-200 dark:border-border p-8">
           {/* Logo */}
           <div className="flex items-center justify-center mb-8">
             <Image
@@ -122,14 +122,14 @@ export default function RegisterPage() {
               alt="Scriptura Logo"
               width={30}
               height={30}
-              className="object-contain w-40 h-15 mr-3"
+              className="object-contain w-40 h-15 mr-3 dark:invert"
               priority
             />
           </div>
 
           {/* Header */}
-          <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-white mb-2 text-center">{t("register.title")}</h1>
-          <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mb-6 text-center">{t("register.subtitle")}</p>
+          <h1 className="font-['Merriweather'] text-4xl font-bold text-[#262626] dark:text-card-foreground mb-2 text-center">{t("register.title")}</h1>
+          <p className="font-['Inter'] text-sm text-gray-600 dark:text-muted-foreground mb-6 text-center">{t("register.subtitle")}</p>
 
           {/* Error Message */}
           {error && (
@@ -142,7 +142,7 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Field */}
             <div className="text-left">
-              <label htmlFor="name" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
+              <label htmlFor="name" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-card-foreground mb-1">
                 {t("register.name")}
               </label>
               <input
@@ -152,14 +152,14 @@ export default function RegisterPage() {
                 required
                 value={formData.name}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-border bg-white dark:bg-background text-[#262626] dark:text-foreground font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                 placeholder={t("register.name")}
               />
             </div>
 
             {/* Email Field */}
             <div className="text-left">
-              <label htmlFor="email" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
+              <label htmlFor="email" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-card-foreground mb-1">
                 {t("register.email")}
               </label>
               <input
@@ -169,14 +169,14 @@ export default function RegisterPage() {
                 required
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-border bg-white dark:bg-background text-[#262626] dark:text-foreground font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                 placeholder={t("register.email")}
               />
             </div>
 
             {/* Password Field */}
             <div className="text-left">
-              <label htmlFor="password" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
+              <label htmlFor="password" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-card-foreground mb-1">
                 {t("register.password")}
               </label>
               <div className="relative">
@@ -187,7 +187,7 @@ export default function RegisterPage() {
                   required
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-border bg-white dark:bg-background text-[#262626] dark:text-foreground font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                   placeholder={t("register.password")}
                 />
                 <button
@@ -198,12 +198,12 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <p className="text-xs font-['Inter'] text-gray-500 dark:text-gray-400 mt-1">{t("register.passwordRequirements")}</p>
+              <p className="text-xs font-['Inter'] text-gray-500 dark:text-muted-foreground mt-1">{t("register.passwordRequirements")}</p>
             </div>
 
             {/* Confirm Password Field */}
             <div className="text-left">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-white mb-1">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium font-['Inter'] text-[#262626] dark:text-card-foreground mb-1">
                 {t("register.confirmPassword")}
               </label>
               <div className="relative">
@@ -214,7 +214,7 @@ export default function RegisterPage() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#181b23] text-[#262626] dark:text-white font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-border bg-white dark:bg-background text-[#262626] dark:text-foreground font-['Inter'] focus:outline-none focus:border-[#798777] dark:focus:border-[#9aaa98] transition-colors"
                   placeholder={t("register.confirmPassword")}
                 />
                 <button
@@ -231,7 +231,7 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-[#798777] hover:bg-[#6a7a68] disabled:bg-gray-400 text-white font-['Inter'] font-medium text-lg transition-colors rounded-none"
+              className="w-full py-3 bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] disabled:bg-gray-400 text-white dark:text-black font-['Inter'] font-medium text-lg transition-colors rounded-none"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
@@ -245,9 +245,9 @@ export default function RegisterPage() {
           </form>
 
           {/* Sign In Link */}
-          <p className="font-['Inter'] text-sm text-gray-600 dark:text-gray-300 mt-6 text-center">
+          <p className="font-['Inter'] text-sm text-gray-600 dark:text-muted-foreground mt-6 text-center">
             {t("register.alreadyHaveAccount")}{" "}
-            <Link href={`/auth/signin`} className="text-[#798777] hover:text-[#6a7a68] font-medium">
+            <Link href={`/auth/signin`} className="text-[#798777] hover:text-[#6a7a68] dark:text-[#e0e0e0] dark:hover:text-[#d0d0d0] font-medium">
               {t("register.signIn")}
             </Link>
           </p>

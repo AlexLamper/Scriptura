@@ -8,20 +8,20 @@ export function Footer() {
   const { t } = useTranslation("footer")
 
   return (
-    <footer className="bg-[#262626] dark:bg-[#0d0f17] py-16 lg:py-20">
+    <footer className="bg-[#262626] dark:bg-card py-16 lg:py-20">
       <div className="container mx-auto px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 max-w-6xl mx-auto">
           {/* About Scriptura */}
           <div className="space-y-4">
-            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white dark:text-card-foreground mb-6">
               {t("about_scriptura")}
             </h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href={`/courses`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("our_courses")}
                 </Link>
@@ -29,7 +29,7 @@ export function Footer() {
               <li>
                 <Link
                   href={`/pricing`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("pricing")}
                 </Link>
@@ -39,14 +39,14 @@ export function Footer() {
 
           {/* Resources */}
           <div className="space-y-4">
-            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white dark:text-card-foreground mb-6">
               {t("resources")}
             </h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href={`/resources`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("resources")}
                 </Link>
@@ -54,7 +54,7 @@ export function Footer() {
               <li>
                 <Link
                   href={`/quizzes`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("quizzes")}
                 </Link>
@@ -62,7 +62,7 @@ export function Footer() {
               <li>
                 <Link
                   href={`/courses`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("courses")}
                 </Link>
@@ -72,14 +72,14 @@ export function Footer() {
 
           {/* Legal */}
           <div className="space-y-4">
-            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white dark:text-card-foreground mb-6">
               {t("legal")}
             </h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href={`/privacy-policy`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("privacy_policy")}
                 </Link>
@@ -87,7 +87,7 @@ export function Footer() {
               <li>
                 <Link
                   href={`/terms-of-service`}
-                  className="font-['Inter'] text-gray-300 hover:text-white transition-colors duration-200"
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("terms_of_service")}
                 </Link>
@@ -97,31 +97,31 @@ export function Footer() {
 
           {/* Connect/Social */}
           <div className="space-y-4">
-            <h3 className="font-['Inter'] text-lg font-semibold text-white mb-6">
+            <h3 className="font-['Inter'] text-lg font-semibold text-white dark:text-card-foreground mb-6">
               {t("connect")}
             </h3>
             <div className="flex space-x-4">
               <Link 
                 href="#" 
-                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+                className="w-10 h-10 bg-brand dark:bg-secondary hover:bg-brand/90 dark:hover:bg-secondary/80 text-white dark:text-foreground hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
               >
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link 
                 href="#" 
-                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+                className="w-10 h-10 bg-brand dark:bg-secondary hover:bg-brand/90 dark:hover:bg-secondary/80 text-white dark:text-foreground hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
               >
                 <Twitter className="w-5 h-5" />
               </Link>
               <Link 
                 href="#" 
-                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+                className="w-10 h-10 bg-brand dark:bg-secondary hover:bg-brand/90 dark:hover:bg-secondary/80 text-white dark:text-foreground hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
               >
                 <Instagram className="w-5 h-5" />
               </Link>
               <Link 
                 href="#" 
-                className="w-10 h-10 bg-[#798777] hover:bg-[#6a7a68] text-white hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
+                className="w-10 h-10 bg-brand dark:bg-secondary hover:bg-brand/90 dark:hover:bg-secondary/80 text-white dark:text-foreground hover:text-white rounded-full flex items-center justify-center transition-all duration-200"
               >
                 <Youtube className="w-5 h-5" />
               </Link>

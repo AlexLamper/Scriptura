@@ -104,7 +104,7 @@ export default function TabComponent({
   return (
     <div className={height ? "flex flex-col h-full" : ""}>
       {/* Tab Headers */}
-      <div className="flex flex-wrap space-x-1 mb-4 border-b border-gray-200 dark:border-gray-600 overflow-x-auto flex-none">
+      <div className="flex flex-wrap space-x-1 mb-4 border-b border-gray-200 dark:border-border overflow-x-auto flex-none">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
@@ -113,8 +113,8 @@ export default function TabComponent({
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-inter font-medium transition whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-[#798777]/10 text-[#798777] border-b-2 border-[#798777] dark:bg-[#232325] dark:text-[#9aaa98] dark:border-[#9aaa98]'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-[#2a2d35]'
+                  ? 'bg-[#798777]/10 text-[#798777] border-b-2 border-[#798777] dark:bg-accent dark:text-[#9aaa98] dark:border-[#9aaa98]'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-accent'
               }`}
             >
               <Icon size={14} className="sm:w-4 sm:h-4" />

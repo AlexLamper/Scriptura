@@ -92,7 +92,7 @@ export default function DownloadButton({
   return (
     <div className="relative download-dropdown">
       <button 
-        className="p-1 sm:p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-[#2a2d35] dark:hover:bg-[#3a3d45] dark:hover:ring-[#9aaa98] dark:text-gray-100 disabled:opacity-50 disabled:cursor-not-allowed" 
+        className="p-1 sm:p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-card dark:hover:bg-accent dark:hover:ring-[#9aaa98] dark:text-foreground disabled:opacity-50 disabled:cursor-not-allowed" 
         title={t('print_download')}
         onClick={() => setShowDownloadOptions(!showDownloadOptions)}
       >
@@ -101,10 +101,10 @@ export default function DownloadButton({
         </svg>
       </button>
       {showDownloadOptions && (
-        <div className="absolute right-0 mt-2 w-48 max-w-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15)] z-10 rounded-md">
+        <div className="absolute right-0 mt-2 w-48 max-w-xs bg-white dark:bg-card border border-gray-200 dark:border-border shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15)] z-10 rounded-md">
           <div className="p-2 space-y-2">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
-              <span className="text-xs font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{t('file_type') || 'File type'}:</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-muted-foreground whitespace-nowrap">{t('file_type') || 'File type'}:</span>
               <label className="flex items-center gap-1 text-xs whitespace-nowrap">
                 <input type="radio" name="fileType" value="txt" checked={fileType === 'txt'} onChange={() => setFileType('txt')} /> txt
               </label>
@@ -115,7 +115,7 @@ export default function DownloadButton({
             <button
               onClick={handleDownloadChapter}
               disabled={!selectedBook || !selectedChapter}
-              className="w-full text-left px-2 py-1 text-xs sm:text-sm font-inter text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full text-left px-2 py-1 text-xs sm:text-sm font-inter text-gray-700 dark:text-foreground hover:bg-gray-100 dark:hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {t('download_chapter')}
             </button>

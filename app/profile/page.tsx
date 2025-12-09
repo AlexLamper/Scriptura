@@ -88,7 +88,7 @@ export default function ProfilePage() {
     <div className="w-full pb-6 pt-0">
       <div className="mb-6">
         {/* Header */}
-        <div className="p-8 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a] mb-6">
+        <div className="p-8 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
@@ -112,7 +112,7 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Profile Section */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+            <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
                   {t("personal_information")}
@@ -128,7 +128,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Badges Section */}
-            <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+            <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
                   {t("your_badges", { defaultValue: "Your Badges" })}
@@ -143,7 +143,7 @@ export default function ProfilePage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Profile Picture */}
-            <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+            <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
                   {t("profile_picture")}

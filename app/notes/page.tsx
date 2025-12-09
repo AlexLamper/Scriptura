@@ -180,7 +180,7 @@ export default function NotesPage() {
     <div className="w-full pb-6 pt-0">
       <div className="mb-6">
         {/* Header */}
-        <div className="p-8 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a] mb-6">
+        <div className="p-8 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
           <div className="flex items-center justify-between gap-4">
             <div>
               <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white mb-2">
@@ -192,7 +192,7 @@ export default function NotesPage() {
             </div>
             <Button 
               onClick={() => router.push(`/study`)}
-              className="bg-[#798777] hover:bg-[#6a7a68] text-white whitespace-nowrap rounded-none"
+              className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black whitespace-nowrap rounded-none"
             >
               <Plus className="h-4 w-4 mr-2" />
               {t("create_note", { defaultValue: "Create Note" })}
@@ -201,7 +201,7 @@ export default function NotesPage() {
         </div>
 
         {/* Filters and Search */}
-        <div className="p-6 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a] mb-6">
+        <div className="p-6 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
             <div className="flex-1">
@@ -211,7 +211,7 @@ export default function NotesPage() {
                   placeholder={t("search_placeholder", { defaultValue: "Search notes, verses, or tags..." })}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-gray-50 dark:bg-[#1a1d2e] border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+                  className="pl-10 bg-gray-50 dark:bg-background border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                 />
               </div>
             </div>
@@ -310,7 +310,7 @@ export default function NotesPage() {
         {!loading && (
           <>
             {filteredNotes.length === 0 ? (
-              <div className="p-12 text-center shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+              <div className="p-12 text-center shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-card">
                 <StickyNote className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="font-['Merriweather'] text-xl font-semibold text-[#262626] dark:text-white mb-2">
                   {t("no_notes_title", { defaultValue: "No notes found" })}
@@ -318,7 +318,7 @@ export default function NotesPage() {
                 <p className="font-['Inter'] text-gray-600 dark:text-gray-300 mb-6">
                   {t("no_notes_description", { defaultValue: "Start taking notes while studying to see them here." })}
                 </p>
-                <Button onClick={() => router.push(`/study`)} className="bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">
+                <Button onClick={() => router.push(`/study`)} className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none">
                   <Plus className="h-4 w-4 mr-2" />
                   {t("start_studying", { defaultValue: "Start Studying" })}
                 </Button>
@@ -326,8 +326,8 @@ export default function NotesPage() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredNotes.map((note) => (
-                  <div key={note._id} className={`shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a] hover:shadow-xl transition-shadow ${
-                    note.type === "highlight" ? `border-l-4 border-l-[#d4af37]` : "border"
+                  <div key={note._id} className={`shadow-lg dark:shadow-gray-900/20 bg-white dark:bg-card hover:shadow-xl transition-shadow ${
+                    note.type === "highlight" ? `border border-gray-200 dark:border-transparent border-l-4 border-l-[#d4af37]` : "border border-gray-200 dark:border-none"
                   }`}>
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">

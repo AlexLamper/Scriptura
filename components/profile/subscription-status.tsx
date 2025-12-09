@@ -15,7 +15,7 @@ export function SubscriptionStatus({
   isAdmin = false,
 }: SubscriptionStatusProps) {
   return (
-    <div className="shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-[#23263a]">
+    <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <h2 className="font-merriweather text-lg font-bold text-[#262626] dark:text-white">
@@ -60,7 +60,7 @@ export function SubscriptionStatus({
             </p>
             {!isAdmin && (
               <Link href={`/subscribe`}>
-                <Button className="w-full mt-4 bg-[#798777] hover:bg-[#6a7a68] text-white rounded-none">Upgrade to Premium</Button>
+                <Button className="w-full mt-4 bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none">Upgrade to Premium</Button>
               </Link>
             )}
           </div>

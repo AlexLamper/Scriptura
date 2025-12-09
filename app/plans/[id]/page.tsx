@@ -263,9 +263,9 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
       )}
 
       {plan.isEnrolled && nextReading && (
-        <Card className="mb-6 border-blue-200 bg-blue-50">
+        <Card className="mb-6 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-blue-800">
+            <CardTitle className="flex items-center gap-2 text-blue-800 dark:text-blue-300">
               <Book className="w-5 h-5" />
               Volgende Lezing
             </CardTitle>
@@ -281,7 +281,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
                 <Button 
                   onClick={() => openBibleReading(nextReading)}
                   size="sm"
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white"
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Lees Nu
@@ -310,8 +310,8 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
             
             return (
               <Card key={reading.day} className={`transition-all ${
-                isCompleted ? 'bg-green-50 border-green-200' : 
-                isNext ? 'bg-blue-50 border-blue-200' : ''
+                isCompleted ? 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800' : 
+                isNext ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800' : ''
               }`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
@@ -329,7 +329,7 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
                             className="h-6 w-6 p-0"
                           >
                             {isCompleted ? (
-                              <CheckCircle className="w-5 h-5 text-green-600" />
+                              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                             ) : (
                               <Circle className="w-5 h-5 text-muted-foreground" />
                             )}
@@ -370,14 +370,14 @@ export default function PlanDetailPage({ params }: PlanDetailPageProps) {
       </div>
 
       {!plan.isEnrolled && (
-        <Card className="mt-8 border-blue-200 bg-blue-50">
+        <Card className="mt-8 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30">
           <CardContent className="pt-6">
             <div className="text-center">
-              <h3 className="text-lg font-semibold mb-2">Schrijf je in voor dit plan</h3>
-              <p className="text-muted-foreground mb-4">
+              <h3 className="text-lg font-semibold mb-2 dark:text-blue-100">Schrijf je in voor dit plan</h3>
+              <p className="text-muted-foreground mb-4 dark:text-blue-200">
                 Om je voortgang bij te houden en meldingen te ontvangen, schrijf je in voor dit leesplan.
               </p>
-              <Button onClick={handleEnrollment}>
+              <Button onClick={handleEnrollment} className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black">
                 Inschrijven
               </Button>
             </div>

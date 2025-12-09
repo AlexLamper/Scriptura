@@ -12,7 +12,6 @@ export default function StudyPage() {
   const { t, i18n } = useTranslation('study');
   const lng = i18n.resolvedLanguage;
   
-  // Use the custom hook for Bible data management
   const {
     versions,
     books,
@@ -31,7 +30,6 @@ export default function StudyPage() {
     handleNextChapter,
   } = useBibleData(lng);
 
-  // App ready state for startup animation
   const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
@@ -40,13 +38,11 @@ export default function StudyPage() {
     }
   }, [loadingVersions, loadingBooks, loadingChapters, selectedBook, selectedChapter]);
 
-  // Wrapper for download functionality for keyboard shortcuts
   const handleDownload = useCallback(() => {
     // This will be handled by the DownloadButton component
     // Download triggered via keyboard shortcut
   }, []);
 
-  // Ref for the BibleViewerSection to measure its height
   const bibleViewerRef = useRef<HTMLDivElement>(null);
   const [bibleViewerHeight, setBibleViewerHeight] = useState<number | undefined>(undefined);
 
@@ -54,7 +50,6 @@ export default function StudyPage() {
     if (!bibleViewerRef.current) return;
 
     const updateHeight = () => {
-      // Only apply height sync on xl screens (matching xl:grid-cols-2)
       if (window.innerWidth >= 1280 && bibleViewerRef.current) {
         setBibleViewerHeight(bibleViewerRef.current.offsetHeight);
       } else {
@@ -62,24 +57,20 @@ export default function StudyPage() {
       }
     };
 
-    // Initial check
     updateHeight();
 
-    // Observer for resize events on the element
     const resizeObserver = new ResizeObserver(() => {
       updateHeight();
     });
     
     resizeObserver.observe(bibleViewerRef.current);
-    
-    // Also listen for window resize to handle breakpoint changes
     window.addEventListener('resize', updateHeight);
 
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener('resize', updateHeight);
     };
-  }, [selectedBook, selectedChapter, selectedVersion]); // Re-run when content changes
+  }, [selectedBook, selectedChapter, selectedVersion]);
 
   return (
     <div className="mt-2 font-inter">

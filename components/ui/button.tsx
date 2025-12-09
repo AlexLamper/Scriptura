@@ -19,8 +19,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground rounded-md",
         link: "text-primary underline-offset-4 hover:underline",
         // Custom button variants as requested - NO rounded corners
-        dark: "bg-[#262626] text-white font-semibold font-inter hover:bg-[#1a1a1a] transition-colors duration-200 rounded-none",
-        transparent: "bg-transparent text-[#262626] font-semibold font-inter border border-[#262626] hover:bg-[#262626] hover:text-white transition-colors duration-200 rounded-none",
+        dark: "bg-[#262626] dark:bg-[#e0e0e0] text-white dark:text-black font-semibold font-inter hover:bg-[#1a1a1a] dark:hover:bg-[#d0d0d0] transition-colors duration-200 rounded-none",
+        transparent: "bg-transparent text-[#262626] dark:text-white font-semibold font-inter border border-[#262626] dark:border-white hover:bg-[#262626] dark:hover:bg-white hover:text-white dark:hover:text-[#262626] transition-colors duration-200 rounded-none",
       },
       size: {
         default: "h-10 px-4 py-2",

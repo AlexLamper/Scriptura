@@ -12,7 +12,7 @@ export function FAQSection() {
   }[]
 
   return (
-    <section id="faq" className="relative bg-white dark:bg-[#181b23] py-16 lg:py-24 overflow-hidden">
+    <section id="faq" className="relative bg-white dark:bg-background py-16 lg:py-24 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Two Column Layout */}
@@ -34,7 +34,7 @@ export function FAQSection() {
             <div className="order-1 lg:order-2 space-y-8">
               {/* Title and Subtitle */}
               <div className="text-center lg:text-left space-y-6">
-                <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-white">
+                <h2 className="font-['Merriweather'] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#262626] dark:text-foreground">
                   {t("faq_title")}
                 </h2>
               </div>
@@ -46,12 +46,12 @@ export function FAQSection() {
                     <AccordionItem
                       key={index}
                       value={`item-${index + 1}`}
-                      className="border-b border-gray-200 dark:border-gray-700 pb-4"
+                      className="border-b border-gray-200 dark:border-border pb-4"
                     >
-                      <AccordionTrigger className="text-left font-['Inter'] text-lg font-medium text-[#262626] dark:text-white hover:no-underline py-4 px-0 border-none">
+                      <AccordionTrigger className="text-left font-['Inter'] text-lg font-medium text-[#262626] dark:text-foreground hover:no-underline py-4 px-0 border-none">
                         {faq.question}
                       </AccordionTrigger>
-                      <AccordionContent className="font-['Inter'] text-gray-600 dark:text-gray-300 leading-relaxed pt-2 pb-4 px-0">
+                      <AccordionContent className="font-['Inter'] text-gray-600 dark:text-muted-foreground leading-relaxed pt-2 pb-4 px-0">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>

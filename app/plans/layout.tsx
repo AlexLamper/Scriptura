@@ -63,7 +63,7 @@ export default async function PlansLayout({
   const session = await getServerSession();
 
   return (
-    <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
+    <div className="antialiased bg-gray-100 dark:bg-background">
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />

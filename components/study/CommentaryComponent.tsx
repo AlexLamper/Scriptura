@@ -156,8 +156,8 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-[#798777] mx-auto mb-4" />
-          <p className="font-inter text-gray-700 text-base font-medium dark:text-gray-200">
+          <Loader2 className="h-8 w-8 animate-spin text-[#798777] dark:text-[#9aaa98] mx-auto mb-4" />
+          <p className="font-inter text-gray-700 text-base font-medium dark:text-muted-foreground">
             Commentaar laden...
           </p>
         </div>
@@ -168,13 +168,13 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   {/* Error state */}
   if (error) {
     return (
-      <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
+      <Card className="border-0 shadow-none rounded-none dark:bg-card">
         <CardContent className="py-12 text-center">
           <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
           <p className="font-merriweather text-red-600 font-semibold mb-2 text-base dark:text-red-400">
             Error loading commentary
           </p>
-          <p className="font-inter text-gray-700 dark:text-gray-200 text-sm">{error}</p>
+          <p className="font-inter text-gray-700 dark:text-muted-foreground text-sm">{error}</p>
         </CardContent>
       </Card>
     );
@@ -183,8 +183,8 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   {/* Empty state */}
   if (!commentary) {
     return (
-      <Card className="border-0 shadow-none rounded-none dark:bg-[#23263a]">
-        <CardContent className="py-12 text-center text-gray-500 dark:text-gray-300 text-sm">
+      <Card className="border-0 shadow-none rounded-none dark:bg-card">
+        <CardContent className="py-12 text-center text-gray-500 dark:text-muted-foreground text-sm">
           <p className="font-inter">Geen commentaar beschikbaar voor dit hoofdstuk.</p>
         </CardContent>
       </Card>
@@ -193,23 +193,23 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
 
   {/* Commentary Content */}
   return (
-    <Card className={`border-0 shadow-none rounded-none dark:bg-[#23263a] ${height ? 'h-full flex flex-col' : ''}`}>
+    <Card className={`border-0 shadow-none rounded-none dark:bg-card ${height ? 'h-full flex flex-col' : ''}`}>
       <CardHeader className="px-0 flex-none">
-        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-white">
-          <MessageCircle className="w-6 h-6 text-[#798777]" />
+        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-foreground">
+          <MessageCircle className="w-6 h-6 text-[#798777] dark:text-[#9aaa98]" />
           Bijbelcommentaar: {book} {chapter}
         </CardTitle>
-        <p className="font-inter text-sm text-gray-600 dark:text-gray-400">
+        <p className="font-inter text-sm text-gray-600 dark:text-muted-foreground">
           Verdieping en uitleg bij de geselecteerde passage uit de Bijbel.
         </p>
       </CardHeader>
-      <CardContent className={`px-0 pt-0 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
+      <CardContent className={`px-0 pt-0 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-secondary scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
         {Object.entries(commentary).map(([key, text]) => (
-          <div key={key} className="border-b border-gray-100 dark:border-gray-800 pb-4 last:border-0 pr-2">
-            <h3 className="font-merriweather font-semibold text-[#262626] dark:text-gray-100 mb-2">
+          <div key={key} className="border-b border-gray-100 dark:border-border pb-4 last:border-0 pr-2">
+            <h3 className="font-merriweather font-semibold text-[#262626] dark:text-foreground mb-2">
               Vers {key}
             </h3>
-            <p className="font-inter text-gray-700 text-sm leading-relaxed dark:text-gray-300 whitespace-pre-line">
+            <p className="font-inter text-gray-700 text-sm leading-relaxed dark:text-muted-foreground whitespace-pre-line">
               {text}
             </p>
           </div>
