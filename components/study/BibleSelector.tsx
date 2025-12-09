@@ -36,7 +36,7 @@ export default function BibleSelector({
     <div className="space-y-1 sm:space-y-2 md:space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-1 sm:gap-2 md:gap-4">
         {/* Version Selector */}
-        <div className="space-y-1 sm:space-y-2 md:space-y-4">
+        <div className="space-y-1">
           <label className="hidden md:block text-xs md:text-sm font-inter font-medium text-gray-700 dark:text-muted-foreground">
             {t('translation')}
           </label>
@@ -61,7 +61,7 @@ export default function BibleSelector({
         {/* Book and Chapter - Side by side on mobile, separate on desktop */}
         <div className="grid grid-cols-2 md:contents gap-1 sm:gap-2 md:gap-4">
           {/* Book Selector */}
-          <div className="space-y-1 sm:space-y-2 md:space-y-4">
+          <div className="space-y-1">
             <label className="hidden md:block text-xs md:text-sm font-inter font-medium text-gray-700 dark:text-muted-foreground">
               {t('book')}
             </label>
@@ -84,7 +84,7 @@ export default function BibleSelector({
           </div>
 
           {/* Chapter Selector */}
-          <div className="space-y-1 sm:space-y-2 md:space-y-4">
+          <div className="space-y-1">
             <label className="hidden md:block text-xs md:text-sm font-inter font-medium text-gray-700 dark:text-muted-foreground">
               {t('chapter')}
             </label>

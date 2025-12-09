@@ -2,9 +2,43 @@
 
 import { Sparkles } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 
 export default function SidebarProCTA() {
   const router = useRouter()
+  const { data: session } = useSession()
+  const [isSubscribed, setIsSubscribed] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function checkSubscription() {
+      if (!session) {
+        setLoading(false)
+        return
+      }
+
+      try {
+        const response = await fetch("/api/user")
+        if (response.ok) {
+          const data = await response.json()
+          if (data.user?.subscribed) {
+            setIsSubscribed(true)
+          }
+        }
+      } catch (error) {
+        console.error("Failed to check subscription", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    checkSubscription()
+  }, [session])
+
+  if (loading || isSubscribed) {
+    return null
+  }
 
   return (
     <div className="mt-auto px-3 pb-4">

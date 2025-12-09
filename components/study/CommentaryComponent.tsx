@@ -209,7 +209,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
             <h3 className="font-merriweather font-semibold text-[#262626] dark:text-foreground mb-2">
               Vers {key}
             </h3>
-            <p className="font-inter text-gray-700 text-sm leading-relaxed dark:text-muted-foreground whitespace-pre-line">
+            <p className="font-inter text-gray-700 text-sm leading-relaxed dark:text-foreground whitespace-pre-line">
               {text}
             </p>
           </div>

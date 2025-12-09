@@ -103,7 +103,7 @@ export default async function SubscribeLayout({
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />
-          <div className="min-h-screen mx-auto w-full">
+          <div className="min-h-screen mx-auto w-full bg-background">
             <Header params={{ lng: "" }} />
             <div className="">
               {children}
