@@ -131,7 +131,7 @@ export default function ChapterViewer({
           <div className="space-y-2 text-justify">
             {Object.entries(verses).map(([verseNumber, text]) => (
               <div key={verseNumber} className="group relative">
-                <p className="font-inter dark:text-foreground leading-relaxed text-[#262626]">
+                <p className="font-inter text-base dark:text-foreground leading-relaxed text-[#262626]">
                   <sup className="font-semibold text-gray-700 dark:text-muted-foreground mr-1">
                     {verseNumber}
                   </sup>

@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { FileText, Edit, BookOpen, Folder } from 'lucide-react';
+import React, { useState } from 'react';
+import { MessageCircle, Clock, Users, Brain } from 'lucide-react';
 import TabComponent from './TabComponent';
 
 interface StudyMaterialsSectionProps {
@@ -24,34 +24,47 @@ export default function StudyMaterialsSection({
   onNextChapter,
   onPrevChapter,
   onDownload,
-  t,
-  height
+  t
 }: StudyMaterialsSectionProps) {
+  const [activeTab, setActiveTab] = useState('commentary');
+
+  const tabs = [
+    { id: 'commentary', label: t('tabs.commentary'), icon: MessageCircle },
+    { id: 'inductive', label: t('tabs.inductive_study'), icon: Brain },
+    { id: 'historical', label: t('tabs.historical'), icon: Clock },
+    { id: 'notes', label: t('tabs.notes'), icon: Users },
+  ];
+
   return (
     <section 
-      style={height ? { height: `${height}px` } : undefined}
-      className={`bg-white p-4 sm:p-6 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.15),0_8px_24px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300 dark:bg-card dark:border dark:border-border ${height ? 'flex flex-col' : ''}`}
+      className="bg-white shadow-sm flex flex-col h-full dark:bg-card dark:border-l dark:border-border"
     >
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2 flex-none">
-        <h2 className="text-lg font-merriweather font-semibold text-[#262626] dark:text-foreground">{t('study_materials')}</h2>
-        <div className="flex space-x-3">
-          <button className="p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-secondary dark:hover:bg-accent dark:hover:ring-[#9aaa98] dark:text-foreground">
-            <FileText size={18} />
-          </button>
-          <button className="p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-secondary dark:hover:bg-accent dark:hover:ring-[#9aaa98] dark:text-foreground">
-            <Edit size={18} />
-          </button>
-          <button className="p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-secondary dark:hover:bg-accent dark:hover:ring-[#9aaa98] dark:text-foreground">
-            <BookOpen size={18} />
-          </button>
-          <button className="p-2 bg-gray-100 hover:bg-gray-200 hover:ring-2 hover:ring-[#798777] transition shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] dark:bg-secondary dark:hover:bg-accent dark:hover:ring-[#9aaa98] dark:text-foreground">
-            <Folder size={18} />
-          </button>
+      {/* Header with Tabs */}
+      <div className="flex items-center px-4 py-2 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none overflow-x-auto">
+        <div className="flex space-x-1">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-inter font-medium transition whitespace-nowrap rounded-md ${
+                  isActive
+                    ? 'bg-[#798777]/10 text-[#798777] dark:bg-accent dark:text-[#9aaa98]'
+                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-accent'
+                }`}
+              >
+                <Icon size={14} className="sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{tab.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
       
-      {/* Tab Navigation */}
-      <div className={height ? "flex-1 min-h-0 overflow-hidden flex flex-col" : ""}>
+      {/* Tab Content */}
+      <div className="flex-1 min-h-0 overflow-hidden flex flex-col relative">
         <TabComponent 
           selectedBook={selectedBook} 
           selectedChapter={selectedChapter} 
@@ -61,8 +74,11 @@ export default function StudyMaterialsSection({
           onNextChapter={onNextChapter}
           onPrevChapter={onPrevChapter}
           onDownload={onDownload}
-          height={height}
+          height={1}
+          activeTab={activeTab}
         />
+        {/* Bottom Blur Fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent pointer-events-none z-10 dark:from-card" />
       </div>
     </section>
   );

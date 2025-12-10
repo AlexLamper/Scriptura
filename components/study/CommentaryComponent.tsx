@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Loader2, AlertCircle, MessageCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Loader2, AlertCircle } from 'lucide-react';
+import { Card, CardContent } from '../ui/card';
 
 interface CommentaryComponentProps {
   book: string;
   chapter: number;
-  source?: string; // e.g. matthew-henry
+  source?: string;
   height?: number;
 }
 
@@ -194,22 +194,13 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   {/* Commentary Content */}
   return (
     <Card className={`border-0 shadow-none rounded-none dark:bg-card ${height ? 'h-full flex flex-col' : ''}`}>
-      <CardHeader className="px-0 flex-none">
-        <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-foreground">
-          <MessageCircle className="w-6 h-6 text-[#798777] dark:text-[#9aaa98]" />
-          Bijbelcommentaar: {book} {chapter}
-        </CardTitle>
-        <p className="font-inter text-sm text-gray-600 dark:text-muted-foreground">
-          Verdieping en uitleg bij de geselecteerde passage uit de Bijbel.
-        </p>
-      </CardHeader>
-      <CardContent className={`px-0 pt-0 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-secondary scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
+      <CardContent className={`px-4 sm:px-6 pt-4 pb-24 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-secondary scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
         {Object.entries(commentary).map(([key, text]) => (
           <div key={key} className="border-b border-gray-100 dark:border-border pb-4 last:border-0 pr-2">
             <h3 className="font-merriweather font-semibold text-[#262626] dark:text-foreground mb-2">
               Vers {key}
             </h3>
-            <p className="font-inter text-gray-700 text-sm leading-relaxed dark:text-foreground whitespace-pre-line">
+            <p className="font-inter text-gray-700 text-base leading-relaxed dark:text-foreground whitespace-pre-line">
               {text}
             </p>
           </div>

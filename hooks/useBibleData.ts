@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface Version {
   name: string;
@@ -44,18 +44,18 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   const [loadingChapters, setLoadingChapters] = useState(false);
   
   const [lastReadLoaded, setLastReadLoaded] = useState(false);
+  const lastBookIndexRef = useRef<number>(-1);
+  const lastChapterRef = useRef<number>(-1);
 
   const API_BASE_URL = 'https://www.scriptura-api.com/api';
 
   // Function to get default Bible version based on language
   const getDefaultVersion = (availableVersions: string[], language: string): string | null => {
     if (language === 'nl') {
-      // For Dutch, prefer Staten Vertaling (note the space)
       if (availableVersions.includes('Staten Vertaling')) {
         return 'Staten Vertaling';
       }
     } else if (language === 'en') {
-      // For English, prefer American Standard Version
       if (availableVersions.includes('American Standard Version')) {
         return 'American Standard Version';
       }
@@ -64,7 +64,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       }
     }
     
-    // Fallback to first available version
     return availableVersions.length > 0 ? availableVersions[0] : null;
   };
 
@@ -90,7 +89,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           if (lastReadRes.ok) {
             const { lastReadChapter } = await lastReadRes.json();
             if (lastReadChapter && lastReadChapter.version && lastReadChapter.book && lastReadChapter.chapter) {
-              // Restore last read position
               setSelectedVersion(lastReadChapter.version);
               setSelectedBook(lastReadChapter.book);
               setSelectedChapter(lastReadChapter.chapter);
@@ -109,23 +107,19 @@ export function useBibleData(lng: string): UseBibleDataReturn {
             if (prefRes.ok) {
               const { preferences } = await prefRes.json();
               if (preferences?.translation) {
-                // Try to find a matching version in the available versions
-                // The preference might be a code (e.g. "ESV") or a full name
-                // We try to find a version that contains the preference string or matches exactly
                 const pref = preferences.translation.toLowerCase();
                 const matchedVersion = versionNames.find(v => {
                   const vLower = v.toLowerCase();
                   return vLower === pref || 
                          vLower.includes(`(${pref})`) || 
                          vLower.includes(`${pref} `) ||
-                         vLower === pref; // exact match
+                         vLower === pref;
                 });
 
                 if (matchedVersion) {
                   setSelectedVersion(matchedVersion);
                   restored = true;
                 } else {
-                   // Fallback: check if any version contains the code
                    const looseMatch = versionNames.find(v => v.toLowerCase().includes(pref));
                    if (looseMatch) {
                      setSelectedVersion(looseMatch);
@@ -138,8 +132,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
             console.error('Error fetching preferences:', e);
           }
         }
-
-        // Set default version based on language preference (only if no last read found AND no preference found)
         if (!restored) {
           const defaultVersion = getDefaultVersion(versionNames, lng);
           setSelectedVersion(defaultVersion);
@@ -160,7 +152,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     if (!selectedVersion) {
       setBooks([]);
       setSelectedBook('');
-      setChapters([]); // Clear dependent states
+      setChapters([]);
       setSelectedChapter(1);
       setMaxChapter(1);
       return;
@@ -169,7 +161,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     const fetchBooks = async () => {
       setLoadingBooks(true);
       try {
-        // Build URL with version parameter if not the default Statenvertaling
         const params = new URLSearchParams();
         if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
           params.append('version', selectedVersion);
@@ -182,30 +173,37 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           const errorText = await res.text();
           throw new Error(`Failed to fetch books: ${res.status} ${res.statusText} - ${errorText}`);
         }
-        // The /api/books endpoint returns an array of strings directly
         const bookNames: string[] = await res.json();
 
         setBooks(bookNames);
 
-        // Only set default book if we haven't already restored one from last read
-        if (!selectedBook) {
-          // Set appropriate default book based on language/version
+        // Check if the currently selected book is valid in the new version
+        let isBookValid = selectedBook && bookNames.includes(selectedBook);
+        let nextBook = selectedBook;
+
+        if (!isBookValid && lastBookIndexRef.current !== -1) {
+          if (lastBookIndexRef.current < bookNames.length) {
+            nextBook = bookNames[lastBookIndexRef.current];
+            isBookValid = true;
+          }
+          lastBookIndexRef.current = -1;
+        }
+
+        // Only set default book if we don't have a valid selected book
+        if (!isBookValid) {
           let defaultBook = '';
           if (selectedVersion === 'Staten Vertaling' || lng === 'nl') {
-            // For Dutch versions, look for "Genesis" or equivalent
             if (bookNames.includes('Genesis')) {
               defaultBook = 'Genesis';
             } else if (bookNames.includes('1 Mozes')) {
               defaultBook = '1 Mozes';
             }
           } else {
-            // For English and other versions, look for "Genesis"
             if (bookNames.includes('Genesis')) {
               defaultBook = 'Genesis';
             }
           }
 
-          // Fallback to first book if no preferred default found
           if (!defaultBook && bookNames.length > 0) {
             defaultBook = bookNames[0];
           }
@@ -213,12 +211,13 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           if (defaultBook) {
             setSelectedBook(defaultBook);
           } else {
-            setSelectedBook(''); // No books found
+            setSelectedBook('');
             console.warn('No books found from API.');
           }
+        } else if (nextBook !== selectedBook) {
+          setSelectedBook(nextBook);
         }
         
-        // Mark that initial load is complete, allowing saves to happen
         if (!lastReadLoaded) {
           setLastReadLoaded(true);
         }
@@ -228,7 +227,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         setSelectedBook('');
       } finally {
         setLoadingBooks(false);
-        console.groupEnd(); // End useEffect: Fetching books... group
+        console.groupEnd();
       }
     };
     fetchBooks();
@@ -239,20 +238,18 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   useEffect(() => {
     if (!selectedBook) {
       setChapters([]);
-      setSelectedChapter(1);
       setMaxChapter(1);
       return;
     }
     if (!selectedVersion) {
       console.warn('useEffect: selectedBook is present but selectedVersion is missing. This is unexpected.');
-      return; // Should ideally not happen if logic flows correctly
+      return;
     }
 
     const fetchChapters = async () => {
       setLoadingChapters(true);
       try {
         const params = new URLSearchParams({ book: selectedBook });
-        // Only append version if it's explicitly selected and not the default 'Staten Vertaling'
         if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
           params.append('version', selectedVersion);
         }
@@ -281,7 +278,15 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         setMaxChapter(numberOfChapters);
 
         setSelectedChapter((prevChapter) => {
-          // If the previous chapter is still in the new list, keep it. Otherwise, default to 1.
+          if (lastChapterRef.current !== -1) {
+            const stored = lastChapterRef.current;
+            lastChapterRef.current = -1;
+            
+            if (chapterNumbers.includes(stored)) {
+              return stored;
+            }
+          }
+
           const newChapter = chapterNumbers.includes(prevChapter) ? prevChapter : (chapterNumbers.length > 0 ? chapterNumbers[0] : 1);
           return newChapter;
         });
@@ -290,10 +295,10 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         console.error(`Error fetching chapters for ${selectedBook}:`, err);
         setChapters([]);
         setMaxChapter(1);
-        setSelectedChapter(1); // Default to 1 on error
+        setSelectedChapter(1);
       } finally {
         setLoadingChapters(false);
-        console.groupEnd(); // End useEffect: Fetching chapters... group
+        console.groupEnd();
       }
     };
     fetchChapters();
@@ -301,7 +306,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
   // 4. Save last read chapter whenever user changes book, chapter, or version
   useEffect(() => {
-    // Only save if we have valid data and it's not the initial load
     if (!selectedBook || !selectedChapter || !selectedVersion || !lastReadLoaded) {
       return;
     }
@@ -324,19 +328,20 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       }
     };
 
-    // Debounce the save to avoid too many requests
     const timeoutId = setTimeout(saveLastRead, 1000);
     return () => clearTimeout(timeoutId);
   }, [selectedBook, selectedChapter, selectedVersion, lastReadLoaded]);
 
   const handleVersionChange = useCallback((version: string) => {
-    setSelectedVersion(version);
+    if (books.length > 0 && selectedBook) {
+      lastBookIndexRef.current = books.indexOf(selectedBook);
+      lastChapterRef.current = selectedChapter;
+    }
+
+    setLoadingBooks(true);
     setSelectedBook('');
-    setBooks([]);
-    setSelectedChapter(1);
-    setChapters([]);
-    setMaxChapter(1);
-  }, []);
+    setSelectedVersion(version);
+  }, [books, selectedBook, selectedChapter]);
 
   const handleBookChange = useCallback((book: string) => {
     setSelectedBook(book);

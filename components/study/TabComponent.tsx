@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { MessageCircle, Clock, Users, Brain } from 'lucide-react';
+import React from 'react';
 import { ChapterNotes } from './ChapterNotes';
 import InductiveStudy from './InductiveStudy';
 import HistoricalContext from './HistoricalContext';
@@ -29,10 +28,9 @@ export default function TabComponent({
   onNextChapter,
   onPrevChapter,
   onDownload,
-  height
-}: TabComponentProps) {
-  const [activeTab, setActiveTab] = useState('commentary');
-
+  height,
+  activeTab
+}: TabComponentProps & { activeTab: string }) {
   // Define keyboard shortcuts
   const shortcuts: KeyboardShortcut[] = [
     {
@@ -54,13 +52,6 @@ export default function TabComponent({
 
   // Enable keyboard shortcuts
   useKeyboardShortcuts({ shortcuts });
-
-  const tabs = [
-    { id: 'commentary', label: t('tabs.commentary'), icon: MessageCircle },
-    { id: 'inductive', label: t('tabs.inductive_study'), icon: Brain },
-    { id: 'historical', label: t('tabs.historical'), icon: Clock },
-    { id: 'notes', label: t('tabs.notes'), icon: Users },
-  ];
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -102,30 +93,9 @@ export default function TabComponent({
   };
 
   return (
-    <div className={height ? "flex flex-col h-full" : ""}>
-      {/* Tab Headers */}
-      <div className="flex flex-wrap space-x-1 mb-4 border-b border-gray-200 dark:border-border overflow-x-auto flex-none">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-inter font-medium transition whitespace-nowrap ${
-                activeTab === tab.id
-                  ? 'bg-[#798777]/10 text-[#798777] border-b-2 border-[#798777] dark:bg-accent dark:text-[#9aaa98] dark:border-[#9aaa98]'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-accent'
-              }`}
-            >
-              <Icon size={14} className="sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
+    <div className={height ? "flex flex-col h-full" : "h-full"}>
       {/* Tab Content */}
-      <div className={height ? "flex-1 min-h-0 overflow-hidden" : "min-h-[400px]"}>
+      <div className={height ? "flex-1 min-h-0 overflow-hidden" : "min-h-[400px] h-full"}>
         {renderTabContent()}
       </div>
     </div>
