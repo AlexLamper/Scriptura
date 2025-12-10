@@ -17,7 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/read`, lastModified: new Date() },
     { url: `${baseUrl}/plans`, lastModified: new Date() },
     { url: `${baseUrl}/notes`, lastModified: new Date() },
-    { url: `${baseUrl}/onboarding`, lastModified: new Date() },
   ];
 
   return staticRoutes;
