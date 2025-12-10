@@ -40,7 +40,7 @@ export default function StudyMaterialsSection({
       className="bg-white shadow-sm flex flex-col h-full dark:bg-card dark:border-l dark:border-border"
     >
       {/* Header with Tabs */}
-      <div className="flex items-center px-4 py-2 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none overflow-x-auto">
+      <div className="h-14 flex items-center px-4 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none overflow-x-auto">
         <div className="flex space-x-1">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
