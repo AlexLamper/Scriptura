@@ -81,7 +81,7 @@ async function getBibleData(version: string) {
 
     if (stats.isDirectory()) {
         const files = await fs.readdir(filePath);
-        const mergedData: Record<string, any> = {};
+        const mergedData: Record<string, unknown> = {};
         
         for (const file of files) {
             if (file.endsWith('.json')) {

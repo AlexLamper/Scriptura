@@ -112,10 +112,6 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
         if (res.ok) {
           const sources = await res.json();
           setAvailableSources(sources);
-          // If initialSource is not in the list, default to the first one or keep it
-          if (sources.length > 0 && !sources.includes(initialSource)) {
-             // Don't override if it's not loaded yet, but good to have logic here
-          }
         }
       } catch (e) {
         console.error("Failed to fetch commentary sources", e);

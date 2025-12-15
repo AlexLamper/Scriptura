@@ -19,11 +19,6 @@ interface Translation {
   abbreviation: string;
 }
 
-interface Verse {
-  verse: number;
-  text: string;
-}
-
 interface ChapterData {
   translation: Translation;
   verses: Record<string, string>;
