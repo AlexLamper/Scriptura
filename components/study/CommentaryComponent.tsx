@@ -69,6 +69,8 @@ const bookNameMap: Record<string, string> = {
   'Romeinen': 'Romans',
   '1 Korintiërs': '1 Corinthians',
   '2 Korintiërs': '2 Corinthians',
+  '1 Corinthiërs': '1 Corinthians',
+  '2 Corinthiërs': '2 Corinthians',
   'Galaten': 'Galatians',
   'Efeziërs': 'Ephesians',
   'Filippenzen': 'Philippians',
@@ -226,7 +228,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
                 {key === 'intro' ? 'Inleiding' : `Vers ${key}`}
                 </h3>
                 <div 
-                    className="font-inter text-gray-700 text-base leading-relaxed dark:text-foreground whitespace-pre-line prose dark:prose-invert max-w-none"
+                    className="font-inter text-gray-700 text-base leading-loose dark:text-foreground whitespace-pre-wrap prose dark:prose-invert max-w-none"
                     dangerouslySetInnerHTML={{ __html: text }}
                 />
             </div>

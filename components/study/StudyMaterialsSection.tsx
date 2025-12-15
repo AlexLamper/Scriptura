@@ -37,7 +37,7 @@ export default function StudyMaterialsSection({
 
   return (
     <section 
-      className="bg-white shadow-sm flex flex-col h-full dark:bg-card dark:border-l dark:border-border"
+      className="bg-white shadow-sm flex flex-col h-full dark:bg-card"
     >
       {/* Header with Tabs */}
       <div className="h-14 flex items-center px-4 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none overflow-x-auto">

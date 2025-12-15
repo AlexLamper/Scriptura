@@ -69,7 +69,7 @@ export default function HistoricalContext({ book }: HistoricalContextProps) {
                 <p className="text-red-500">{error}</p>
              </div>
         ) : summary ? (
-            <div className="prose dark:prose-invert max-w-none font-inter text-gray-700 dark:text-foreground whitespace-pre-line leading-relaxed">
+            <div className="prose dark:prose-invert max-w-none font-inter text-gray-700 dark:text-foreground whitespace-pre-wrap leading-loose">
                 {summary}
             </div>
         ) : (

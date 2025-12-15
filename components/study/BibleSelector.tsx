@@ -16,6 +16,15 @@ type Props = {
   t: (key: string) => string;
 };
 
+const versionNames: Record<string, string> = {
+  'statenvertaling': 'Staten Vertaling',
+  'kjv': 'King James Version',
+  'asv': 'American Standard Version',
+  'afri': 'Afrikaans 1953',
+};
+
+const getVersionName = (v: string) => versionNames[v] || v;
+
 export default function BibleSelector({
   versions,
   books,
@@ -47,7 +56,7 @@ export default function BibleSelector({
         </option>
         {versions.map((version) => (
           <option key={version} value={version}>
-            {version}
+            {getVersionName(version)}
           </option>
         ))}
       </select>
