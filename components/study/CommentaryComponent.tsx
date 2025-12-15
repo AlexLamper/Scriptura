@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, ChevronDown } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
 
 interface CommentaryComponentProps {
@@ -93,14 +93,36 @@ const bookNameMap: Record<string, string> = {
 const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   book,
   chapter,
-  source = 'matthew-henry',
+  source: initialSource = 'matthew-henry',
   height
 }) => {
   const [commentary, setCommentary] = useState<CommentaryData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [availableSources, setAvailableSources] = useState<string[]>([]);
+  const [selectedSource, setSelectedSource] = useState(initialSource);
 
-  const API_BASE_URL = 'https://www.scriptura-api.com/api';
+  const API_BASE_URL = '/api';
+
+  // Fetch available commentaries
+  useEffect(() => {
+    const fetchSources = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/commentaries`);
+        if (res.ok) {
+          const sources = await res.json();
+          setAvailableSources(sources);
+          // If initialSource is not in the list, default to the first one or keep it
+          if (sources.length > 0 && !sources.includes(initialSource)) {
+             // Don't override if it's not loaded yet, but good to have logic here
+          }
+        }
+      } catch (e) {
+        console.error("Failed to fetch commentary sources", e);
+      }
+    };
+    fetchSources();
+  }, []);
 
   useEffect(() => {
     const fetchCommentary = async () => {
@@ -114,7 +136,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
         const englishBook = bookNameMap[book] || book;
 
         const params = new URLSearchParams({
-          source,
+          source: selectedSource,
           book: englishBook,
           chapter: chapter.toString(),
         });
@@ -149,62 +171,71 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
     };
 
     fetchCommentary();
-  }, [book, chapter, source]);
+  }, [book, chapter, selectedSource]);
 
-  {/* Loading state */}
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-[#798777] dark:text-[#9aaa98] mx-auto mb-4" />
-          <p className="font-inter text-gray-700 text-base font-medium dark:text-muted-foreground">
-            Commentaar laden...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const formatSourceLabel = (src: string) => {
+      return src.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
 
-  {/* Error state */}
-  if (error) {
-    return (
-      <Card className="border-0 shadow-none rounded-none dark:bg-card">
-        <CardContent className="py-12 text-center">
-          <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
-          <p className="font-merriweather text-red-600 font-semibold mb-2 text-base dark:text-red-400">
-            Error loading commentary
-          </p>
-          <p className="font-inter text-gray-700 dark:text-muted-foreground text-sm">{error}</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  {/* Empty state */}
-  if (!commentary) {
-    return (
-      <Card className="border-0 shadow-none rounded-none dark:bg-card">
-        <CardContent className="py-12 text-center text-gray-500 dark:text-muted-foreground text-sm">
-          <p className="font-inter">Geen commentaar beschikbaar voor dit hoofdstuk.</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  {/* Commentary Content */}
   return (
     <Card className={`border-0 shadow-none rounded-none dark:bg-card ${height ? 'h-full flex flex-col' : ''}`}>
+      {/* Source Selector */}
+      <div className="px-4 sm:px-6 py-3 border-b border-gray-100 dark:border-border flex items-center justify-between bg-gray-50/50 dark:bg-card">
+        <span className="text-sm font-medium text-gray-600 dark:text-muted-foreground">Source:</span>
+        <div className="relative">
+            <select 
+                value={selectedSource}
+                onChange={(e) => setSelectedSource(e.target.value)}
+                className="appearance-none bg-white dark:bg-secondary border border-gray-200 dark:border-border rounded-md py-1 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-[#798777] dark:text-foreground"
+            >
+                {availableSources.length > 0 ? (
+                    availableSources.map(src => (
+                        <option key={src} value={src}>{formatSourceLabel(src)}</option>
+                    ))
+                ) : (
+                    <option value={selectedSource}>{formatSourceLabel(selectedSource)}</option>
+                )}
+            </select>
+            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+        </div>
+      </div>
+
+      {/* Content Area */}
       <CardContent className={`px-4 sm:px-6 pt-4 pb-24 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-secondary scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
-        {Object.entries(commentary).map(([key, text]) => (
-          <div key={key} className="border-b border-gray-100 dark:border-border pb-4 last:border-0 pr-2">
-            <h3 className="font-merriweather font-semibold text-[#262626] dark:text-foreground mb-2">
-              Vers {key}
-            </h3>
-            <p className="font-inter text-gray-700 text-base leading-relaxed dark:text-foreground whitespace-pre-line">
-              {text}
-            </p>
-          </div>
-        ))}
+        {loading ? (
+            <div className="flex items-center justify-center py-12">
+                <div className="text-center">
+                <Loader2 className="h-8 w-8 animate-spin text-[#798777] dark:text-[#9aaa98] mx-auto mb-4" />
+                <p className="font-inter text-gray-700 text-base font-medium dark:text-muted-foreground">
+                    Commentaar laden...
+                </p>
+                </div>
+            </div>
+        ) : error ? (
+            <div className="py-12 text-center">
+                <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
+                <p className="font-merriweather text-red-600 font-semibold mb-2 text-base dark:text-red-400">
+                    Error loading commentary
+                </p>
+                <p className="font-inter text-gray-700 dark:text-muted-foreground text-sm">{error}</p>
+            </div>
+        ) : !commentary ? (
+            <div className="py-12 text-center text-gray-500 dark:text-muted-foreground text-sm">
+                <p className="font-inter">Geen commentaar beschikbaar voor dit hoofdstuk.</p>
+            </div>
+        ) : (
+            Object.entries(commentary).map(([key, text]) => (
+            <div key={key} className="border-b border-gray-100 dark:border-border pb-4 last:border-0 pr-2">
+                <h3 className="font-merriweather font-semibold text-[#262626] dark:text-foreground mb-2">
+                {key === 'intro' ? 'Inleiding' : `Vers ${key}`}
+                </h3>
+                <div 
+                    className="font-inter text-gray-700 text-base leading-relaxed dark:text-foreground whitespace-pre-line prose dark:prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: text }}
+                />
+            </div>
+            ))
+        )}
       </CardContent>
     </Card>
   );

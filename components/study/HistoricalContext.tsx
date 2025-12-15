@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, Clock } from 'lucide-react';
+import { Loader2, Info, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 interface HistoricalContextProps {
@@ -10,17 +10,36 @@ interface HistoricalContextProps {
   t: (key: string) => string;
 }
 
-export default function HistoricalContext({ book, chapter, t }: HistoricalContextProps) {
+export default function HistoricalContext({ book }: HistoricalContextProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [summary, setSummary] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate loading for consistency with other components
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+    const fetchSummary = async () => {
+        if (!book) return;
+        
+        setIsLoading(true);
+        setError(null);
+        
+        try {
+            const res = await fetch(`/api/summary?book=${encodeURIComponent(book)}`);
+            if (res.ok) {
+                const data = await res.json();
+                setSummary(data.summary);
+            } else {
+                setSummary(null);
+            }
+        } catch (e) {
+            console.error('Error fetching summary', e);
+            setError('Failed to load summary');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-    return () => clearTimeout(timer);
-  }, [book, chapter]);
+    fetchSummary();
+  }, [book]);
 
   if (isLoading) {
     return (
@@ -28,7 +47,7 @@ export default function HistoricalContext({ book, chapter, t }: HistoricalContex
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin text-[#798777] dark:text-[#9aaa98] mx-auto mb-4" />
           <p className="font-inter text-gray-700 text-base font-medium dark:text-muted-foreground">
-            Historische context laden...
+            Algemene informatie laden...
           </p>
         </div>
       </div>
@@ -36,54 +55,28 @@ export default function HistoricalContext({ book, chapter, t }: HistoricalContex
   }
 
   return (
-    <Card className="border-0 shadow-none rounded-none dark:bg-card">
+    <Card className="border-0 shadow-none rounded-none dark:bg-card h-full flex flex-col">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 font-merriweather text-[#262626] dark:text-foreground">
-          <Clock className="w-6 h-6 text-[#798777] dark:text-[#9aaa98]" />
-          {t('historical.title')} {book} {chapter}
+          <Info className="w-6 h-6 text-[#798777] dark:text-[#9aaa98]" />
+          Algemene Informatie: {book}
         </CardTitle>
-        <p className="font-inter text-sm text-gray-600 dark:text-muted-foreground">
-          Ontdek de historische en culturele achtergrond van deze passage.
-        </p>
       </CardHeader>
-      <CardContent className="p-6 pt-0 space-y-6">
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-merriweather font-semibold mb-3 text-[#262626] dark:text-foreground flex items-center gap-2">
-              <div className="w-6 h-6 bg-[#798777] text-white flex items-center justify-center text-xs font-bold">
-                1
-              </div>
-              {t('historical.time_period')}
-            </h4>
-            <p className="font-inter text-sm text-gray-700 dark:text-muted-foreground leading-relaxed pl-8">
-              {t('historical.time_period_text')}
+      <CardContent className="p-6 pt-0 space-y-6 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-secondary scrollbar-track-transparent">
+        {error ? (
+             <div className="text-center py-8">
+                <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
+                <p className="text-red-500">{error}</p>
+             </div>
+        ) : summary ? (
+            <div className="prose dark:prose-invert max-w-none font-inter text-gray-700 dark:text-foreground whitespace-pre-line leading-relaxed">
+                {summary}
+            </div>
+        ) : (
+            <p className="text-gray-500 dark:text-muted-foreground italic">
+                Geen algemene informatie beschikbaar voor dit boek.
             </p>
-          </div>
-          
-          <div>
-            <h4 className="font-merriweather font-semibold mb-3 text-[#262626] dark:text-foreground flex items-center gap-2">
-              <div className="w-6 h-6 bg-[#798777] text-white flex items-center justify-center text-xs font-bold">
-                2
-              </div>
-              {t('historical.cultural_background')}
-            </h4>
-            <p className="font-inter text-sm text-gray-700 dark:text-muted-foreground leading-relaxed pl-8">
-              {t('historical.cultural_background_text')}
-            </p>
-          </div>
-          
-          <div>
-            <h4 className="font-merriweather font-semibold mb-3 text-[#262626] dark:text-foreground flex items-center gap-2">
-              <div className="w-6 h-6 bg-[#798777] text-white flex items-center justify-center text-xs font-bold">
-                3
-              </div>
-              {t('historical.literary_context')}
-            </h4>
-            <p className="font-inter text-sm text-gray-700 dark:text-muted-foreground leading-relaxed pl-8">
-              {t('historical.literary_context_text')}
-            </p>
-          </div>
-        </div>
+        )}
       </CardContent>
     </Card>
   );

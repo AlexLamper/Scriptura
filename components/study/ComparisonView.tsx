@@ -26,7 +26,7 @@ interface Verse {
 
 interface ChapterData {
   translation: Translation;
-  verses: Verse[];
+  verses: Record<string, string>;
   loading: boolean;
   error: string | null;
 }
@@ -66,16 +66,19 @@ export default function ComparisonView({
     }));
 
     try {
-      const response = await fetch(
-        `https://www.scriptura-api.com/api/${translationId}/${book}/${chapter}`
-      );
+      const params = new URLSearchParams({
+        version: translationId,
+        book,
+        chapter: chapter.toString(),
+      });
+      const response = await fetch(`/api/bible/chapter?${params.toString()}`);
       
       if (!response.ok) {
         throw new Error(`Failed to fetch ${translationId}`);
       }
       
       const data = await response.json();
-      const verses = Array.isArray(data.verses) ? data.verses : [];
+      const verses = data.verses || {};
       
       setChaptersData(prev => ({
         ...prev,
@@ -127,8 +130,11 @@ export default function ComparisonView({
   const getMaxVerses = () => {
     let max = 0;
     Object.values(chaptersData).forEach(data => {
-      if (data.verses && data.verses.length > max) {
-        max = data.verses.length;
+      if (data.verses) {
+        const count = Object.keys(data.verses).length;
+        if (count > max) {
+          max = count;
+        }
       }
     });
     return max;
@@ -138,8 +144,7 @@ export default function ComparisonView({
     const data = chaptersData[translationId];
     if (!data || !data.verses) return '';
     
-    const verse = data.verses.find(v => v.verse === verseNumber);
-    return verse ? verse.text : '';
+    return data.verses[verseNumber.toString()] || '';
   };
 
   const maxVerses = getMaxVerses();

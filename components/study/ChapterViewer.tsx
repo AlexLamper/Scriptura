@@ -28,7 +28,7 @@ export default function ChapterViewer({
   const [selectedVerse, setSelectedVerse] = useState<SelectedVerse | null>(null);
   const [showCreateNoteModal, setShowCreateNoteModal] = useState(false);
 
-  const API_BASE_URL = 'https://www.scriptura-api.com/api';
+  const API_BASE_URL = '/api/bible';
 
   useEffect(() => {
     const fetchChapter = async () => {

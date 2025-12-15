@@ -24,7 +24,7 @@ export default function ReadPage() {
   const [fromPlan, setFromPlan] = useState<string | null>(null)
   const [planDay, setPlanDay] = useState<number | null>(null)
 
-  const API_BASE_URL = 'https://www.scriptura-api.com/api';
+  const API_BASE_URL = '/api/bible';
 
   // Function to get default version based on language
   const getDefaultVersion = (versionNames: string[], language: string): string | null => {
@@ -62,7 +62,7 @@ export default function ReadPage() {
           throw new Error(`Failed to fetch versions: ${resVersions.status}`);
         }
         const versionData = await resVersions.json();
-        const versionNames = versionData.map((v: { name: string }) => v.name);
+        const versionNames = versionData;
         setVersions(versionNames);
 
         // Try to fetch user's last read chapter if no URL params provided
@@ -80,7 +80,7 @@ export default function ReadPage() {
               }
             }
           } catch {
-            console.log('No last read chapter found, using defaults');
+            // No last read chapter found, using defaults
           }
         }
 

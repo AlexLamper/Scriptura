@@ -24,11 +24,9 @@ export default function DailyBibleVerse() {
     setVerse(null);
     
     // Determine the API URL based on language
-    let apiUrl = '';
+    let apiUrl = '/api/bible/daytext';
     if (lng === 'en' || lng === 'de') {
-      apiUrl = 'https://www.scriptura-api.com/api/daytext?version=asv';
-    } else {
-      apiUrl = 'https://www.scriptura-api.com/api/daytext';
+      apiUrl += '?version=asv';
     }
     
     fetch(apiUrl)
@@ -40,23 +38,11 @@ export default function DailyBibleVerse() {
         return res.json();
       })
       .then((data) => {
-        // Handle ASV response format for English/German
-        if ((lng === "en" || lng === "de") && data.version && data.text && data.book && data.chapter && data.verse) {
-          const reference = `${data.book} ${data.chapter}:${data.verse}`;
-          setVerse({ text: data.text, reference: reference, translation: data.version.toUpperCase() });
-        }
-        // Handle Dutch statenvertaling response format
-        else if (lng === "nl" && data.text && data.reference) {
-          setVerse({ text: data.text, reference: data.reference, translation: data.version || "Statenvertaling" });
-        }
-        // Fallback for other response formats
-        else if (data.verse && data.verse.details && data.verse.details.text) {
-          setVerse({ text: data.verse.details.text, reference: data.verse.details.reference, translation: lng === "en" || lng === "de" ? "ASV" : "Statenvertaling" });
-        } else if (data.text) {
-          setVerse({ text: data.text, translation: lng === "en" || lng === "de" ? "ASV" : "Statenvertaling" });
-        } else {
-          throw new Error(t("fetch_failed"));
-        }
+        setVerse({ 
+            text: data.text, 
+            reference: data.reference, 
+            translation: data.version 
+        });
       })
       .catch((err) => {
         setError(err.message || t("fetch_failed"));

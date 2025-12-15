@@ -41,8 +41,7 @@ export default function SuccessPage() {
         } else {
           router.replace("/subscribe")
         }
-      } catch (err) {
-        console.log(err)
+      } catch {
         router.replace("/subscribe")
       }
     }

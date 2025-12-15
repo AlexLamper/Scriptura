@@ -2,10 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-interface Version {
-  name: string;
-}
-
 interface UseBibleDataReturn {
   // State
   versions: string[];
@@ -47,7 +43,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   const lastBookIndexRef = useRef<number>(-1);
   const lastChapterRef = useRef<number>(-1);
 
-  const API_BASE_URL = 'https://www.scriptura-api.com/api';
+  const API_BASE_URL = '/api/bible';
 
   // Function to get default Bible version based on language
   const getDefaultVersion = (availableVersions: string[], language: string): string | null => {
@@ -77,8 +73,8 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           const errorText = await res.text();
           throw new Error(`Failed to fetch versions: ${res.status} ${res.statusText} - ${errorText}`);
         }
-        const data: Version[] = await res.json();
-        const versionNames = data.map((v) => v.name);
+        const data: string[] = await res.json();
+        const versionNames = data;
         setVersions(versionNames);
 
         let restored = false;
@@ -97,7 +93,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
             }
           }
         } catch {
-          console.log('No last read chapter found, using defaults');
+          // No last read chapter found, using defaults
         }
 
         // If not restored from last read, try to use user preferences
@@ -136,8 +132,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           const defaultVersion = getDefaultVersion(versionNames, lng);
           setSelectedVersion(defaultVersion);
         }
-      } catch (err) {
-        console.log(err)
+      } catch {
         setVersions([]);
         setSelectedVersion(null);
       } finally {
@@ -212,7 +207,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
             setSelectedBook(defaultBook);
           } else {
             setSelectedBook('');
-            console.warn('No books found from API.');
           }
         } else if (nextBook !== selectedBook) {
           setSelectedBook(nextBook);
@@ -227,7 +221,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         setSelectedBook('');
       } finally {
         setLoadingBooks(false);
-        console.groupEnd();
       }
     };
     fetchBooks();
@@ -242,7 +235,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       return;
     }
     if (!selectedVersion) {
-      console.warn('useEffect: selectedBook is present but selectedVersion is missing. This is unexpected.');
       return;
     }
 
@@ -267,7 +259,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         const numberOfChapters = chapterNumbers.length > 0 ? chapterNumbers[chapterNumbers.length - 1] : 0;
 
         if (chapterNumbers.length === 0) {
-          console.warn(`No chapters found for ${selectedBook}. API returned empty array.`);
           setChapters([]);
           setMaxChapter(1);
           setSelectedChapter(1);
@@ -298,7 +289,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         setSelectedChapter(1);
       } finally {
         setLoadingChapters(false);
-        console.groupEnd();
       }
     };
     fetchChapters();

@@ -19,14 +19,10 @@ function getLocale(request: NextRequest): string {
 
   const acceptLanguageHeader = request.headers.get('accept-language');
   if (acceptLanguageHeader) {
-    try {
-      const headers = { 'accept-language': acceptLanguageHeader };
-      const userLanguages = new Negotiator({ headers }).languages();
-      const matchedLocale = match(userLanguages, languages, fallbackLng);
-      return matchedLocale;
-    } catch (error) {
-      console.warn('Locale matching failed:', error);
-    }
+    const headers = { 'accept-language': acceptLanguageHeader };
+    const userLanguages = new Negotiator({ headers }).languages();
+    const matchedLocale = match(userLanguages, languages, fallbackLng);
+    return matchedLocale;
   }
   return fallbackLng;
 }

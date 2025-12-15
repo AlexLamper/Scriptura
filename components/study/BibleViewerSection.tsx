@@ -46,7 +46,7 @@ export default function BibleViewerSection({
   return (
     <section className="bg-white shadow-sm flex flex-col h-full dark:bg-card dark:border-r dark:border-border">
       {/* Header with Navigation and Selectors */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none gap-2">
+      <div className="h-14 flex items-center justify-between px-4 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none gap-2">
         {/* Previous Chapter Button */}
         <button
           onClick={onPreviousChapter}

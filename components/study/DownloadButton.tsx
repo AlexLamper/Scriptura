@@ -18,7 +18,7 @@ export default function DownloadButton({
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
   const [fileType, setFileType] = useState<'txt' | 'json'>('txt');
 
-  const API_BASE_URL = 'https://www.scriptura-api.com/api';
+  const API_BASE_URL = '/api/bible';
 
   // Close download dropdown when clicking outside
   useEffect(() => {
