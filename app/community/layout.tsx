@@ -6,7 +6,9 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Community",
+  title: {
+    absolute: "Scriptura | Community",
+  },
   description:
     "Join the Scriptura community to connect with fellow learners, share insights, and grow together in biblical knowledge.",
   keywords: [

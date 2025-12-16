@@ -6,7 +6,9 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | My Notes & Highlights",
+  title: {
+    absolute: "Scriptura | My Notes & Highlights",
+  },
   description:
     "Manage all your Bible study notes and highlights in one place. Search, organize, and review your spiritual insights.",
   keywords: [

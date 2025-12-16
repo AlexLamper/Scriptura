@@ -6,7 +6,9 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Settings",
+  title: {
+    absolute: "Scriptura | Settings",
+  },
   description:
     "Manage your Scriptura account settings, including profile information, privacy preferences, and notification preferences, to enhance your learning experience.",
   keywords: [

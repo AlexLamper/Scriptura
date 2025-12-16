@@ -6,7 +6,9 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Admin",
+  title: {
+    absolute: "Scriptura | Admin",
+  },
   description:
     "Admin page of Scriptura.",
   keywords: [

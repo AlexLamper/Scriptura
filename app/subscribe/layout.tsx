@@ -6,7 +6,9 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Subscribe",
+  title: {
+    absolute: "Scriptura | Subscribe",
+  },
   description: "Subscribe to Scriptura for exclusive biblical learning resources and personalized content.",
   keywords: [
     "Subscribe",

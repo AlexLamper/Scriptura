@@ -8,7 +8,9 @@ import { cookies } from "next/headers";
 import { cookieName, fallbackLng } from "../i18n/settings";
 
 export const metadata: Metadata = {
-  title: "Scriptura | User Profile",
+  title: {
+    absolute: "Scriptura | User Profile",
+  },
   description: "Manage your Scriptura user profile, track your progress, and personalize your biblical learning experience.",
   keywords: [
     "User profile",

@@ -156,7 +156,9 @@ export function generatePageMetadata(
   const fullUrl = `${baseUrl}${config.path}`;
 
   return {
-    title: `Scriptura | ${pageTitle}`,
+    title: {
+      absolute: `Scriptura | ${pageTitle}`,
+    },
     description: customDescription || config.descriptionKey,
     openGraph: {
       title: `Scriptura | ${pageTitle}`,

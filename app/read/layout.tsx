@@ -6,8 +6,10 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | User Profile",
-  description: "Manage your Scriptura user profile, track your progress, and personalize your biblical learning experience.",
+  title: {
+    absolute: "Scriptura | Read",
+  },
+  description: "Read and study the Bible online with Scriptura. Access multiple translations and study tools.",
   keywords: [
     "User profile",
   ],

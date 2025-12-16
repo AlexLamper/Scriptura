@@ -6,7 +6,9 @@ import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Scriptura | Bible Reading Plans",
+  title: {
+    absolute: "Scriptura | Bible Reading Plans",
+  },
   description: "Discover and follow structured Bible reading plans to enhance your spiritual journey with Scriptura.",
   keywords: [
     "Bible reading plans",
