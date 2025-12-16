@@ -247,9 +247,10 @@ export async function getCommentaries() {
     return manifest.commentaries.map(c => c.name.replace('.json', ''));
 }
 
-export async function getBibleSummary(bookName: string) {
+export async function getBibleSummary(bookName: string, language: string = 'en') {
     try {
-        const summaryData = await fetchJson('/data/bible_summary.json');
+        const filename = language === 'nl' ? 'bible_summary_nl.json' : 'bible_summary.json';
+        const summaryData = await fetchJson(`/data/${filename}`);
         if (!summaryData) return null;
         
         if (summaryData[bookName]) return summaryData[bookName];

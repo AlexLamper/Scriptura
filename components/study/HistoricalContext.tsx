@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2, Info, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { useTranslation } from '../../app/i18n/client';
 
 interface HistoricalContextProps {
   book: string;
@@ -11,6 +12,8 @@ interface HistoricalContextProps {
 }
 
 export default function HistoricalContext({ book }: HistoricalContextProps) {
+  const { i18n } = useTranslation('study');
+  const lng = i18n.resolvedLanguage;
   const [isLoading, setIsLoading] = useState(true);
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +26,7 @@ export default function HistoricalContext({ book }: HistoricalContextProps) {
         setError(null);
         
         try {
-            const res = await fetch(`/api/summary?book=${encodeURIComponent(book)}`);
+            const res = await fetch(`/api/summary?book=${encodeURIComponent(book)}&lang=${lng}`);
             if (res.ok) {
                 const data = await res.json();
                 setSummary(data.summary);
@@ -39,7 +42,7 @@ export default function HistoricalContext({ book }: HistoricalContextProps) {
     };
 
     fetchSummary();
-  }, [book]);
+  }, [book, lng]);
 
   if (isLoading) {
     return (
