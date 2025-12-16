@@ -14,7 +14,7 @@ interface BibleViewerSectionProps {
   loadingBooks: boolean;
   loadingChapters: boolean;
   loadingVersions: boolean;
-  versions: string[];
+  versions: { id: string; name: string }[];
   books: string[];
   chapters: number[];
   onVersionChange: (v: string) => void;
@@ -105,7 +105,7 @@ export default function BibleViewerSection({
               loadingBooks={loadingBooks}
               loadingChapters={loadingChapters}
               loadingVersions={loadingVersions}
-              versions={versions}
+              versions={versions.map(v => v.name)}
               books={books}
               t={t}
             />

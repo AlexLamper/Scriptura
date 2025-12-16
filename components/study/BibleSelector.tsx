@@ -1,7 +1,7 @@
 import React from 'react';
 
 type Props = {
-  versions: string[];
+  versions: { id: string; name: string }[];
   books: string[];
   chapters: number[];
   selectedVersion: string | null;
@@ -15,15 +15,6 @@ type Props = {
   loadingChapters: boolean;
   t: (key: string) => string;
 };
-
-const versionNames: Record<string, string> = {
-  'statenvertaling': 'Staten Vertaling',
-  'kjv': 'King James Version',
-  'asv': 'American Standard Version',
-  'afri': 'Afrikaans 1953',
-};
-
-const getVersionName = (v: string) => versionNames[v] || v;
 
 export default function BibleSelector({
   versions,
@@ -55,8 +46,8 @@ export default function BibleSelector({
           {loadingVersions ? '...' : (versions.length === 0 ? t('no_translations') : 'Trans')}
         </option>
         {versions.map((version) => (
-          <option key={version} value={version}>
-            {getVersionName(version)}
+          <option key={version.id} value={version.id}>
+            {version.name}
           </option>
         ))}
       </select>

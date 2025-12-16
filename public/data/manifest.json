@@ -1,0 +1,142 @@
+{
+  "bibles": [
+    {
+      "name": "afri.json",
+      "title": "Afrikaans 1953",
+      "type": "file"
+    },
+    {
+      "name": "asv.json",
+      "title": "American Standard Version",
+      "type": "file"
+    },
+    {
+      "name": "coverdale.json",
+      "title": "Coverdale Bible",
+      "type": "file"
+    },
+    {
+      "name": "elberfelder_1905.json",
+      "title": "Elberfelder 1905",
+      "type": "file"
+    },
+    {
+      "name": "geneva.json",
+      "title": "Geneva Bible",
+      "type": "file"
+    },
+    {
+      "name": "hsv.json",
+      "title": "Herziene Statenvertaling",
+      "type": "file"
+    },
+    {
+      "name": "kjv.json",
+      "title": "King James Version",
+      "type": "file"
+    },
+    {
+      "name": "luther_1912.json",
+      "title": "Luther 1912",
+      "type": "file"
+    },
+    {
+      "name": "net.json",
+      "title": "New English Translation",
+      "type": "file"
+    },
+    {
+      "name": "schlachter.json",
+      "title": "Schlachter 2000",
+      "type": "file"
+    },
+    {
+      "name": "statenvertaling.json",
+      "title": "Statenvertaling",
+      "type": "file"
+    },
+    {
+      "name": "web.json",
+      "title": "World English Bible",
+      "type": "file"
+    }
+  ],
+  "commentaries": [
+    {
+      "name": "kingcomments",
+      "type": "dir",
+      "files": [
+        "1 Chronicles.json",
+        "1 Corinthians.json",
+        "1 John.json",
+        "1 Kings.json",
+        "1 Peter.json",
+        "1 Samuel.json",
+        "1 Thessalonians.json",
+        "1 Timothy.json",
+        "2 Chronicles.json",
+        "2 Corinthians.json",
+        "2 John.json",
+        "2 Kings.json",
+        "2 Peter.json",
+        "2 Samuel.json",
+        "2 Thessalonians.json",
+        "2 Timothy.json",
+        "3 John.json",
+        "Acts.json",
+        "Amos.json",
+        "Colossians.json",
+        "Daniel.json",
+        "Deuteronomy.json",
+        "Ecclesiastes.json",
+        "Ephesians.json",
+        "Esther.json",
+        "Exodus.json",
+        "Ezekiel.json",
+        "Ezra.json",
+        "Galatians.json",
+        "Genesis.json",
+        "Habakkuk.json",
+        "Haggai.json",
+        "Hebrews.json",
+        "Hosea.json",
+        "Isaiah.json",
+        "James.json",
+        "Jeremiah.json",
+        "Job.json",
+        "Joel.json",
+        "John.json",
+        "Jonah.json",
+        "Joshua.json",
+        "Jude.json",
+        "Judges.json",
+        "Lamentations.json",
+        "Leviticus.json",
+        "Luke.json",
+        "Malachi.json",
+        "Mark.json",
+        "Matthew.json",
+        "Micah.json",
+        "Nahum.json",
+        "Nehemiah.json",
+        "Numbers.json",
+        "Obadiah.json",
+        "Philemon.json",
+        "Philippians.json",
+        "Proverbs.json",
+        "Psalms.json",
+        "Revelation.json",
+        "Romans.json",
+        "Ruth.json",
+        "Song of Solomon.json",
+        "Titus.json",
+        "Zechariah.json",
+        "Zephaniah.json"
+      ]
+    },
+    {
+      "name": "matthew-henry.json",
+      "type": "file"
+    }
+  ]
+}

@@ -12,7 +12,7 @@ interface TabComponentProps {
   selectedChapter: number;
   selectedVersion?: string | null;
   t: (key: string) => string;
-  versions: string[];
+  versions: { id: string; name: string }[];
   versionObjects?: { id: string; name: string; abbreviation: string }[];
   onNextChapter: () => void;
   onPrevChapter: () => void;

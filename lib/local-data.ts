@@ -1,11 +1,6 @@
-import fs from 'fs/promises';
-import path from 'path';
 import { getBookNameVariants } from './book-mapping';
-
-const DATA_DIR = path.join(process.cwd(), 'data');
-
-// Simple in-memory cache to prevent re-reading files on every request
-const cache: Record<string, FlatVerse[] | NestedData> = {};
+import { promises as fs } from 'fs';
+import path from 'path';
 
 // Interfaces
 interface FlatVerse {
@@ -16,244 +11,281 @@ interface FlatVerse {
   text: string;
 }
 
-interface NestedBook {
-  chapters: {
-    [key: string]: {
-      verses: {
-        [key: string]: string;
-      };
-    };
-  };
+interface Book {
+    chapters?: Record<string, Record<string, string>>;
+    [key: string]: Record<string, string> | Record<string, Record<string, string>> | undefined;
 }
 
-interface NestedData {
-  books: {
-    [key: string]: NestedBook;
-  };
+interface ManifestEntry {
+    name: string;
+    title?: string;
+    type: 'file' | 'dir';
+    files?: string[]; // For dirs
 }
 
-async function getBibleData(version: string) {
-  // Normalize version name to match filename (e.g. "Staten Vertaling" -> "statenvertaling")
-  const versionKey = version.toLowerCase().replace(/\s+/g, ''); 
-  
-  if (cache[versionKey]) {
-      return cache[versionKey];
-  }
+interface Manifest {
+    bibles: ManifestEntry[];
+    commentaries: ManifestEntry[];
+}
 
-  // Try to find the file in bibles or commentaries
-  const biblesDir = path.join(DATA_DIR, 'bibles');
-  const commentariesDir = path.join(DATA_DIR, 'commentaries');
-  
-  let filePath: string | null = null;
-  
-  try {
-    // Check bibles first
-    await fs.mkdir(biblesDir, { recursive: true });
-    const bibleFiles = await fs.readdir(biblesDir);
-    let match = bibleFiles.find(f => {
-        const normalizedFile = f.toLowerCase().replace(/[-_]/g, '').replace('.json', '');
-        const normalizedKey = versionKey.replace(/[-_]/g, '');
-        return normalizedFile === normalizedKey;
-    });
+const CACHE: Record<string, { verses?: Record<string, string>; books?: Record<string, Book> } | FlatVerse[] | null> = {};
+let MANIFEST_CACHE: Manifest | null = null;
 
-    if (match) {
-        filePath = path.join(biblesDir, match);
-    } else {
-        // Check commentaries
-        await fs.mkdir(commentariesDir, { recursive: true });
-        const commentaryFiles = await fs.readdir(commentariesDir);
-        match = commentaryFiles.find(f => {
-            const normalizedFile = f.toLowerCase().replace(/[-_]/g, '').replace('.json', '');
-            const normalizedKey = versionKey.replace(/[-_]/g, '');
-            return normalizedFile === normalizedKey;
-        });
-        if (match) {
-            filePath = path.join(commentariesDir, match);
-        }
-    }
-    
-    if (!filePath) {
+function hasVerses(data: unknown): data is { verses: unknown } {
+    return typeof data === 'object' && data !== null && 'verses' in data;
+}
+
+async function fetchJson(relativePath: string) {
+    try {
+        const filePath = path.join(process.cwd(), 'public', relativePath);
+        const fileContents = await fs.readFile(filePath, 'utf8');
+        return JSON.parse(fileContents);
+    } catch (error) {
+        console.error(`Error reading ${relativePath}:`, error);
         return null;
     }
-
-    const stats = await fs.stat(filePath);
-    let data;
-
-    if (stats.isDirectory()) {
-        const files = await fs.readdir(filePath);
-        const mergedData: Record<string, unknown> = {};
-        
-        for (const file of files) {
-            if (file.endsWith('.json')) {
-                try {
-                    const content = await fs.readFile(path.join(filePath, file), 'utf-8');
-                    const json = JSON.parse(content);
-                    // Use the id from json or filename as key
-                    const key = json.id || file.replace('.json', '');
-                    mergedData[key] = json;
-                } catch (e) {
-                    console.error(`[LocalData] Error parsing ${file} in ${filePath}`, e);
-                }
-            }
-        }
-        data = mergedData;
-    } else {
-        const fileContent = await fs.readFile(filePath, 'utf-8');
-        data = JSON.parse(fileContent);
-    }
-    
-    cache[versionKey] = data;
-    return data;
-  } catch (error) {
-    console.error(`[LocalData] Error reading file for ${version}:`, error);
-    return null;
-  }
 }
 
-export async function getVersions() {
-  try {
-    const biblesDir = path.join(DATA_DIR, 'bibles');
-    await fs.mkdir(biblesDir, { recursive: true });
-    const files = await fs.readdir(biblesDir);
-    return files
-      .filter(file => file.endsWith('.json'))
-      .map(file => file.replace('.json', ''));
-  } catch (error) {
-    console.error('Error listing versions:', error);
-    return [];
-  }
+async function getManifest(): Promise<Manifest> {
+    if (MANIFEST_CACHE) return MANIFEST_CACHE;
+    const manifest = await fetchJson('/data/manifest.json');
+    if (manifest) {
+        MANIFEST_CACHE = manifest;
+        return manifest;
+    }
+    return { bibles: [], commentaries: [] };
+}
+
+// Helper to find entry in manifest
+async function findEntry(version: string) {
+    const manifest = await getManifest();
+    const versionKey = version.toLowerCase().replace(/\s+/g, '');
+    
+    // Check bibles
+    let entry = manifest.bibles.find(e => 
+        e.name.toLowerCase().replace(/[-_]/g, '').replace('.json', '') === versionKey.replace(/[-_]/g, '')
+    );
+    if (entry) return { ...entry, category: 'bibles' };
+
+    // Check commentaries
+    entry = manifest.commentaries.find(e => 
+        e.name.toLowerCase().replace(/[-_]/g, '').replace('.json', '') === versionKey.replace(/[-_]/g, '')
+    );
+    if (entry) return { ...entry, category: 'commentaries' };
+
+    return null;
+}
+
+export async function getBibleData(version: string, bookName?: string) {
+    const entry = await findEntry(version);
+    if (!entry) return null;
+
+    const cacheKey = `${version}-${bookName || 'full'}`;
+    if (CACHE[cacheKey]) return CACHE[cacheKey];
+
+    if (entry.type === 'file') {
+        // Fetch full file
+        const data = await fetchJson(`/data/${entry.category}/${entry.name}`);
+        if (data) {
+            CACHE[cacheKey] = data;
+            return data;
+        }
+    } else if (entry.type === 'dir') {
+        // Directory based (e.g. King Comments)
+        if (bookName) {
+            // Try to find the specific book file
+            const targetFile = entry.files?.find(f => {
+                const fName = f.replace('.json', '').toLowerCase();
+                return fName === bookName.toLowerCase() || getBookNameVariants(bookName).some(v => v.toLowerCase() === fName);
+            });
+
+            if (targetFile) {
+                const data = await fetchJson(`/data/${entry.category}/${entry.name}/${targetFile}`);
+                if (data) {
+                    // Wrap it to look like full data structure
+                    const result = {
+                        books: {
+                            [targetFile.replace('.json', '')]: data
+                        }
+                    };
+                    CACHE[cacheKey] = result;
+                    return result;
+                }
+            }
+        } else {
+            // If no bookName, return a stub structure with empty books
+            // This allows getBooks to work without fetching everything
+            const booksStub: Record<string, Book> = {};
+            entry.files?.forEach(f => {
+                booksStub[f.replace('.json', '')] = {};
+            });
+            return { books: booksStub };
+        }
+    }
+    return null;
 }
 
 export async function getBooks(version: string) {
-  try {
-    const data = await getBibleData(version);
-    if (!data) return [];
-
-    const flatData = Array.isArray(data) ? data : (data.verses && Array.isArray(data.verses) ? data.verses : null);
-
-    if (flatData) {
-        // Flat structure: Extract unique book names
-        const books = new Set<string>();
-        (flatData as FlatVerse[]).forEach(v => books.add(v.book_name));
-        const result = Array.from(books);
-        return result;
-    } else if (data.books) {
-        // Nested structure with 'books' key
-        const result = Object.keys(data.books);
-        return result;
-    } else {
-        // Fallback for simple object structure
-        return Object.keys(data);
+    const entry = await findEntry(version);
+    if (!entry) {
+        return [];
     }
-  } catch (error) {
-    console.error(`[LocalData] Error in getBooks for ${version}:`, error);
-    return [];
-  }
-}
 
-export async function getChapters(version: string, bookName: string) {
-  try {
+    if (entry.type === 'dir') {
+        return entry.files?.map(f => f.replace('.json', '')) || [];
+    }
+
+    // For single file, we must fetch it
     const data = await getBibleData(version);
-    if (!data) return [];
+    if (!data) {
+        return [];
+    }
     
-    const flatData = Array.isArray(data) ? data : (data.verses && Array.isArray(data.verses) ? data.verses : null);
-
-    if (flatData) {
-        // Flat structure
-        const chapters = new Set<number>();
-        const lowerBookName = bookName.toLowerCase();
-        
-        // Try direct match first
-        (flatData as FlatVerse[]).forEach(v => {
-            if (v.book_name.toLowerCase() === lowerBookName) {
-                chapters.add(v.chapter);
+    if (Array.isArray(data)) {
+        // Handle flat array structure
+        const bookNames = new Set<string>();
+        data.forEach((v: FlatVerse) => {
+            if (v.book_name) {
+                bookNames.add(v.book_name);
             }
         });
-        
-        // If no chapters found, try variants
-        if (chapters.size === 0) {
-             const variants = getBookNameVariants(bookName);
-             for (const variant of variants) {
-                 if (variant.toLowerCase() === lowerBookName) continue;
-                 
-                 const lowerVariant = variant.toLowerCase();
-                 (flatData as FlatVerse[]).forEach(v => {
-                    if (v.book_name.toLowerCase() === lowerVariant) {
-                        chapters.add(v.chapter);
-                    }
-                });
-                if (chapters.size > 0) break;
-             }
-        }
-
-        const result = Array.from(chapters).sort((a, b) => a - b);
-        return result;
-    } else {
-        // Nested structure
-        const booksData = data.books || data;
-        let bookKey = Object.keys(booksData).find(k => k.toLowerCase() === bookName.toLowerCase());
-        
-        if (!bookKey) {
-            const variants = getBookNameVariants(bookName);
-            for (const variant of variants) {
-                bookKey = Object.keys(booksData).find(k => k.toLowerCase() === variant.toLowerCase());
-                if (bookKey) break;
-            }
-        }
-
-        if (!bookKey || !booksData[bookKey]) return [];
-        
-        const book = booksData[bookKey];
-        const chaptersObj = book.chapters || book; // Handle if chapters are direct or nested
-        const result = Object.keys(chaptersObj).map(Number).sort((a, b) => a - b);
-        return result;
+        return Array.from(bookNames);
     }
-  } catch (error) {
-    console.error(`[LocalData] Error in getChapters for ${version}/${bookName}:`, error);
-    return [];
-  }
+
+    if (hasVerses(data) && Array.isArray(data.verses)) {
+        const bookNames = new Set<string>();
+        (data.verses as FlatVerse[]).forEach((v: FlatVerse) => {
+            if (v.book_name) {
+                bookNames.add(v.book_name);
+            }
+        });
+        return Array.from(bookNames);
+    }
+
+    const booksData = (data as { books?: Record<string, Book> } | Record<string, Book>).books || (data as Record<string, Book>);
+    const keys = Object.keys(booksData);
+    return keys.filter(k => k !== 'metadata' && k !== 'version' && k !== 'id' && k !== 'verses' && k !== 'meta');
 }
 
 export async function getChapter(version: string, bookName: string, chapterNumber: number) {
-  try {
-    const data = await getBibleData(version);
-    if (!data) return null;
-    
-    const flatData = Array.isArray(data) ? data : (data.verses && Array.isArray(data.verses) ? data.verses : null);
+    // Pass bookName to getBibleData to optimize directory-based sources
+    const data = await getBibleData(version, bookName);
+    if (!data) {
+        return null;
+    }
+
+    const flatData = Array.isArray(data) ? data : (hasVerses(data) && Array.isArray(data.verses) ? data.verses : null);
 
     if (flatData) {
-        // Flat structure
         const lowerBookName = bookName.toLowerCase();
         let verses = (flatData as FlatVerse[]).filter(v => 
             v.book_name.toLowerCase() === lowerBookName && v.chapter === Number(chapterNumber)
         );
-
+        
         if (verses.length === 0) {
              const variants = getBookNameVariants(bookName);
              for (const variant of variants) {
                  if (variant.toLowerCase() === lowerBookName) continue;
-                 
                  verses = (flatData as FlatVerse[]).filter(v => 
                     v.book_name.toLowerCase() === variant.toLowerCase() && v.chapter === Number(chapterNumber)
                 );
                 if (verses.length > 0) break;
              }
         }
-
-        if (verses.length === 0) {
-            return null;
-        }
-
-        // Transform to map
-        const versesMap: Record<string, string> = {};
-        verses.forEach(v => {
-            versesMap[v.verse.toString()] = v.text;
-        });
         
+        if (verses.length === 0) return null;
+        
+        const versesMap: Record<string, string> = {};
+        verses.forEach(v => { versesMap[v.verse.toString()] = v.text; });
         return { verses: versesMap };
     } else {
-        // Nested structure
-        const booksData = data.books || data;
+        // Nested
+        const booksData = (data as { books?: Record<string, Book> } | Record<string, Book>).books || (data as Record<string, Book>);
+        // Find book key
+        let bookKey = Object.keys(booksData).find(k => k.toLowerCase() === bookName.toLowerCase());
+        if (!bookKey) {
+            const variants = getBookNameVariants(bookName);
+            for (const variant of variants) {
+                bookKey = Object.keys(booksData).find(k => k.toLowerCase() === variant.toLowerCase());
+                if (bookKey) break;
+            }
+        }
+        if (!bookKey) return null;
+
+        const book = booksData[bookKey];
+        
+        // Handle the case where book might be empty (if fetched via stub)
+        // But getBibleData(version, bookName) should have fetched the real data
+        if (!book || Object.keys(book).length === 0) return null;
+
+        const chaptersObj = book.chapters || book;
+        const chapterData = chaptersObj[chapterNumber.toString()] || chaptersObj[chapterNumber];
+        
+        if (!chapterData) return null;
+        
+        // Handle KingComments structure where verses might be directly in chapterData or nested
+        const versesMap = chapterData.verses || chapterData;
+        return { verses: versesMap };
+    }
+}
+
+export async function getCommentary(source: string, bookName: string, chapterNumber: number) {
+    const result = await getChapter(source, bookName, chapterNumber);
+    return result ? result.verses : null;
+}
+
+export async function getCommentaries() {
+    const manifest = await getManifest();
+    return manifest.commentaries.map(c => c.name.replace('.json', ''));
+}
+
+export async function getBibleSummary(bookName: string) {
+    try {
+        const summaryData = await fetchJson('/data/bible_summary.json');
+        if (!summaryData) return null;
+        
+        if (summaryData[bookName]) return summaryData[bookName];
+        const variants = getBookNameVariants(bookName);
+        for (const variant of variants) {
+            if (summaryData[variant]) return summaryData[variant];
+        }
+        return null;
+    } catch (e) {
+        console.error('Error reading bible summary', e);
+        return null;
+    }
+}
+
+export async function getVersions() {
+    const manifest = await getManifest();
+    return manifest.bibles.map(b => ({
+        id: b.name.replace('.json', ''),
+        name: b.title || b.name.replace('.json', '')
+    }));
+}
+
+export async function getChapters(version: string, bookName: string) {
+    const data = await getBibleData(version, bookName);
+    if (!data) return [];
+
+    const flatData = Array.isArray(data) ? data : (hasVerses(data) && Array.isArray(data.verses) ? data.verses : null);
+
+    if (flatData) {
+        const lowerBookName = bookName.toLowerCase();
+        let bookVerses = (flatData as FlatVerse[]).filter(v => v.book_name.toLowerCase() === lowerBookName);
+        
+        if (bookVerses.length === 0) {
+            const variants = getBookNameVariants(bookName);
+            for (const variant of variants) {
+                bookVerses = (flatData as FlatVerse[]).filter(v => v.book_name.toLowerCase() === variant.toLowerCase());
+                if (bookVerses.length > 0) break;
+            }
+        }
+        
+        const chapters = new Set(bookVerses.map(v => v.chapter));
+        return Array.from(chapters).sort((a, b) => a - b);
+    } else {
+        const booksData = (data as { books?: Record<string, Book> } | Record<string, Book>).books || (data as Record<string, Book>);
         let bookKey = Object.keys(booksData).find(k => k.toLowerCase() === bookName.toLowerCase());
         
         if (!bookKey) {
@@ -263,69 +295,11 @@ export async function getChapter(version: string, bookName: string, chapterNumbe
                 if (bookKey) break;
             }
         }
-
-        if (!bookKey) return null;
+        
+        if (!bookKey) return [];
         
         const book = booksData[bookKey];
         const chaptersObj = book.chapters || book;
-        const chapterData = chaptersObj[chapterNumber.toString()] || chaptersObj[chapterNumber];
-        
-        if (!chapterData) return null;
-
-        // If chapterData has 'verses' property, use it, otherwise assume it IS the verses map
-        const versesMap = chapterData.verses || chapterData;
-        
-        return { verses: versesMap };
+        return Object.keys(chaptersObj).map(Number).sort((a, b) => a - b);
     }
-  } catch (error) {
-    console.error(`[LocalData] Error in getChapter for ${version}/${bookName}/${chapterNumber}:`, error);
-    return null;
-  }
-}
-
-// Keep getCommentary for backward compatibility if needed, but getChapter now handles both
-export async function getCommentary(source: string, bookName: string, chapterNumber: number) {
-    const result = await getChapter(source, bookName, chapterNumber);
-    // Return the verses map directly, as expected by the commentary component
-    return result ? result.verses : null;
-}
-
-export async function getCommentaries() {
-  try {
-    const commentariesDir = path.join(DATA_DIR, 'commentaries');
-    await fs.mkdir(commentariesDir, { recursive: true });
-    const dirents = await fs.readdir(commentariesDir, { withFileTypes: true });
-    return dirents
-      .filter(dirent => dirent.name.endsWith('.json') || dirent.isDirectory())
-      .map(dirent => dirent.name.replace('.json', ''));
-  } catch (error) {
-    console.error('Error listing commentaries:', error);
-    return [];
-  }
-}
-
-export async function getBibleSummary(bookName: string) {
-  try {
-    const summaryPath = path.join(DATA_DIR, 'bible_summary.json');
-    const fileContent = await fs.readFile(summaryPath, 'utf-8');
-    const summaryData = JSON.parse(fileContent);
-    
-    // Try direct match
-    if (summaryData[bookName]) {
-        return summaryData[bookName];
-    }
-
-    // Try variants
-    const variants = getBookNameVariants(bookName);
-    for (const variant of variants) {
-        if (summaryData[variant]) {
-            return summaryData[variant];
-        }
-    }
-    
-    return null;
-  } catch (error) {
-    console.error('Error reading bible summary:', error);
-    return null;
-  }
 }

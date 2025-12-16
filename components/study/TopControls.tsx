@@ -7,7 +7,7 @@ import DownloadButton from './DownloadButton';
 
 interface TopControlsProps {
   // Bible data
-  versions: string[];
+  versions: { id: string; name: string }[];
   books: string[];
   chapters: number[];
   selectedVersion: string | null;

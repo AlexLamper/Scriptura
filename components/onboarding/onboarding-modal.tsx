@@ -27,12 +27,12 @@ const LANGUAGES = [
 ]
 
 const BIBLE_VERSIONS = [
-  { code: "ESV", label: "English Standard Version (ESV)" },
-  { code: "NIV", label: "New International Version (NIV)" },
-  { code: "KJV", label: "King James Version (KJV)" },
-  { code: "NBV21", label: "Nieuwe Bijbelvertaling 21 (NBV21)" },
-  { code: "HSV", label: "Herziene Statenvertaling (HSV)" },
-  { code: "LUT", label: "Lutherbibel 2017 (LUT)" },
+  { code: "kjv", label: "King James Version (KJV)" },
+  { code: "hsv", label: "Herziene Statenvertaling (HSV)" },
+  { code: "statenvertaling", label: "Statenvertaling" },
+  { code: "luther_1912", label: "Luther 1912" },
+  { code: "asv", label: "American Standard Version (ASV)" },
+  { code: "web", label: "World English Bible (WEB)" },
 ]
 
 const THEMES = [

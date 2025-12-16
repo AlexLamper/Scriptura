@@ -12,7 +12,7 @@ export default function ReadPage() {
   const lng = i18n.resolvedLanguage;
   const searchParams = useSearchParams();
   
-  const [versions, setVersions] = useState<string[]>([])
+  const [versions, setVersions] = useState<{id: string, name: string}[]>([])
   const [books, setBooks] = useState<string[]>([])
   const [chapters, setChapters] = useState<number[]>([])
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null)
@@ -27,13 +27,13 @@ export default function ReadPage() {
   const API_BASE_URL = '/api/bible';
 
   // Function to get default version based on language
-  const getDefaultVersion = (versionNames: string[], language: string): string | null => {
+  const getDefaultVersion = (versionList: {id: string, name: string}[], language: string): string | null => {
     if (language === 'nl') {
-      return versionNames.find(v => v === 'Staten Vertaling') || versionNames[0] || null;
+      return versionList.find(v => v.id === 'statenvertaling')?.id || versionList[0]?.id || null;
     } else if (language === 'en') {
-      return versionNames.find(v => v === 'American Standard Version') || versionNames[0] || null;
+      return versionList.find(v => v.id === 'asv')?.id || versionList[0]?.id || null;
     } else {
-      return versionNames[0] || null;
+      return versionList[0]?.id || null;
     }
   };
 
@@ -85,13 +85,16 @@ export default function ReadPage() {
         }
 
         // Set version based on language if not restored from last read
-        if (!lastReadRestored) {
+        let currentVersion = selectedVersion;
+        if (!lastReadRestored && !currentVersion) {
           const defaultVersion = getDefaultVersion(versionNames, lng);
           setSelectedVersion(defaultVersion);
+          currentVersion = defaultVersion;
         }
 
         // Fetch books
-        const resBooks = await fetch(`${API_BASE_URL}/books`);
+        const booksUrl = currentVersion ? `${API_BASE_URL}/books?version=${currentVersion}` : `${API_BASE_URL}/books`;
+        const resBooks = await fetch(booksUrl);
         if (!resBooks.ok) {
           throw new Error(`Failed to fetch books: ${resBooks.status}`);
         }

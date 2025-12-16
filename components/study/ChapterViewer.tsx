@@ -42,7 +42,7 @@ export default function ChapterViewer({
           chapter: chapter.toString(),
         });
 
-        if (version && version.toLowerCase() !== 'statenvertaling') {
+        if (version) {
           params.append('version', version);
         }
 
@@ -161,7 +161,7 @@ export default function ChapterViewer({
               chapter={chapter}
               verse={parseInt(selectedVerse.verseNumber)}
               verseText={selectedVerse.text}
-              translation={version || "Statenvertaling"}
+              translation={version || "statenvertaling"}
               onSave={handleNoteSaved}
             />
           )}

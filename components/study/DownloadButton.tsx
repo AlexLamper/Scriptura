@@ -55,7 +55,7 @@ export default function DownloadButton({
         book: selectedBook, 
         chapter: selectedChapter.toString() 
       });
-      if (selectedVersion && selectedVersion !== 'Staten Vertaling') {
+      if (selectedVersion) {
         params.append('version', selectedVersion);
       }
       const response = await fetch(`${API_BASE_URL}/chapter?${params.toString()}`);

@@ -8,7 +8,7 @@ interface StudyMaterialsSectionProps {
   selectedBook: string;
   selectedChapter: number;
   selectedVersion: string | null;
-  versions: string[];
+  versions: { id: string; name: string }[];
   onNextChapter: () => void;
   onPrevChapter: () => void;
   onDownload: () => void;

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface UseBibleDataReturn {
   // State
-  versions: string[];
+  versions: { id: string; name: string }[];
   books: string[];
   chapters: number[];
   selectedVersion: string | null;
@@ -26,7 +26,7 @@ interface UseBibleDataReturn {
 }
 
 export function useBibleData(lng: string): UseBibleDataReturn {
-  const [versions, setVersions] = useState<string[]>([]);
+  const [versions, setVersions] = useState<{ id: string; name: string }[]>([]);
   const [books, setBooks] = useState<string[]>([]);
   const [chapters, setChapters] = useState<number[]>([]);
 
@@ -46,21 +46,18 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   const API_BASE_URL = '/api/bible';
 
   // Function to get default Bible version based on language
-  const getDefaultVersion = (availableVersions: string[], language: string): string | null => {
+  const getDefaultVersion = (availableVersions: { id: string; name: string }[], language: string): string | null => {
     if (language === 'nl') {
-      if (availableVersions.includes('Staten Vertaling')) {
-        return 'Staten Vertaling';
+      if (availableVersions.some(v => v.id === 'statenvertaling')) {
+        return 'statenvertaling';
       }
     } else if (language === 'en') {
-      if (availableVersions.includes('American Standard Version')) {
-        return 'American Standard Version';
-      }
-      if (availableVersions.includes('ASV')) {
-        return 'ASV';
+      if (availableVersions.some(v => v.id === 'asv')) {
+        return 'asv';
       }
     }
     
-    return availableVersions.length > 0 ? availableVersions[0] : null;
+    return availableVersions.length > 0 ? availableVersions[0].id : null;
   };
 
   // 1. Fetch available versions on initial load
@@ -73,7 +70,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           const errorText = await res.text();
           throw new Error(`Failed to fetch versions: ${res.status} ${res.statusText} - ${errorText}`);
         }
-        const data: string[] = await res.json();
+        const data: { id: string; name: string }[] = await res.json();
         const versionNames = data;
         setVersions(versionNames);
 
@@ -85,11 +82,14 @@ export function useBibleData(lng: string): UseBibleDataReturn {
           if (lastReadRes.ok) {
             const { lastReadChapter } = await lastReadRes.json();
             if (lastReadChapter && lastReadChapter.version && lastReadChapter.book && lastReadChapter.chapter) {
-              setSelectedVersion(lastReadChapter.version);
-              setSelectedBook(lastReadChapter.book);
-              setSelectedChapter(lastReadChapter.chapter);
-              setLastReadLoaded(true);
-              restored = true;
+              // Validate that the book is not 'verses' or other invalid values
+              if (lastReadChapter.book.toLowerCase() !== 'verses') {
+                setSelectedVersion(lastReadChapter.version);
+                setSelectedBook(lastReadChapter.book);
+                setSelectedChapter(lastReadChapter.chapter);
+                setLastReadLoaded(true);
+                restored = true;
+              }
             }
           }
         } catch {
@@ -105,7 +105,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
               if (preferences?.translation) {
                 const pref = preferences.translation.toLowerCase();
                 const matchedVersion = versionNames.find(v => {
-                  const vLower = v.toLowerCase();
+                  const vLower = v.name.toLowerCase();
                   return vLower === pref || 
                          vLower.includes(`(${pref})`) || 
                          vLower.includes(`${pref} `) ||
@@ -113,12 +113,12 @@ export function useBibleData(lng: string): UseBibleDataReturn {
                 });
 
                 if (matchedVersion) {
-                  setSelectedVersion(matchedVersion);
+                  setSelectedVersion(matchedVersion.id);
                   restored = true;
                 } else {
-                   const looseMatch = versionNames.find(v => v.toLowerCase().includes(pref));
+                   const looseMatch = versionNames.find(v => v.name.toLowerCase().includes(pref));
                    if (looseMatch) {
-                     setSelectedVersion(looseMatch);
+                     setSelectedVersion(looseMatch.id);
                      restored = true;
                    }
                 }
@@ -174,6 +174,12 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
         // Check if the currently selected book is valid in the new version
         let isBookValid = selectedBook && bookNames.includes(selectedBook);
+        
+        // Explicitly invalidate 'verses' if it somehow got selected
+        if (selectedBook && selectedBook.toLowerCase() === 'verses') {
+            isBookValid = false;
+        }
+
         let nextBook = selectedBook;
 
         if (!isBookValid && lastBookIndexRef.current !== -1) {

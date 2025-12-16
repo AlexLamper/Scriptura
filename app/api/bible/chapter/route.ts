@@ -10,7 +10,9 @@ export async function GET(request: Request) {
   if (!book || !chapter) return NextResponse.json({ error: 'Missing params' }, { status: 400 });
 
   const data = await getChapter(version, book, Number(chapter));
-  if (!data) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  if (!data) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
   
   return NextResponse.json(data);
 }

@@ -7,7 +7,7 @@ import { fallbackLng, languages, cookieName } from "./app/i18n/settings";
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|data).*)",
   ],
 };
 
