@@ -5,12 +5,14 @@ declare module "next-auth" {
     user: {
       id: string;
       isAdmin?: boolean;
+      isSubscribed?: boolean;
       onboardingCompleted?: boolean;
     } & DefaultSession["user"];
   }
 
   interface User {
     isAdmin?: boolean;
+    isSubscribed?: boolean;
     onboardingCompleted?: boolean;
   }
 }
@@ -19,6 +21,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     isAdmin?: boolean;
+    isSubscribed?: boolean;
     onboardingCompleted?: boolean;
   }
 }

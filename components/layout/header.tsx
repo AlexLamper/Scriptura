@@ -11,6 +11,7 @@ import { ModeToggle } from "../dark-mode-toggle"
 import { LanguageSwitcher } from "../language-switcher"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 import { useTranslation } from "../../app/i18n/client"
+import { SubscriptionBadge } from "../subscription-badge"
 
 
 interface HeaderProps {
@@ -145,7 +146,10 @@ export function Header({ title }: HeaderProps) {
               </AvatarFallback>
             </Avatar>
             <div className="text-sm text-left">
-              <p className="font-medium">{session.user?.name}</p>
+              <div className="flex items-center">
+                <p className="font-medium">{session.user?.name}</p>
+                <SubscriptionBadge isSubscribed={!!session.user?.isSubscribed} />
+              </div>
               <p className="text-gray-500 text-[0.8rem]">{session.user?.email}</p>
             </div>
           </Button>
