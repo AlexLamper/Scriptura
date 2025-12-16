@@ -1,6 +1,4 @@
 import { getBookNameVariants } from './book-mapping';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 // Interfaces
 interface FlatVerse {
@@ -37,9 +35,19 @@ function hasVerses(data: unknown): data is { verses: unknown } {
 
 async function fetchJson(relativePath: string) {
     try {
-        const filePath = path.join(process.cwd(), 'public', relativePath);
-        const fileContents = await fs.readFile(filePath, 'utf8');
-        return JSON.parse(fileContents);
+        const baseUrl = process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}` 
+            : 'http://localhost:3000';
+            
+        const url = new URL(relativePath, baseUrl).toString();
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            console.error(`Failed to fetch ${url}: ${response.statusText}`);
+            return null;
+        }
+        
+        return await response.json();
     } catch (error) {
         console.error(`Error reading ${relativePath}:`, error);
         return null;
