@@ -1,6 +1,4 @@
 import { getBookNameVariants, getBookNameFromNumber, englishToDutchMap } from './book-mapping';
-import fs from 'fs';
-import path from 'path';
 
 // Interfaces
 interface FlatVerse {
@@ -37,37 +35,53 @@ function hasVerses(data: unknown): data is { verses: unknown } {
 
 async function fetchJson(relativePath: string) {
     try {
-        // Use filesystem directly since this runs on the server
-        const publicDir = path.join(process.cwd(), 'public');
-        // Remove leading slash if present to join correctly
-        const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
-        const filePath = path.join(publicDir, cleanPath);
-        
-        // Check if fs is available (server-side)
-        if (typeof window === 'undefined' && fs && fs.existsSync) {
-             if (fs.existsSync(filePath)) {
-                const fileContent = await fs.promises.readFile(filePath, 'utf-8');
-                return JSON.parse(fileContent);
-            } else {
-                console.error(`File not found: ${filePath}`);
-                return null;
+        // Check if running on server (Node.js environment)
+        if (typeof window === 'undefined') {
+            try {
+                const fsModule = await import('fs');
+                const pathModule = await import('path');
+                const fs = fsModule.default || fsModule;
+                const path = pathModule.default || pathModule;
+
+                if (fs && fs.existsSync && path && path.join && process && process.cwd) {
+                    // Use filesystem directly since this runs on the server
+                    const publicDir = path.join(process.cwd(), 'public');
+                    // Remove leading slash if present to join correctly
+                    const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
+                    const filePath = path.join(publicDir, cleanPath);
+                    
+                    if (fs.existsSync(filePath)) {
+                        const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+                        return JSON.parse(fileContent);
+                    } else {
+                        console.error(`File not found: ${filePath}`);
+                        return null;
+                    }
+                }
+            } catch (e) {
+                // Ignore error if fs/path cannot be imported (e.g. Edge runtime)
             }
-        } else {
-            // Fallback for client-side (though this file should mainly run on server)
+        }
+        
+        // Fallback for client-side or Edge runtime
+        // Use relative URL for client-side fetch, or absolute for server-side fetch
+        let urlStr = relativePath;
+        if (typeof window === 'undefined') {
              const baseUrl = process.env.VERCEL_URL 
                 ? `https://${process.env.VERCEL_URL}` 
                 : 'http://localhost:3000';
-                
-            const url = new URL(relativePath, baseUrl).toString();
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                console.error(`Failed to fetch ${url}: ${response.statusText}`);
-                return null;
-            }
-            
-            return await response.json();
+             urlStr = new URL(relativePath, baseUrl).toString();
         }
+
+        const response = await fetch(urlStr);
+        
+        if (!response.ok) {
+            console.error(`Failed to fetch ${urlStr}: ${response.statusText}`);
+            return null;
+        }
+        
+        return await response.json();
+
     } catch (error) {
         console.error(`Error reading ${relativePath}:`, error);
         return null;
