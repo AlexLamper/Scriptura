@@ -6,6 +6,7 @@ import { Card, CardContent } from '../ui/card';
 import { useSession } from 'next-auth/react';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '../../app/i18n/client';
 
 interface CommentaryComponentProps {
   book: string;
@@ -110,6 +111,8 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   const [selectedSource, setSelectedSource] = useState(initialSource);
   const { data: session } = useSession();
   const router = useRouter();
+  const { t } = useTranslation('study');
+  const [notFound, setNotFound] = useState(false);
 
   const API_BASE_URL = '/api';
 
@@ -140,6 +143,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
       setLoading(true);
       setError(null);
       setCommentary(null);
+      setNotFound(false);
 
       try {
         const englishBook = bookNameMap[book] || book;
@@ -155,6 +159,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
         const res = await fetch(url);
 
         if (!res.ok) {
+          if (res.status === 404) {
+            setNotFound(true);
+            return;
+          }
           const errText = await res.text();
           throw new Error(
             `API error: ${res.status} ${res.statusText} - ${errText}`
@@ -164,7 +172,8 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
         const data = await res.json();
 
         if (!data || Object.keys(data).length === 0) {
-          throw new Error('No commentary found for this chapter.');
+          setNotFound(true);
+          return;
         }
 
         setCommentary(data);
@@ -262,6 +271,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
                     Error loading commentary
                 </p>
                 <p className="font-inter text-gray-700 dark:text-muted-foreground text-sm">{error}</p>
+            </div>
+        ) : notFound ? (
+            <div className="py-12 text-center text-gray-500 dark:text-muted-foreground text-sm">
+                <p className="font-inter">{t('no_commentary_for_chapter', { source: formatSourceLabel(selectedSource) })}</p>
             </div>
         ) : !commentary ? (
             <div className="py-12 text-center text-gray-500 dark:text-muted-foreground text-sm">

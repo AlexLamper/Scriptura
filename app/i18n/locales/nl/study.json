@@ -29,6 +29,7 @@
   "keyboard_shortcuts": "Toetsenbordsnelkoppelingen",
   "no_translations_available": "Geen vertalingen beschikbaar.",
   "no_books_available": "Geen boeken beschikbaar voor deze vertaling.",
+  "no_commentary_for_chapter": "Geen commentaar van '{{source}}' voor dit hoofdstuk.",
   "select_book_chapter": "Selecteer een boek en hoofdstuk om te beginnen met lezen.",
   "select_translation_start": "Selecteer een Bijbelvertaling om je studie te beginnen.",
   "ready_to_study": "Klaar om dieper in Gods Woord te duiken",

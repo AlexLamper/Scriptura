@@ -139,6 +139,25 @@
       "type": "file"
     },
     {
+      "name": "matthew_henry_nl.json",
+      "title": "Matthew Henry (NL)",
+      "type": "file"
+    },
+    {
+      "name": "karlaugustdachsel",
+      "title": "Karl August Dachsel",
+      "type": "dir",
+      "files": [
+        "1Johannes", "1Korinthe", "1Petrus", "1Thessalonicenzen", "1Timotheus",
+        "2Johannes", "2Korinthe", "2Petrus", "2Thessalonicenzen", "2Timotheus",
+        "3Johannes", "Efeze", "Exodus", "Filemon", "Filippenzen", "Galaten",
+        "Genesis", "Habakuk", "Handelingen", "Hebreeen", "Jakobus", "Joel",
+        "Johannes", "Jona", "Judas", "Kolossenzen", "Leviticus", "Lukas",
+        "Markus", "Mattheus", "Numeri", "Openbaring", "Prediker", "Romeinen",
+        "Ruth", "Titus"
+      ]
+    },
+    {
       "name": "meyer.json",
       "title": "F.B. Meyer",
       "type": "file"

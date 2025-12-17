@@ -29,6 +29,7 @@
   "keyboard_shortcuts": "Keyboard Shortcuts",
   "no_translations_available": "No translations available.",
   "no_books_available": "No books available for this translation.",
+  "no_commentary_for_chapter": "No commentary from '{{source}}' for this chapter.",
   "select_book_chapter": "Select a book and chapter to start reading.",
   "select_translation_start": "Select a Bible translation to begin your study.",
   "ready_to_study": "Ready to dive deeper into God's Word",

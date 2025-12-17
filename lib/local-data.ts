@@ -84,11 +84,11 @@ async function findEntry(version: string) {
     return null;
 }
 
-export async function getBibleData(version: string, bookName?: string) {
+export async function getBibleData(version: string, bookName?: string, chapter?: number) {
     const entry = await findEntry(version);
     if (!entry) return null;
 
-    const cacheKey = `${version}-${bookName || 'full'}`;
+    const cacheKey = `${version}-${bookName || 'full'}-${chapter || 'all'}`;
     if (CACHE[cacheKey]) return CACHE[cacheKey];
 
     if (entry.type === 'file') {
@@ -99,25 +99,66 @@ export async function getBibleData(version: string, bookName?: string) {
             return data;
         }
     } else if (entry.type === 'dir') {
-        // Directory based (e.g. King Comments)
+        // Directory based (e.g. King Comments, Karl August Dachsel)
         if (bookName) {
-            // Try to find the specific book file
+            // Try to find the specific book file or folder
             const targetFile = entry.files?.find(f => {
                 const fName = f.replace('.json', '').toLowerCase();
                 return fName === bookName.toLowerCase() || getBookNameVariants(bookName).some(v => v.toLowerCase() === fName);
             });
 
             if (targetFile) {
-                const data = await fetchJson(`/data/${entry.category}/${entry.name}/${targetFile}`);
-                if (data) {
-                    // Wrap it to look like full data structure
-                    const result = {
-                        books: {
-                            [targetFile.replace('.json', '')]: data
-                        }
-                    };
-                    CACHE[cacheKey] = result;
-                    return result;
+                if (targetFile.endsWith('.json')) {
+                    const data = await fetchJson(`/data/${entry.category}/${entry.name}/${targetFile}`);
+                    if (data) {
+                        // Wrap it to look like full data structure
+                        const result = {
+                            books: {
+                                [targetFile.replace('.json', '')]: data
+                            }
+                        };
+                        CACHE[cacheKey] = result;
+                        return result;
+                    }
+                } else if (chapter) {
+                    // It's a directory (e.g. 1Korinthe), fetch specific chapter file
+                    // Pattern: BookName/BookNameChapter.json
+                    const chapterFileName = `${targetFile}${chapter}.json`;
+                    const data = await fetchJson(`/data/${entry.category}/${entry.name}/${targetFile}/${chapterFileName}`);
+                    if (data) {
+                        // Wrap it to look like full data structure
+                        // The data is { "1": "text", "2": "text" } (verses)
+                        const result = {
+                            books: {
+                                [targetFile]: {
+                                    chapters: {
+                                        [chapter.toString()]: data
+                                    }
+                                }
+                            }
+                        };
+                        CACHE[cacheKey] = result;
+                        return result;
+                    }
+                } else {
+                    // Directory based, bookName present, but no chapter.
+                    // Try to fetch chapters.json to list available chapters
+                    const chaptersData = await fetchJson(`/data/${entry.category}/${entry.name}/${targetFile}/chapters.json`);
+                    if (chaptersData && Array.isArray(chaptersData)) {
+                         // chaptersData is [1, 2, 3]
+                         const chaptersStub: Record<string, Record<string, string>> = {};
+                         chaptersData.forEach(c => {
+                             chaptersStub[c.toString()] = {};
+                         });
+                         
+                         const result = {
+                             books: {
+                                 [targetFile]: { chapters: chaptersStub }
+                             }
+                         };
+                         CACHE[cacheKey] = result;
+                         return result;
+                    }
                 }
             }
         } else {
@@ -190,8 +231,8 @@ export async function getBooks(version: string) {
 }
 
 export async function getChapter(version: string, bookName: string, chapterNumber: number) {
-    // Pass bookName to getBibleData to optimize directory-based sources
-    const data = await getBibleData(version, bookName);
+    // Pass bookName and chapterNumber to getBibleData to optimize directory-based sources
+    const data = await getBibleData(version, bookName, chapterNumber);
     if (!data) {
         return null;
     }

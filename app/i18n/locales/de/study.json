@@ -14,6 +14,7 @@
   "print_download": "Kapitel drucken oder herunterladen",
   "no_translations_available": "Keine Übersetzungen verfügbar.",
   "no_books_available": "Keine Bücher für diese Übersetzung verfügbar.",
+  "no_commentary_for_chapter": "Kein Kommentar von '{{source}}' für dieses Kapitel.",
   "select_book_chapter": "Wählen Sie ein Buch und Kapitel zum Starten.",
   "select_translation_start": "Wählen Sie eine Bibelübersetzung zum Starten.",
   "select_passage": "Wählen Sie eine Passage zum Lesen",
