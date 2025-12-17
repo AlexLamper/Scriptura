@@ -122,7 +122,7 @@ export default function ReadPage() {
     }
 
     fetchData()
-  }, [lng, searchParams])
+  }, [lng, searchParams, selectedVersion])
 
   // Fetch chapters when book changes
   useEffect(() => {

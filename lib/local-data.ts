@@ -43,12 +43,30 @@ async function fetchJson(relativePath: string) {
         const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
         const filePath = path.join(publicDir, cleanPath);
         
-        if (fs.existsSync(filePath)) {
-            const fileContent = await fs.promises.readFile(filePath, 'utf-8');
-            return JSON.parse(fileContent);
+        // Check if fs is available (server-side)
+        if (typeof window === 'undefined' && fs && fs.existsSync) {
+             if (fs.existsSync(filePath)) {
+                const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+                return JSON.parse(fileContent);
+            } else {
+                console.error(`File not found: ${filePath}`);
+                return null;
+            }
         } else {
-            console.error(`File not found: ${filePath}`);
-            return null;
+            // Fallback for client-side (though this file should mainly run on server)
+             const baseUrl = process.env.VERCEL_URL 
+                ? `https://${process.env.VERCEL_URL}` 
+                : 'http://localhost:3000';
+                
+            const url = new URL(relativePath, baseUrl).toString();
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                console.error(`Failed to fetch ${url}: ${response.statusText}`);
+                return null;
+            }
+            
+            return await response.json();
         }
     } catch (error) {
         console.error(`Error reading ${relativePath}:`, error);
