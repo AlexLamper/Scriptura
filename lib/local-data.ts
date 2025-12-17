@@ -55,12 +55,12 @@ async function fetchJson(relativePath: string) {
                         const fileContent = await fs.promises.readFile(filePath, 'utf-8');
                         return JSON.parse(fileContent);
                     } else {
-                        console.error(`File not found: ${filePath}`);
-                        return null;
+                        console.warn(`[LocalData] File not found on disk: ${filePath}. Falling back to HTTP fetch.`);
+                        // Do NOT return null here. Allow fall-through to fetch() below.
                     }
                 }
-            } catch {
-                // Ignore error if fs/path cannot be imported (e.g. Edge runtime)
+            } catch (err) {
+                console.warn('[LocalData] FS access failed, falling back to fetch:', err);
             }
         }
         
