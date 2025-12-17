@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../lib/authOptions";
 import { OnboardingWrapper } from "../components/onboarding/onboarding-wrapper";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -168,6 +169,7 @@ export default async function RootLayout({
         </ThemeProvider>
         {/* Load External Scripts After Interactive */}
         <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />
+        <SpeedInsights />
       </body>
     </html>
   );
