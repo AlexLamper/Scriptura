@@ -58,7 +58,7 @@ async function fetchJson(relativePath: string) {
                         return null;
                     }
                 }
-            } catch (e) {
+            } catch {
                 // Ignore error if fs/path cannot be imported (e.g. Edge runtime)
             }
         }
