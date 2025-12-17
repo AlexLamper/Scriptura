@@ -64,6 +64,18 @@ async function getManifest(): Promise<Manifest> {
     return { bibles: [], commentaries: [] };
 }
 
+let BOOKS_INDEX_CACHE: Record<string, string[]> | null = null;
+
+async function getBooksIndex(): Promise<Record<string, string[]> | null> {
+    if (BOOKS_INDEX_CACHE) return BOOKS_INDEX_CACHE;
+    const index = await fetchJson('/data/books-index.json');
+    if (index) {
+        BOOKS_INDEX_CACHE = index;
+        return index;
+    }
+    return null;
+}
+
 // Helper to find entry in manifest
 async function findEntry(version: string) {
     const manifest = await getManifest();
@@ -178,6 +190,19 @@ export async function getBooks(version: string) {
     const entry = await findEntry(version);
     if (!entry) {
         return [];
+    }
+
+    // Try to use index first
+    const index = await getBooksIndex();
+    const indexKey = entry.name.replace('.json', '');
+    
+    if (index && index[indexKey]) {
+        const books = index[indexKey];
+         // Translate to Dutch if version is HSV
+        if (version.toLowerCase() === 'hsv') {
+            return books.map(book => englishToDutchMap[book] || book);
+        }
+        return books;
     }
 
     let books: string[] = [];

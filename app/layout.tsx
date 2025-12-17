@@ -9,6 +9,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../lib/authOptions";
 import { OnboardingWrapper } from "../components/onboarding/onboarding-wrapper";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { PrefetchProvider } from "../components/providers/prefetch-provider";
+import { StartupLoader } from "../components/ui/startup-loader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -160,12 +162,15 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div id="main-content" className="min-h-screen mx-auto w-full">
-            {children}
-          </div>
-          {session?.user && (
-            <OnboardingWrapper shouldShow={!session.user.onboardingCompleted} />
-          )}
+          <PrefetchProvider>
+            <StartupLoader />
+            <div id="main-content" className="min-h-screen mx-auto w-full">
+              {children}
+            </div>
+            {session?.user && (
+              <OnboardingWrapper shouldShow={!session.user.onboardingCompleted} />
+            )}
+          </PrefetchProvider>
         </ThemeProvider>
         {/* Load External Scripts After Interactive */}
         <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />

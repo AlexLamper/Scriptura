@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from '../i18n/client';
 import { useBibleData } from '../../hooks/useBibleData';
 import BibleViewerSection from '../../components/study/BibleViewerSection';
 import StudyMaterialsSection from '../../components/study/StudyMaterialsSection';
-import StartupAnimation from '../../components/ui/startup-animation';
 
 export default function StudyPage() {
   const { t, i18n } = useTranslation('study');
@@ -31,14 +30,6 @@ export default function StudyPage() {
     handleNextChapter,
   } = useBibleData(lng);
 
-  const [isAppReady, setIsAppReady] = useState(false);
-
-  useEffect(() => {
-    if (!loadingVersions && !loadingBooks && !loadingChapters && selectedBook && selectedChapter) {
-      setIsAppReady(true);
-    }
-  }, [loadingVersions, loadingBooks, loadingChapters, selectedBook, selectedChapter]);
-
   const handleDownload = useCallback(() => {
     // This will be handled by the DownloadButton component
     // Download triggered via keyboard shortcut
@@ -46,7 +37,6 @@ export default function StudyPage() {
 
   return (
     <div className="h-full flex flex-col font-inter overflow-hidden">
-      <StartupAnimation isReady={isAppReady} />
       
       <div className="flex flex-col lg:flex-row h-full w-full">
         {/* Left: Bible verse section (50% width) */}
