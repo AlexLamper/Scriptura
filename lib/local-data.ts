@@ -1,4 +1,6 @@
 import { getBookNameVariants, getBookNameFromNumber, englishToDutchMap } from './book-mapping';
+import fs from 'fs';
+import path from 'path';
 
 // Interfaces
 interface FlatVerse {
@@ -35,19 +37,19 @@ function hasVerses(data: unknown): data is { verses: unknown } {
 
 async function fetchJson(relativePath: string) {
     try {
-        const baseUrl = process.env.VERCEL_URL 
-            ? `https://${process.env.VERCEL_URL}` 
-            : 'http://localhost:3000';
-            
-        const url = new URL(relativePath, baseUrl).toString();
-        const response = await fetch(url);
+        // Use filesystem directly since this runs on the server
+        const publicDir = path.join(process.cwd(), 'public');
+        // Remove leading slash if present to join correctly
+        const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
+        const filePath = path.join(publicDir, cleanPath);
         
-        if (!response.ok) {
-            console.error(`Failed to fetch ${url}: ${response.statusText}`);
+        if (fs.existsSync(filePath)) {
+            const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+            return JSON.parse(fileContent);
+        } else {
+            console.error(`File not found: ${filePath}`);
             return null;
         }
-        
-        return await response.json();
     } catch (error) {
         console.error(`Error reading ${relativePath}:`, error);
         return null;

@@ -18,7 +18,7 @@ export function StartupLoader() {
     const timer = setTimeout(() => {
       setVisible(false);
       sessionStorage.setItem('startup-loader-shown', 'true');
-    }, 2000); // 2 seconds for data prefetching
+    }, 1000); // 1 second for data prefetching
 
     return () => clearTimeout(timer);
   }, []);
