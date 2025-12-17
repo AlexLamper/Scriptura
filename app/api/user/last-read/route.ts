@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { book, chapter, version } = await request.json()
+    const { book, chapter, version, commentary } = await request.json()
 
     if (!book || !chapter || !version) {
       return NextResponse.json({ 
@@ -49,16 +49,20 @@ export async function POST(request: NextRequest) {
 
     await connectMongoDB()
 
+    const updateData: Record<string, string | Date> = {
+      'lastReadChapter.book': book,
+      'lastReadChapter.chapter': chapter,
+      'lastReadChapter.version': version,
+      'lastReadChapter.updatedAt': new Date()
+    };
+
+    if (commentary) {
+      updateData['lastReadChapter.commentary'] = commentary;
+    }
+
     const user = await User.findOneAndUpdate(
       { email: session.user.email },
-      { 
-        lastReadChapter: {
-          book,
-          chapter,
-          version,
-          updatedAt: new Date()
-        }
-      },
+      { $set: updateData },
       { new: true }
     )
 

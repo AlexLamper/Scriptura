@@ -11,11 +11,13 @@ interface TabComponentProps {
   selectedBook: string;
   selectedChapter: number;
   selectedVersion?: string | null;
+  selectedCommentary?: string;
   t: (key: string) => string;
   versions: { id: string; name: string }[];
   versionObjects?: { id: string; name: string; abbreviation: string }[];
   onNextChapter: () => void;
   onPrevChapter: () => void;
+  onCommentaryChange?: (commentary: string) => void;
   onDownload: () => void;
   height?: number;
 }
@@ -24,9 +26,11 @@ export default function TabComponent({
   selectedBook, 
   selectedChapter, 
   selectedVersion, 
+  selectedCommentary,
   t, 
   onNextChapter,
   onPrevChapter,
+  onCommentaryChange,
   onDownload,
   height,
   activeTab
@@ -60,7 +64,8 @@ export default function TabComponent({
           <CommentaryComponent
             book={selectedBook}
             chapter={selectedChapter}
-            source="matthew-henry"
+            source={selectedCommentary || "matthew-henry"}
+            onSourceChange={onCommentaryChange}
             height={height}
           />
         );

@@ -1,4 +1,4 @@
-import { getBookNameVariants } from './book-mapping';
+import { getBookNameVariants, getBookNameFromNumber, englishToDutchMap } from './book-mapping';
 
 // Interfaces
 interface FlatVerse {
@@ -139,40 +139,54 @@ export async function getBooks(version: string) {
         return [];
     }
 
+    let books: string[] = [];
+
     if (entry.type === 'dir') {
-        return entry.files?.map(f => f.replace('.json', '')) || [];
+        books = entry.files?.map(f => f.replace('.json', '')) || [];
+    } else {
+        // For single file, we must fetch it
+        const data = await getBibleData(version);
+        if (!data) {
+            return [];
+        }
+        
+        // Check for array of books (NBG51, Meyer)
+        if (data.books && Array.isArray(data.books)) {
+            books = data.books.map((b: { name?: string; bnumber?: number }) => {
+                if (b.name) return b.name;
+                if (b.bnumber) return getBookNameFromNumber(b.bnumber);
+                return "Unknown";
+            });
+        } else if (Array.isArray(data)) {
+            // Handle flat array structure
+            const bookNames = new Set<string>();
+            data.forEach((v: FlatVerse) => {
+                if (v.book_name) {
+                    bookNames.add(v.book_name);
+                }
+            });
+            books = Array.from(bookNames);
+        } else if (hasVerses(data) && Array.isArray(data.verses)) {
+            const bookNames = new Set<string>();
+            (data.verses as FlatVerse[]).forEach((v: FlatVerse) => {
+                if (v.book_name) {
+                    bookNames.add(v.book_name);
+                }
+            });
+            books = Array.from(bookNames);
+        } else {
+            const booksData = (data as { books?: Record<string, Book> } | Record<string, Book>).books || (data as Record<string, Book>);
+            const keys = Object.keys(booksData);
+            books = keys.filter(k => k !== 'metadata' && k !== 'version' && k !== 'id' && k !== 'verses' && k !== 'meta');
+        }
     }
 
-    // For single file, we must fetch it
-    const data = await getBibleData(version);
-    if (!data) {
-        return [];
-    }
-    
-    if (Array.isArray(data)) {
-        // Handle flat array structure
-        const bookNames = new Set<string>();
-        data.forEach((v: FlatVerse) => {
-            if (v.book_name) {
-                bookNames.add(v.book_name);
-            }
-        });
-        return Array.from(bookNames);
+    // Translate to Dutch if version is HSV
+    if (version.toLowerCase() === 'hsv') {
+        return books.map(book => englishToDutchMap[book] || book);
     }
 
-    if (hasVerses(data) && Array.isArray(data.verses)) {
-        const bookNames = new Set<string>();
-        (data.verses as FlatVerse[]).forEach((v: FlatVerse) => {
-            if (v.book_name) {
-                bookNames.add(v.book_name);
-            }
-        });
-        return Array.from(bookNames);
-    }
-
-    const booksData = (data as { books?: Record<string, Book> } | Record<string, Book>).books || (data as Record<string, Book>);
-    const keys = Object.keys(booksData);
-    return keys.filter(k => k !== 'metadata' && k !== 'version' && k !== 'id' && k !== 'verses' && k !== 'meta');
+    return books;
 }
 
 export async function getChapter(version: string, bookName: string, chapterNumber: number) {
@@ -183,6 +197,60 @@ export async function getChapter(version: string, bookName: string, chapterNumbe
     }
 
     const flatData = Array.isArray(data) ? data : (hasVerses(data) && Array.isArray(data.verses) ? data.verses : null);
+
+    if (data.books && Array.isArray(data.books)) {
+        // Handle array of books structure
+        interface BookEntry {
+            name?: string;
+            bnumber?: number;
+            chapters?: Array<{ number?: number; cnumber?: number; verses?: Array<{ number?: number; vnumber?: number; text: string }> }>;
+        }
+        const lowerBookName = bookName.toLowerCase();
+        let book = data.books.find((b: BookEntry) => {
+            if (b.name && b.name.toLowerCase() === lowerBookName) return true;
+            if (b.bnumber) {
+                const name = getBookNameFromNumber(b.bnumber);
+                if (name.toLowerCase() === lowerBookName) return true;
+            }
+            return false;
+        });
+
+        if (!book) {
+            const variants = getBookNameVariants(bookName);
+            for (const variant of variants) {
+                book = data.books.find((b: BookEntry) => {
+                    if (b.name && b.name.toLowerCase() === variant.toLowerCase()) return true;
+                    if (b.bnumber) {
+                        const name = getBookNameFromNumber(b.bnumber);
+                        if (name.toLowerCase() === variant.toLowerCase()) return true;
+                    }
+                    return false;
+                });
+                if (book) break;
+            }
+        }
+
+        if (!book) return null;
+        
+        if (book.chapters && Array.isArray(book.chapters)) {
+            interface ChapterEntry {
+                number?: number;
+                cnumber?: number;
+                verses?: Array<{ number?: number; vnumber?: number; text: string }>;
+            }
+            const chapter = book.chapters.find((c: ChapterEntry) => (c.number || c.cnumber) === Number(chapterNumber));
+            if (!chapter) return null;
+            
+            const versesMap: Record<string, string> = {};
+            if (chapter.verses && Array.isArray(chapter.verses)) {
+                chapter.verses.forEach((v: { number?: number; vnumber?: number; text: string }) => {
+                    versesMap[(v.number || v.vnumber).toString()] = v.text;
+                });
+            }
+            return { verses: versesMap };
+        }
+        return null;
+    }
 
     if (flatData) {
         const lowerBookName = bookName.toLowerCase();
@@ -278,6 +346,46 @@ export async function getChapters(version: string, bookName: string) {
     if (!data) return [];
 
     const flatData = Array.isArray(data) ? data : (hasVerses(data) && Array.isArray(data.verses) ? data.verses : null);
+
+    if (data.books && Array.isArray(data.books)) {
+        // Handle array of books structure
+        interface BookEntry {
+            name?: string;
+            bnumber?: number;
+            chapters?: Array<{ number?: number; cnumber?: number; verses?: Array<{ number?: number; vnumber?: number; text: string }> }>;
+        }
+        const lowerBookName = bookName.toLowerCase();
+        let book = data.books.find((b: BookEntry) => {
+            if (b.name && b.name.toLowerCase() === lowerBookName) return true;
+            if (b.bnumber) {
+                const name = getBookNameFromNumber(b.bnumber);
+                if (name.toLowerCase() === lowerBookName) return true;
+            }
+            return false;
+        });
+
+        if (!book) {
+            const variants = getBookNameVariants(bookName);
+            for (const variant of variants) {
+                book = data.books.find((b: BookEntry) => {
+                    if (b.name && b.name.toLowerCase() === variant.toLowerCase()) return true;
+                    if (b.bnumber) {
+                        const name = getBookNameFromNumber(b.bnumber);
+                        if (name.toLowerCase() === variant.toLowerCase()) return true;
+                    }
+                    return false;
+                });
+                if (book) break;
+            }
+        }
+
+        if (!book) return [];
+        
+        if (book.chapters && Array.isArray(book.chapters)) {
+            return book.chapters.map((c: { number?: number; cnumber?: number }) => c.number || c.cnumber).sort((a: number, b: number) => a - b);
+        }
+        return [];
+    }
 
     if (flatData) {
         const lowerBookName = bookName.toLowerCase();

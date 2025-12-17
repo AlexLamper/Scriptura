@@ -18,6 +18,7 @@ export default function StudyPage() {
     selectedVersion,
     selectedBook,
     selectedChapter,
+    selectedCommentary,
     maxChapter,
     loadingVersions,
     loadingBooks,
@@ -25,6 +26,7 @@ export default function StudyPage() {
     handleVersionChange,
     handleBookChange,
     handleChapterChange,
+    handleCommentaryChange,
     handlePreviousChapter,
     handleNextChapter,
   } = useBibleData(lng);
@@ -75,9 +77,11 @@ export default function StudyPage() {
             selectedBook={selectedBook}
             selectedChapter={selectedChapter}
             selectedVersion={selectedVersion}
+            selectedCommentary={selectedCommentary}
             versions={versions}
             onNextChapter={handleNextChapter}
             onPrevChapter={handlePreviousChapter}
+            onCommentaryChange={handleCommentaryChange}
             onDownload={handleDownload}
             t={t}
           />

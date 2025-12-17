@@ -11,6 +11,7 @@ interface CommentaryComponentProps {
   book: string;
   chapter: number;
   source?: string;
+  onSourceChange?: (source: string) => void;
   height?: number;
 }
 
@@ -99,6 +100,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   book,
   chapter,
   source: initialSource = 'matthew-henry',
+  onSourceChange,
   height
 }) => {
   const [commentary, setCommentary] = useState<CommentaryData | null>(null);
@@ -110,6 +112,10 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   const router = useRouter();
 
   const API_BASE_URL = '/api';
+
+  useEffect(() => {
+    setSelectedSource(initialSource);
+  }, [initialSource]);
 
   // Fetch available commentaries
   useEffect(() => {
@@ -195,7 +201,13 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
         <div className="relative">
             <select 
                 value={selectedSource}
-                onChange={(e) => setSelectedSource(e.target.value)}
+                onChange={(e) => {
+                  const newSource = e.target.value;
+                  setSelectedSource(newSource);
+                  if (onSourceChange) {
+                    onSourceChange(newSource);
+                  }
+                }}
                 className="appearance-none bg-white dark:bg-secondary border border-gray-200 dark:border-border rounded-md py-1 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-[#798777] dark:text-foreground"
             >
                 {availableSources.length > 0 ? (

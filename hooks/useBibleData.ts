@@ -10,6 +10,7 @@ interface UseBibleDataReturn {
   selectedVersion: string | null;
   selectedBook: string;
   selectedChapter: number;
+  selectedCommentary: string;
   maxChapter: number;
   
   // Loading states
@@ -21,6 +22,7 @@ interface UseBibleDataReturn {
   handleVersionChange: (version: string) => void;
   handleBookChange: (book: string) => void;
   handleChapterChange: (chapter: number) => void;
+  handleCommentaryChange: (commentary: string) => void;
   handlePreviousChapter: () => void;
   handleNextChapter: () => void;
 }
@@ -33,6 +35,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null);
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
+  const [selectedCommentary, setSelectedCommentary] = useState<string>('matthew-henry');
   const [maxChapter, setMaxChapter] = useState<number>(1);
 
   const [loadingVersions, setLoadingVersions] = useState(false);
@@ -87,6 +90,9 @@ export function useBibleData(lng: string): UseBibleDataReturn {
                 setSelectedVersion(lastReadChapter.version);
                 setSelectedBook(lastReadChapter.book);
                 setSelectedChapter(lastReadChapter.chapter);
+                if (lastReadChapter.commentary) {
+                  setSelectedCommentary(lastReadChapter.commentary);
+                }
                 setLastReadLoaded(true);
                 restored = true;
               }
@@ -317,6 +323,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
             book: selectedBook,
             chapter: selectedChapter,
             version: selectedVersion,
+            commentary: selectedCommentary,
           }),
         });
       } catch (err) {
@@ -326,7 +333,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
     const timeoutId = setTimeout(saveLastRead, 1000);
     return () => clearTimeout(timeoutId);
-  }, [selectedBook, selectedChapter, selectedVersion, lastReadLoaded]);
+  }, [selectedBook, selectedChapter, selectedVersion, selectedCommentary, lastReadLoaded]);
 
   const handleVersionChange = useCallback((version: string) => {
     if (books.length > 0 && selectedBook) {
@@ -346,6 +353,10 @@ export function useBibleData(lng: string): UseBibleDataReturn {
 
   const handleChapterChange = useCallback((chapter: number) => {
     setSelectedChapter(chapter);
+  }, []);
+
+  const handleCommentaryChange = useCallback((commentary: string) => {
+    setSelectedCommentary(commentary);
   }, []);
 
   // Callback handlers for navigation buttons
@@ -378,6 +389,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     selectedVersion,
     selectedBook,
     selectedChapter,
+    selectedCommentary,
     maxChapter,
     loadingVersions,
     loadingBooks,
@@ -385,6 +397,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     handleVersionChange,
     handleBookChange,
     handleChapterChange,
+    handleCommentaryChange,
     handlePreviousChapter,
     handleNextChapter,
   };

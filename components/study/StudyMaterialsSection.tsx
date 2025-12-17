@@ -8,9 +8,11 @@ interface StudyMaterialsSectionProps {
   selectedBook: string;
   selectedChapter: number;
   selectedVersion: string | null;
+  selectedCommentary: string;
   versions: { id: string; name: string }[];
   onNextChapter: () => void;
   onPrevChapter: () => void;
+  onCommentaryChange: (commentary: string) => void;
   onDownload: () => void;
   t: (key: string) => string;
   height?: number;
@@ -20,9 +22,11 @@ export default function StudyMaterialsSection({
   selectedBook,
   selectedChapter,
   selectedVersion,
+  selectedCommentary,
   versions,
   onNextChapter,
   onPrevChapter,
+  onCommentaryChange,
   onDownload,
   t
 }: StudyMaterialsSectionProps) {
@@ -69,10 +73,12 @@ export default function StudyMaterialsSection({
           selectedBook={selectedBook} 
           selectedChapter={selectedChapter} 
           selectedVersion={selectedVersion}
+          selectedCommentary={selectedCommentary}
           t={t} 
           versions={versions}
           onNextChapter={onNextChapter}
           onPrevChapter={onPrevChapter}
+          onCommentaryChange={onCommentaryChange}
           onDownload={onDownload}
           height={1}
           activeTab={activeTab}

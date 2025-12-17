@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema(
       book: { type: String },
       chapter: { type: Number },
       version: { type: String },
+      commentary: { type: String },
       updatedAt: { type: Date }
     },
   },

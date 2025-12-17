@@ -137,6 +137,11 @@
     {
       "name": "matthew-henry.json",
       "type": "file"
+    },
+    {
+      "name": "meyer.json",
+      "title": "F.B. Meyer",
+      "type": "file"
     }
   ]
 }
