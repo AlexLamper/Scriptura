@@ -18,6 +18,7 @@ import { User, Settings, BookText, StickyNote, Calendar
 import SidebarProCTA from "../pricing/sidebar-pro-cta"
 import React, { useEffect, useState } from 'react';
 import Image from "next/image"
+import { useTheme } from "next-themes"
 
 // Main navigation items/links with translation keys
 const mainNavItems = [
@@ -51,58 +52,33 @@ const mainNavItems = [
 export function AppSidebar({ ...props }) {
   const pathname = usePathname()
   const { t } = useTranslation("sidebar")
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const [isClient, setIsClient] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   const isActive = (url: string) => {
     return pathname === url
   }
+  
   useEffect(() => {
-    setIsClient(true)
-    
-    const checkDarkMode = () => {
-      const darkModeActive = document.documentElement.classList.contains('dark')
-      setIsDarkMode(darkModeActive)
-    }
-
-    checkDarkMode()
-    
-    // Listen for theme changes
-    const observer = new MutationObserver(checkDarkMode)
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ['class'] 
-    })
-
-    // Also listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleMediaChange = () => {
-      if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
-        setIsDarkMode(mediaQuery.matches)
-      }
-    }
-    mediaQuery.addEventListener('change', handleMediaChange)
-
-    return () => {
-      observer.disconnect()
-      mediaQuery.removeEventListener('change', handleMediaChange)
-    }
+    setMounted(true)
   }, [])
+
+  const isDarkMode = mounted && resolvedTheme === 'dark'
 
   return (
     <Sidebar
       {...props}
       className="dark:border-r-[#91969e52] font-['Inter'] text-sm text-gray-800 dark:text-gray-200"
       style={{
-        backgroundColor: isClient && isDarkMode ? '#16191D' : '#ffffff',
-        '--sidebar-background': isClient && isDarkMode ? '#16191D' : '#ffffff',
+        backgroundColor: isDarkMode ? '#16191D' : '#ffffff',
+        '--sidebar-background': isDarkMode ? '#16191D' : '#ffffff',
       } as React.CSSProperties}
     >
       <SidebarHeader>
         <SidebarMenu>
           <Link href={'/study'} className="flex items-center m-1">
             <Image 
-              src={isClient && isDarkMode ? "/images/Logo-text-dark-mode.svg" : "/images/logo-text.svg"} 
+              src={isDarkMode ? "/images/Logo-text-dark-mode.svg" : "/images/logo-text.svg"} 
               alt="Scriptura Logo" 
               width={100} 
               height={32} 

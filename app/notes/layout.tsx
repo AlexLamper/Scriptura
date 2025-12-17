@@ -80,16 +80,14 @@ export default async function NotesLayout({ children }: NotesLayoutProps) {
   const session = await getServerSession();
 
   return (
-    <div className="antialiased bg-gray-100 dark:bg-background">
+    <div className="antialiased bg-gray-100 dark:bg-background h-screen flex flex-col overflow-hidden">
       <SessionProvider session={session}>
         <SidebarProvider>
-          <div className="flex min-h-screen w-full">
-            <AppSidebar />
-            <div className="flex-1 flex flex-col">
-              <Header />
-              <div className="lg:px-4 lg:pb-4 lg:pt-2 px-1 pb-1 pt-1">
-                {children}
-              </div>
+          <AppSidebar />
+          <div className="flex flex-col flex-1 min-h-0 w-full">
+            <Header />
+            <div className="flex-1 min-h-0 overflow-hidden">
+              {children}
             </div>
           </div>
         </SidebarProvider>

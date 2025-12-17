@@ -111,13 +111,13 @@ export default async function SettingsLayout({
   const session = await getServerSession();
 
   return (
-    <div className="antialiased bg-gray-100 dark:bg-background">
+    <div className="antialiased bg-gray-100 dark:bg-background h-screen flex flex-col overflow-hidden">
       <SessionProvider session={session}>
         <SidebarProvider>
           <AppSidebar />
-          <div className="min-h-screen mx-auto w-full">
+          <div className="flex flex-col flex-1 min-h-0 w-full">
             <Header params={{ lng: "" }} />
-            <div className="lg:px-4 lg:pb-4 lg:pt-2 px-1 pb-1 pt-1">
+            <div className="flex-1 min-h-0 overflow-hidden">
               {children}
             </div>
           </div>

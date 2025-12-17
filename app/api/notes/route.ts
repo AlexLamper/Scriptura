@@ -90,6 +90,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    // Check note limit for free users
+    if (!user.subscribed) {
+      const noteCount = await Note.countDocuments({ userId: user._id });
+      if (noteCount >= 10) {
+        return NextResponse.json(
+          { error: "Free limit reached. Upgrade to Pro to create unlimited notes." },
+          { status: 403 }
+        );
+      }
+    }
+
     const body = await request.json();
     const {
       verseReference,

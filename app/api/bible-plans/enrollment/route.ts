@@ -36,6 +36,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Already enrolled in this plan' }, { status: 400 });
     }
 
+    // Check active plan limit for free users
+    if (!user.subscribed) {
+      // Find all plans where the user is enrolled
+      const enrolledPlansCount = await BiblePlan.countDocuments({
+        enrolledUsers: user._id
+      });
+
+      if (enrolledPlansCount >= 1) {
+        return NextResponse.json(
+          { error: 'Free limit reached. Upgrade to Pro to enroll in multiple plans.' },
+          { status: 403 }
+        );
+      }
+    }
+
     // Add user to enrolled users
     plan.enrolledUsers.push(user._id);
     

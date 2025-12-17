@@ -177,41 +177,39 @@ export default function NotesPage() {
   }
 
   return (
-    <div className="w-full pb-6 pt-0">
-      <div className="mb-6">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="w-full p-6">
         {/* Header */}
-        <div className="p-8 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white mb-2">
-                {t("page_title", { defaultValue: "My Notes & Highlights" })}
-              </h1>
-              <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
-                {t("page_description", { defaultValue: "Manage all your Bible study notes and highlights in one place" })}
-              </p>
-            </div>
-            <Button 
-              onClick={() => router.push(`/study`)}
-              className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black whitespace-nowrap rounded-none"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              {t("create_note", { defaultValue: "Create Note" })}
-            </Button>
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white mb-2">
+              {t("page_title", { defaultValue: "My Notes & Highlights" })}
+            </h1>
+            <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
+              {t("page_description", { defaultValue: "Manage all your Bible study notes and highlights in one place" })}
+            </p>
           </div>
+          <Button 
+            onClick={() => router.push(`/study`)}
+            className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black whitespace-nowrap rounded-md"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            {t("create_note", { defaultValue: "Create Note" })}
+          </Button>
         </div>
 
         {/* Filters and Search */}
-        <div className="p-6 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
+        <div className="mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
-            <div className="flex-1">
+            <div className="flex-1 max-w-md">
               <div className="relative">
                 <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <Input
                   placeholder={t("search_placeholder", { defaultValue: "Search notes, verses, or tags..." })}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-gray-50 dark:bg-background border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+                  className="pl-10 bg-white dark:bg-card border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                 />
               </div>
             </div>
@@ -221,7 +219,7 @@ export default function NotesPage() {
               {/* Type Filter */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <Button variant="outline" size="sm" className="bg-white dark:bg-card border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">
                     <Filter className="h-4 w-4 mr-2" />
                     {selectedType === "all" ? t("all_types", { defaultValue: "All Types" }) : selectedType}
                     <ChevronDown className="h-4 w-4 ml-2" />

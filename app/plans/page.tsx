@@ -349,50 +349,50 @@ export default function PlansPage() {
 
   if (!session) {
     return (
-      <div className="w-full pb-6 pt-0">
-        <div className="p-8 shadow-lg border dark:shadow-gray-900/20 bg-white dark:bg-card">
-          <p className="font-['Inter'] text-lg text-gray-600 dark:text-gray-300">
-            {t('loginRequired', 'Log in om leesplannen te bekijken')}
-          </p>
+      <div className="w-full h-full overflow-y-auto">
+        <div className="w-full p-6">
+          <div className="p-8 bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-gray-700">
+            <p className="font-['Inter'] text-lg text-gray-600 dark:text-gray-300">
+              {t('loginRequired', 'Log in om leesplannen te bekijken')}
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full pb-6 pt-0">
-      <div className="mb-6">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="w-full p-6">
         {/* Header */}
-        <div className="p-8 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
-          <div className="flex items-center justify-between gap-4">
-            <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white">
-              {t('title', 'Bijbel Leesplannen')}
-            </h1>
-            <Button onClick={() => setIsCreateModalOpen(true)} className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-none whitespace-nowrap">
-              <Plus className="w-4 h-4 mr-2" />
-              {t('createPlan', 'Nieuw Plan')}
-            </Button>
-          </div>
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white">
+            {t('title', 'Bijbel Leesplannen')}
+          </h1>
+          <Button onClick={() => setIsCreateModalOpen(true)} className="bg-brand hover:bg-brand/90 dark:bg-[#e0e0e0] dark:hover:bg-[#d0d0d0] text-white dark:text-black rounded-md whitespace-nowrap">
+            <Plus className="w-4 h-4 mr-2" />
+            {t('createPlan', 'Nieuw Plan')}
+          </Button>
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-0 mb-6 w-fit">
+        <div className="flex space-x-1 mb-6 bg-gray-200 dark:bg-gray-800 p-1 rounded-lg w-fit">
           <button
             onClick={() => setActiveTab('public')}
-            className={`px-6 py-3 transition-colors border font-['Inter'] ${
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               activeTab === 'public'
-                ? 'bg-brand text-white border-brand dark:bg-[#e0e0e0] dark:text-black dark:border-[#e0e0e0]'
-                : 'bg-white dark:bg-card text-gray-900 dark:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
+                ? 'bg-white dark:bg-card text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
             {t('publicPlans', 'Openbare Plannen')}
           </button>
           <button
             onClick={() => setActiveTab('my')}
-            className={`px-6 py-3 transition-colors border font-['Inter'] ${
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               activeTab === 'my'
-                ? 'bg-brand text-white border-brand dark:bg-[#e0e0e0] dark:text-black dark:border-[#e0e0e0]'
-                : 'bg-white dark:bg-card text-gray-900 dark:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
+                ? 'bg-white dark:bg-card text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
             {t('myPlans', 'Mijn Plannen')}
@@ -400,14 +400,14 @@ export default function PlansPage() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-6 p-6 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
-          <div className="relative flex-1">
+        <div className="mb-8">
+          <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder={t('searchPlans', 'Zoek leesplannen...')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9 font-['Inter'] bg-gray-50 dark:bg-background border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+              className="pl-9 font-['Inter'] bg-white dark:bg-card border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
             />
           </div>
         </div>
@@ -434,14 +434,14 @@ export default function PlansPage() {
             />
           ))}
           {activeTab === 'public' && filteredPlans(publicPlans).length === 0 && (
-            <div className="col-span-full text-center py-12 p-6 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
+            <div className="col-span-full text-center py-12 p-6 bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-gray-700">
               <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
                 {t('noPublicPlans', 'Geen openbare leesplannen gevonden')}
               </p>
             </div>
           )}
           {activeTab === 'my' && filteredPlans(myPlans).length === 0 && (
-            <div className="col-span-full text-center py-12 p-6 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
+            <div className="col-span-full text-center py-12 p-6 bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-gray-700">
               <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
                 {t('noMyPlans', 'Je hebt nog geen persoonlijke leesplannen')}
               </p>

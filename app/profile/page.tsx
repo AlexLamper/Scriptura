@@ -85,34 +85,32 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="w-full pb-6 pt-0">
-      <div className="mb-6">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="w-full p-6">
         {/* Header */}
-        <div className="p-8 shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card mb-6">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white">
-                  {t("your_profile")}
-                </h1>
-                {user.isAdmin && (
-                  <span className="text-xs px-2 py-1 bg-purple-600 text-white flex items-center gap-1 shadow-sm">
-                    <ShieldCheck className="h-3 w-3" />
-                    <span>Admin</span>
-                  </span>
-                )}
-              </div>
-              <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
-                {t("profile_description", { defaultValue: "Manage your account settings and preferences" })}
-              </p>
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="font-['Merriweather'] text-2xl lg:text-3xl font-bold text-[#262626] dark:text-white">
+                {t("your_profile")}
+              </h1>
+              {user.isAdmin && (
+                <span className="text-xs px-2 py-1 bg-purple-600 text-white flex items-center gap-1 shadow-sm rounded-sm">
+                  <ShieldCheck className="h-3 w-3" />
+                  <span>Admin</span>
+                </span>
+              )}
             </div>
+            <p className="font-['Inter'] text-gray-600 dark:text-gray-300">
+              {t("profile_description", { defaultValue: "Manage your account settings and preferences" })}
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Profile Section */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
+          <div className="lg:col-span-2 space-y-8">
+            <div className="bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-gray-700">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
                   {t("personal_information")}
@@ -128,7 +126,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Badges Section */}
-            <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
+            <div className="bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-gray-700">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
                   {t("your_badges", { defaultValue: "Your Badges" })}
@@ -141,9 +139,9 @@ export default function ProfilePage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Profile Picture */}
-            <div className="shadow-lg border dark:border-none dark:shadow-gray-900/20 bg-white dark:bg-card">
+            <div className="bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-gray-700">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="font-['Merriweather'] text-lg font-bold text-[#262626] dark:text-white">
                   {t("profile_picture")}

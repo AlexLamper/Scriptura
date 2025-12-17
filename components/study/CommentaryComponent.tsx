@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Loader2, AlertCircle, ChevronDown } from 'lucide-react';
+import { Loader2, AlertCircle, ChevronDown, Lock } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
+import { useSession } from 'next-auth/react';
+import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
 
 interface CommentaryComponentProps {
   book: string;
@@ -103,6 +106,8 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [availableSources, setAvailableSources] = useState<string[]>([]);
   const [selectedSource, setSelectedSource] = useState(initialSource);
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const API_BASE_URL = '/api';
 
@@ -175,6 +180,13 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
       return src.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
+  const isLocked = (source: string) => {
+    if (source === 'kingcomments' && !session?.user?.isSubscribed) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Card className={`border-0 shadow-none rounded-none dark:bg-card ${height ? 'h-full flex flex-col' : ''}`}>
       {/* Source Selector */}
@@ -188,7 +200,9 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
             >
                 {availableSources.length > 0 ? (
                     availableSources.map(src => (
-                        <option key={src} value={src}>{formatSourceLabel(src)}</option>
+                        <option key={src} value={src}>
+                          {formatSourceLabel(src)} {src === 'kingcomments' && !session?.user?.isSubscribed ? '🔒' : ''}
+                        </option>
                     ))
                 ) : (
                     <option value={selectedSource}>{formatSourceLabel(selectedSource)}</option>
@@ -200,7 +214,27 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
 
       {/* Content Area */}
       <CardContent className={`px-4 sm:px-6 pt-4 pb-24 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-secondary scrollbar-track-transparent ${height ? 'flex-1 min-h-0' : 'max-h-[600px] lg:max-h-[calc(100vh-300px)]'}`}>
-        {loading ? (
+        {isLocked(selectedSource) ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
+            <div className="bg-amber-100 dark:bg-amber-900/20 p-4 rounded-full">
+              <Lock className="h-8 w-8 text-amber-600 dark:text-amber-500" />
+            </div>
+            <div className="max-w-md space-y-2">
+              <h3 className="font-merriweather font-bold text-xl text-gray-900 dark:text-gray-100">
+                Premium Commentary
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Unlock deep insights with King Comments and other premium study materials by subscribing to Scriptura Pro.
+              </p>
+            </div>
+            <Button 
+              onClick={() => router.push('/subscribe')}
+              className="bg-[#798777] hover:bg-[#687566] text-white"
+            >
+              Upgrade to Pro
+            </Button>
+          </div>
+        ) : loading ? (
             <div className="flex items-center justify-center py-12">
                 <div className="text-center">
                 <Loader2 className="h-8 w-8 animate-spin text-[#798777] dark:text-[#9aaa98] mx-auto mb-4" />
