@@ -1,4 +1,5 @@
 import { getBookNameVariants, getBookNameFromNumber, englishToDutchMap } from './book-mapping';
+import { headers } from 'next/headers';
 
 // Interfaces
 interface FlatVerse {
@@ -67,16 +68,31 @@ async function fetchJson(relativePath: string) {
         // Use relative URL for client-side fetch, or absolute for server-side fetch
         let urlStr = relativePath;
         if (typeof window === 'undefined') {
-             const baseUrl = process.env.VERCEL_URL 
-                ? `https://${process.env.VERCEL_URL}` 
-                : 'http://localhost:3000';
+             let baseUrl = '';
+             try {
+                 const headersList = await headers();
+                 const host = headersList.get('host');
+                 const protocol = headersList.get('x-forwarded-proto') || 'https';
+                 if (host) {
+                     baseUrl = `${protocol}://${host}`;
+                 }
+             } catch {
+                 // Not in request context or headers not available
+             }
+
+             if (!baseUrl) {
+                 baseUrl = process.env.VERCEL_URL 
+                    ? `https://${process.env.VERCEL_URL}` 
+                    : 'http://localhost:3000';
+             }
+             
              urlStr = new URL(relativePath, baseUrl).toString();
         }
 
-        const response = await fetch(urlStr);
+        const response = await fetch(urlStr, { cache: 'no-store' });
         
         if (!response.ok) {
-            console.error(`Failed to fetch ${urlStr}: ${response.statusText}`);
+            console.error(`Failed to fetch ${urlStr}: ${response.status} ${response.statusText}`);
             return null;
         }
         
