@@ -33,6 +33,7 @@
     "inductive_study": "Induktive Studienmethode",
     "explanation": "Erklärung",
     "historical": "Historischer Kontext",
+    "general_info": "Allgemeine Info",
     "related": "Verwandte Verse",
     "notes": "Meine Notizen"
   },
@@ -48,6 +49,13 @@
     "creation_text": "Die Schöpfung findet in einer aufsteigenden Reihe von Ereignissen statt, in einer anderen Reihenfolge als die zeitgenössische Evolutionstheorie. Menschen entstehen nicht aus Tieren, in einem Prozess des Zufalls und des Überlebens der Stärksten, sondern sie entstanden durch Gottes schöpferische Worte."
   },
   "historical": {
+    "loading": "Lade allgemeine Informationen...",
+    "general_info_title": "Allgemeine Informationen: {{book}}",
+    "premium_title": "Premium-Inhalt",
+    "premium_desc": "Schalten Sie detaillierten historischen Kontext, Themen und Hintergrundinformationen für jedes Buch der Bibel mit Scriptura Pro frei.",
+    "upgrade_button": "Upgrade auf Pro",
+    "preview_text": "Das Buch {{book}} ist ein grundlegender Teil der biblischen Erzählung...",
+    "no_info": "Keine allgemeinen Informationen für dieses Buch verfügbar.",
     "title": "Historischer Kontext von",
     "time_period": "Zeitperiode",
     "time_period_text": "Genesis wurde im Kontext des alten Nahen Ostens geschrieben, wahrscheinlich zur Zeit von Mose (ca. 1400 v. Chr.).",
@@ -129,5 +137,16 @@
   "studies_completed": "Studien abgeschlossen",
   "notes_made": "Notizen erstellt",
   "last_active": "Zuletzt aktiv",
-  "last_activity_example": "Genesis 3 - vor 2 Stunden"
+  "last_activity_example": "Genesis 3 - vor 2 Stunden",
+  "geo_images": {
+    "locations_in_chapter": "Orte in diesem Kapitel",
+    "locations_in_book_chapter": "Orte in {{book}} {{chapter}}",
+    "view_details": "Details anzeigen",
+    "mentioned_in": "Erwähnt in:",
+    "description": "Beschreibung",
+    "modern_id": "Moderne ID:",
+    "credit": "Credit:",
+    "view_source": "Quelle anzeigen",
+    "error_loading": "Fehler beim Laden der Standortbilder"
+  }
 }

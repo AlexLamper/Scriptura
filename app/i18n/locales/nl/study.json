@@ -48,6 +48,7 @@
     "inductive_study": "Inductieve Studiemethode",
     "commentary": "Commentaar",
     "historical": "Historische Context",
+    "general_info": "Algemene Info",
     "related": "Gerelateerde Verzen",
     "notes": "Mijn Notities"
   },
@@ -63,6 +64,13 @@
     "creation_text": "De schepping vindt plaats in een oplopende reeks van gebeurtenissen, in een andere volgorde dan de hedendaagse evolutietheorie dat doet. De mensen komen niet voort uit dieren, in een proces van toeval en overleving van de sterkste, maar zij zijn ontstaan door Gods scheppingswoorden."
   },
   "historical": {
+    "loading": "Algemene informatie laden...",
+    "general_info_title": "Algemene Informatie: {{book}}",
+    "premium_title": "Premium Inhoud",
+    "premium_desc": "Ontgrendel gedetailleerde historische context, thema's en achtergrondinformatie voor elk boek van de Bijbel met Scriptura Pro.",
+    "upgrade_button": "Upgrade naar Pro",
+    "preview_text": "Het boek {{book}} is een fundamenteel onderdeel van het bijbelse verhaal...",
+    "no_info": "Geen algemene informatie beschikbaar voor dit boek.",
     "title": "Historische Context van",
     "time_period": "Tijdperiode",
     "time_period_text": "Genesis werd geschreven in de context van het oude Nabije Oosten, waarschijnlijk tijdens de tijd van Mozes (ca. 1400 v.Chr.).",
@@ -157,5 +165,16 @@
   "studies_completed": "Studies voltooid",
   "notes_made": "Notities gemaakt",
   "last_active": "Laatst actief",
-  "last_activity_example": "Genesis 3 - 2 uur geleden"
+  "last_activity_example": "Genesis 3 - 2 uur geleden",
+  "geo_images": {
+    "locations_in_chapter": "Locaties in dit hoofdstuk",
+    "locations_in_book_chapter": "Locaties in {{book}} {{chapter}}",
+    "view_details": "Bekijk details",
+    "mentioned_in": "Genoemd in:",
+    "description": "Beschrijving",
+    "modern_id": "Modern ID:",
+    "credit": "Credit:",
+    "view_source": "Bekijk bron",
+    "error_loading": "Kon locatie-afbeeldingen niet laden"
+  }
 }

@@ -48,6 +48,7 @@
     "inductive_study": "Inductive Study Method",
     "commentary": "Commentary",
     "historical": "Historical Context",
+    "general_info": "General Info",
     "related": "Related Verses",
     "notes": "My Notes"
   },
@@ -63,6 +64,13 @@
     "creation_text": "Creation takes place in an ascending series of events, in a different order than contemporary evolutionary theory does. Humans do not emerge from animals, in a process of chance and survival of the fittest, but they arose through God's creative words."
   },
   "historical": {
+    "loading": "Loading general info...",
+    "general_info_title": "General Info: {{book}}",
+    "premium_title": "Premium Content",
+    "premium_desc": "Unlock detailed historical context, themes, and background information for every book of the Bible with Scriptura Pro.",
+    "upgrade_button": "Upgrade to Pro",
+    "preview_text": "The book of {{book}} is a fundamental part of the biblical narrative...",
+    "no_info": "No general information available for this book.",
     "title": "Historical Context of",
     "time_period": "Time Period",
     "time_period_text": "Genesis was written in the context of the ancient Near East, probably during the time of Moses (ca. 1400 BC).",
@@ -157,5 +165,16 @@
   "studies_completed": "Studies completed",
   "notes_made": "Notes made",
   "last_active": "Last active",
-  "last_activity_example": "Genesis 3 - 2 hours ago"
+  "last_activity_example": "Genesis 3 - 2 hours ago",
+  "geo_images": {
+    "locations_in_chapter": "Locations in this Chapter",
+    "locations_in_book_chapter": "Locations in {{book}} {{chapter}}",
+    "view_details": "View Details",
+    "mentioned_in": "Mentioned in:",
+    "description": "Description",
+    "modern_id": "Modern ID:",
+    "credit": "Credit:",
+    "view_source": "View Source",
+    "error_loading": "Failed to load location images"
+  }
 }

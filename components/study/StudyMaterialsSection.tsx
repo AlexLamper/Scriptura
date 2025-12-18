@@ -35,7 +35,7 @@ export default function StudyMaterialsSection({
   const tabs = [
     { id: 'commentary', label: t('tabs.commentary'), icon: MessageCircle },
     { id: 'inductive', label: t('tabs.inductive_study'), icon: Brain },
-    { id: 'historical', label: 'General Info', icon: Info },
+    { id: 'historical', label: t('tabs.general_info'), icon: Info },
     { id: 'notes', label: t('tabs.notes'), icon: Users },
   ];
 

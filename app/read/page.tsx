@@ -5,6 +5,7 @@ import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import BibleSelector from '../../components/study/BibleSelector'
 import ChapterViewer from '../../components/study/ChapterViewer'
+import GeoImages from '../../components/study/GeoImages'
 import { useTranslation } from '../i18n/client'
 
 export default function ReadPage() {
@@ -314,6 +315,9 @@ export default function ReadPage() {
             </div>
           )}
         </div>
+
+        {/* Geo Images */}
+        <GeoImages book={selectedBook} chapter={selectedChapter} />
       </div>
     </div>
   )
