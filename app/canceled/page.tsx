@@ -1,6 +1,16 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card"
 import { Button } from "../../components/ui/button"
+import { Metadata } from "next";
+import { cookies } from "next/headers";
+import { cookieName, fallbackLng } from "../i18n/settings";
+import { generatePageMetadata } from "../../lib/pageMetadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lng = cookieStore.get(cookieName)?.value || fallbackLng;
+  return generatePageMetadata('canceled', lng);
+}
 
 export default function CanceledPage() {
   return (

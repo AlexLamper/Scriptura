@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export function StartupLoader() {
   const [visible, setVisible] = useState(true);
@@ -18,23 +20,64 @@ export function StartupLoader() {
     const timer = setTimeout(() => {
       setVisible(false);
       sessionStorage.setItem('startup-loader-shown', 'true');
-    }, 1000); // 1 second for data prefetching
+    }, 1500); // 1.5 seconds for animation
 
     return () => clearTimeout(timer);
   }, []);
 
-  if (!mounted || !visible) return null;
+  if (!mounted) return null;
 
   return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-white dark:bg-gray-950 transition-opacity duration-700 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      <div className="flex flex-col items-center animate-pulse">
-        {/* Simple Logo Representation */}
-        <svg className="w-20 h-20 text-blue-600 dark:text-blue-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-wider">SCRIPTURA</h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Loading resources...</p>
-      </div>
-    </div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f8f9fa] dark:bg-background"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.5, 
+              ease: "easeOut",
+              delay: 0.1
+            }}
+            className="relative w-64 h-24 sm:w-80 sm:h-32 mb-8"
+          >
+            <div className="relative w-full h-full dark:hidden">
+              <Image
+                src="/images/logo-text.svg"
+                alt="Scriptura"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="relative w-full h-full hidden dark:block">
+              <Image
+                src="/images/Logo-text-dark-mode.svg"
+                alt="Scriptura"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.3 }}
+            className="flex space-x-2"
+          >
+            <div className="w-2 h-2 bg-[#798777] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="w-2 h-2 bg-[#798777] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div className="w-2 h-2 bg-[#798777] rounded-full animate-bounce"></div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

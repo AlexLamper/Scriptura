@@ -85,6 +85,54 @@ const pageConfigs: Record<string, PageMetadataConfig> = {
     descriptionKey: 'Subscription successful! Welcome to Scriptura.',
     path: '/success',
     type: 'website'
+  },
+  home: {
+    titleKey: 'home',
+    descriptionKey: 'Scriptura - Online Bible Study & Biblical Education Platform',
+    path: '/',
+    type: 'website'
+  },
+  signin: {
+    titleKey: 'signin',
+    descriptionKey: 'Sign in to Scriptura to access your courses and community.',
+    path: '/auth/signin',
+    type: 'website'
+  },
+  register: {
+    titleKey: 'register',
+    descriptionKey: 'Create a Scriptura account to start your biblical education journey.',
+    path: '/auth/register',
+    type: 'website'
+  },
+  forgotPassword: {
+    titleKey: 'forgotPassword',
+    descriptionKey: 'Reset your Scriptura password.',
+    path: '/auth/forgot-password',
+    type: 'website'
+  },
+  resetPassword: {
+    titleKey: 'resetPassword',
+    descriptionKey: 'Set a new password for your Scriptura account.',
+    path: '/auth/reset-password',
+    type: 'website'
+  },
+  privacyPolicy: {
+    titleKey: 'privacyPolicy',
+    descriptionKey: 'Scriptura Privacy Policy.',
+    path: '/privacy-policy',
+    type: 'website'
+  },
+  termsOfService: {
+    titleKey: 'termsOfService',
+    descriptionKey: 'Scriptura Terms of Service.',
+    path: '/terms-of-service',
+    type: 'website'
+  },
+  canceled: {
+    titleKey: 'canceled',
+    descriptionKey: 'Payment canceled.',
+    path: '/canceled',
+    type: 'website'
   }
 };
 
@@ -117,7 +165,15 @@ export function generatePageMetadata(
       admin: 'Admin',
       read: 'Read',
       subscribe: 'Subscribe',
-      success: 'Success'
+      success: 'Success',
+      home: 'Home',
+      signin: 'Sign In',
+      register: 'Register',
+      forgotPassword: 'Forgot Password',
+      resetPassword: 'Reset Password',
+      privacyPolicy: 'Privacy Policy',
+      termsOfService: 'Terms of Service',
+      canceled: 'Payment Canceled'
     },
     nl: {
       dashboard: 'Dashboard',
@@ -132,7 +188,15 @@ export function generatePageMetadata(
       admin: 'Beheer',
       read: 'Lezen',
       subscribe: 'Abonneren',
-      success: 'Succes'
+      success: 'Succes',
+      home: 'Home',
+      signin: 'Inloggen',
+      register: 'Registreren',
+      forgotPassword: 'Wachtwoord vergeten',
+      resetPassword: 'Wachtwoord resetten',
+      privacyPolicy: 'Privacybeleid',
+      termsOfService: 'Algemene Voorwaarden',
+      canceled: 'Betaling Geannuleerd'
     },
     de: {
       dashboard: 'Dashboard',
@@ -147,7 +211,15 @@ export function generatePageMetadata(
       admin: 'Verwaltung',
       read: 'Lesen',
       subscribe: 'Abonnieren',
-      success: 'Erfolg'
+      success: 'Erfolg',
+      home: 'Startseite',
+      signin: 'Anmelden',
+      register: 'Registrieren',
+      forgotPassword: 'Passwort vergessen',
+      resetPassword: 'Passwort zurücksetzen',
+      privacyPolicy: 'Datenschutzerklärung',
+      termsOfService: 'Nutzungsbedingungen',
+      canceled: 'Zahlung Abgebrochen'
     }
   };
 

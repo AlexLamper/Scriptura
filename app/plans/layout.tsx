@@ -4,58 +4,20 @@ import SessionProvider from "../../components/providers/SessionProvider";
 import { Header } from "../../components/layout/header";
 import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
+import { cookies } from "next/headers";
+import { cookieName, fallbackLng } from "../i18n/settings";
+import { generatePageMetadata } from "../../lib/pageMetadata";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Scriptura | Bible Reading Plans",
-  },
-  description: "Discover and follow structured Bible reading plans to enhance your spiritual journey with Scriptura.",
-  keywords: [
-    "Bible reading plans",
-    "Scripture study",
-    "Biblical learning",
-    "Reading schedule",
-    "Spiritual growth"
-  ],
-  openGraph: {
-    title: "Scriptura | Bible Reading Plans",
-    description: "Access structured Bible reading plans to deepen your understanding of Scripture through guided study.",
-    url: "https://scriptura-edu.com/plans",
-    siteName: "Scriptura",
-    images: [
-      {
-        url: "https://scriptura-edu.com/og-plans.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Scriptura - Bible Reading Plans",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Scriptura | Bible Reading Plans",
-    description: "Follow structured Bible reading plans to enhance your spiritual journey with guided Scripture study.",
-    site: "@ScripturaEdu",
-    creator: "@ScripturaEdu",
-    images: ["https://scriptura-edu.com/og-plans.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  alternates: {
-    canonical: "https://scriptura-edu.com/plans",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lng = cookieStore.get(cookieName)?.value || fallbackLng;
+  return generatePageMetadata('plans', lng);
+}
+
+
+
+
+
 
 export default async function PlansLayout({
   children,
@@ -63,6 +25,8 @@ export default async function PlansLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession();
+  const cookieStore = await cookies();
+  const lng = cookieStore.get(cookieName)?.value || fallbackLng;
 
   return (
     <div className="antialiased bg-gray-100 dark:bg-background h-screen flex flex-col overflow-hidden">
@@ -70,7 +34,7 @@ export default async function PlansLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="flex flex-col flex-1 min-h-0 w-full">
-            <Header params={{ lng: "" }} />
+            <Header params={{ lng }} />
             <div className="flex-1 min-h-0 overflow-hidden">
               {children}
             </div>

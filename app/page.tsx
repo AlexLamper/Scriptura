@@ -5,6 +5,16 @@ import { PricingSection } from "../components/landing/pricing";
 import { FAQSection } from "../components/landing/faq";
 import { Footer } from "../components/landing/footer";
 import { Header } from "../components/landing/navbar";
+import { Metadata } from "next";
+import { cookies } from "next/headers";
+import { cookieName, fallbackLng } from "./i18n/settings";
+import { generatePageMetadata } from "../lib/pageMetadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lng = cookieStore.get(cookieName)?.value || fallbackLng;
+  return generatePageMetadata('home', lng);
+}
 
 export default function LandingPage() {
   return (

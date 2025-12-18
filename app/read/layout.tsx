@@ -4,54 +4,20 @@ import SessionProvider from "../../components/providers/SessionProvider";
 import { Header } from "../../components/layout/header";
 import { AppSidebar } from "../../components/layout/app-sidebar";
 import { SidebarProvider } from "../../components/ui/sidebar";
+import { cookies } from "next/headers";
+import { cookieName, fallbackLng } from "../i18n/settings";
+import { generatePageMetadata } from "../../lib/pageMetadata";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Scriptura | Read",
-  },
-  description: "Read and study the Bible online with Scriptura. Access multiple translations and study tools.",
-  keywords: [
-    "User profile",
-  ],
-  openGraph: {
-    title: "Scriptura | User Profile",
-    description: "Access and manage your Scriptura user profile to enhance your personalized biblical learning journey.",
-    url: "https://scriptura.cloud/profile",
-    siteName: "Scriptura",
-    images: [
-      {
-        url: "https://scriptura.cloud/og-profile.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Scriptura - User Profile",
-      },
-    ],
-    locale: "en_US",
-    type: "profile",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Scriptura | User Profile",
-    description: "Personalize your Scriptura experience by managing your user profile and tracking your biblical learning progress.",
-    site: "@ScripturaEdu",
-    creator: "@ScripturaEdu",
-    images: ["https://scriptura.cloud/og-profile.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  alternates: {
-    canonical: "https://scriptura.cloud/profile",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lng = cookieStore.get(cookieName)?.value || fallbackLng;
+  return generatePageMetadata('read', lng);
+}
+
+
+
+
+
 
 export default async function ReadLayout({
   children,
@@ -59,6 +25,8 @@ export default async function ReadLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession();
+  const cookieStore = await cookies();
+  const lng = cookieStore.get(cookieName)?.value || fallbackLng;
 
   return (
     <div className="antialiased bg-gray-100 dark:bg-[#18181bf2]">
@@ -66,7 +34,7 @@ export default async function ReadLayout({
         <SidebarProvider>
           <AppSidebar />
           <div className="min-h-screen mx-auto w-full">
-            <Header params={{ lng: "" }} />
+            <Header params={{ lng }} />
             <div className="lg:px-4 lg:pb-4 lg:pt-2 px-1 pb-1 pt-1">
               {children}
             </div>

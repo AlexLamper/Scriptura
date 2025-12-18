@@ -94,9 +94,6 @@ export const metadata: Metadata = {
     title: 'Scriptura - Online Bible Study',
     description: 'Join Scriptura for comprehensive online Bible study. Access interactive courses, quizzes, and a supportive community.',
     images: ["https://scriptura.cloud/og-image.svg"],
-  },
-  alternates: {
-    canonical: '/',
   }
 };
 
