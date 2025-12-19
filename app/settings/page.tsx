@@ -2,6 +2,7 @@ import { Button } from "../../components/ui/button"
 import { Switch } from "../../components/ui/switch"
 import { Label } from "../../components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
+import { ReadingPreferencesCard } from "../../components/settings/ReadingPreferencesCard"
 
 export default function SettingsPage() {
   return (
@@ -17,6 +18,9 @@ export default function SettingsPage() {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Reading Preferences */}
+          <ReadingPreferencesCard />
+
           {/* Notification Preferences */}
           <Card className="border border-gray-200 dark:border-gray-700 shadow-none rounded-lg bg-white dark:bg-card">
             <CardHeader className="pb-4 border-b border-gray-200 dark:border-gray-700">

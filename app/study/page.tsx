@@ -3,6 +3,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from '../i18n/client';
 import { useBibleData } from '../../hooks/useBibleData';
+import { useReadingPreferences } from '../../hooks/useReadingPreferences';
 import BibleViewerSection from '../../components/study/BibleViewerSection';
 import StudyMaterialsSection from '../../components/study/StudyMaterialsSection';
 
@@ -10,6 +11,8 @@ export default function StudyPage() {
   const { t, i18n } = useTranslation('study');
   const lng = i18n.resolvedLanguage;
   
+  const { preferences, updatePreferences } = useReadingPreferences();
+
   const {
     versions,
     books,
@@ -58,6 +61,8 @@ export default function StudyPage() {
             onPreviousChapter={handlePreviousChapter}
             onNextChapter={handleNextChapter}
             t={t}
+            preferences={preferences}
+            onUpdatePreferences={updatePreferences}
           />
         </div>
 

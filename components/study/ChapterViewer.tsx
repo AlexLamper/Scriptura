@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Loader2, AlertCircle, Plus } from 'lucide-react';
 import { CreateNoteModal } from './CreateNoteModal';
+import { ReadingPreferences } from '../../hooks/useReadingPreferences';
+import { cn } from '../../lib/utils';
 
 type Props = {
   version: string | null;
   book: string;
   chapter: number;
   maxChapter: number;
+  preferences?: ReadingPreferences;
 };
 
 type VerseData = { [key: string]: string };
@@ -21,6 +24,7 @@ export default function ChapterViewer({
   version,
   book,
   chapter,
+  preferences
 }: Props) {
   const [verses, setVerses] = useState<VerseData>({});
   const [loading, setLoading] = useState(false);
@@ -29,6 +33,41 @@ export default function ChapterViewer({
   const [showCreateNoteModal, setShowCreateNoteModal] = useState(false);
 
   const API_BASE_URL = '/api/bible';
+
+  // Default preferences if not provided
+  const prefs = preferences || {
+    fontSize: 'base',
+    fontFamily: 'sans',
+    lineHeight: 'relaxed',
+    letterSpacing: 'normal',
+    highContrast: false,
+    showVerseNumbers: true,
+  };
+
+  const fontSizeClass = {
+    sm: 'text-sm',
+    base: 'text-base',
+    lg: 'text-lg',
+    xl: 'text-xl',
+  }[prefs.fontSize] || 'text-base';
+
+  const fontFamilyClass = {
+    sans: 'font-sans',
+    serif: 'font-serif',
+    mono: 'font-mono',
+  }[prefs.fontFamily] || 'font-sans';
+
+  const lineHeightClass = {
+    normal: 'leading-normal',
+    relaxed: 'leading-relaxed',
+    loose: 'leading-loose',
+  }[prefs.lineHeight] || 'leading-relaxed';
+
+  const letterSpacingClass = {
+    tight: 'tracking-tight',
+    normal: 'tracking-normal',
+    wide: 'tracking-wide',
+  }[prefs.letterSpacing] || 'tracking-normal';
 
   useEffect(() => {
     const fetchChapter = async () => {
@@ -128,13 +167,28 @@ export default function ChapterViewer({
 
       {!loading && !error && Object.keys(verses).length > 0 && (
         <>
-          <div className="space-y-2 text-justify">
+          <div className={cn(
+            "space-y-2 text-justify",
+            prefs.highContrast && "contrast-more:text-black dark:contrast-more:text-white"
+          )}>
             {Object.entries(verses).map(([verseNumber, text]) => (
               <div key={verseNumber} className="group relative">
-                <p className="font-inter text-base dark:text-foreground leading-relaxed text-[#262626]">
-                  <sup className="font-semibold text-gray-700 dark:text-muted-foreground mr-1">
-                    {verseNumber}
-                  </sup>
+                <p className={cn(
+                  "dark:text-foreground text-[#262626]",
+                  fontSizeClass,
+                  fontFamilyClass,
+                  lineHeightClass,
+                  letterSpacingClass,
+                  prefs.highContrast && "text-black dark:text-white font-medium"
+                )}>
+                  {prefs.showVerseNumbers && (
+                    <sup className={cn(
+                      "font-semibold text-gray-700 dark:text-muted-foreground mr-1",
+                      prefs.highContrast && "text-black dark:text-white"
+                    )}>
+                      {verseNumber}
+                    </sup>
+                  )}
                   <span className="hover:bg-[#798777]/10 dark:hover:bg-[#9aaa98]/20 cursor-pointer transition-colors px-1"
                         onClick={() => handleVerseClick(verseNumber, text)}>
                     {text}

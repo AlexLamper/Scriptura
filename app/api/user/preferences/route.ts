@@ -14,7 +14,18 @@ export async function POST(request: NextRequest) {
 
     await connectMongoDB();
     
-    const { language, translation, intent, onboardingCompleted } = await request.json();
+    const { 
+      language, 
+      translation, 
+      intent, 
+      onboardingCompleted,
+      fontSize,
+      fontFamily,
+      lineHeight,
+      letterSpacing,
+      highContrast,
+      showVerseNumbers
+    } = await request.json();
 
     const updateData: Record<string, string | boolean | Date> = {
       "preferences.updatedAt": new Date()
@@ -24,6 +35,14 @@ export async function POST(request: NextRequest) {
     if (translation) updateData["preferences.translation"] = translation;
     if (intent) updateData["preferences.intent"] = intent;
     if (onboardingCompleted !== undefined) updateData["preferences.onboardingCompleted"] = onboardingCompleted;
+    
+    // Reading preferences
+    if (fontSize) updateData["preferences.fontSize"] = fontSize;
+    if (fontFamily) updateData["preferences.fontFamily"] = fontFamily;
+    if (lineHeight) updateData["preferences.lineHeight"] = lineHeight;
+    if (letterSpacing) updateData["preferences.letterSpacing"] = letterSpacing;
+    if (highContrast !== undefined) updateData["preferences.highContrast"] = highContrast;
+    if (showVerseNumbers !== undefined) updateData["preferences.showVerseNumbers"] = showVerseNumbers;
 
     // Update user preferences
     const updatedUser = await User.findOneAndUpdate(

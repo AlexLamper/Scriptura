@@ -1,4 +1,4 @@
-import { getBookNameVariants, getBookNameFromNumber, englishToDutchMap } from './book-mapping';
+import { getBookNameVariants, getBookNameFromNumber, englishToDutchMap, BIBLE_BOOKS_ORDER, normalizeBookName } from './book-mapping';
 import { headers } from 'next/headers';
 
 // Interfaces
@@ -247,7 +247,21 @@ export async function getBooks(version: string) {
     const indexKey = entry.name.replace('.json', '');
     
     if (index && index[indexKey]) {
-        const books = index[indexKey];
+        const books = [...index[indexKey]];
+        
+        // Sort books by canonical order
+        books.sort((a, b) => {
+            const aName = normalizeBookName(a);
+            const bName = normalizeBookName(b);
+            const aIndex = BIBLE_BOOKS_ORDER.indexOf(aName);
+            const bIndex = BIBLE_BOOKS_ORDER.indexOf(bName);
+            
+            if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+            return a.localeCompare(b);
+        });
+
          // Translate to Dutch if version is HSV
         if (version.toLowerCase() === 'hsv') {
             return books.map(book => englishToDutchMap[book] || book);
@@ -296,6 +310,19 @@ export async function getBooks(version: string) {
             books = keys.filter(k => k !== 'metadata' && k !== 'version' && k !== 'id' && k !== 'verses' && k !== 'meta');
         }
     }
+
+    // Sort books by canonical order
+    books.sort((a, b) => {
+        const aName = normalizeBookName(a);
+        const bName = normalizeBookName(b);
+        const aIndex = BIBLE_BOOKS_ORDER.indexOf(aName);
+        const bIndex = BIBLE_BOOKS_ORDER.indexOf(bName);
+        
+        if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+        if (aIndex !== -1) return -1;
+        if (bIndex !== -1) return 1;
+        return a.localeCompare(b);
+    });
 
     // Translate to Dutch if version is HSV
     if (version.toLowerCase() === 'hsv') {

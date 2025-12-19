@@ -5,6 +5,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ChapterViewer from './ChapterViewer';
 import BibleSelector from './BibleSelector';
 import EmptyState from './EmptyState';
+import { ReadingPreferencesMenu } from './ReadingPreferencesMenu';
+import { ReadingPreferences } from '../../hooks/useReadingPreferences';
 
 interface BibleViewerSectionProps {
   selectedBook: string;
@@ -23,6 +25,8 @@ interface BibleViewerSectionProps {
   onPreviousChapter: () => void;
   onNextChapter: () => void;
   t: (key: string) => string;
+  preferences: ReadingPreferences;
+  onUpdatePreferences: (prefs: Partial<ReadingPreferences>) => void;
 }
 
 export default function BibleViewerSection({
@@ -41,12 +45,21 @@ export default function BibleViewerSection({
   onChapterChange,
   onPreviousChapter,
   onNextChapter,
-  t
+  t,
+  preferences,
+  onUpdatePreferences
 }: BibleViewerSectionProps) {
   return (
     <section className="bg-white shadow-sm flex flex-col h-full dark:bg-card dark:border-r dark:border-border">
       {/* Header with Navigation and Selectors */}
       <div className="h-14 flex items-center justify-between px-4 border-b border-gray-200 dark:border-border bg-white dark:bg-card flex-none gap-2">
+        {/* Reading Preferences Menu (moved left) */}
+        <ReadingPreferencesMenu 
+          preferences={preferences}
+          onUpdate={onUpdatePreferences}
+        />
+        <div className="h-6 w-px bg-gray-200 dark:bg-border mx-1" />
+
         {/* Previous Chapter Button */}
         <button
           onClick={onPreviousChapter}
@@ -96,6 +109,7 @@ export default function BibleViewerSection({
               book={selectedBook}
               chapter={selectedChapter}
               maxChapter={maxChapter}
+              preferences={preferences}
             />
           ) : (
             <EmptyState

@@ -22,7 +22,13 @@ const UserSchema = new mongoose.Schema(
       translation: { type: String },
       intent: { type: String },
       onboardingCompleted: { type: Boolean, default: false },
-      updatedAt: { type: Date }
+      fontSize: { type: String, default: "base" },
+      fontFamily: { type: String, default: "sans" },
+      lineHeight: { type: String, default: "relaxed" },
+      letterSpacing: { type: String, default: "normal" },
+      highContrast: { type: Boolean, default: false },
+      showVerseNumbers: { type: Boolean, default: true },
+      updatedAt: { type: Date },
     },
     lastReadChapter: {
       book: { type: String },

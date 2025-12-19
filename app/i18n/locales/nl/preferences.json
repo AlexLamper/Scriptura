@@ -1,0 +1,19 @@
+{
+  "reading_preferences": "Leesvoorkeuren",
+  "font_size": "Lettergrootte",
+  "font_family": "Lettertype",
+  "line_height": "Regelhoogte",
+  "letter_spacing": "Letterafstand",
+  "verse_numbers": "Versnummers",
+  "high_contrast": "Hoog Contrast",
+  "reset_to_default": "Herstel Standaardwaarden",
+  "reset_confirm": "Weet je zeker dat je alle leesvoorkeuren wilt terugzetten naar de standaardwaarden?",
+  "sans": "Sans",
+  "serif": "Serif",
+  "mono": "Mono",
+  "compact": "Compact",
+  "normal": "Normaal",
+  "loose": "Ruim",
+  "tight": "Krap",
+  "wide": "Breed"
+}
