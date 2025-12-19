@@ -1,0 +1,13 @@
+{
+  "title": "Neem contact op",
+  "description": "Neem contact met ons op.",
+  "name": "Naam",
+  "email": "E-mail",
+  "message": "Bericht",
+  "send": "Verstuur bericht",
+  "success_message": "Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.",
+  "get_in_touch": "Neem contact op",
+  "contact_info": "Contactgegevens",
+  "address": "Adres",
+  "phone": "Telefoon"
+}

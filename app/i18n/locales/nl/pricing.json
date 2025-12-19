@@ -7,24 +7,24 @@
     "price": "Gratis",
     "description": "Perfect om te starten",
     "features": [
-      "Basis bijbelstudie tools",
-      "Beperkte leesplannen",
-      "Meerdere bijbelvertalingen",
-      "Persoonlijke notities"
+      "Alle bijbelvertalingen",
+      "Toegang tot basis leesplannen",
+      "Persoonlijke voortgangstracker",
+      "Enkele bijbelcommentaren",
+      "Max. 20 notities en markeringen"
     ],
     "buttonText": "Gratis beginnen"
   },
   "premium": {
-    "name": "Premium",
+    "name": "Pro",
     "price": "€9,99",
     "priceSubtext": "/maand",
     "description": "Voor serieuze bijbelstudenten",
     "features": [
-      "Alle inductieve studiehulpmiddelen",
-      "Onbeperkte leesplannen",
-      "Geavanceerde studiemateriaal",
-      "Voortgangsregistratie",
-      "Premium ondersteuning"
+      "Alle Basis-functies",
+      "Alle leesplannen",
+      "Toegang tot alle bijbelcommentaren",
+      "Toegang tot onbeperkte notities en markeringen"
     ],
     "buttonText": "Probeer gratis"
   },
@@ -33,9 +33,8 @@
     "price": "Op maat",
     "description": "Voor kerken en organisaties",
     "features": [
-      "Alle premiumfuncties",
-      "Groepsbeheer",
-      "Aangepaste cursussen",
+      "Alle Premium-functies",
+      "Aangepaste cursuscreatie",
       "Persoonlijke ondersteuning",
       "Inzichten en rapportage"
     ],

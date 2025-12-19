@@ -69,7 +69,7 @@ export function AboutSection() {
               }}
             >
               <Image
-                src={`/images/dashboard1.png`}
+                src={`/images/dashboard.png`}
                 alt="Scripture study illustration"
                 width={1200}
                 height={800}

@@ -20,51 +20,75 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href={`/courses`}
+                  href={`/#about`}
                   className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
-                  {t("our_courses")}
+                  {t("about_us")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={`/pricing`}
+                  href={`/#features`}
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
+                >
+                  {t("features")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/#pricing`}
                   className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
                   {t("pricing")}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/#faq`}
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
+                >
+                  {t("faq")}
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Support */}
           <div className="space-y-4">
             <h3 className="font-['Inter'] text-lg font-semibold text-white dark:text-card-foreground mb-6">
-              {t("resources")}
+              {t("support")}
             </h3>
             <ul className="space-y-3">
               <li>
                 <Link
-                  href={`/resources`}
+                  href={`/auth/signin`}
                   className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
-                  {t("resources")}
+                  {t("signin")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={`/quizzes`}
+                  href={`/auth/register`}
                   className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
-                  {t("quizzes")}
+                  {t("signup")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={`/courses`}
+                  href={`/help`}
                   className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
                 >
-                  {t("courses")}
+                  {t("help")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/contact`}
+                  className="font-['Inter'] text-gray-300 dark:text-muted-foreground hover:text-white dark:hover:text-card-foreground transition-colors duration-200"
+                >
+                  {t("contact")}
                 </Link>
               </li>
             </ul>

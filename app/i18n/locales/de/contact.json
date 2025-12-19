@@ -1,0 +1,13 @@
+{
+  "title": "Kontaktieren Sie uns",
+  "description": "Treten Sie mit uns in Kontakt.",
+  "name": "Name",
+  "email": "E-Mail",
+  "message": "Nachricht",
+  "send": "Nachricht senden",
+  "success_message": "Vielen Dank für Ihre Nachricht. Wir werden uns bald bei Ihnen melden.",
+  "get_in_touch": "In Kontakt kommen",
+  "contact_info": "Kontaktinformationen",
+  "address": "Adresse",
+  "phone": "Telefon"
+}
