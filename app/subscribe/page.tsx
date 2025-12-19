@@ -133,7 +133,7 @@ export default function SubscribePage() {
   }
 
   return (
-    <main className="mt-12 flex flex-col items-center justify-center bg-background overflow-hidden mb-12">
+    <main className="mt-12 bg-gray-100 flex flex-col items-center justify-center bg-background overflow-hidden mb-12">
       <div className="w-full max-w-lg text-center px-6">
         <header className="mb-8">
           <h1 className="text-4xl font-['Merriweather'] font-bold text-gray-800 dark:text-white mb-2">
