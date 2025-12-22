@@ -18,7 +18,7 @@
 
 **Your Bible Study Platform**
 
-![Scriptura Banner Screenshot](public/screenshot1.png)
+![Scriptura Banner Screenshot](public/images/dashboard.png)
 <p>
   <a href="https://scriptura.cloud">
     <img src="https://img.shields.io/badge/Live_Demo-▶️-blue?style=for-the-badge" alt="Visit Scriptura" />
