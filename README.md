@@ -15,9 +15,6 @@
   </a>
 </p>
 
-
-**Your Bible Study Platform**
-
 ![Scriptura Banner Screenshot](public/images/dashboard.png)
 <p>
   <a href="https://scriptura.cloud">
@@ -30,13 +27,12 @@
 
 ## About Scriptura
 
-*Scriptura* is a modern, web-based learning platform designed to help users explore and study the Bible interactively. Whether you're just beginning your spiritual journey or have extensive Bible knowledge, *Scriptura* provides personalized tools, quizzes, and resources to deepen your understanding.
+*Scriptura* is a modern, web-based bible study platform designed to help users explore and study the Bible verse-by-verse. Whether you're just a beginner or already have extensive Bible knowledge, *Scriptura* provides personalized tools, bible translations, commentaries, and other resources to deepen your understanding of the scripture.
 
 ## Table of Contents
 
 - [Features](#features)  
 - [Tech Stack](#tech-stack)  
-- [API](#api)
 - [Roadmap](#roadmap)  
 - [Contributing](#contributing)  
 - [Sponsors](#sponsors)  
@@ -47,12 +43,10 @@
 
 ## Features
 
-- ![📖](https://img.shields.io/badge/📖-Personalized_Learning-lightgrey?style=flat-square) **Personalized Learning** — Track your progress with tailored suggestions and daily Bible reading prompts.  
-- ![🎓](https://img.shields.io/badge/🎓-Bible_Courses-lightgrey?style=flat-square) **Bible Courses** — Deepen your knowledge of Bible characters, events, and teachings through engaging courses.  
-- ![📝](https://img.shields.io/badge/📝-Bible_Quizzes-lightgrey?style=flat-square) **Bible Quizzes** — Learn more about the Bible through our quizzes and challenge yourself.  
-- ![📈](https://img.shields.io/badge/📈-Progress_Tracking-lightgrey?style=flat-square) **Progress Tracking** — Monitor your milestones, quiz scores, and daily Bible engagement.  
-- ![🏆](https://img.shields.io/badge/🏆-Leaderboards-lightgrey?style=flat-square) **Leaderboards** — Compete with others and see how your Bible knowledge stacks up.  
-- ![💬](https://img.shields.io/badge/💬-Community_Insights-lightgrey?style=flat-square) **Community Insights** — Share notes, reflections, and insights with fellow learners.  
+- ![📖](https://img.shields.io/badge/📖-Personalized_Learning-lightgrey?style=flat-square) **Personalized Learning** — Track your progress with tailored suggestions and daily Bible reading prompts.
+- ![🎓](https://img.shields.io/badge/🎓-Bible_Courses-lightgrey?style=flat-square) **Reading Plans** — Deepen your knowledge of the Bible through our reading plans.
+- ![📈](https://img.shields.io/badge/📈-Progress_Tracking-lightgrey?style=flat-square) **Progress Tracking** — Monitor your study through scores, streaks and daily Bible engagement.  
+- ![💬](https://img.shields.io/badge/💬-Community_Insights-lightgrey?style=flat-square) **Notes & Bookmarks** — Write notes, reflections, or bookmark verses you want to come back to later.
 - ![✨](https://img.shields.io/badge/✨-Daily_Verses-lightgrey?style=flat-square) **Daily Verses and Teachings** — Reflect on daily Bible verses and thematic lessons.
 
 ## Tech Stack
@@ -71,15 +65,12 @@
   <img src="https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
 </p>
 
-## API
-
-*Scriptura* integrates with the **Bible API** to provide dynamic, real-time access to Bible verses and related content. Learn more about the API [here](https://rapidapi.com/ajith/api/holy-bible).
-
 ## Roadmap
 
-- **v1.0.1** — Integrated Dark and Light Mode
-- **v1.0.2** — Internationalization for English, Dutch and German
-- **v1.0.3** — Added Scriptura Pro Subscription
+- **v1.0.1** - Integrated Dark and Light Mode
+- **v1.0.2** - Internationalization for English, Dutch and German
+- **v1.0.3** - Added Scriptura Pro Subscription
+- **v1.0.4** - Added commentaries & more bible translations
 
 ## Contributing
 
@@ -99,11 +90,11 @@ Support ongoing development and be featured as a project sponsor:
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). See the full text in the **LICENSE** file for details.
+This project is licensed under the [GNU General Public License v3.0](LICENSE). See the full text in the **LICENSE** file for details.
 
 ## Version
 
-**Current Version:** [v1.0.1](https://github.com/AlexLamper/Scriptura/releases/tag/v1.0.1)  
+**Current Version:** [v1.0.1](https://github.com/AlexLamper/Scriptura/releases/tag/v1.0.4)  
 
 ## FAQ
 
@@ -117,7 +108,19 @@ Yes. Scriptura is completely free to use for anyone. Scriptura also has a Pro pl
 <details>
 <summary>Which Bible translations are supported?</summary>
 
-Currently, we support the King James Version (KJV). More translations (e.g., NIV, ESV) are on the roadmap.
+We support a list of bible translations such as: 
+- King James Version (KJV)
+- American Standard Version (ASV)
+- Coverdale Bible
+- Geneva Bible
+- New English Translation
+- World English Bible
+- Statenvertaling
+- Herziene Statenvertaling
+- Afrikaans 1953
+- Elberfelder 1905
+- Luther 1912
+- Schlachter 2000
 
 </details>
 
@@ -137,5 +140,5 @@ For questions or feedback:
 
 ---
 
-Thank you for exploring *Scriptura* — we hope it enriches your Bible learning experience.
+Thank you for exploring *Scriptura* - we hope it enriches your Bible learning experience.
 
