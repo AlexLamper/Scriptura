@@ -29,7 +29,7 @@ export default function SignInPage() {
   // Carousel state for right side
   const slides = [
     {
-      image: "/images/signin/study.png",
+      image: "/images/dashboard.png",
       heading: t("signin.features.introducingFeatures"),
       text: t("signin.features.analyzeTrends")
     },
@@ -102,7 +102,7 @@ export default function SignInPage() {
   const handleEmailFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setEmailFormData(prev => ({ ...prev, [name]: value }))
-    setEmailSignInError("") // Clear error when user types
+    setEmailSignInError("")
   }
 
   return (
