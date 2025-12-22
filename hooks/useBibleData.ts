@@ -17,6 +17,7 @@ interface UseBibleDataReturn {
   loadingVersions: boolean;
   loadingBooks: boolean;
   loadingChapters: boolean;
+  isInitialLoading: boolean;
   
   // Handlers
   handleVersionChange: (version: string) => void;
@@ -41,6 +42,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
   const [loadingVersions, setLoadingVersions] = useState(false);
   const [loadingBooks, setLoadingBooks] = useState(false);
   const [loadingChapters, setLoadingChapters] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   
   const [lastReadLoaded, setLastReadLoaded] = useState(false);
   const lastBookIndexRef = useRef<number>(-1);
@@ -141,6 +143,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
       } catch {
         setVersions([]);
         setSelectedVersion(null);
+        setIsInitialLoading(false);
       } finally {
         setLoadingVersions(false);
       }
@@ -177,6 +180,10 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         const bookNames: string[] = await res.json();
 
         setBooks(bookNames);
+
+        if (bookNames.length === 0) {
+          setIsInitialLoading(false);
+        }
 
         // Check if the currently selected book is valid in the new version
         let isBookValid = selectedBook && bookNames.includes(selectedBook);
@@ -231,6 +238,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         console.error('Error fetching books:', err);
         setBooks([]);
         setSelectedBook('');
+        setIsInitialLoading(false);
       } finally {
         setLoadingBooks(false);
       }
@@ -301,6 +309,7 @@ export function useBibleData(lng: string): UseBibleDataReturn {
         setSelectedChapter(1);
       } finally {
         setLoadingChapters(false);
+        setIsInitialLoading(false);
       }
     };
     fetchChapters();
@@ -400,5 +409,6 @@ export function useBibleData(lng: string): UseBibleDataReturn {
     handleCommentaryChange,
     handlePreviousChapter,
     handleNextChapter,
+    isInitialLoading,
   };
 }

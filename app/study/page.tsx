@@ -1,17 +1,32 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from '../i18n/client';
 import { useBibleData } from '../../hooks/useBibleData';
 import { useReadingPreferences } from '../../hooks/useReadingPreferences';
 import BibleViewerSection from '../../components/study/BibleViewerSection';
 import StudyMaterialsSection from '../../components/study/StudyMaterialsSection';
+import StartupAnimation from '../../components/ui/startup-animation';
 
 export default function StudyPage() {
   const { t, i18n } = useTranslation('study');
   const lng = i18n.resolvedLanguage;
   
   const { preferences, updatePreferences } = useReadingPreferences();
+  const [showAnimation, setShowAnimation] = useState(false);
+
+  useEffect(() => {
+    // Check if we've already shown the animation in this session
+    const hasShown = sessionStorage.getItem('study-startup-shown');
+    if (!hasShown) {
+      setShowAnimation(true);
+    }
+  }, []);
+
+  const handleAnimationComplete = () => {
+    sessionStorage.setItem('study-startup-shown', 'true');
+    setShowAnimation(false);
+  };
 
   const {
     versions,
@@ -25,6 +40,7 @@ export default function StudyPage() {
     loadingVersions,
     loadingBooks,
     loadingChapters,
+    isInitialLoading,
     handleVersionChange,
     handleBookChange,
     handleChapterChange,
@@ -40,6 +56,12 @@ export default function StudyPage() {
 
   return (
     <div className="h-full flex flex-col font-inter overflow-hidden">
+      {showAnimation && (
+        <StartupAnimation 
+          isReady={!isInitialLoading} 
+          onComplete={handleAnimationComplete} 
+        />
+      )}
       
       <div className="flex flex-col lg:flex-row h-full w-full">
         {/* Left: Bible verse section (50% width) */}

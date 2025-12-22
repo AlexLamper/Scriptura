@@ -4,8 +4,10 @@ import { Sparkles } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
+import { useTranslation } from "../../app/i18n/client"
 
 export default function SidebarProCTA() {
+  const { t } = useTranslation("sidebar")
   const router = useRouter()
   const { data: session } = useSession()
   const [isSubscribed, setIsSubscribed] = useState(false)
@@ -48,7 +50,7 @@ export default function SidebarProCTA() {
       >
         <div className="flex items-center">
           <Sparkles className="h-5 w-5 mr-2 text-[#798777] dark:text-[#9aaa98]" />
-          <span className="font-medium text-gray-800 dark:text-gray-200">Try Scriptura Pro Now!</span>
+          <span className="font-medium text-gray-800 dark:text-gray-200">{t("try_pro_now")}</span>
         </div>
       </div>
     </div>
