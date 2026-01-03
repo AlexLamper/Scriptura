@@ -9,7 +9,7 @@ interface StudyMaterialsSectionProps {
   selectedChapter: number;
   selectedVersion: string | null;
   selectedCommentary: string;
-  versions: { id: string; name: string }[];
+  versions: { id: string; name: string; language?: string }[];
   onNextChapter: () => void;
   onPrevChapter: () => void;
   onCommentaryChange: (commentary: string) => void;

@@ -16,7 +16,7 @@ interface BibleViewerSectionProps {
   loadingBooks: boolean;
   loadingChapters: boolean;
   loadingVersions: boolean;
-  versions: { id: string; name: string }[];
+  versions: { id: string; name: string; language?: string }[];
   books: string[];
   chapters: number[];
   onVersionChange: (v: string) => void;

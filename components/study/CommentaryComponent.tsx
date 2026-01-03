@@ -16,8 +16,10 @@ interface CommentaryComponentProps {
   height?: number;
 }
 
-interface CommentaryData {
-  [verse: string]: string;
+interface CommentarySource {
+  id: string;
+  name: string;
+  language: string;
 }
 
 // ✅ Map Dutch → English book names for the commentary API
@@ -107,7 +109,7 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
   const [commentary, setCommentary] = useState<CommentaryData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [availableSources, setAvailableSources] = useState<string[]>([]);
+  const [availableSources, setAvailableSources] = useState<CommentarySource[]>([]);
   const [selectedSource, setSelectedSource] = useState(initialSource);
   const { data: session } = useSession();
   const router = useRouter();
@@ -202,6 +204,31 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
     return false;
   };
 
+  const languageNames: Record<string, string> = {
+    en: 'English',
+    nl: 'Nederlands',
+    de: 'Deutsch',
+    af: 'Afrikaans',
+  };
+
+  // Group sources by language
+  const groupedSources = availableSources.reduce((acc, source) => {
+    const lang = source.language || 'en';
+    if (!acc[lang]) {
+      acc[lang] = [];
+    }
+    acc[lang].push(source);
+    return acc;
+  }, {} as Record<string, CommentarySource[]>);
+
+  const sortedLanguages = Object.keys(groupedSources).sort((a, b) => {
+      if (a === 'nl') return -1;
+      if (b === 'nl') return 1;
+      if (a === 'en') return -1;
+      if (b === 'en') return 1;
+      return a.localeCompare(b);
+  });
+
   return (
     <Card className={`border-0 shadow-none rounded-none dark:bg-card ${height ? 'h-full flex flex-col' : ''}`}>
       {/* Source Selector */}
@@ -220,10 +247,14 @@ const CommentaryComponent: React.FC<CommentaryComponentProps> = ({
                 className="appearance-none bg-white dark:bg-secondary border border-gray-200 dark:border-border rounded-md py-1 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-[#798777] dark:text-foreground"
             >
                 {availableSources.length > 0 ? (
-                    availableSources.map(src => (
-                        <option key={src} value={src}>
-                          {formatSourceLabel(src)} {src === 'kingcomments' && !session?.user?.isSubscribed ? '🔒' : ''}
-                        </option>
+                    sortedLanguages.map(lang => (
+                        <optgroup key={lang} label={languageNames[lang] || lang.toUpperCase()}>
+                            {groupedSources[lang].map(src => (
+                                <option key={src.id} value={src.id}>
+                                  {src.name} {src.id === 'kingcomments' && !session?.user?.isSubscribed ? '🔒' : ''}
+                                </option>
+                            ))}
+                        </optgroup>
                     ))
                 ) : (
                     <option value={selectedSource}>{formatSourceLabel(selectedSource)}</option>

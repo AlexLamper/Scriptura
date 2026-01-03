@@ -13,7 +13,7 @@ export default function ReadPage() {
   const lng = i18n.resolvedLanguage;
   const searchParams = useSearchParams();
   
-  const [versions, setVersions] = useState<{id: string, name: string}[]>([])
+  const [versions, setVersions] = useState<{id: string, name: string, language?: string}[]>([])
   const [books, setBooks] = useState<string[]>([])
   const [chapters, setChapters] = useState<number[]>([])
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null)
@@ -28,7 +28,7 @@ export default function ReadPage() {
   const API_BASE_URL = '/api/bible';
 
   // Function to get default version based on language
-  const getDefaultVersion = (versionList: {id: string, name: string}[], language: string): string | null => {
+  const getDefaultVersion = (versionList: {id: string, name: string, language?: string}[], language: string): string | null => {
     if (language === 'nl') {
       return versionList.find(v => v.id === 'statenvertaling')?.id || versionList[0]?.id || null;
     } else if (language === 'en') {

@@ -3,6 +3,7 @@
     {
       "name": "afri",
       "title": "Afrikaans 1953",
+      "language": "af",
       "type": "dir",
       "files": [
         "1 Chronicles",
@@ -368,6 +369,7 @@
     {
       "name": "hsv",
       "title": "Herziene Statenvertaling",
+      "language": "nl",
       "type": "dir",
       "files": [
         "1 Chronicles",
@@ -514,6 +516,7 @@
     {
       "name": "luther_1912",
       "title": "Luther 1912",
+      "language": "de",
       "type": "dir",
       "files": [
         "1 Chronik",
@@ -587,6 +590,7 @@
     {
       "name": "net",
       "title": "New English Translation",
+      "language": "en",
       "type": "dir",
       "files": [
         "1 Chronicles",
@@ -660,6 +664,7 @@
     {
       "name": "schlachter",
       "title": "Schlachter 2000",
+      "language": "de",
       "type": "dir",
       "files": [
         "1 Chronik",
@@ -733,6 +738,7 @@
     {
       "name": "statenvertaling",
       "title": "Statenvertaling",
+      "language": "nl",
       "type": "dir",
       "files": [
         "1 Corinthiërs",
@@ -806,6 +812,7 @@
     {
       "name": "web",
       "title": "World English Bible",
+      "language": "en",
       "type": "dir",
       "files": [
         "1 Chronicles",
@@ -880,6 +887,7 @@
   "commentaries": [
     {
       "name": "kingcomments",
+      "language": "en",
       "type": "dir",
       "files": [
         "1 Chronicles.json",
@@ -952,16 +960,19 @@
     },
     {
       "name": "matthew-henry.json",
+      "language": "en",
       "type": "file"
     },
     {
       "name": "matthew_henry_nl.json",
       "title": "Matthew Henry (NL)",
+      "language": "nl",
       "type": "file"
     },
     {
       "name": "karlaugustdachsel",
       "title": "Karl August Dachsel",
+      "language": "nl",
       "type": "dir",
       "files": [
         "1Johannes",
@@ -1005,6 +1016,7 @@
     {
       "name": "meyer.json",
       "title": "F.B. Meyer",
+      "language": "en",
       "type": "file"
     }
   ]

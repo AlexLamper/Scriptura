@@ -1,7 +1,7 @@
 import React from 'react';
 
 type Props = {
-  versions: { id: string; name: string }[];
+  versions: { id: string; name: string; language?: string }[];
   books: string[];
   chapters: number[];
   selectedVersion: string | null;
@@ -14,6 +14,13 @@ type Props = {
   loadingBooks: boolean;
   loadingChapters: boolean;
   t: (key: string) => string;
+};
+
+const languageNames: Record<string, string> = {
+  en: 'English',
+  nl: 'Nederlands',
+  de: 'Deutsch',
+  af: 'Afrikaans',
 };
 
 export default function BibleSelector({
@@ -32,6 +39,26 @@ export default function BibleSelector({
   t,
 }: Props) {
 
+  // Group versions by language
+  const groupedVersions = versions.reduce((acc, version) => {
+    const lang = version.language || 'en';
+    if (!acc[lang]) {
+      acc[lang] = [];
+    }
+    acc[lang].push(version);
+    return acc;
+  }, {} as Record<string, typeof versions>);
+
+  // Sort languages (optional, maybe put current language first?)
+  const sortedLanguages = Object.keys(groupedVersions).sort((a, b) => {
+      // Put 'nl' and 'en' first
+      if (a === 'nl') return -1;
+      if (b === 'nl') return 1;
+      if (a === 'en') return -1;
+      if (b === 'en') return 1;
+      return a.localeCompare(b);
+  });
+
   return (
     <div className="flex flex-row gap-2 items-center w-full">
       {/* Version Selector */}
@@ -45,10 +72,14 @@ export default function BibleSelector({
         <option value="" disabled>
           {loadingVersions ? '...' : (versions.length === 0 ? t('no_translations') : 'Trans')}
         </option>
-        {versions.map((version) => (
-          <option key={version.id} value={version.id}>
-            {version.name}
-          </option>
+        {sortedLanguages.map((lang) => (
+          <optgroup key={lang} label={languageNames[lang] || lang.toUpperCase()}>
+            {groupedVersions[lang].map((version) => (
+              <option key={version.id} value={version.id}>
+                {version.name}
+              </option>
+            ))}
+          </optgroup>
         ))}
       </select>
 

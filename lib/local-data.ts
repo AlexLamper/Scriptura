@@ -18,6 +18,7 @@ interface Book {
 interface ManifestEntry {
     name: string;
     title?: string;
+    language?: string;
     type: 'file' | 'dir';
     files?: string[]; // For dirs
 }
@@ -455,7 +456,11 @@ export async function getCommentary(source: string, bookName: string, chapterNum
 
 export async function getCommentaries() {
     const manifest = await getManifest();
-    return manifest.commentaries.map(c => c.name.replace('.json', ''));
+    return manifest.commentaries.map(c => ({
+        id: c.name.replace('.json', ''),
+        name: c.title || c.name.replace('.json', '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        language: c.language || 'en'
+    }));
 }
 
 export async function getBibleSummary(bookName: string, language: string = 'en') {
@@ -480,7 +485,8 @@ export async function getVersions() {
     const manifest = await getManifest();
     return manifest.bibles.map(b => ({
         id: b.name.replace('.json', ''),
-        name: b.title || b.name.replace('.json', '')
+        name: b.title || b.name.replace('.json', ''),
+        language: b.language || 'en'
     }));
 }
 
