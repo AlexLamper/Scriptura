@@ -22,6 +22,10 @@ interface CommentarySource {
   language: string;
 }
 
+interface CommentaryData {
+  [key: string]: string;
+}
+
 // ✅ Map Dutch → English book names for the commentary API
 const bookNameMap: Record<string, string> = {
   // OT

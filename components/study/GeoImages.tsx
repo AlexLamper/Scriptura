@@ -63,7 +63,7 @@ export default function GeoImages({ book, chapter, className }: GeoImagesProps) 
     };
 
     fetchImages();
-  }, [book, chapter]);
+  }, [book, chapter, t]);
 
   if (loading) {
     return (
